@@ -1,0 +1,37 @@
+.flex {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.registraion-table {
+    @extend .flex;
+
+    // gap: 20px
+}
+
+.registraion-table__item {
+    @extend .flex;
+    // gap: 10px;
+}
+
+.registraion-table__title {
+
+}
+
+.registraion-table__form {
+    @extend .flex;
+    flex-direction: column;
+
+    // gap: 10px;
+}
+
+.form__table-rows {
+    @extend .flex;
+
+    gap: 10px;
+}
+
+.registraion-table__row {
+    @extend .flex;
+}

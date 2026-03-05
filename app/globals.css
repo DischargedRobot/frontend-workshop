@@ -1,6 +1,10 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #2A2828;
+  --text-color: #FFFFFF;
+  --foreground: #323234;
+  --active: #1171DE;
+  --stroke: #544F4F;
+  --text-size: 100%;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -9,7 +13,7 @@
     --foreground: #ededed;
   }
 }
-
+/* 
 html,
 body {
   max-width: 100vw;
@@ -39,4 +43,4 @@ a {
   html {
     color-scheme: dark;
   }
-}
+} */
