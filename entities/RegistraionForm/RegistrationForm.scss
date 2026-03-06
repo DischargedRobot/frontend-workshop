@@ -1,37 +1,43 @@
-.flex {
-    display: flex;
-    flex-direction: column;
+/* app/main.scss */
+@use "../../app/placeholder.scss";
+.registration-table {
+    @extend %flex-column;
+
+    padding: 38px 60px;
+    gap: 32px;
+
+    max-width: 705px;
+    max-height: 611px;
+
+    border: 2px solid var(--gray);
+    border-radius: 40px;
+}
+
+
+
+.registration-table__item {
+    @extend %flex-column;
+    gap: 18px;
+    
+}
+
+.registration-table__title {
 
 }
 
-.registraion-table {
-    @extend .flex;
-
-    // gap: 20px
-}
-
-.registraion-table__item {
-    @extend .flex;
-    // gap: 10px;
-}
-
-.registraion-table__title {
-
-}
-
-.registraion-table__form {
-    @extend .flex;
+.registration-table__form {
+    @extend %flex-column;
     flex-direction: column;
 
     // gap: 10px;
 }
 
 .form__table-rows {
-    @extend .flex;
+    @extend %flex-column;
 
     gap: 10px;
 }
 
-.registraion-table__row {
-    @extend .flex;
+.registration-table__row {
+    @extend %flex-column;
 }

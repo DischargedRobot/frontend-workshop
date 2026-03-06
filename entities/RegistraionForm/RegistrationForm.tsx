@@ -4,7 +4,7 @@ import './RegistrationForm.scss'
 
 import AuthTextInput from '@/shared/AuthTextInput/AuthTextInput'
 import { useRouter } from 'next/navigation'
-import { ChangeEvent, use, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export type checkPassword = (e: ChangeEvent<HTMLInputElement>) => boolean
@@ -24,7 +24,7 @@ interface RegistrationError {
 export const RegistrationForm = () => {
 
     const router = useRouter()
-    // const [user, setUser] = useState<string>()
+
     const { 
         register,
         handleSubmit,
@@ -32,6 +32,8 @@ export const RegistrationForm = () => {
     } = useForm<FormValues>()
 
     const [serverErrors, setServerErrors] = useState<RegistrationError>()
+
+
     const  registration = async (data: FormValues) => {
         console.log('ref')
         const response = await fetch('/api/reg', {
@@ -43,19 +45,18 @@ export const RegistrationForm = () => {
                 AdminPassword: data.AdminPassword
             }),
         })
+
         if (response.ok)  {
             router.push('/ffMenu')
         } else {
             const dataErrors: RegistrationError = (await response.json()).errors 
             setServerErrors(dataErrors as RegistrationError)
         }
-
     }
 
     return (
         <form className="registration-table" onSubmit={handleSubmit(registration)} >
-            <h2>Регистрация</h2>
-            <div className="registraion-table__item">
+            <div className="registration-table__item">
                 <h3>Организация</h3>
                 <AuthTextInput
                     name='OrganisationName'
@@ -64,7 +65,7 @@ export const RegistrationForm = () => {
                     error={serverErrors?.OrganisationName}
                 />
             </div>
-            <div className="registraion-table__item">
+            <div className="registration-table__item">
                 <h3>Профиль администрации</h3>
                 <AuthTextInput
                     placeholder='Name'
@@ -92,7 +93,7 @@ export const RegistrationForm = () => {
                     error = {errors.AdminPassword?.message}
                 />
             </div>
-            <button type='submit'>
+            <button className="button" type='submit'>
                 Зарегистрироваться
             </button>
         </form>

@@ -1,3 +1,5 @@
+
+
 import { RegistrationForm } from "@/entities/RegistraionForm";
 import AuthTextInput from "@/shared/AuthTextInput/AuthTextInput";
 import Image from "next/image";

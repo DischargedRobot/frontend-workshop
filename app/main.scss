@@ -1,1 +1,5 @@
-@import './base.scss'
+@use './reset.css';
+@use './globals.scss';
+@use './base.scss';
+
+@use '../common/fonts/stylesheet.css';

@@ -23,7 +23,7 @@ export const authConfig: AuthOptions = {
                 return {
                     id: responseData.user.sessionId,
                     login: responseData.user.login,
-                    password:responseData.user.password,
+                    // password: responseData.user.password,
                 }
             }
             
