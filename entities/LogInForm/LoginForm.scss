@@ -1,0 +1,10 @@
+@use '../../app/placeholder';
+
+.authorisation-table {
+    @extend %flex-column;
+}
+
+.authorisation-table__item {
+    @extend %flex-column;
+    gap: 10px;
+}

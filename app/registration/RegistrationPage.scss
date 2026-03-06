@@ -13,10 +13,9 @@
 
 .registration {
     @extend .center_content;
-    flex-direction: column;
 }
 
 .registration__content {
-    @extend %flex-column !optional;
+    @extend %flex-column;
     align-items: center;
 }

@@ -25,13 +25,6 @@
 
 }
 
-.registration-table__form {
-    @extend %flex-column;
-    flex-direction: column;
-
-    // gap: 10px;
-}
-
 .form__table-rows {
     @extend %flex-column;
 

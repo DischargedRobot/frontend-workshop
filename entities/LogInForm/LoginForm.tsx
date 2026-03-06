@@ -1,4 +1,6 @@
 'use client'
+import AuthCheckBox from '@/shared/AuthCheckBox/AuthCheckBox'
+import './LoginForm.scss'
 
 import AuthTextInput from "@/shared/AuthTextInput/AuthTextInput"
 import { redirect, RedirectType } from "next/navigation"
@@ -39,9 +41,9 @@ const LoginForm = () => {
 
 
     return (
-        <form className="registration-table" onSubmit={handleSubmit(login)} >
+        <form className="authorisation-table" onSubmit={handleSubmit(login)} >
             {errorAuth && <span>{errorAuth.message}</span>}
-            <div className="registraion-table__item">
+            <div className="authorisation-table__item">
                 <AuthTextInput
                     placeholder='Name'
                     name='login'
@@ -55,7 +57,15 @@ const LoginForm = () => {
                     register = {register}
                 />
             </div>
-            <button type='submit'>
+            <AuthCheckBox
+                label='политика чего-то там'
+                name='police'
+            />
+            <AuthCheckBox
+                label='политика чего-то там'
+                name='police'
+            />
+            <button type='submit' className='button'>
                 Зарегистрироваться
             </button>
         </form>
