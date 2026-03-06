@@ -1,30 +1,30 @@
 
+import {  UseFormRegister, FieldValues,RegisterOptions, Path } from 'react-hook-form'
 import './AuthTextInput.scss'
 
-
-
-type Props = {
-    title?: string
+type Props<T extends FieldValues> = {
+    type?: string
     placeholder: string
-    name: string
-    onClick?: unknown
-    onChange?: (password: string) => boolean | null | unknown
-
+    name: Path<T>
+    register: UseFormRegister<T>
+    rules?: RegisterOptions<T>
+    error?: string
 }
 
-const AuthTextInput = (props: Props) => {
+const AuthTextInput = <T extends FieldValues>(props: Props<T>) => {
 
     const {
-        title,
         placeholder,
         name,
-        onChange,
+        rules,
+        register,
+        error,
     } = props
 
     return(
         <label className="auth-text-input">
-            {title}
-            <input type="text" className='auth-text-input' placeholder={placeholder} name={name} onChange={onChange}/>
+            <input type="text" className='auth-text-input' placeholder={placeholder} {...register(name, rules)}/>
+            {error}
         </label>
     )
 }
