@@ -1,5 +1,6 @@
 import NavigationMenu from "@/entities/NavigationMenu/NavigationMenu"
 import TableDepartment, { TableData } from "@/entities/TableDepartment/TableDepartment"
+import { useState } from "react";
 
 const data: TableData[] = [
   {
@@ -19,7 +20,16 @@ const data: TableData[] = [
   },
 ];
 
+
+
 export const FFMenu = () => {
+
+    // TODO:: после хлебных крошек
+    // const {
+    //   getDepartmentsByPath: getDepartments
+    // } = useDepartment()
+
+    // const [departments, setDepartments] = useState([])
 
     return (
         <>
