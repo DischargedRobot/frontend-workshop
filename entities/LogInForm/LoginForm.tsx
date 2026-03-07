@@ -3,9 +3,6 @@ import './LoginForm.scss'
 
 import { Button, Form, Input } from 'antd'
 
-import AuthCheckBox from '@/shared/AuthCheckBox/AuthCheckBox'
-import AuthTextInput from "@/shared/AuthTextInput/AuthTextInput"
-
 import { redirect, RedirectType } from "next/navigation"
 import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"

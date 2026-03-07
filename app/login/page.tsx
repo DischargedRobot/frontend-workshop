@@ -3,8 +3,7 @@ import "./LoginPage.scss"
 
 import LoginForm from "@/entities/LogInForm/LoginForm";
  
-export default async function SignIn() {
-
+ const Login = () => {
     return (
         <Content className="login">
             <h2>Авторизация</h2>
@@ -12,3 +11,4 @@ export default async function SignIn() {
         </Content>
     )
 }
+export default Login

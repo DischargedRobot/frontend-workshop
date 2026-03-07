@@ -26,12 +26,24 @@ const theme: ThemeConfig = {
     colorBgBase: COLOR.foreground,
     colorBgLayout: COLOR.background,
     colorBorder: COLOR.stroke,
+
+    colorTextPlaceholder: '#d2d2d2'
+    
   },
   components: {
+    Layout: {
+      siderBg: COLOR.foreground,
+    },
     Button: {
       colorBgContainer: COLOR.activeBackground,
       colorBorder: COLOR.activeBorder,
     },
+    Menu: {
+      collapsedIconSize: 64,
+      itemHeight: 64,
+      itemSelectedBg: COLOR.background,
+      itemBg: COLOR.foreground
+    }
   },
 }
 
@@ -44,6 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        {/* theme={theme} */}
         <ConfigProvider theme={theme}>
             <Layout className='body-layout'>
               {children}
