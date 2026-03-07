@@ -1,11 +1,14 @@
 'use client'
-import AuthCheckBox from '@/shared/AuthCheckBox/AuthCheckBox'
 import './LoginForm.scss'
 
+import { Button, Form, Input } from 'antd'
+
+import AuthCheckBox from '@/shared/AuthCheckBox/AuthCheckBox'
 import AuthTextInput from "@/shared/AuthTextInput/AuthTextInput"
+
 import { redirect, RedirectType } from "next/navigation"
 import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 
 interface AuthForm {
     login: string
@@ -18,7 +21,7 @@ interface ErrorAuth {
 
 const LoginForm = () => {
 
-    const {register, handleSubmit} = useForm<AuthForm>()
+    const { handleSubmit, control, formState: { errors },} = useForm<AuthForm>()
     const [errorAuth, setErrorAuth] = useState<ErrorAuth>()
 
     const login = async (data: AuthForm) => {
@@ -29,7 +32,7 @@ const LoginForm = () => {
                 password: data.password
             })
         })
-
+        console.log(data)
         const responseData = await response.json()
 
         if (!response.ok) {
@@ -39,36 +42,60 @@ const LoginForm = () => {
         redirect('/ffMenu', RedirectType.push)
     }
 
+    // const login = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     // const response = await fetch ('/login', {
+    //     //     method: 'POST',
+    //     //     body: JSON.stringify({
+    //     //         login: data.login,
+    //     //         password: data.password
+    //     //     })
+    //     // })
+    //     // const responseData = await response.json()
 
+    //     // if (!response.ok) {
+    //     //     setErrorAuth(responseData.error)
+    //     // }
+        
+    //     // redirect('/ffMenu', RedirectType.push)
+    // }
     return (
-        <form className="authorisation-table" onSubmit={handleSubmit(login)} >
+        <Form className="authorisation-table" onFinish={handleSubmit(login)} >
             {errorAuth && <span>{errorAuth.message}</span>}
-            <div className="authorisation-table__item">
-                <AuthTextInput
-                    placeholder='Name'
+            <Form.Item
+                layout='vertical'
+                label="Логин"
+                validateStatus={errors.login ? 'error' : ''}
+                help={errors.login ? errors.login.message : ''}
+            >
+                <Controller
+                    control={control}
                     name='login'
-                    type='login'
-                    register = {register}
-                />                
-                <AuthTextInput
-                    placeholder='Name'
-                    name='password'
-                    type='password'
-                    register = {register}
+                    rules={{
+                        required: 'Введите логин',
+                    }}
+                    render={({ field }) => <Input placeholder="Логин" {...field} />}
                 />
-            </div>
-            <AuthCheckBox
-                label='политика чего-то там'
-                name='police'
-            />
-            <AuthCheckBox
-                label='политика чего-то там'
-                name='police'
-            />
-            <button type='submit' className='button'>
-                Зарегистрироваться
-            </button>
-        </form>
+            </Form.Item>
+            <Form.Item
+                layout='vertical'
+                label="Пароль"
+                validateStatus={errors.password ? 'error' : ''}
+                help={errors.password ? errors.password.message : ''}
+            >
+                <Controller
+                    control={control}
+                    name='password'
+                    rules={{
+                        required: 'Введите пароль',
+                    }}
+                    render={({ field }) => <Input placeholder="Пароль" {...field} />}
+                />
+            </Form.Item>
+            <Button htmlType='submit'>
+                Войти
+            </Button>
+        </Form>
     )
 }
 
