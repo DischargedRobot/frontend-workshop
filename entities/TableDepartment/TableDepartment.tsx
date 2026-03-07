@@ -1,34 +1,29 @@
 'use client'
 
+import DeleteIcon from "@/shared/Icon/DeleteIcon"
+import NextLinkIcon from "@/shared/Icon/NextLinkIcon"
 import { Space, Table, TableProps } from "antd"
+import { RowSelectionType } from "antd/es/table/interface"
 import Link from "next/link"
 
 const COLUMNS: TableProps<TableData>['columns'] = [
   {
-    title: 'Action', 
-    key: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <button onClick={(e) => handleClick(e, record)}>Invite {record.name}</button>
-        <button onClick={()=> {}}> Delete</button>
-      </Space>
+    title: '', 
+    key: "delete",
+    render: () => (
+        <button onClick={()=> {}}><DeleteIcon/> </button>
     )
   },
   {
-    title: 'NameDepartment',
+    title: 'Имя отдела',
     dataIndex: 'name',
     key: 'NameDepartment',
   },
   {
-    title: 'RoleName',
-    dataIndex: 'roleName',
-    key: 'RoleName',
-  },
-  {
-    title: 'link',
+    title: '',
     dataIndex: 'link',
     render: (_, record) => (
-      <Link href={record.link}>{record.link}</Link>
+      <Link href={record.link}><NextLinkIcon/></Link>
     ),
     key: 'link',
   },
@@ -37,8 +32,11 @@ const COLUMNS: TableProps<TableData>['columns'] = [
 export interface TableData {
   key: React.Key,
   name: string,
-  roleName: string,
   link: string
+}
+
+const rowSelection: TableProps<TableData>['rowSelection'] = {
+
 }
 
 interface Props {
@@ -56,7 +54,10 @@ const TableDepartment = (props: Props) => {
     } = props
 
     return (
-        <Table dataSource={data} columns={COLUMNS}>
+        <Table 
+          rowSelection={{type: 'checkbox', ...rowSelection}}
+          dataSource={data}
+          columns={COLUMNS}>
 
         </Table>
     )

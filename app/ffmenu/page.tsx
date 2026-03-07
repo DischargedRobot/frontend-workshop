@@ -4,20 +4,17 @@ import TableDepartment, { TableData } from "@/entities/TableDepartment/TableDepa
 const data: TableData[] = [
   {
     key: '1',
-    name: 'John Brown',
-    roleName: 'John Brown',
+    name: 'Depart1',
     link: '12312',
   },
   {
     key: '2',
-    name: 'Jim Green',
-    roleName: 'John Brown',
+    name: 'Depart2',
     link: '#!',
   },
   {
     key: '3',
-    name: 'Joe Black',
-    roleName: 'John Brown',
+    name: 'Depart3',
     link: '#!',
   },
 ];
