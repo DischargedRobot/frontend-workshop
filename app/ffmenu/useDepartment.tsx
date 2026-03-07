@@ -1,4 +1,6 @@
 const useDepartment = () => {
+
+    // TODO:: жду бекенд, чтобы допилить
     async function getDepartmentsByPath(path: string) {
         const response = await fetch(`${path}`,{
             method: 'GET',

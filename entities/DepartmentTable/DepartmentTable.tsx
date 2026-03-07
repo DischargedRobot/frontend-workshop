@@ -2,9 +2,9 @@
 
 import DeleteIcon from "@/shared/Icon/DeleteIcon"
 import NextLinkIcon from "@/shared/Icon/NextLinkIcon"
-import { Space, Table, TableProps } from "antd"
-import { RowSelectionType } from "antd/es/table/interface"
+import {  Table, TableProps } from "antd"
 import Link from "next/link"
+import { TableData } from "./DepartmentTableType"
 
 const COLUMNS: TableProps<TableData>['columns'] = [
   {
@@ -29,11 +29,7 @@ const COLUMNS: TableProps<TableData>['columns'] = [
   },
 ]
 
-export interface TableData {
-  key: React.Key,
-  name: string,
-  link: string
-}
+
 
 const rowSelection: TableProps<TableData>['rowSelection'] = {
 
