@@ -1,6 +1,6 @@
 import NavigationMenu from "@/entities/NavigationMenu/NavigationMenu"
-import TableDepartment, { TableData } from "@/entities/DepartmentTable/DepartmentTable"
 import FullDepartmentTable from "@/widgets/FullDepartmentTable/FullDepartmentTable";
+import FFTable from "@/entities/FFTable/FFTable";
 
 
 
@@ -17,6 +17,7 @@ export const FFMenu = () => {
         <>
         <NavigationMenu/>
         <FullDepartmentTable></FullDepartmentTable>
+        <FFTable></FFTable>
         </>
     )
 }
