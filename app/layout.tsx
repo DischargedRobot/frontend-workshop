@@ -6,7 +6,19 @@ import type { Metadata } from "next";
 import { Content } from 'antd/es/layout/layout';
 
 // import { SessionProvider } from "next-auth/react";
+const FONTS = {
+  text: {
+    fontSize: 16,
+    fontFamily: 'Roboto',
+  },
+  bigText: {
+    fontSize: 20,
+    fontFamily: 'Roboto',
+  }
+}
+
 const COLOR = {
+  backgroundTextColor: "#d4d4d4",
   background: "#2A2828",
   textColor: "#ECECEC",
   foreground: "#323234",
@@ -28,13 +40,11 @@ const theme: ThemeConfig = {
     colorBorder: COLOR.stroke,
 
     colorTextPlaceholder: '#d2d2d2',
-    
   },
   components: {
     
     Layout: {
       siderBg: COLOR.foreground,
-      
     },
     Button: {
       colorBgContainer: COLOR.activeBackground,
@@ -50,6 +60,20 @@ const theme: ThemeConfig = {
       itemHeight: 64,
       itemSelectedBg: COLOR.background,
       itemBg: COLOR.foreground
+    },
+    Breadcrumb: {
+      lastItemColor: COLOR.activeBackground,
+      fontSize: FONTS.text.fontSize,
+      lineHeight: 1,
+      fontFamily: FONTS.text.fontFamily,
+
+      separatorColor: COLOR.stroke
+      // itemColor: COLOR.backgroundTextColor,
+
+      
+      // colorLinkHover: COLOR.activeBackground,
+      // colorInfoTextHover: COLOR.activeBackground,
+      // linkHoverColor: COLOR.activeBackground
     }
   },
 }

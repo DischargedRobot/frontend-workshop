@@ -1,0 +1,10 @@
+.bredcamb {
+    display: flex;
+    align-items: center;
+
+    color: #747474;
+
+    &:hover {
+        color: rgba($color: #fff, $alpha: 0.8);
+    }
+}

@@ -1,4 +1,7 @@
 'use client'
+
+import './DepartmentBreadcamb.scss'
+
 import { Breadcrumb } from "antd"
 
 interface Props {
@@ -12,14 +15,16 @@ const DepartmentBreadcamb = ( {items, onClick: callback}: Props) => {
 
     return (
         <Breadcrumb 
+            
             items={items.map((item) => 
                 {
                 const path = DEPARTMENTS_REQUEST_URL+item
                  return {title: 
-                    <button onClick={() => callback(path)}
+                    // callback(path)
+                    <button className='bredcamb' onClick={() => {}}
                     >
                         {item}
-                    </button>,
+                    </button>
                     }   
                 })}
         />
