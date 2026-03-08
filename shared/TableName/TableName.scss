@@ -1,5 +1,8 @@
 @import '../../app/placeholder.scss';
 
 .table-name {
-    @extend %flex
+    @extend %flex;
+    align-items: center;
+
+    font-size: var(--litleTitle-size);
 }

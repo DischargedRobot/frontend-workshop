@@ -7,6 +7,8 @@ import { TableData } from "@/entities/DepartmentTable";
 import DepartmentBreadcamb from "@/shared/DepartmentBreadcamb/DepartmentBreadcamb"
 import TableName from "@/shared/TableName/TableName";
 import { useDepartment } from './model/useDepartment';
+import { useFullDepartmentTable } from './useFullDepartmentTable';
+import { useShallow } from 'zustand/shallow';
 
 const data: TableData[] = [
   {
@@ -72,12 +74,13 @@ const data: TableData[] = [
 const FullDepartmentTable = () => {
 
   const toDepartment  = useDepartment((state) => state.toDepartment)
+  const {isHidden, setIsHidden} = useFullDepartmentTable(useShallow(state => ({isHidden: state.isHidden, setIsHidden: state.setIsHidden})))
   
     return (
         <div className="full-department-table">
             <DepartmentBreadcamb items={['depart1','depart1.1','depart1.1.1']} onClick={toDepartment}/>
-            <TableName title="Отделы"/>
-            <TableDepartment data={data}/>
+            <TableName title="Отделы" isHidden={isHidden} setIsHidden={setIsHidden}/>
+            <TableDepartment data={data} isHidden={isHidden}/>
         </div>
     )
 }

@@ -3,14 +3,21 @@
   --inter: 'Inter', sans-serif;
   --roboto: 'Roboto', sans-serif;
 
+
+  --text-size: 16px;
+  --bigText-size: 20px;
+
+  --litleTitle-size: 24px; 
+  --title-size: 28px;
+
+  --background-text-color: #cfcfcf;
   --background: #2A2828;
-  --text-color: #ECECEC;
+  --text-color: #d9d8d8;
   --foreground: #323234;
   --active-background: #2d75c8;
   --stroke: #544F4F;
   --active-border: #ECECEC;
-
-  --text-size: 100%;
+// --text-size: 100%;
 }
 
 .body-layout {

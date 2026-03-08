@@ -42,6 +42,7 @@ const rowSelection: TableProps<TableData>['rowSelection'] = {
 
 interface Props {
     data: TableData[]
+    isHidden: boolean
 }
 
 function handleClick(e: React.MouseEvent, record: TableData) {
@@ -51,7 +52,8 @@ function handleClick(e: React.MouseEvent, record: TableData) {
 const TableDepartment = (props: Props) => {
 
   const {
-      data 
+      data,
+      isHidden,
   } = props
 
   return (
@@ -61,7 +63,7 @@ const TableDepartment = (props: Props) => {
         columns={COLUMNS}
         pagination={{ placement: ['bottomCenter'], pageSize: 6 }}
         size="small"
-        className="department-table"
+        className={`department-table ${isHidden && 'hidden'}`}
         tableLayout={"auto"}
         >
       </Table>

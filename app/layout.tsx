@@ -18,9 +18,9 @@ const FONTS = {
 }
 
 const COLOR = {
-  backgroundTextColor: "#d4d4d4",
+  backgroundTextColor: "#cfcfcf",
   background: "#2A2828",
-  textColor: "#ECECEC",
+  textColor: "#e8e8e8",
   foreground: "#323234",
   activeBackground: "#2d75c8",
   stroke: "#544F4F",
@@ -51,6 +51,7 @@ const theme: ThemeConfig = {
       colorBorder: COLOR.activeBorder,
     },
     Table: {
+      fontSize: FONTS.text.fontSize,
       cellPaddingBlockSM: 2,
       // cellPaddingBlock: 8,
     },
@@ -74,7 +75,7 @@ const theme: ThemeConfig = {
       // colorLinkHover: COLOR.activeBackground,
       // colorInfoTextHover: COLOR.activeBackground,
       // linkHoverColor: COLOR.activeBackground
-    }
+    },
   },
 }
 

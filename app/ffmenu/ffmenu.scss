@@ -4,5 +4,7 @@
 
 .ff-menu {
     @extend %flex-column;
-    margin: 0 clamp(10px, 2vw, 20px);
+
+    gap: 15px;
+    margin: clamp(15px, 2vw, 20px) clamp(10px, 2vw, 20px);
 }

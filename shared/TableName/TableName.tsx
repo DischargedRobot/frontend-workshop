@@ -4,14 +4,18 @@ import DropArrowIcon from "../Icon/DropArrowIcon/DropArrowIcon"
 
 interface Props { 
     title: string
+    isHidden: boolean
+    setIsHidden: (isHidden: boolean) => void
 }
 
-const TableName = ({title}: Props) => {
+const TableName = ({title, isHidden, setIsHidden}: Props) => {
+
+
     return (
-        <div className="table-name">
-            <DropArrowIcon/>
+        <button className="table-name" onClick={(() => setIsHidden(isHidden))}>
+            <DropArrowIcon rotateDeg={isHidden ? -90 : 0}/>
             <h2>{title}</h2>
-        </div>
+        </button>
     )
 }
 
