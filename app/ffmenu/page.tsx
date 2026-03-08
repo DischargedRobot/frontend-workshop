@@ -1,8 +1,9 @@
 import NavigationMenu from "@/entities/NavigationMenu/NavigationMenu"
 import FullDepartmentTable from "@/widgets/FullDepartmentTable/FullDepartmentTable";
 import FFTable from "@/entities/FFTable/FFTable";
+import { Content } from "antd/es/layout/layout";
 
-
+import './ffmenu.scss'
 
 export const FFMenu = () => {
 
@@ -15,10 +16,13 @@ export const FFMenu = () => {
 
     return (
         <>
-        <NavigationMenu/>
-        <FullDepartmentTable></FullDepartmentTable>
-        <FFTable></FFTable>
+            <NavigationMenu/>
+            <Content className="ff-menu">
+                <FullDepartmentTable></FullDepartmentTable>
+                <FFTable></FFTable>
+            </Content>
         </>
+        
     )
 }
 

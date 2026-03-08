@@ -1,5 +1,9 @@
 
 %flex-column {
-    display: flex;
+    @extend %flex;
     flex-direction: column;
+}
+
+%flex {
+    display: flex;
 }

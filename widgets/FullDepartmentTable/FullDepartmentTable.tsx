@@ -1,6 +1,9 @@
+import './FullDepartmentTabe.scss'
+
 import TableDepartment from "@/entities/DepartmentTable/DepartmentTable"
 import { TableData } from "@/entities/DepartmentTable";
 import DepartmentBreadcamb from "@/shared/DepartmentBreadcamb/DepartmentBreadcamb"
+import TableName from "@/shared/TableName/TableName";
 
 const data: TableData[] = [
   {
@@ -24,8 +27,9 @@ const data: TableData[] = [
 const FullDepartmentTable = () => {
 
     return (
-        <div>
+        <div className="full-department-table">
             <DepartmentBreadcamb path={['depart1','depart1.1','depart1.1.1']}/>
+            <TableName title="Отделы"/>
             <TableDepartment data={data}/>
         </div>
     )

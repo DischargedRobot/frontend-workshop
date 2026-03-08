@@ -54,8 +54,8 @@ const data: FeatureFlagTable[] = [
     lastModified: new Date(0)
   },
   {
-    key: '1',
-    name: 'Depart1',
+    key: '2',
+    name: 'Depart2',
     departmentName: 'dep1',
     isEnabled: true,
     description: 'bla-bla-lba',

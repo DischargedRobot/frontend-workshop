@@ -1,0 +1,8 @@
+@import '../placeholder.scss';
+
+// $l: ca10vw*1px;
+
+.ff-menu {
+    @extend %flex-column;
+    margin: 0 clamp(10px, 2vw, 20px);
+}

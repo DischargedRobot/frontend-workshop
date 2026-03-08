@@ -31,8 +31,10 @@ const theme: ThemeConfig = {
     
   },
   components: {
+    
     Layout: {
       siderBg: COLOR.foreground,
+      
     },
     Button: {
       colorBgContainer: COLOR.activeBackground,
@@ -40,6 +42,7 @@ const theme: ThemeConfig = {
     },
     Menu: {
       collapsedIconSize: 64,
+      // collapsedWidth: 100, 
       itemHeight: 64,
       itemSelectedBg: COLOR.background,
       itemBg: COLOR.foreground
