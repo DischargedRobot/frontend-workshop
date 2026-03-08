@@ -56,9 +56,9 @@ const theme: ThemeConfig = {
       // cellPaddingBlock: 8,
     },
     Menu: {
-      collapsedIconSize: 64,
-      // collapsedWidth: 100, 
-      itemHeight: 64,
+      collapsedIconSize: 32, // почему-то нужно чтобы было в 2 раза больше иначе будет дёргаться размер
+      collapsedWidth: 32, 
+      itemHeight: 48,
       itemSelectedBg: COLOR.background,
       itemBg: COLOR.foreground
     },

@@ -1,5 +1,19 @@
 .navigation-menu {
-    height: 100vh;
-    // display: flex;
-    // align-items: center;
+
+    // &.ant-menu-inline-collapsed > li > span {
+    //     display: none !important;
+    // }
+
+    // &.ant-menu-inline-collapsed > li::after {
+    //     display: none !important;
+    // }
+    li {
+        display: flex !important;
+        // align-items: center;
+    }
+    svg {
+        margin-right:  16px;
+        min-width: 32px;
+        max-width: 32px; // на всякий случай, чтобы в ширь тоже не колбасило
+    }
 }

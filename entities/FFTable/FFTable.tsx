@@ -17,15 +17,15 @@ const FF_TABLE_COLUMNS: TableProps<FeatureFlagTable>['columns'] = [
         )
     },
     {
+        title: 'Отдел/Проект',
+        key: 'departmentName',
+        dataIndex: 'departmentName',
+    },
+    {
         title: 'Описание',
         key: 'description',
         dataIndex: 'description',
     },
-    {
-        title: 'Отдел',
-        key: 'departmentName',
-        dataIndex: 'departmentName',
-    }
 ]
 
 interface FeatureFlag {
@@ -82,9 +82,11 @@ const data: FeatureFlagTable[] = [
 const FFTable = () => {
 
     return (
-        <Table dataSource={data} columns={FF_TABLE_COLUMNS}>
-
-        </Table>
+        <Table 
+            pagination={{placement: ['bottomCenter'], pageSize: 10}}
+            dataSource={data} 
+            columns={FF_TABLE_COLUMNS}
+        />
     )
 }
 
