@@ -1,5 +1,7 @@
 'use client'
 
+import './DepartmentTable.scss'
+
 import DeleteIcon from "@/shared/Icon/DeleteIcon"
 import NextLinkIcon from "@/shared/Icon/NextLinkIcon"
 import {  Table, TableProps } from "antd"
@@ -12,12 +14,14 @@ const COLUMNS: TableProps<TableData>['columns'] = [
     key: "delete",
     render: () => (
         <button onClick={()=> {}}><DeleteIcon/> </button>
-    )
+    ),
+    width: "64px",
   },
   {
     title: 'Имя отдела',
     dataIndex: 'name',
     key: 'NameDepartment',
+    minWidth: 100,
   },
   {
     title: '',
@@ -26,6 +30,7 @@ const COLUMNS: TableProps<TableData>['columns'] = [
       <Link href={record.link}><NextLinkIcon/></Link>
     ),
     key: 'link',
+    width: "64px",
   },
 ]
 
@@ -53,8 +58,12 @@ const TableDepartment = (props: Props) => {
         <Table 
           rowSelection={{type: 'checkbox', ...rowSelection}}
           dataSource={data}
-          columns={COLUMNS}>
-
+          columns={COLUMNS}
+          pagination={{ placement: ['bottomCenter'], pageSize: 6 }}
+          size="small"
+          className="department-table"
+          tableLayout={"auto"}
+          >
         </Table>
     )
 }

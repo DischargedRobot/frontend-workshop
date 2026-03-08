@@ -27,7 +27,7 @@ const theme: ThemeConfig = {
     colorBgLayout: COLOR.background,
     colorBorder: COLOR.stroke,
 
-    colorTextPlaceholder: '#d2d2d2'
+    colorTextPlaceholder: '#d2d2d2',
     
   },
   components: {
@@ -39,6 +39,10 @@ const theme: ThemeConfig = {
     Button: {
       colorBgContainer: COLOR.activeBackground,
       colorBorder: COLOR.activeBorder,
+    },
+    Table: {
+      cellPaddingBlockSM: 2,
+      // cellPaddingBlock: 8,
     },
     Menu: {
       collapsedIconSize: 64,
@@ -61,7 +65,7 @@ export default function RootLayout({
       <body>
         {/* theme={theme} */}
         <ConfigProvider theme={theme}>
-            <Layout className='body-layout'>
+            <Layout hasSider className='body-layout'>
               {children}
             </Layout>
         </ConfigProvider>

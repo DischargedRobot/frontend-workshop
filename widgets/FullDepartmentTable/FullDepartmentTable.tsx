@@ -20,6 +20,48 @@ const data: TableData[] = [
     key: '3',
     name: 'Depart3',
     link: '#!',
+  },  {
+    key: '4',
+    name: 'Depart1',
+    link: '12312',
+  },
+  {
+    key: '5',
+    name: 'Depart2',
+    link: '#!',
+  },
+  {
+    key: '6',
+    name: 'Depart3',
+    link: '#!',
+  },  {
+    key: '7',
+    name: 'Depart1',
+    link: '12312',
+  },
+  {
+    key: '8',
+    name: 'Depart2',
+    link: '#!',
+  },
+  {
+    key: '9',
+    name: 'Depart3',
+    link: '#!',
+  },  {
+    key: '10',
+    name: 'Depart1',
+    link: '12312',
+  },
+  {
+    key: '12',
+    name: 'Depart2',
+    link: '#!',
+  },
+  {
+    key: '13',
+    name: 'Depart3',
+    link: '#!',
   },
 ];
 
