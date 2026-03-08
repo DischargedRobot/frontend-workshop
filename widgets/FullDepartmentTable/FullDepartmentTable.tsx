@@ -4,6 +4,7 @@ import TableDepartment from "@/entities/DepartmentTable/DepartmentTable"
 import { TableData } from "@/entities/DepartmentTable";
 import DepartmentBreadcamb from "@/shared/DepartmentBreadcamb/DepartmentBreadcamb"
 import TableName from "@/shared/TableName/TableName";
+import { useDepartment } from './model/useDepartment';
 
 const data: TableData[] = [
   {
@@ -68,9 +69,11 @@ const data: TableData[] = [
 
 const FullDepartmentTable = () => {
 
+  const toDepartment  = useDepartment((state) => state.toDepartment)
+  
     return (
         <div className="full-department-table">
-            <DepartmentBreadcamb path={['depart1','depart1.1','depart1.1.1']}/>
+            <DepartmentBreadcamb items={['depart1','depart1.1','depart1.1.1']} onClick={toDepartment}/>
             <TableName title="Отделы"/>
             <TableDepartment data={data}/>
         </div>

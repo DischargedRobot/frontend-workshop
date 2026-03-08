@@ -50,22 +50,22 @@ function handleClick(e: React.MouseEvent, record: TableData) {
 
 const TableDepartment = (props: Props) => {
 
-    const {
-        data 
-    } = props
+  const {
+      data 
+  } = props
 
-    return (
-        <Table 
-          rowSelection={{type: 'checkbox', ...rowSelection}}
-          dataSource={data}
-          columns={COLUMNS}
-          pagination={{ placement: ['bottomCenter'], pageSize: 6 }}
-          size="small"
-          className="department-table"
-          tableLayout={"auto"}
-          >
-        </Table>
-    )
+  return (
+      <Table 
+        rowSelection={{type: 'checkbox', ...rowSelection}}
+        dataSource={data}
+        columns={COLUMNS}
+        pagination={{ placement: ['bottomCenter'], pageSize: 6 }}
+        size="small"
+        className="department-table"
+        tableLayout={"auto"}
+        >
+      </Table>
+  )
 }
 
 export default TableDepartment

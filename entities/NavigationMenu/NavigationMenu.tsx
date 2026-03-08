@@ -4,7 +4,6 @@ import Sider from "antd/es/layout/Sider"
 import { MenuItemType } from "antd/es/menu/interface"
 import Link from "next/link"
 import './NavigationMenu.scss'
-import Image from "next/image"
 import Logo from "@/shared/Logo/Logo"
 import { useState } from "react"
 import MenuIcon from "@/shared/Icon/MenuIcon/MenuIcon"
@@ -22,8 +21,14 @@ const NavigationMenu = () => {
     const [collapsed, setCollapsed] = useState(false)
 
     return (
-        <nav className="navigation-menu">
-            <Sider style={{ height: '100%'}} collapsed={collapsed}>
+        // <nav className="navigation-menu">
+            <Sider  
+                style={{  
+                    height: '100vh',
+                    top: 0,
+                    position: 'sticky'
+                }} 
+                collapsed={collapsed}>
                 <Button
                     type="primary"
                     onClick={() => setCollapsed((prev) => !prev)}
@@ -35,7 +40,7 @@ const NavigationMenu = () => {
                     <Menu.Item> <Link href="#!"> Profile </Link> </Menu.Item> */}
                 </Menu>
             </Sider>
-        </nav>
+        // </nav>
         
     )
 }
