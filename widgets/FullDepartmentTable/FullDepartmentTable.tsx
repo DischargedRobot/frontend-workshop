@@ -1,3 +1,5 @@
+'use client'
+
 import './FullDepartmentTabe.scss'
 
 import TableDepartment from "@/entities/DepartmentTable/DepartmentTable"
