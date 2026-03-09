@@ -36,9 +36,9 @@ const COLUMNS: TableProps<TableData>['columns'] = [
 
 
 
-const rowSelection: TableProps<TableData>['rowSelection'] = {
+// const rowSelection: TableProps<TableData>['rowSelection'] = {
 
-}
+// }
 
 interface Props {
     data: TableData[]
@@ -57,8 +57,9 @@ const TableDepartment = (props: Props) => {
   } = props
 
   return (
+    // TODO:  onSelect: (__, _, records) => {console.log(records)}}
       <Table 
-        rowSelection={{type: 'checkbox', ...rowSelection}}
+        rowSelection={{type: 'checkbox'}}
         dataSource={data}
         columns={COLUMNS}
         pagination={{ placement: ['bottomCenter'], pageSize: 6 }}

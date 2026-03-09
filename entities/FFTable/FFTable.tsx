@@ -1,6 +1,6 @@
 'use client'
-
 import FFSearch from "@/features/FFSearch/FFSearch";
+import { InfoIcon } from "@/shared/Icon";
 import { Switch, Table, TableProps } from "antd"
 import Search from "antd/es/input/Search";
 
@@ -22,11 +22,24 @@ const FF_TABLE_COLUMNS: TableProps<FeatureFlagTable>['columns'] = [
         title: 'Отдел/Проект',
         key: 'departmentName',
         dataIndex: 'departmentName',
+    },    
+    {
+        title: 'Последнее изменение',
+        key: 'lastModified',
+        dataIndex: 'lastModified',
     },
+    {
+        title: 'Последнее изменение',
+        key: 'lastModified',
+        dataIndex: 'lastModified',
+    },    
     {
         title: 'Описание',
         key: 'description',
         dataIndex: 'description',
+        render: (value: string) => (
+            <InfoIcon info={value}/>
+        ),
     },
 ]
 
@@ -52,8 +65,9 @@ const data: FeatureFlagTable[] = [
     name: 'Depart1',
     departmentName: 'dep1',
     isEnabled: false,
-    description: 'bla-bla-lba',
+    description: '',
     lastModified: new Date(0)
+    
   },
   {
     key: '2',
@@ -69,7 +83,7 @@ const data: FeatureFlagTable[] = [
     isEnabled: false,
     departmentName: 'dep1',
     description: 'bla-bla-lba',
-    lastModified: new Date(0)
+    lastModified: new Date(1)
   },  
   {
     key: '4',
@@ -77,7 +91,7 @@ const data: FeatureFlagTable[] = [
     isEnabled: true,
     departmentName: 'dep1',
     description: 'bla-bla-lba',
-    lastModified: new Date(0)
+    lastModified: new Date(1)
   },
 ];
 
@@ -87,6 +101,7 @@ const FFTable = () => {
         <>
         <FFSearch/>
         <Table 
+            rowSelection={{type: 'checkbox'}}
             pagination={{placement: ['bottomCenter'], pageSize: 10}}
             dataSource={data} 
             columns={FF_TABLE_COLUMNS}
