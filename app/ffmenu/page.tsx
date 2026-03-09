@@ -4,8 +4,7 @@ import FFTable from "@/entities/FFTable/FFTable";
 import { Content } from "antd/es/layout/layout";
 
 import './ffmenu.scss'
-
-export const FFMenu = () => {
+const FFMenu = () => {
 
     // TODO:: после хлебных крошек
     // const {

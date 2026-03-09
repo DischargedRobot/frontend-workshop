@@ -3,7 +3,6 @@ import './main.scss';
 // import style from './main.scss'
 // import 
 import type { Metadata } from "next";
-import { Content } from 'antd/es/layout/layout';
 
 // import { SessionProvider } from "next-auth/react";
 const FONTS = {

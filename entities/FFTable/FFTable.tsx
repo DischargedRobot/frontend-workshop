@@ -1,8 +1,9 @@
 'use client'
+import AddFeatureFlag from "@/features/AddFeatureFlag/AddFeatureFlag";
 import FFSearch from "@/features/FFSearch/FFSearch";
+import ReloadFeaturesFlags from "@/features/ReloadFeatureFlags/ReloadFeaturesFlags";
 import { InfoIcon } from "@/shared/Icon";
-import { Switch, Table, TableProps } from "antd"
-import Search from "antd/es/input/Search";
+import { Flex, Switch, Table, TableProps } from "antd"
 
 const FF_TABLE_COLUMNS: TableProps<FeatureFlagTable>['columns'] = [
     {
@@ -28,11 +29,6 @@ const FF_TABLE_COLUMNS: TableProps<FeatureFlagTable>['columns'] = [
         key: 'lastModified',
         dataIndex: 'lastModified',
     },
-    {
-        title: 'Последнее изменение',
-        key: 'lastModified',
-        dataIndex: 'lastModified',
-    },    
     {
         title: 'Описание',
         key: 'description',
@@ -99,7 +95,12 @@ const FFTable = () => {
 
     return (
         <>
-        <FFSearch/>
+        <Flex align="center" gap={30}>
+            <FFSearch/>
+            <AddFeatureFlag/>
+            <ReloadFeaturesFlags/>
+        </Flex>
+        
         <Table 
             rowSelection={{type: 'checkbox'}}
             pagination={{placement: ['bottomCenter'], pageSize: 10}}
