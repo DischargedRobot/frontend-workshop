@@ -12,7 +12,7 @@ import { FFMenuIcon, ProfileIcon, StructureMenuIcon } from "@/shared/Icon"
 
 
 const items: MenuItemType[] = [
-    { key: 'logo', icon: <LogoIcon />, label: <Link style={{display: 'flex', alignItems: "center"}} href="#!"style={{ width: '10px' }} > RedFlag </Link>},
+    { key: 'logo', icon: <LogoIcon />, label: <Link style={{display: 'flex', alignItems: "center"}} href="#!" > RedFlag </Link>},
     { key: 'profile', icon: <ProfileIcon />, label: <Link href="#!" style={{ width: '10px' }} > Профиль </Link> },
     { key: 'structure', icon: <StructureMenuIcon />, label: <Link href="#!" style={{ width: '10px' }} > Структура орагнизации </Link> },
     { key: 'ffmenu', icon: <FFMenuIcon />, label: <Link href="#!" style={{ width: 'auto' }}> Меню с FF </Link> },

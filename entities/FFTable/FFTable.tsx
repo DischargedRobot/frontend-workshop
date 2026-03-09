@@ -1,6 +1,8 @@
 'use client'
 
+import FFSearch from "@/features/FFSearch/FFSearch";
 import { Switch, Table, TableProps } from "antd"
+import Search from "antd/es/input/Search";
 
 const FF_TABLE_COLUMNS: TableProps<FeatureFlagTable>['columns'] = [
     {
@@ -82,11 +84,15 @@ const data: FeatureFlagTable[] = [
 const FFTable = () => {
 
     return (
+        <>
+        <FFSearch/>
         <Table 
             pagination={{placement: ['bottomCenter'], pageSize: 10}}
             dataSource={data} 
             columns={FF_TABLE_COLUMNS}
         />
+        </>
+        
     )
 }
 
