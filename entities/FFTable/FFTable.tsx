@@ -1,9 +1,6 @@
 'use client'
-import AddFeatureFlag from "@/features/AddFeatureFlag/AddFeatureFlag";
-import FFSearch from "@/features/FFSearch/FFSearch";
-import ReloadFeaturesFlags from "@/features/ReloadFeatureFlags/ReloadFeaturesFlags";
 import { InfoIcon } from "@/shared/Icon";
-import { Flex, Switch, Table, TableProps } from "antd"
+import { Switch, Table, TableProps } from "antd"
 
 const FF_TABLE_COLUMNS: TableProps<FeatureFlagTable>['columns'] = [
     {
@@ -55,8 +52,6 @@ interface Props {
     data: FeatureFlagTable[]
 }
 
-
-
 const FFTable = ({data}: Props) => {
 
     return (
@@ -67,7 +62,6 @@ const FFTable = ({data}: Props) => {
             dataSource={data} 
             columns={FF_TABLE_COLUMNS}
         />
-        
     )
 }
 

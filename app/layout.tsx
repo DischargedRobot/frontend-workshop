@@ -17,10 +17,11 @@ const FONTS = {
 }
 
 const COLOR = {
+  textColor: "#e8e8e8",
   backgroundTextColor: "#cfcfcf",
   background: "#2A2828",
-  textColor: "#e8e8e8",
   foreground: "#323234",
+  hover: "#4d4d4d",
   activeBackground: "#2d75c8",
   stroke: "#544F4F",
   activeBorder: "#ECECEC",
@@ -30,6 +31,11 @@ const COLOR = {
 export const metadata: Metadata = {
   title: "Registration",
 };
+
+// TODO: вот так для всех сделать
+const layout = {
+  siderBg: COLOR.foreground,
+}
 
 const theme: ThemeConfig = {
   token: {
@@ -43,24 +49,35 @@ const theme: ThemeConfig = {
   components: {
     
     Layout: {
-      siderBg: COLOR.foreground,
+      ...layout
     },
+
     Button: {
       colorBgContainer: COLOR.activeBackground,
       colorBorder: COLOR.activeBorder,
     },
+
     Table: {
       fontSize: FONTS.text.fontSize,
       cellPaddingBlockSM: 2,
+      rowSelectedBg: COLOR.foreground,
+      rowSelectedHoverBg: COLOR.hover,
+      rowHoverBg: COLOR.hover,
+      colorBgContainer: COLOR.background,
+      borderColor: COLOR.stroke,
       // cellPaddingBlock: 8,
     },
+
     Menu: {
       collapsedIconSize: 32, // почему-то нужно чтобы было в 2 раза больше иначе будет дёргаться размер
       collapsedWidth: 32, 
       itemHeight: 48,
-      itemSelectedBg: COLOR.background,
-      itemBg: COLOR.foreground
+      itemSelectedBg: COLOR.activeBackground,
+      itemSelectedColor: COLOR.textColor,
+      itemBg: COLOR.foreground,
+      itemHoverBg: COLOR.hover,
     },
+
     Breadcrumb: {
       lastItemColor: COLOR.activeBackground,
       fontSize: FONTS.text.fontSize,
