@@ -43,71 +43,30 @@ interface FeatureFlag {
     name: string,
     departmentName: string,
     isEnabled: boolean,
-    lastModified: Date,
+    lastModified: string,
     description: string,
 }
 
-interface FeatureFlagTable extends FeatureFlag{
+export interface FeatureFlagTable extends FeatureFlag{
     key: React.Key,
 }
 
 interface Props {
-    data: FeatureFlag[]
+    data: FeatureFlagTable[]
 }
 
-const data: FeatureFlagTable[] = [
-  {
-    key: '1',
-    name: 'Depart1',
-    departmentName: 'dep1',
-    isEnabled: false,
-    description: '',
-    lastModified: new Date(0)
-    
-  },
-  {
-    key: '2',
-    name: 'Depart2',
-    departmentName: 'dep1',
-    isEnabled: true,
-    description: 'bla-bla-lba',
-    lastModified: new Date(0)
-  },
-  {
-    key: '3',
-    name: 'Depart3',
-    isEnabled: false,
-    departmentName: 'dep1',
-    description: 'bla-bla-lba',
-    lastModified: new Date(1)
-  },  
-  {
-    key: '4',
-    name: 'Depart4',
-    isEnabled: true,
-    departmentName: 'dep1',
-    description: 'bla-bla-lba',
-    lastModified: new Date(1)
-  },
-];
 
-const FFTable = () => {
+
+const FFTable = ({data}: Props) => {
 
     return (
-        <>
-        <Flex align="center" gap={30}>
-            <FFSearch/>
-            <AddFeatureFlag/>
-            <ReloadFeaturesFlags/>
-        </Flex>
-        
         <Table 
+            size="small"
             rowSelection={{type: 'checkbox'}}
-            pagination={{placement: ['bottomCenter'], pageSize: 10}}
+            pagination={{placement: ['bottomCenter'], pageSize: 4}}
             dataSource={data} 
             columns={FF_TABLE_COLUMNS}
         />
-        </>
         
     )
 }

@@ -4,6 +4,7 @@ import FFTable from "@/entities/FFTable/FFTable";
 import { Content } from "antd/es/layout/layout";
 
 import './ffmenu.scss'
+import FullFeatureFlagsTable from "@/widgets/FullFeatureFlagsTable/FullFeatureFlagsTable";
 const FFMenu = () => {
 
     // TODO:: после хлебных крошек
@@ -17,8 +18,8 @@ const FFMenu = () => {
         <>
             <NavigationMenu/>
             <Content className="ff-menu">
-                <FullDepartmentTable></FullDepartmentTable>
-                <FFTable></FFTable>
+                <FullDepartmentTable/>
+                <FullFeatureFlagsTable/>
             </Content>
         </>
         
