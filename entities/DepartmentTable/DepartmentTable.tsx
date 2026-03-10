@@ -7,6 +7,8 @@ import NextLinkIcon from "@/shared/Icon/NextLinkIcon"
 import {  Table, TableProps } from "antd"
 import Link from "next/link"
 import { TableData } from "./DepartmentTableType"
+import { useFFMenu } from '@/app/ffmenu/useFFMenu'
+import { useShallow } from 'zustand/shallow'
 
 const COLUMNS: TableProps<TableData>['columns'] = [
   {
@@ -49,12 +51,22 @@ function handleClick(e: React.MouseEvent, record: TableData) {
   console.log(e, record)
 }
 
-const TableDepartment = (props: Props) => {
+const TableDepartment = () => {
 
-  const {
-      data,
-      isHidden,
-  } = props
+  const departments = useFFMenu(state => state.departments)
+  const data: TableData[] = departments.map((v) => ({...v, key: v.id}))
+  
+  const isHidden: boolean = useFFMenu(state => state.isHidden)
+
+  // const {
+  //   data, 
+  //   isHidden
+  // }: Props = useFFMenu(
+  //   useShallow(
+  //   (state) => ({
+  //     data: state.departments.map((item) => ({...item, key: item.id })),
+  //     isHidden: state.isHidden
+  //   })))
 
   return (
     // TODO:  onSelect: (__, _, records) => {console.log(records)}}

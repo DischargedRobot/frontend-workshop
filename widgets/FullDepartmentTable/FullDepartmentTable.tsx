@@ -10,65 +10,7 @@ import { useDepartment } from './model/useDepartment';
 import { useFFMenu } from '../../app/ffmenu/useFFMenu';
 import { useShallow } from 'zustand/shallow';
 
-const data: TableData[] = [
-  {
-    key: '1',
-    name: 'Depart1',
-    link: '12312',
-  },
-  {
-    key: '2',
-    name: 'Depart2',
-    link: '#!',    
-  },
-  {
-    key: '3',
-    name: 'Depart3',
-    link: '#!',
-  },  {
-    key: '4',
-    name: 'Depart1',
-    link: '12312',   
-  },
-  {
-    key: '5',
-    name: 'Depart2',
-    link: '#!', 
-  },
-  {
-    key: '6',
-    name: 'Depart3',
-    link: '#!', 
-  },  {
-    key: '7',
-    name: 'Depart1',
-    link: '12312', 
-  },
-  {
-    key: '8',
-    name: 'Depart2',
-    link: '#!', 
-  },
-  {
-    key: '9',
-    name: 'Depart3',
-    link: '#!', 
-  },  {
-    key: '10',
-    name: 'Depart1',
-    link: '12312',
-  },
-  {
-    key: '12',
-    name: 'Depart2',
-    link: '#!', 
-  },
-  {
-    key: '13',
-    name: 'Depart3',
-    link: '#!',
-  },
-];
+
 
 
 const FullDepartmentTable = () => {
@@ -78,9 +20,9 @@ const FullDepartmentTable = () => {
   
     return (
         <div className="full-department-table">
-            <DepartmentBreadcamb items={['depart1','depart1.1','depart1.1.1']} onClick={toDepartment}/>
+            <DepartmentBreadcamb/>
             <TableName title="Отделы" isHidden={isHidden} setIsHidden={setIsHidden}/>
-            <TableDepartment data={data} isHidden={isHidden}/>
+            <TableDepartment/>
         </div>
     )
 }

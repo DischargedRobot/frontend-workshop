@@ -1,9 +1,10 @@
 import { FeatureFlag } from "../FFTable/FFTable";
 
 export interface Department {
+  id: number,
   name: string,
-  children: Department[],
-  featureFlags: FeatureFlag[],
+  children?: Department[],
+  featureFlags?: FeatureFlag[],
   link: string,
 }
 

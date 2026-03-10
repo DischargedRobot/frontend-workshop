@@ -1,4 +1,4 @@
-import { Department } from "@/entities/DepartmentTable/DepartmentTableType";
+import { Department, TableData } from "@/entities/DepartmentTable/DepartmentTableType";
 import { FeatureFlag } from "@/entities/FFTable/FFTable";
 import { create } from "zustand";
 
@@ -23,7 +23,55 @@ interface IUseFFMenu {
     getFeatureFlagsByDepartments: (departments: Department[]) => Promise<FeatureFlag[]>
     toDepartment: (path: string) => void
 }
-
+const data: Department[] = [
+  {
+    id: 1,
+    name: 'Depart1',
+    link: '12312',
+  },
+  {
+    id: 2,
+    name: 'Depart2',
+    link: '#!',    
+  },
+  {
+    id: 3,
+    name: 'Depart3',
+    link: '#!',
+  },  {
+    id: 4,
+    name: 'Depart1',
+    link: '12312',   
+  },
+  {
+    id: 5,
+    name: 'Depart2',
+    link: '#!', 
+  },
+  {
+    id: 6,
+    name: 'Depart3',
+    link: '#!', 
+  },  {
+    id: 7,
+    name: 'Depart1',
+    link: '12312', 
+  },
+  {
+    id: 8,
+    name: 'Depart2',
+    link: '#!', 
+  },
+  {
+    id: 9,
+    name: 'Depart3',
+    link: '#!', 
+  },  {
+    id: 10,
+    name: 'Depart1',
+    link: '12312',
+  }
+];
 export const useFFMenu = create<IUseFFMenu>( (set, get) => ({
 
     isHidden: false,
@@ -33,7 +81,7 @@ export const useFFMenu = create<IUseFFMenu>( (set, get) => ({
     setPath: (v) => set({path: v}),
     
     // TODO: переделать после обсуждения с бекендом
-    departments: [], 
+    departments: data, 
     setDepartments: (newDepartments) => set({departments: newDepartments}),
 
     featureFlags: [],
