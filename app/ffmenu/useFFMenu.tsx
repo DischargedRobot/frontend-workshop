@@ -1,4 +1,4 @@
-import { Department, TableData } from "@/entities/DepartmentTable/DepartmentTableType";
+import { Department } from "@/entities/DepartmentTable/DepartmentTableType";
 import { FeatureFlag } from "@/entities/FFTable/FFTable";
 import { create } from "zustand";
 
@@ -72,6 +72,18 @@ const data: Department[] = [
     link: '12312',
   }
 ];
+
+const createData = (number: number) : FeatureFlag[] => {
+    return Array.from(({length: number}), (_, index) => ({
+        id: index,
+        name: `FF${index}`,
+        departmentName: `Depart${index}`,
+        isEnabled: false ,
+        description: 'd'.repeat(index),
+        lastModified: '11.11.2022'
+    }))
+}
+
 export const useFFMenu = create<IUseFFMenu>( (set, get) => ({
 
     isHidden: false,
@@ -84,7 +96,7 @@ export const useFFMenu = create<IUseFFMenu>( (set, get) => ({
     departments: data, 
     setDepartments: (newDepartments) => set({departments: newDepartments}),
 
-    featureFlags: [],
+    featureFlags: createData(10),
     setFeatureFlags: (newFeatureFlags) => set({featureFlags: newFeatureFlags}),
 
     // TODO:: жду бекенд, чтобы допилить
@@ -114,7 +126,7 @@ export const useFFMenu = create<IUseFFMenu>( (set, get) => ({
     toDepartment: async (path) => {
         try {
             const newDepartments = await get().getDepartmentsByPath(path)
-            const newFeatureFlags = await get().getFeatureFlagsByDepartments(departments)
+            const newFeatureFlags = await get().getFeatureFlagsByDepartments(newDepartments)
             set({
                 featureFlags: newFeatureFlags, 
                 departments: newDepartments,

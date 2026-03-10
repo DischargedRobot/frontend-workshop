@@ -10,17 +10,7 @@ import { useFFMenu } from "../../app/ffmenu/useFFMenu"
 import { Department } from "@/entities/DepartmentTable/DepartmentTableType"
 import { useShallow } from "zustand/shallow"
 
-const createData = (number: number) : FeatureFlagTable[] => {
-    return Array.from(({length: number}), (_, index) => ({
-        key: index,
-        id: index,
-        name: `FF${index}`,
-        departmentName: `Depart${index}`,
-        isEnabled: false ,
-        description: 'd'.repeat(index),
-        lastModified: '11.11.2022'
-    }))
-}
+
 
 const FilteredByStringParam = <T, K extends keyof T>(regular: string, data: T[], field: K): T[] => {
     if (regular) {

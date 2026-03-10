@@ -11,14 +11,7 @@ import { useFFMenu } from '@/app/ffmenu/useFFMenu'
 import { useShallow } from 'zustand/shallow'
 
 const COLUMNS: TableProps<TableData>['columns'] = [
-  {
-    title: '', 
-    key: "delete",
-    render: () => (
-        <button onClick={()=> {}}><DeleteIcon/> </button>
-    ),
-    width: "64px",
-  },
+
   {
     title: 'Имя отдела',
     dataIndex: 'name',
@@ -32,6 +25,14 @@ const COLUMNS: TableProps<TableData>['columns'] = [
       <Link href={record.link}><NextLinkIcon/></Link>
     ),
     key: 'link',
+    width: "64px",
+  },
+  {
+    title: '', 
+    key: "delete",
+    render: () => (
+        <button onClick={()=> {}}><DeleteIcon/> </button>
+    ),
     width: "64px",
   },
 ]

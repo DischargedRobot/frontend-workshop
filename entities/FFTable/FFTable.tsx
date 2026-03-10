@@ -1,5 +1,5 @@
 'use client'
-import { InfoIcon } from "@/shared/Icon";
+import { DeleteIcon, InfoIcon } from "@/shared/Icon";
 import { Switch, Table, TableProps } from "antd"
 
 const FF_TABLE_COLUMNS: TableProps<FeatureFlagTable>['columns'] = [
@@ -9,6 +9,7 @@ const FF_TABLE_COLUMNS: TableProps<FeatureFlagTable>['columns'] = [
         dataIndex: 'name',
     },
     {
+        align: "center",
         title: 'Включён',
         key: 'isEnabled',
         dataIndex: 'isEnabled',
@@ -22,17 +23,28 @@ const FF_TABLE_COLUMNS: TableProps<FeatureFlagTable>['columns'] = [
         dataIndex: 'departmentName',
     },    
     {
+        align: "center",
         title: 'Последнее изменение',
         key: 'lastModified',
         dataIndex: 'lastModified',
     },
     {
+        align: "center",
         title: 'Описание',
         key: 'description',
         dataIndex: 'description',
         render: (value: string) => (
             <InfoIcon info={value}/>
         ),
+    },
+    {
+        align: "center",
+        title: '', 
+        key: "delete",
+        render: () => (
+            <button onClick={()=> {}}><DeleteIcon/> </button>
+        ),
+        width: "64px",
     },
 ]
 
@@ -58,8 +70,9 @@ const FFTable = ({data}: Props) => {
     return (
         <Table 
             size="small"
+            
             rowSelection={{type: 'checkbox'}}
-            pagination={{placement: ['bottomCenter'], pageSize: 4}}
+            pagination={{placement: ['bottomCenter'], pageSize: 8}}
             dataSource={data} 
             columns={FF_TABLE_COLUMNS}
         />
