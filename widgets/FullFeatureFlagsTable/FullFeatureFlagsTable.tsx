@@ -10,10 +10,10 @@ import { useFFMenu } from "../../app/ffmenu/useFFMenu"
 import { Department } from "@/entities/DepartmentTable/DepartmentTableType"
 import { useShallow } from "zustand/shallow"
 
-
 const createData = (number: number) : FeatureFlagTable[] => {
     return Array.from(({length: number}), (_, index) => ({
         key: index,
+        id: index,
         name: `FF${index}`,
         departmentName: `Depart${index}`,
         isEnabled: false ,
@@ -36,19 +36,27 @@ const FilteredByStringParam = <T, K extends keyof T>(regular: string, data: T[],
     return data
 }
 
-interface Props {
-    featureFlags: FeatureFlag[]
-    departments: Department[]
-    // setFeatureFlags: (departments: Department[]) => void
-    getFeatureFlagsByDepartments: (departments: Department[]) => Promise<FeatureFlag[]>
-}
+// interface Props {
+//     featureFlags: FeatureFlag[]
+//     departments: Department[]
+//     // setFeatureFlags: (departments: Department[]) => void
+//     getFeatureFlagsByDepartments: (departments: Department[]) => Promise<FeatureFlag[]>
+// }
 
-const FullFeatureFlagsTable = (props: Props) => {
-    const {
-        departments,
-        featureFlags, 
-        getFeatureFlagsByDepartments,
-    } = props
+const FullFeatureFlagsTable = () => {
+    // const {
+    //     departments,
+    //     featureFlags, 
+    //     getFeatureFlagsByDepartments,
+    // } = props
+
+
+    const {featureFlags, departments, getFeatureFlagsByDepartments} = 
+        useFFMenu(useShallow(state => ({
+            getFeatureFlagsByDepartments: state.getFeatureFlagsByDepartments, 
+            featureFlags: state.featureFlags, 
+            departments: state.departments,
+        })))
 
     const setFeatureFlags = async (departments: Department[]) => {
         const response = await getFeatureFlagsByDepartments(departments)

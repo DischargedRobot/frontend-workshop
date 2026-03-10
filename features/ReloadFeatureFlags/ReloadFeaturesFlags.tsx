@@ -10,7 +10,7 @@ interface Props {
 const ReloadFeaturesFlags = ({onClick}: Props) => {
 
     return (
-        <button className='reload-feature-flags' onClick={()=>{}}>
+        <button className='reload-feature-flags' onClick={onClick}>
             <ReloadOutlined/>
             Обновить
         </button>

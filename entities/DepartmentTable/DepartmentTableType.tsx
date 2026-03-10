@@ -7,6 +7,6 @@ export interface Department {
   link: string,
 }
 
-export interface TableData extends Department{
+export interface TableData extends Omit<Department, 'children'|'featureFlags' >{
   key: React.Key,
 }

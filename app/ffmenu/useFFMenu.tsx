@@ -5,6 +5,9 @@ import { create } from "zustand";
 
 
 interface IUseFFMenu {
+
+    path: string[]
+    setPath: (v: string[]) => void,
     // TODO:: вот это перенести в пейджес
     departments: Department[]
     setDepartments: (departments: Department[]) => void
@@ -18,13 +21,17 @@ interface IUseFFMenu {
     // TODO:: вот это перенести в пейджес
     getDepartmentsByPath: (path: string) => Promise<Department[]>
     getFeatureFlagsByDepartments: (departments: Department[]) => Promise<FeatureFlag[]>
-    toDepartment: (path: string) => Promise<{featureFlags: FeatureFlag[]; departments: Department[]}>
+    toDepartment: (path: string) => void
 }
 
 export const useFFMenu = create<IUseFFMenu>( (set, get) => ({
 
     isHidden: false,
     setIsHidden: (value) => set({isHidden: !value}),
+    
+    path: ["dep1","dep1.1","dep1.1.1","dep1.1.1.1",],
+    setPath: (v) => set({path: v}),
+    
     // TODO: переделать после обсуждения с бекендом
     departments: [], 
     setDepartments: (newDepartments) => set({departments: newDepartments}),
@@ -40,7 +47,7 @@ export const useFFMenu = create<IUseFFMenu>( (set, get) => ({
         })
 
         if (!response.ok) {
-            throw new Error()
+            throw new Error('getDepartmentsByPath')
         }
 
         return await response.json()
@@ -57,9 +64,17 @@ export const useFFMenu = create<IUseFFMenu>( (set, get) => ({
     },
 
     toDepartment: async (path) => {
-         const departments = await get().getDepartmentsByPath(path)
-         const featureFlags = await get().getFeatureFlagsByDepartments(departments)
-         return {featureFlags, departments}
-    },
+        try {
+            const newDepartments = await get().getDepartmentsByPath(path)
+            const newFeatureFlags = await get().getFeatureFlagsByDepartments(departments)
+            set({
+                featureFlags: newFeatureFlags, 
+                departments: newDepartments,
+            })
+        }
+        catch {
+            throw new Error('toDepartmentError')
+        }        
+    }
         
 }))

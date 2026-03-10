@@ -9,13 +9,13 @@ import { useFFMenu } from "./useFFMenu";
 import { useShallow } from "zustand/shallow";
 const FFMenu = () => {
 
-    const {featureFlags, setFeatureFlags,departments, getFeatureFlagsByDepartments} = 
-        useFFMenu(useShallow(state => ({
-            getFeatureFlagsByDepartments: state.getFeatureFlagsByDepartments, 
-            featureFlags: state.featureFlags, 
-            departments: state.departments,
-            setFeatureFlags: state.setFeatureFlags
-        })))
+    // const {featureFlags, setFeatureFlags,departments, getFeatureFlagsByDepartments} = 
+    //     useFFMenu(useShallow(state => ({
+    //         getFeatureFlagsByDepartments: state.getFeatureFlagsByDepartments, 
+    //         featureFlags: state.featureFlags, 
+    //         departments: state.departments,
+    //         setFeatureFlags: state.setFeatureFlags
+    //     })))
     // TODO:: после хлебных крошек
     // const {
     //   getDepartmentsByPath: getDepartments
@@ -28,15 +28,7 @@ const FFMenu = () => {
             <NavigationMenu/>
             <Content className="ff-menu">
                 <FullDepartmentTable/>
-                <FullFeatureFlagsTable 
-                    departments={departments}
-                    featureFlags={featureFlags.map(item => ({
-                            ...item,
-                            key: item.id,
-                        }))} 
-                    // setFeatureFlags={setFeatureFlags} 
-                    getFeatureFlagsByDepartments={getFeatureFlagsByDepartments}
-                />
+                <FullFeatureFlagsTable/>
             </Content>
         </>
         
