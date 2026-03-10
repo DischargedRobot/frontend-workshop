@@ -7,6 +7,9 @@ interface IUseDepartment {
     departments: string[]
     featureFlags: string[]
 
+    isHidden: boolean
+    setIsHidden: (isHidden: boolean) => void
+
     getDepartmentsByPath: (path: string) => Promise<string[]>
     getFeatureFlagsByDepartments: (departments: string[]) => Promise<string[]>
     toDepartment: (path: string) => Promise<{featureFlags: string[]; departments: string[]}>
@@ -15,6 +18,8 @@ interface IUseDepartment {
 
 export const useDepartment = create<IUseDepartment>((set, get) => ({
 
+    isHidden: false,
+    setIsHidden: (value) => set({isHidden: !value}),
 // TODO: переделать после обсуждения с бекендом
     departments: [''], 
     featureFlags: [''],

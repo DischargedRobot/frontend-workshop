@@ -2,10 +2,15 @@ import './ReloadFeaturesFlags.scss'
 
 import { ReloadOutlined } from "@ant-design/icons"
 
-const ReloadFeaturesFlags = () => {
+interface Props {
+    onClick: () => void
+}
+
+
+const ReloadFeaturesFlags = ({onClick}: Props) => {
 
     return (
-        <button className='reload-feature-flags'>
+        <button className='reload-feature-flags' onClick={()=>{}}>
             <ReloadOutlined/>
             Обновить
         </button>

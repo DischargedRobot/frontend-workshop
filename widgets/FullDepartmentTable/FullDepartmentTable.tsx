@@ -3,11 +3,11 @@
 import './FullDepartmentTabe.scss'
 
 import TableDepartment from "@/entities/DepartmentTable/DepartmentTable"
-import { TableData } from "@/entities/DepartmentTable";
+import type { TableData } from "@/entities/DepartmentTable";
 import DepartmentBreadcamb from "@/shared/DepartmentBreadcamb/DepartmentBreadcamb"
 import TableName from "@/shared/TableName/TableName";
 import { useDepartment } from './model/useDepartment';
-import { useFullDepartmentTable } from './useFullDepartmentTable';
+import { useFFMenu } from '../../app/ffmenu/useFFMenu';
 import { useShallow } from 'zustand/shallow';
 
 const data: TableData[] = [
@@ -15,58 +15,72 @@ const data: TableData[] = [
     key: '1',
     name: 'Depart1',
     link: '12312',
+    children: [],
+    featureFlags: [],
   },
   {
     key: '2',
     name: 'Depart2',
-    link: '#!',
+    link: '#!',    children: [],
+    featureFlags: [],
   },
   {
     key: '3',
     name: 'Depart3',
     link: '#!',
+      children: [],
+    featureFlags: [],
   },  {
     key: '4',
     name: 'Depart1',
-    link: '12312',
+    link: '12312',    children: [],
+    featureFlags: [],
   },
   {
     key: '5',
     name: 'Depart2',
-    link: '#!',
+    link: '#!',    children: [],
+    featureFlags: [],
   },
   {
     key: '6',
     name: 'Depart3',
-    link: '#!',
+    link: '#!',    children: [],
+    featureFlags: [],
   },  {
     key: '7',
     name: 'Depart1',
-    link: '12312',
+    link: '12312',    children: [],
+    featureFlags: [],
   },
   {
     key: '8',
     name: 'Depart2',
-    link: '#!',
+    link: '#!',    children: [],
+    featureFlags: [],
   },
   {
     key: '9',
     name: 'Depart3',
-    link: '#!',
+    link: '#!',    children: [],
+    featureFlags: [],
   },  {
     key: '10',
     name: 'Depart1',
-    link: '12312',
+    link: '12312',    children: [],
+    featureFlags: [],
   },
   {
     key: '12',
     name: 'Depart2',
-    link: '#!',
+    link: '#!',    children: [],
+    featureFlags: [],
   },
   {
     key: '13',
     name: 'Depart3',
-    link: '#!',
+    link: '#!',    children: [],
+    featureFlags: [],
   },
 ];
 
@@ -74,7 +88,7 @@ const data: TableData[] = [
 const FullDepartmentTable = () => {
 
   const toDepartment  = useDepartment((state) => state.toDepartment)
-  const {isHidden, setIsHidden} = useFullDepartmentTable(useShallow(state => ({isHidden: state.isHidden, setIsHidden: state.setIsHidden})))
+  const {isHidden, setIsHidden} = useFFMenu(useShallow(state => ({isHidden: state.isHidden, setIsHidden: state.setIsHidden})))
   
     return (
         <div className="full-department-table">

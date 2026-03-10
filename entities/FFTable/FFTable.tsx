@@ -36,7 +36,8 @@ const FF_TABLE_COLUMNS: TableProps<FeatureFlagTable>['columns'] = [
     },
 ]
 
-interface FeatureFlag {
+export interface FeatureFlag {
+    id: number,
     name: string,
     departmentName: string,
     isEnabled: boolean,

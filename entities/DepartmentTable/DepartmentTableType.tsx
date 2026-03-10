@@ -1,5 +1,12 @@
-export interface TableData {
-  key: React.Key,
+import { FeatureFlag } from "../FFTable/FFTable";
+
+export interface Department {
   name: string,
-  link: string
+  children: Department[],
+  featureFlags: FeatureFlag[],
+  link: string,
+}
+
+export interface TableData extends Department{
+  key: React.Key,
 }
