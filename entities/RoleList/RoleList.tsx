@@ -1,3 +1,6 @@
+'use client'
+import './RoleList.scss'
+
 import Role, { IRole, TROLE } from "@/shared/Role"
 
 const RoleList = () => {
@@ -7,12 +10,12 @@ const RoleList = () => {
         {name: 'UD', type: TROLE.UD}
     ]
     return (
-        <ul>
-           {roles.map(role => (
+        <ul className="role-list">
+        {roles.map(role => (
             <li key={crypto?.randomUUID()}>
                 {Role(role)}
             </li>
-           ))} 
+        ))} 
         </ul>
     )
 }

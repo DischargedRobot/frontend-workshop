@@ -1,0 +1,50 @@
+@use '../../app/placeholder.scss';
+
+.user-card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas: 
+    "avatar personal-data"
+    "roles roles";
+
+    align-items: center;
+
+    padding: 10px;
+
+    max-width: 315px;
+    max-height: 258px;
+
+    height: 100%;
+
+    background-color: var(--foreground);
+    border-radius: 20px;
+
+    color: #fff
+}
+
+.user-card__avatar {
+    grid-area: avatar;
+    width: 80px;
+    margin: 0 auto;
+}
+
+.user-card__personal-data {
+    grid-area: personal-data;
+
+    padding-right: 10px;
+    
+    input,button{
+        margin: 10px;
+        border-bottom: 1px solid #fff;
+    }
+}
+
+.user-card__role-list {
+    grid-area: roles;
+
+    @extend %flex-column;
+
+    gap: 10px;
+    padding: 15px;
+}

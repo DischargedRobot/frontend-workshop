@@ -7,10 +7,11 @@ const Avatar = () => {
     return (
         <button>
             <Image 
+                style={{borderRadius: 50}}
                 src={img}
                 alt='Profile'
-                width={32}
-                height={32}
+                width={64}
+                height={64}
             />
         </button>
     )

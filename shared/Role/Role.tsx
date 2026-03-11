@@ -1,10 +1,15 @@
+'use client'
+
+import './Role.scss'
+
 import { CloseOutlined } from "@ant-design/icons"
 import { IRole } from "./types"
+import { use } from 'react'
 
 const Role = (role: IRole) => {
 
     return (
-        <button style={{backgroundColor: '#464649'}}>
+        <button className="role">
             <CloseOutlined/>
             {role.name}
         </button>
