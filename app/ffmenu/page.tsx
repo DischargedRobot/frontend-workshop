@@ -1,12 +1,9 @@
 import NavigationMenu from "@/entities/NavigationMenu/NavigationMenu"
 import FullDepartmentTable from "@/widgets/FullDepartmentTable/FullDepartmentTable";
-import FFTable from "@/entities/FFTable/FFTable";
 import { Content } from "antd/es/layout/layout";
 
 import './ffmenu.scss'
 import FullFeatureFlagsTable from "@/widgets/FullFeatureFlagsTable/FullFeatureFlagsTable";
-import { useFFMenu } from "./useFFMenu";
-import { useShallow } from "zustand/shallow";
 const FFMenu = () => {
 
     // const {featureFlags, setFeatureFlags,departments, getFeatureFlagsByDepartments} = 

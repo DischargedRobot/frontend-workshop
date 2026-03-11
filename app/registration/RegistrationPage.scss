@@ -1,18 +1,17 @@
 @use "../placeholder.scss";
 
+// .center_content {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
 
-.center_content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
-}
+//     margin: 0 auto;
+//     width: 100%;
+//     height: 100%;
+// }
 
 .registration {
-    @extend .center_content;
+    @extend %center_content;
 }
 
 .registration__content {
