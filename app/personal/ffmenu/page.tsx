@@ -22,7 +22,6 @@ const FFMenu = () => {
 
     return (
         <>
-            <NavigationMenu/>
             <Content className="ff-menu">
                 <FullDepartmentTable/>
                 <FullFeatureFlagsTable/>

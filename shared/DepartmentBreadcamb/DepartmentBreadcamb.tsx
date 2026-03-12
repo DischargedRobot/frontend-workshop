@@ -4,7 +4,7 @@ import { MouseEventHandler } from 'react'
 import './DepartmentBreadcamb.scss'
 
 import { Breadcrumb } from "antd"
-import { useFFMenu } from '@/app/ffmenu/useFFMenu'
+import { useFFMenu } from '@/app/personal/ffmenu/useFFMenu'
 import { useShallow } from 'zustand/shallow'
 // Promise<{featureFlags: string[]; departments: string[]}>
 

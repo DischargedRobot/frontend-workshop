@@ -7,6 +7,8 @@
     // &.ant-menu-inline-collapsed > li::after {
     //     display: none !important;
     // }
+    border-inline-end: none !important;
+
     li {
         display: flex !important;
         // align-items: center;
@@ -15,5 +17,9 @@
         margin-right:  16px;
         min-width: 32px;
         max-width: 32px; // на всякий случай, чтобы в ширь тоже не колбасило
+    }
+
+    &__item_selected {
+        background-color: #1c42d78f;
     }
 }

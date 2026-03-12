@@ -6,7 +6,7 @@ import FFSearch from "@/features/FFSearch/FFSearch"
 import ReloadFeaturesFlags from "@/features/ReloadFeatureFlags/ReloadFeaturesFlags"
 import { Flex } from "antd"
 import { useState } from "react"
-import { useFFMenu } from "../../app/ffmenu/useFFMenu"
+import { useFFMenu } from "../../app/personal/ffmenu/useFFMenu"
 import { Department } from "@/entities/DepartmentTable/DepartmentTableType"
 import { useShallow } from "zustand/shallow"
 

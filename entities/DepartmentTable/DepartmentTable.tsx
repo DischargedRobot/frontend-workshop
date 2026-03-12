@@ -7,7 +7,7 @@ import NextLinkIcon from "@/shared/assets/Icon/NextLinkIcon"
 import {  Table, TableProps } from "antd"
 import Link from "next/link"
 import { TableData } from "./DepartmentTableType"
-import { useFFMenu } from '@/app/ffmenu/useFFMenu'
+import { useFFMenu } from '@/app/personal/ffmenu/useFFMenu'
 import { useShallow } from 'zustand/shallow'
 
 const COLUMNS: TableProps<TableData>['columns'] = [

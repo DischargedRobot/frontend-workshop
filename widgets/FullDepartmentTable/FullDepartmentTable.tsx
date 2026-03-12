@@ -7,7 +7,7 @@ import type { TableData } from "@/entities/DepartmentTable";
 import DepartmentBreadcamb from "@/shared/DepartmentBreadcamb/DepartmentBreadcamb"
 import TableName from "@/shared/TableName/TableName";
 import { useDepartment } from './model/useDepartment';
-import { useFFMenu } from '../../app/ffmenu/useFFMenu';
+import { useFFMenu } from '../../app/personal/ffmenu/useFFMenu';
 import { useShallow } from 'zustand/shallow';
 
 
