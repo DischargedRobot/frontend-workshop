@@ -19,9 +19,9 @@ const UserList = (props: Props) => {
 
     return (
         <div className="user-list">
-            <h2>Пользователи</h2>
 
             <div className="user-list__title">
+            <h2>Пользователи</h2>
                 <UserSearch onSearch={() => console.log(users)}/>
                 <AddButton/>
             </div>
