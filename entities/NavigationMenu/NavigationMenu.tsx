@@ -4,11 +4,11 @@ import Sider from "antd/es/layout/Sider"
 import { MenuItemType } from "antd/es/menu/interface"
 import Link from "next/link"
 import './NavigationMenu.scss'
-import { LogoIcon } from "@/shared/Icon"
+import { LogoIcon } from "@/shared/assets/Icon"
 import { useState } from "react"
-import MenuIcon from "@/shared/Icon/MenuIcon/MenuIcon"
-import { FFMenuIcon, ProfileIcon, StructureMenuIcon } from "@/shared/Icon"
-// import StructureMenuIcon from "@/shared/Icon"
+import MenuIcon from "@/shared/assets/Icon/MenuIcon/MenuIcon"
+import { FFMenuIcon, ProfileIcon, StructureMenuIcon } from "@/shared/assets/Icon"
+// import StructureMenuIcon from "@/shared/assets/Icon"
 
 
 const items: MenuItemType[] = [

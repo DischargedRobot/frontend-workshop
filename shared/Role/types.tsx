@@ -15,4 +15,5 @@ export type TROLE = typeof TROLE[keyof typeof TROLE]
 export interface IRole {
     name: string
     type: TROLE
+    isEnabled: boolean
 }

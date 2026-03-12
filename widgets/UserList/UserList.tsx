@@ -1,5 +1,11 @@
+'use client'
+
+import './UserList.scss'
+
 import { IUser } from "@/entities/UserCard/types"
 import UserCard from "@/entities/UserCard/UserCard"
+import UserSearch from "@/features/UserSearch/UserSearch"
+import AddButton from "@/shared/AddButton"
 
 interface Props {
     users: IUser[]
@@ -12,9 +18,15 @@ const UserList = (props: Props) => {
     } = props
 
     return (
-        <div>
-            {/* <h2>Users</h2> */}
-            <ul>
+        <div className="user-list">
+            <h2>Пользователи</h2>
+
+            <div className="user-list__title">
+                <UserSearch onSearch={() => console.log(users)}/>
+                <AddButton/>
+            </div>
+            
+            <ul className='user-list__list'>
                 {users.map(user => (
                     <UserCard key={user.id} user={user}/>
                 ))}

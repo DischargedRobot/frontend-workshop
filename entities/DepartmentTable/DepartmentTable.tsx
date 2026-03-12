@@ -2,8 +2,8 @@
 
 import './DepartmentTable.scss'
 
-import DeleteIcon from "@/shared/Icon/DeleteIcon"
-import NextLinkIcon from "@/shared/Icon/NextLinkIcon"
+import DeleteIcon from "@/shared/assets/Icon/DeleteIcon"
+import NextLinkIcon from "@/shared/assets/Icon/NextLinkIcon"
 import {  Table, TableProps } from "antd"
 import Link from "next/link"
 import { TableData } from "./DepartmentTableType"

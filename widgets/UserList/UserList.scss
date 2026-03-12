@@ -1,0 +1,22 @@
+@use '../../app/placeholder.scss';
+
+.user-list {
+    @extend %flex-column;
+    
+    gap: 10px;
+
+    &__title {
+        @extend %flex;
+        
+        gap: 10px;
+    }
+
+    &__list {
+        @extend %flex;
+
+        flex-wrap: wrap;
+        
+        row-gap: 10px;
+        gap: 10px;
+    }
+}

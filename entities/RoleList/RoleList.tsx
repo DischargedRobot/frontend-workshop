@@ -3,12 +3,16 @@ import './RoleList.scss'
 
 import Role, { IRole, TROLE } from "@/shared/Role"
 
-const RoleList = () => {
+interface Props {
+    roles: IRole[]
+}
 
-    const roles: IRole[] = [
-        {name: 'DC', type: TROLE.DC},
-        {name: 'UD', type: TROLE.UD}
-    ]
+const RoleList = (props: Props) => {
+
+    const {
+        roles,
+    } = props
+
     return (
         <ul className="role-list">
         {roles.map(role => (

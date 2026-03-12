@@ -1,5 +1,5 @@
 'use client'
-import { DeleteIcon, InfoIcon } from "@/shared/Icon";
+import { DeleteIcon, InfoIcon } from "@/shared/assets/Icon";
 import { Switch, Table, TableProps } from "antd"
 
 const FF_TABLE_COLUMNS: TableProps<FeatureFlagTable>['columns'] = [

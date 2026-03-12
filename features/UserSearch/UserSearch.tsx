@@ -1,3 +1,4 @@
+'use client'
 import { Input } from "antd"
 import React from "react"
 
@@ -7,7 +8,6 @@ interface Props {
     onSearch: React.ChangeEventHandler<HTMLInputElement>
 }
 
-
 const UserSearch = (props: Props) => {
 
     const {
@@ -15,7 +15,7 @@ const UserSearch = (props: Props) => {
     } = props
 
     return(
-        <Search type={'search'} enterButton onChange={onSearch} placeholder="Имя фич флага"/>
+        <Search type={'search'} enterButton onChange={onSearch} placeholder="Логин пользователя"/>
     )
 }
 
