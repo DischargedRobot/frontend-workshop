@@ -5,24 +5,21 @@ import './UserCard.scss'
 import Avatar from "@/shared/ui/Avatar"
 import RoleList from "../RoleList"
 import { IUser } from "./types"
-import AddButton from "@/shared/AddButton"
 import { PlusIcon } from '@/shared/assets/Icon'
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import RoleStatus from '@/shared/model/RolesStatus/RolesStatus'
-import { IRole, TROLE } from '@/shared/Role'
+import { IRole } from '@/shared/Role'
 
 interface Props {
     user: IUser
 }
 
 
-// const AddRole = () => {
-
-// }
 
 const UserCard = (props: Props) => {
 
     const [roleStatusIsHidden, setRoleStatusIsHidden] = useState(false)
+    const [isChanged, setIsChanged] = useState(false)
 
     const {
         user
@@ -30,6 +27,11 @@ const UserCard = (props: Props) => {
 
     const [roles, setRoles] = useState<IRole[]>(user.roles)
 
+    const changeStatusRole = useCallback((): void => {
+        setRoles([...user.roles])
+    }, [user.roles])
+    
+    const filterRoleList = useMemo(() => roles.filter(role => role.isEnabled), [roles])
     console.log('user card')
     return (
         <div className="user-card">
@@ -38,12 +40,27 @@ const UserCard = (props: Props) => {
             </span>
             <form className='user-card__personal-data'>
                 <label>
-                    <input type="text" placeholder="Логин" defaultValue={user.login}/>
+                    <input 
+                        type="text" 
+                        placeholder="Логин"
+                        defaultValue={user.login}
+                        onChange={() => {setIsChanged(true)}}
+                        />
                 </label>
                 <label>
-                    <input type="text" placeholder="Пароль" defaultValue={user.password}/>
+                    <input 
+                        type="text"
+                        placeholder="Пароль"
+                        defaultValue={user.password}
+                        onChange={() => {setIsChanged(true)}}
+                    />
                 </label>
-                <button type="submit">
+                <button 
+                    className={!isChanged ? 'disabled' : ''}
+                    type="submit"
+                    disabled={!isChanged}
+                    onClick={()=>{}}
+                >
                     Сохранить
                 </button>
             </form>
@@ -56,7 +73,7 @@ const UserCard = (props: Props) => {
                     {roleStatusIsHidden && <RoleStatus setRoles={setRoles} roles={roles}/>}
                 </div>
                 
-                <RoleList roles={roles.filter(role => role.isEnabled)}/>
+                <RoleList roles={filterRoleList} changeRoles={changeStatusRole}/>
             </div>
         </div>
     )

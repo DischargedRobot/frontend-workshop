@@ -38,6 +38,13 @@
     input,button{
         margin: 10px;
         border-bottom: 1px solid #fff;
+
+        &.disabled {
+            cursor: not-allowed;
+
+            border-bottom-color: #ffffff00;
+            color: #bcbcbc;
+        }
     }
 }
 

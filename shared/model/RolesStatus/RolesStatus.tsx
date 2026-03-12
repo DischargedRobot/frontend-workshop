@@ -2,6 +2,7 @@ import './RolesStatus.scss'
 
 import { Switch } from "antd"
 import { IRole } from "../../Role/types"
+import { memo } from 'react';
 
 interface Props {
     roles: IRole[];
@@ -19,7 +20,7 @@ const RoleStatus = (props: Props) => {
             {roles.map(role => {
                 return <li key={role.type}>
                     {role.name}
-                    <Switch onChange={(value) => {
+                    <Switch value={role.isEnabled} onChange={(value) => {
                         role.isEnabled = value
                         setRoles([...roles]) 
                     }}/>
@@ -30,4 +31,4 @@ const RoleStatus = (props: Props) => {
     )
 }
 
-export default RoleStatus
+export default memo(RoleStatus)
