@@ -15,11 +15,11 @@ const RoleList = (props: Props) => {
 
     return (
         <ul className="role-list">
-        {roles.map(role => (
-            <li key={crypto?.randomUUID()}>
-                {Role(role)}
-            </li>
-        ))} 
+            {roles.map(role => (
+                <li key={crypto?.randomUUID()}>
+                    {Role(role)}
+                </li>
+            ))} 
         </ul>
     )
 }

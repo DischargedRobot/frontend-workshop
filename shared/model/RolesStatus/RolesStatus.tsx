@@ -19,7 +19,10 @@ const RoleStatus = (props: Props) => {
             {roles.map(role => {
                 return <li key={role.type}>
                     {role.name}
-                    <Switch onChange={(value) => {setRoles(roles) role.isEnabled = value}}></Switch>
+                    <Switch onChange={(value) => {
+                        role.isEnabled = value
+                        setRoles([...roles]) 
+                    }}/>
                 </li>
             })}
         </ul>

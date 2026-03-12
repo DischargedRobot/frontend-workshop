@@ -30,6 +30,7 @@ const UserCard = (props: Props) => {
 
     const [roles, setRoles] = useState<IRole[]>(user.roles)
 
+    console.log('user card')
     return (
         <div className="user-card">
             <span className='user-card__avatar'>
@@ -52,7 +53,7 @@ const UserCard = (props: Props) => {
                     <button onClick={() => {setRoleStatusIsHidden(prev => !prev)}}>
                         <PlusIcon/>
                     </button>
-                    {roleStatusIsHidden && <RoleStatus roles={roles}/>}
+                    {roleStatusIsHidden && <RoleStatus setRoles={setRoles} roles={roles}/>}
                 </div>
                 
                 <RoleList roles={roles.filter(role => role.isEnabled)}/>
