@@ -1,5 +1,6 @@
 'use client'
 
+import { IUser } from '@/entities/UserCard/types'
 import './DepartmentTree.scss'
 
 import { LeftOutlined } from "@ant-design/icons"
@@ -8,11 +9,13 @@ import { useState } from "react"
 
 interface Props {
     tree: TreeDataNode[]
+    onCheck: (departmentsId: number[]) => void
 }
 
 const DepartmentTree = (props: Props) => {
     const {
-        tree
+        tree,
+        onCheck: filterUsers,
     } = props
 
     const [isCollapsed, setIsCollapsed] = useState(false)
@@ -23,6 +26,14 @@ const DepartmentTree = (props: Props) => {
                 <LeftOutlined />
             </button>
             <Tree 
+                onCheck={(checkedKeys) => {
+                    if (Array.isArray(checkedKeys)) {
+                        filterUsers(checkedKeys as number[])
+                    }
+                    else {
+                        filterUsers(checkedKeys.checked as number[])
+                    }
+                }}
                 className={`department-tree__tree`}
                 checkable
                 selectable={false}

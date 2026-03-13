@@ -13,7 +13,23 @@ const useFilterOfUserList = () => {
         return filteredUsers
     }
 
+    const filterByDepartmentsId = (users: IUser[], departmentsId: number[]) => {
+
+        const filteredUsers = users.filter((user) => (departmentsId.includes(user.departmentId)))
+        
+        return filteredUsers
+    }
+
+    const filterByLogin = (users: IUser[], login: string) => {
+
+        const filteredUsers = users.filter((user) => (user.login.includes(login)))
+        
+        return filteredUsers
+    }
+
     return {
+        filterByLogin,
+        filterByDepartmentsId,
         filterByDepartment,
     }
 }

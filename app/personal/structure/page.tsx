@@ -1,50 +1,42 @@
+'use client'
+
 import './StructureOrganisation.scss'
 
-import { IUser } from "@/entities/UserCard/types"
-import { IRole, TROLE } from "@/shared/Role";
+import FullUserList from '@/widgets/FullUserList/FullUserList';
 import DepartmentTree from '@/widgets/Tree/DepartmentTree';
-import UserList from "@/widgets/UserList"
-import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Menu, Tree, TreeDataNode } from "antd";
+import { TreeDataNode } from "antd";
 import { Content } from "antd/es/layout/layout"
-
-const createIntialRoles = (): IRole[] => {
-    const roles: IRole[] = [];
-    for ( const [key, value] of Object.entries(TROLE)) {
-        roles.push({name: key, type: value, isEnabled: false})
-    }
-    return roles
-}
-
-const users = [
-    {login: 'L', password: 'ss', id:1, roles: createIntialRoles()},
-    {login: 'rob', password: 'ss', id:2, roles: createIntialRoles()}
-]
-
+import useStructure from './model/useStructure';
+import useFilterOfUserList from '@/entities/UserList/model/useFilterOfUserList';
 
 const tree: TreeDataNode[] = [
   {
     title: 'parent 1',
-    key: '0-0',
+    key: 1,
     children: [
       {
         title: 'parent 1-0',
-        key: '0-0-0',
+        key: 2,
         children: [
           {
             title: 'leaf',
-            key: '0-0-0-0',
+            key: 3,
           },
           {
             title: 'leaf',
-            key: '0-0-0-1',
+            key: 4,
           },
         ],
       },
       {
         title: 'parent 1-1',
-        key: '0-0-1',
-        children: [{ title: <span style={{ color: '#1677ff' }}>sss</span>, key: '0-0-1-0' }],
+        key: 5,
+        children: [
+          { 
+            title: <span style={{ color: '#1677ff' }}>sss</span>, 
+            key: 6 
+          }
+        ],
       },
     ],
   },
@@ -52,13 +44,28 @@ const tree: TreeDataNode[] = [
 
 const StructureOrganisation = () => {
 
-    
-    return(
-        <Content className="structure-organisation ">
-            <DepartmentTree tree={tree}/>
-            <UserList users={users}/>
-        </Content>
-    )
+
+  const users = useStructure(state => (state.users))
+  const filteredUsers = useStructure(state => (state.filteredUsers))
+  const setFilteredUsers = useStructure(state => (state.setFilteredUsers))
+
+  const { filterByDepartmentsId: filterUser } = useFilterOfUserList()
+  const departments = useStructure(state => (state.departments))
+
+  return(
+      <Content className="structure-organisation ">
+          <DepartmentTree 
+            tree={tree} 
+            onCheck={
+              (departmentsId) => {
+                console.log(departmentsId)
+                console.log('filter', users, filterUser(users, departmentsId))
+                setFilteredUsers(filterUser(users, departmentsId))
+              }}
+            />
+          <FullUserList users={filteredUsers}/>
+      </Content>
+  )
 }
 
 export default StructureOrganisation

@@ -1,6 +1,6 @@
 @use '../../app/placeholder.scss';
 
-.user-list {
+.full-user-list {
     @extend %flex-column;
     
     gap: 10px;

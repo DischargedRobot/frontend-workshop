@@ -1,6 +1,6 @@
 'use client'
 
-import './UserList.scss'
+import './FullUserList.scss'
 
 import { IUser } from "@/entities/UserCard/types"
 import UserCard from "@/entities/UserCard/UserCard"
@@ -19,9 +19,9 @@ const FullUserList = (props: Props) => {
     } = props
 
     return (
-        <div className="user-list">
+        <div className="full-user-list">
 
-            <div className="user-list__title">
+            <div className="full-user-list__title">
             <h2>Пользователи</h2>
                 <UserSearch onSearch={() => console.log(users)}/>
                 <AddButton/>
