@@ -8,6 +8,15 @@ export interface Department {
   link: string,
 }
 
-export interface TableData extends Omit<Department, 'children'|'featureFlags' >{
+export interface IDepartment {
+  id: number,
+  name: string,
+  children?: IDepartment[],
+  featureFlags?: FeatureFlag[],
+  link: string,
+}
+
+export interface TableData extends Omit<Department, 'children' | 'featureFlags' >{
   key: React.Key,
+  isSelected?: boolean,
 }

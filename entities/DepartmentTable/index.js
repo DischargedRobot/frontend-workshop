@@ -1,3 +1,3 @@
 export { default } from './DepartmentTable'
 
-export { TableData } from './DepartmentTableType'
+export { TableData, IDepartment } from './DepartmentTableType'

@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "entities/DepartmentTable/api/departmentApi.js"  ],
   "exclude": ["node_modules"]
 }
