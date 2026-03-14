@@ -21,9 +21,8 @@ const FullUserList = () => {
             <h2>Пользователи</h2>
                 <UserSearch onSearch={(e) => {
                     setLogin(e.target.value)
-                    // console.log(filterUsers(['login'],users), e.target.value)
-                    // setFilteredUsers(filterUsers(['login'],users))
-                }}/>
+                    }}
+                />
                 <AddButton/>
             </div>
             

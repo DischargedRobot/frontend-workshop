@@ -22,7 +22,6 @@ const NavigationMenu = () => {
     const [collapsed, setCollapsed] = useState(false)
 
     return (
-        // <nav className="navigation-menu">
             <Sider
                 collapsedWidth={64}  
                 style={{  
@@ -38,20 +37,15 @@ const NavigationMenu = () => {
                             onClick={() => setCollapsed((prev) => !prev)}
                             icon={collapsed ? <MenuIcon closed={true} /> : <MenuIcon closed={false} />}
                         />
-                        {/* style={{ minWidth: 0, flex: "auto" }}  */}
                         <Menu 
                             items={items}
                             className="navigation-menu" 
                             mode="inline" 
                             inlineCollapsed={collapsed}>
-                            {/* <Menu.Item> <Link href="#!"> Меню с FF </Link> </Menu.Item>
-                            <Menu.Item> <Link href="#!"> Структура орагнизации </Link> </Menu.Item>
-                            <Menu.Item> <Link href="#!"> Profile </Link> </Menu.Item> */}
                         </Menu>
                     {/* </nav> */}
                 
             </Sider>
-        // </nav>
         
     )
 }

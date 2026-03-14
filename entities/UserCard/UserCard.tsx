@@ -5,10 +5,11 @@ import './UserCard.scss'
 import Avatar from "@/shared/ui/Avatar"
 import RoleList from "../RoleList"
 import { IUser } from "./types"
-import { PlusIcon } from '@/shared/assets/Icon'
+import { DeleteIcon, PlusIcon } from '@/shared/assets/Icon'
 import { useCallback, useMemo, useState } from 'react'
 import RoleStatus from '@/shared/model/RolesStatus/RolesStatus'
 import { IRole } from '@/shared/Role'
+import { useUsers } from '../UserList'
 
 interface Props {
     user: IUser
@@ -27,6 +28,7 @@ const UserCard = (props: Props) => {
     const [roles, setRoles] = useState<IRole[]>(user.roles)
     const [isSelected, setIsSelected] = useState(false)
 
+    const deleteUserById = useUsers(state => state.deleteUserById)
 
     const changeStatusRole = useCallback((): void => {
         setRoles([...user.roles])
@@ -42,6 +44,9 @@ const UserCard = (props: Props) => {
             />
             <span className='user-card__avatar'>
                 <Avatar />
+                <button className='user-card__delete-button' onClick={() => {deleteUserById(user.id)}}>
+                    <DeleteIcon/>
+                </button>
             </span>
             <form className='user-card__personal-data'>
                 <label>

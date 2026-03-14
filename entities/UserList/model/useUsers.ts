@@ -8,6 +8,7 @@ interface IUseUsers {
 
     filteredUsers: IUser[]
     setFilteredUsers: (newfilteredUsers: IUser[]) => void
+    deleteUserById: (userId: number) => void
 }
 
 const createIntialRoles = (): IRole[] => {
@@ -24,13 +25,17 @@ const useUsers = create<IUseUsers>((set, get) => ({
         {login: 'L', password: 'ss', id:1, roles: createIntialRoles(), departmentId: 3},
         {login: 'rob', password: 'ss', id:2, roles: createIntialRoles(), departmentId: 4}
     ],
-    setUsers: (newUsers) => set({users: newUsers}),
+    setUsers: (users) => set({users}),
+    deleteUserById: (idDeletedUser: number) => set(() => {
+        return {users: get().users.filter(user => user.id != idDeletedUser)}
+    }),
 
     filteredUsers: [
         {login: 'L', password: 'ss', id:1, roles: createIntialRoles(), departmentId: 3},
         {login: 'rob', password: 'ss', id:2, roles: createIntialRoles(), departmentId: 4}
     ],
-    setFilteredUsers: (newfilteredUsers) => set({filteredUsers: newfilteredUsers}),
+    setFilteredUsers: (filteredUsers) => set({filteredUsers}),
+
 
 }))
 

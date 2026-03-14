@@ -38,6 +38,7 @@
     }
 
     &__avatar {
+        position: relative;
         grid-area: avatar;
         align-self: center;
         justify-self: center;
@@ -45,6 +46,15 @@
         margin: 0 auto;
     }
 
+    &__delete-button {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transform: translate(25%, 25%);
+
+        border-radius: 50;
+        background-color: var(--foreground);
+    }
     
     &__circle-selection {
         grid-area: circle-selection;

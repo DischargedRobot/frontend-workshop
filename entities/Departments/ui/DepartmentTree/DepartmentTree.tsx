@@ -15,14 +15,9 @@ interface Props {
 const DepartmentTree = (props: Props) => {
     const {
         tree,
-        // onCheck: filterUsers,
     } = props
 
-    // const users = useUsers(state => (state.users))
-    // const setFilteredUsers = useUsers(state => (state.setFilteredUsers))
-
     const setDepartmentIds = useUserFiltersStore(state => state.setDepartmentIds)
-
     // console.log('DepartmentTree')
 
     return (
