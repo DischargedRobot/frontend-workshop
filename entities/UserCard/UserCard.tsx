@@ -18,14 +18,15 @@ interface Props {
 
 const UserCard = (props: Props) => {
 
-    const [roleStatusIsHidden, setRoleStatusIsHidden] = useState(false)
-    const [isChanged, setIsChanged] = useState(false)
-
     const {
         user
     } = props
 
+    const [roleStatusIsHidden, setRoleStatusIsHidden] = useState(false)
+    const [isChanged, setIsChanged] = useState(false)
     const [roles, setRoles] = useState<IRole[]>(user.roles)
+    const [isSelected, setIsSelected] = useState(false)
+
 
     const changeStatusRole = useCallback((): void => {
         setRoles([...user.roles])
@@ -34,7 +35,11 @@ const UserCard = (props: Props) => {
     const filterRoleList = useMemo(() => roles.filter(role => role.isEnabled), [roles])
     console.log('user card')
     return (
-        <div className="user-card">
+        <div className={`user-card ${isSelected ? 'user-card_selected' : ''}`}>
+            <button 
+                className='user-card__circle-selection'
+                onClick={() => setIsSelected(prev => !prev)}
+            />
             <span className='user-card__avatar'>
                 <Avatar />
             </span>

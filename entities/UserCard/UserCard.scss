@@ -3,8 +3,9 @@
 .user-card {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 100px auto;
+    grid-template-rows: 32px 100px auto;
     grid-template-areas: 
+    "avatar circle-selection"
     "avatar personal-data"
     "roles roles";
 
@@ -19,43 +20,79 @@
     background-color: var(--foreground);
     border-radius: 20px;
 
-    color: #fff
-}
+    color: #fff;
 
-.user-card__avatar {
-    grid-area: avatar;
-    width: 80px;
-    margin: 0 auto;
-}
-
-.user-card__personal-data {
-    grid-area: personal-data;
-
-    padding-right: 10px;
+    transition: background-color ease-in 0.2s;
     
-    input,button{
-        margin: 10px;
-        border-bottom: 1px solid #fff;
+    &_selected {
 
-        &.disabled {
-            cursor: not-allowed;
+        background-color: #424a61;        
 
-            border-bottom-color: #ffffff00;
-            color: #bcbcbc;
+        .user-card__circle-selection {
+            background-color: var(--active);
+
+            &:active {
+                background-color: #5d70aa;
+            }
         }
     }
+
+    &__avatar {
+        grid-area: avatar;
+        align-self: center;
+        justify-self: center;
+
+        margin: 0 auto;
+    }
+
+    
+    &__circle-selection {
+        grid-area: circle-selection;
+        justify-self: end;
+
+        margin-right: 10px;
+
+        width: 16px;
+        height: 16px;
+
+        border-radius: 50px;
+        border: 1px solid var(--stroke);
+    }
+
+    &__personal-data {
+        grid-area: personal-data;
+
+        padding-right: 10px;
+        
+        input,button{
+            margin: 10px;
+            border-bottom: 1px solid #fff;
+
+            &.disabled {
+                cursor: not-allowed;
+
+                border-bottom-color: #ffffff00;
+                color: #bcbcbc;
+            }
+        }
+    }
+
+    &__role-list {
+        grid-area: roles;
+        align-self: self-start;
+
+        @extend %flex-column;
+        justify-content: flex-start;
+
+        gap: 10px;
+        padding: 0 10px 5px 10px;
+
+        border-color: black;
+    }
+
 }
 
-.user-card__role-list {
-    grid-area: roles;
-    align-self: self-start;
 
-    @extend %flex-column;
-    justify-content: flex-start;
-
-    gap: 10px;
-    padding: 10px;
-}
 
 .role-list__title {
     position: relative;

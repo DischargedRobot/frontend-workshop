@@ -1,5 +1,5 @@
 import { IRole } from "@/shared/Role"
-import { IDepartment } from "../DepartmentTable"
+import { IDepartment } from "../Departments/ui/DepartmentTable"
 
 export interface IUser {
     id: number
