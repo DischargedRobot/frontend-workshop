@@ -1,4 +1,4 @@
-import { IDepartment } from "../DepartmentTableType"
+import { IDepartment } from "../lib/DepartmentType"
 
     
 interface IDepartmentApi {

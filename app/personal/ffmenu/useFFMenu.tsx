@@ -1,4 +1,4 @@
-import { Department } from "@/entities/DepartmentTable/DepartmentTableType";
+import { Department } from "@/entities/Departments/lib/DepartmentType";
 import { FeatureFlag } from "@/entities/FFTable/FFTable";
 import { create } from "zustand";
 

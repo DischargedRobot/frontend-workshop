@@ -5,7 +5,7 @@ import img from './furryAV.jpeg'
 const Avatar = () => {
 
     return (
-        <button>
+        <>
             <Image 
                 style={{borderRadius: 50}}
                 src={img}
@@ -13,7 +13,7 @@ const Avatar = () => {
                 width={64}
                 height={64}
             />
-        </button>
+        </>
     )
 }
 

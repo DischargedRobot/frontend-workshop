@@ -1,4 +1,4 @@
-import { FeatureFlag } from "../FFTable/FFTable";
+import { FeatureFlag } from "../../FFTable/FFTable";
 
 export interface Department {
   id: number,
@@ -14,9 +14,4 @@ export interface IDepartment {
   children?: IDepartment[],
   featureFlags?: FeatureFlag[],
   link: string,
-}
-
-export interface TableData extends Omit<Department, 'children' | 'featureFlags' >{
-  key: React.Key,
-  isSelected?: boolean,
 }

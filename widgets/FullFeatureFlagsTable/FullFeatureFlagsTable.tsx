@@ -7,7 +7,7 @@ import ReloadFeaturesFlags from "@/features/ReloadFeatureFlags/ReloadFeaturesFla
 import { Flex } from "antd"
 import { useState } from "react"
 import { useFFMenu } from "../../app/personal/ffmenu/useFFMenu"
-import { Department } from "@/entities/DepartmentTable/DepartmentTableType"
+import { Department } from "@/entities/Departments/lib/DepartmentType"
 import { useShallow } from "zustand/shallow"
 
 

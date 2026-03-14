@@ -1,1 +1,1 @@
-export { default } from './DepartmentTree'
+export { default } from './FullDepartmentTree'

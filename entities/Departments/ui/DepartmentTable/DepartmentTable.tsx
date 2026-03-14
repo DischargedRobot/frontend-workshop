@@ -6,7 +6,7 @@ import DeleteIcon from "@/shared/assets/Icon/DeleteIcon"
 import NextLinkIcon from "@/shared/assets/Icon/NextLinkIcon"
 import {  Table, TableProps } from "antd"
 import Link from "next/link"
-import { TableData } from "./DepartmentTableType"
+import { TableData } from "../../lib/DepartmentType"
 import { useFFMenu } from '@/app/personal/ffmenu/useFFMenu'
 import { useShallow } from 'zustand/shallow'
 

@@ -2,7 +2,7 @@
 
 import './FullDepartmentTabe.scss'
 
-import TableDepartment from "@/entities/DepartmentTable/DepartmentTable"
+import TableDepartment from "@/entities/Departments/ui/DepartmentTable/DepartmentTable"
 import type { TableData } from "@/entities/DepartmentTable";
 import DepartmentBreadcamb from "@/shared/DepartmentBreadcamb/DepartmentBreadcamb"
 import TableName from "@/shared/TableName/TableName";
