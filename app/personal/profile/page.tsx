@@ -1,10 +1,9 @@
 'use client'
 import UserCard from "@/entities/UserCard/UserCard"
 import UserSettings from "@/features/UserSettings/ui/UserSettings"
+import UserTestingPanelForTheme from "@/features/UserTestingPanelForTheme/UserTestingPanelForTheme"
 import { IRole, TROLE } from "@/shared/Role"
 import { Content } from "antd/es/layout/layout"
-import { redirect, RedirectType } from "next/navigation"
-import { useEffect } from "react"
 
 const createIntialRoles = (): IRole[] => {
     const roles: IRole[] = [];
@@ -22,6 +21,7 @@ const Profile = () => {
         <Content>
             <UserCard user={{login: 'Robo', password:'password', id: 1, roles: createIntialRoles(), departmentId:1}}/>
             <UserSettings/>
+            <UserTestingPanelForTheme/>
         </Content>
     )
 }

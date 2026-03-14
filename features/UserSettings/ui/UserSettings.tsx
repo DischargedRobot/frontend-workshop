@@ -11,6 +11,7 @@ const UserSettings = () => {
             <LanguageSettings/>
             <ThemeSettings/>
             <TextSizeSettings/>
+            <button> Сохранить </button>
         </div>
     )
 }
