@@ -2,31 +2,32 @@
 
 import './FullUserList.scss'
 
-import { IUser } from "@/entities/UserCard/types"
-import UserCard from "@/entities/UserCard/UserCard"
 import { useUsers } from '@/entities/UserList'
-import useFilterOfUserList, { IUseFilterOfUserList } from '@/entities/UserList/model/useFilterOfUserList'
+import useFilteredUsers from '@/entities/UserList/model/useFilteredUsers'
+import useUserFiltersStore from '@/entities/UserList/model/useUserFiltersStore'
 import UserList from '@/entities/UserList/ui/UserList'
 import UserSearch from "@/features/UserSearch/UserSearch"
 import AddButton from "@/shared/AddButton"
+import { useMemo } from 'react'
 
 const FullUserList = () => {
 
-    const users = useUsers(state => (state.users))
-    const filteredUsers = useUsers(state => (state.filteredUsers))
-    const setFilteredUsers = useUsers(state => (state.setFilteredUsers))
+    const setLogin = useUserFiltersStore(state => state.setLogin)
 
-    const { filterByLogin: filterBylogin } = useFilterOfUserList()
     return (
         <div className="full-user-list">
 
             <div className="full-user-list__title">
             <h2>Пользователи</h2>
-                <UserSearch onSearch={(e) => setFilteredUsers(filterBylogin(users, e.target.value))}/>
+                <UserSearch onSearch={(e) => {
+                    setLogin(e.target.value)
+                    // console.log(filterUsers(['login'],users), e.target.value)
+                    // setFilteredUsers(filterUsers(['login'],users))
+                }}/>
                 <AddButton/>
             </div>
             
-            <UserList users={filteredUsers}/>
+            <UserList/>
         </div>
         
     )

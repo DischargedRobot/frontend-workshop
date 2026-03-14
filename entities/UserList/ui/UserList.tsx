@@ -4,20 +4,17 @@ import './UserList.scss'
 
 import { IUser } from "@/entities/UserCard/types"
 import UserCard from "@/entities/UserCard/UserCard"
+import { useFilteredUsers, useUsers } from '../model'
 
-interface Props {
-    users: IUser[]
-}
+const UserList = () => {
 
-const UserList = (props: Props) => {
+    const users = useUsers(state => (state.users))
 
-    const {
-        users,
-    } = props
+    const filteredUsers = useFilteredUsers(users)
 
     return (
         <ul className='user-list'>
-            {users.map(user => (
+            {filteredUsers.map(user => (
                 <UserCard key={user.id} user={user}/>
             ))}
         </ul>

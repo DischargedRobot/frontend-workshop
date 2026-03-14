@@ -4,7 +4,8 @@ import { useFilterOfUserList, useUsers } from '@/entities/UserList'
 import './DepartmentTree.scss'
 
 import { Tree, TreeDataNode } from "antd"
-import { memo } from "react"
+import { memo, useEffect } from "react"
+import useUserFiltersStore from '@/entities/UserList/model/useUserFiltersStore'
 
 interface Props {
     tree: TreeDataNode[]
@@ -17,20 +18,24 @@ const DepartmentTree = (props: Props) => {
         // onCheck: filterUsers,
     } = props
 
-    const users = useUsers(state => (state.users))
-    const setFilteredUsers = useUsers(state => (state.setFilteredUsers))
-    const { filterByDepartmentsId: filterUsers } = useFilterOfUserList()
-    console.log('DepartmentTree')
+    // const users = useUsers(state => (state.users))
+    // const setFilteredUsers = useUsers(state => (state.setFilteredUsers))
+
+    const setDepartmentIds = useUserFiltersStore(state => state.setDepartmentIds)
+
+    // console.log('DepartmentTree')
 
     return (
         <Tree 
             onCheck={(checkedKeys) => {
                 console.log(checkedKeys)
                 if (Array.isArray(checkedKeys)) {
-                    setFilteredUsers(filterUsers(users, checkedKeys as number[]))
+                    setDepartmentIds(checkedKeys as number[])
+                    // setFilteredUsers(filterUsers(['departmentIds'], users))
                 }
                 else {
-                    filterUsers(users, checkedKeys.checked as number[])
+                    setDepartmentIds(checkedKeys.checked as number[])
+                    // setFilteredUsers(filterUsers(['departmentIds'], users))
                 }
             }}
             className={`department-tree__tree`}

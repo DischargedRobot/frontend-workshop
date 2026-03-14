@@ -1,3 +1,5 @@
+'use client'
+
 import DepartmentTree from "@/entities/Departments/ui/DepartmentTree/DepartmentTree"
 import { LeftOutlined } from "@ant-design/icons";
 import { TreeDataNode } from "antd";

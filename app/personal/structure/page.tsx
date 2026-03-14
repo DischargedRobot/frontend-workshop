@@ -1,5 +1,3 @@
-'use client'
-
 import './StructureOrganisation.scss'
 
 import FullUserList from '@/widgets/FullUserList/FullUserList';
@@ -7,7 +5,7 @@ import DepartmentTree from '@/entities/Departments/ui/DepartmentTree/DepartmentT
 import { TreeDataNode } from "antd";
 import { Content } from "antd/es/layout/layout"
 import useStructure from './model/useStructure';
-import useFilterOfUserList from '@/entities/UserList/model/useFilterOfUserList';
+import useFilterOfUserList from '@/entities/UserList/model/useFilteredUsers';
 import FullDepartmentTree from '@/widgets/Tree/FullDepartmentTree';
 
 const tree: TreeDataNode[] = [
@@ -45,7 +43,7 @@ const tree: TreeDataNode[] = [
 
 const StructureOrganisation = () => {
 
-  const departments = useStructure(state => (state.departments))
+  // const departments = useStructure(state => (state.departments))
 
   return(
       <Content className="structure-organisation ">
