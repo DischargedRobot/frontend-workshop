@@ -1,10 +1,9 @@
 'use client'
 
-import { useFilterOfUserList, useUsers } from '@/entities/UserList'
 import './DepartmentTree.scss'
 
 import { Tree, TreeDataNode } from "antd"
-import { memo, useEffect } from "react"
+import { memo } from "react"
 import useUserFiltersStore from '@/entities/UserList/model/useUserFiltersStore'
 
 interface Props {
@@ -33,7 +32,7 @@ const DepartmentTree = (props: Props) => {
                     // setFilteredUsers(filterUsers(['departmentIds'], users))
                 }
             }}
-            className={`department-tree__tree`}
+            className={`tree`}
             checkable
             selectable={false}
             treeData={tree}

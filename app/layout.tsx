@@ -19,12 +19,17 @@ const FONTS = {
 const COLOR = {
   textColor: "#e8e8e8",
   backgroundTextColor: "#cfcfcf",
-  background: "#2A2828",
-  foreground: "#323234",
+  background: "#313131",
+  foreground: "#222222",
+  buttonBaseBackground: "#8d8d8d",
   hover: "#4d4d4d",
-  activeBackground: "#2d75c8",
-  stroke: "#544F4F",
+  activeBackground: "#2a5dd2",
+  stroke: "#58595d76",
   activeBorder: "#ECECEC",
+  foregroundSecond: "#292929cb",
+  strokeNavPanel: '#111111e8',
+
+  // colorPrimary: '#2a5dd2'
 }
 
 
@@ -39,12 +44,14 @@ const layout = {
 
 const theme: ThemeConfig = {
   token: {
+    colorPrimary: COLOR.activeBackground,
     colorText: COLOR.textColor,
     colorBgBase: COLOR.foreground,
     colorBgLayout: COLOR.background,
     colorBorder: COLOR.stroke,
-
     colorTextPlaceholder: '#d2d2d2',
+    colorPrimaryActive: COLOR.activeBackground,
+    colorPrimaryBg: COLOR.foregroundSecond
   },
   components: {
     
@@ -68,6 +75,10 @@ const theme: ThemeConfig = {
       // cellPaddingBlock: 8,
     },
 
+    Tree: {
+      colorBgContainer: '',
+    },
+
     Menu: {
       collapsedIconSize: 32, // почему-то нужно чтобы было в 2 раза больше иначе будет дёргаться размер
       collapsedWidth: 32, 
@@ -85,12 +96,6 @@ const theme: ThemeConfig = {
       fontFamily: FONTS.text.fontFamily,
 
       separatorColor: COLOR.stroke
-      // itemColor: COLOR.backgroundTextColor,
-
-      
-      // colorLinkHover: COLOR.activeBackground,
-      // colorInfoTextHover: COLOR.activeBackground,
-      // linkHoverColor: COLOR.activeBackground
     },
   },
 }
@@ -103,7 +108,13 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body>
+      <body style={{
+          '--foreground': COLOR.foreground,
+          '--foreground-second': COLOR.foregroundSecond, 
+          '--background': COLOR.background,
+          '--hover': COLOR.hover,
+          '--border-for-nav-panel': COLOR.strokeNavPanel,
+        } as React.CSSProperties}>
         {/* theme={theme} */}
         <ConfigProvider theme={theme}>
             <Layout hasSider className='body-layout'>

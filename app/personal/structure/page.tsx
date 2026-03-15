@@ -1,12 +1,9 @@
 import './StructureOrganisation.scss'
 
 import FullUserList from '@/widgets/FullUserList/FullUserList';
-import DepartmentTree from '@/entities/Departments/ui/DepartmentTree/DepartmentTree';
 import { TreeDataNode } from "antd";
 import { Content } from "antd/es/layout/layout"
-import useStructure from './model/useStructure';
-import useFilterOfUserList from '@/entities/UserList/model/useFilteredUsers';
-import FullDepartmentTree from '@/widgets/Tree/FullDepartmentTree';
+import FullDepartmentTree from '@/widgets/FullDepartmentTree';
 
 const tree: TreeDataNode[] = [
   {

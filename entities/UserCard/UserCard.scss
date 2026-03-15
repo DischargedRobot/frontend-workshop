@@ -22,21 +22,22 @@
 
     color: #fff;
 
-    transition: background-color ease-in 0.2s;
+    transition: background-color ease-in 0.1s;
     
     &_selected {
 
         background-color: #424a61;        
 
+        button {
+            background-color: #424a61;        
+        }
+
         .user-card__circle-selection {
             background-color: var(--active);
-
-            &:active {
-                background-color: #5d70aa;
-            }
         }
     }
 
+    
     &__avatar {
         position: relative;
         grid-area: avatar;
@@ -67,6 +68,10 @@
 
         border-radius: 50px;
         border: 1px solid var(--stroke);
+
+        &:hover {
+            background-color:#585a62;
+        }
     }
 
     &__personal-data {
@@ -98,6 +103,18 @@
         padding: 0 10px 5px 10px;
 
         border-color: black;
+
+        button.add-role svg {
+            font-size: 24px;
+
+            &:hover {
+                color: #5d70aa;
+            }
+
+            &:active {
+                color: #475cd3;
+            }
+        }
     }
 
 }

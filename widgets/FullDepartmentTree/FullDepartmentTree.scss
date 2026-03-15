@@ -1,0 +1,60 @@
+.department-tree {
+    position: relative;
+    background-color: var(--foreground-second);
+
+    padding: 10px;
+    padding-right: 30px;
+    
+    max-width: 250px;
+    width: 100%;
+
+    border-right: var(--border-for-nav-panel);
+    box-shadow: 2px 0 5px var(--shadow);
+    &.collapsed {
+        max-width: 0;
+
+        & .department-tree__tree {
+            overflow: hidden;
+            width: 0px;
+        }
+
+    }
+
+    &__button {
+        z-index: 1;
+        position: absolute;
+        top: 40px;
+        right: 0;
+        transform: translate(50%, 0);
+
+        padding: 3px;
+
+        width: auto;
+
+        border-radius: 50%;
+
+        background-color: var(--ant-color-primary);
+
+        svg {
+            transition: transform linear 0.2s;
+            font-size: 16;
+        }
+
+        // &::after {
+        //     content: "";
+        //     position: absolute;
+        //     top: 0;
+        //     right: 0;
+    
+        //     width: 43%;
+        //     height: 100%;
+
+        //     border-top-right-radius: 10px;
+        //     border-bottom-right-radius: 10px;
+
+        //     border: 2px solid #535353;
+        //     border-left: none;
+        // }
+    }
+    
+}

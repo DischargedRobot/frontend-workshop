@@ -10,6 +10,7 @@ import { useCallback, useMemo, useState } from 'react'
 import RoleStatus from '@/shared/model/RolesStatus/RolesStatus'
 import { IRole } from '@/shared/Role'
 import { useUsers } from '../UserList'
+import { PlusOutlined } from '@ant-design/icons'
 
 interface Props {
     user: IUser
@@ -77,8 +78,8 @@ const UserCard = (props: Props) => {
             <div className='user-card__role-list'>
                 <div className='role-list__title'>
                     <h2>Роли</h2>
-                    <button onClick={() => {setRoleStatusIsHidden(prev => !prev)}}>
-                        <PlusIcon/>
+                    <button className='add-role' onClick={() => {setRoleStatusIsHidden(prev => !prev)}}>
+                        <PlusOutlined/>
                     </button>
                     {roleStatusIsHidden && <RoleStatus setRoles={setRoles} roles={roles}/>}
                 </div>
