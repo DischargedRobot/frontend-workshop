@@ -9,13 +9,17 @@ import { useFilteredUsers, useUsers } from '../model'
 const UserList = () => {
 
     const users = useUsers(state => (state.users))
-
+    const setUser = useUsers(state => (state.setUser))
     const filteredUsers = useFilteredUsers(users)
 
     return (
         <ul className='user-list'>
             {filteredUsers.map(user => (
-                <UserCard key={user.id} user={user}/>
+                <UserCard 
+                    key={user.id} 
+                    user={user}
+                    setUser={setUser}
+                />
             ))}
         </ul>
     )

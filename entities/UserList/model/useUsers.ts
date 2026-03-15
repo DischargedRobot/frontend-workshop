@@ -5,6 +5,7 @@ import { create } from "zustand";
 interface IUseUsers {
     users: IUser[]
     setUsers: (newUsers: IUser[]) => void
+    setUser: (newDataOfUser: IUser) => void
 
     filteredUsers: IUser[]
     setFilteredUsers: (newfilteredUsers: IUser[]) => void
@@ -26,6 +27,7 @@ const useUsers = create<IUseUsers>((set, get) => ({
         {login: 'rob', password: 'ss', id:2, roles: createIntialRoles(), departmentId: 4}
     ],
     setUsers: (users) => set({users}),
+    setUser: (newUser) => set(() => ({users: get().users.map(user => (user.id == newUser.id ? {...user, ...newUser}: user ))})),
     deleteUserById: (idDeletedUser: number) => set(() => {
         return {users: get().users.filter(user => user.id != idDeletedUser)}
     }),

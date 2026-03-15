@@ -23,7 +23,11 @@ const AuthTextInput = <T extends FieldValues>(props: Props<T>) => {
 
     return(
         <label className="auth-text-filed text">
-            <input type="text" className='auth-text-filed__input' placeholder={placeholder} {...register(name, rules)}/>
+            <input 
+                type="text"
+                className='auth-text-filed__input'
+                placeholder={placeholder}
+                {...register(name, rules)}/>
             {error}
         </label>
     )
