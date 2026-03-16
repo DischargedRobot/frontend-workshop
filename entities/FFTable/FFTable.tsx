@@ -1,8 +1,11 @@
 'use client'
 import { DeleteIcon, InfoIcon } from "@/shared/assets/Icon";
 import { Switch, Table, TableProps } from "antd"
+import useFilteredFFs from "./model/useFilteredFFs";
+import { useDepartment } from "@/widgets/FullDepartmentTable/model/useDepartment";
+import useDepartmentsStore from "../Departments/model/useDepartmentsStore";
 
-const FF_TABLE_COLUMNS: TableProps<FeatureFlagTable>['columns'] = [
+const FF_TABLE_COLUMNS: TableProps<FeatureFlag>['columns'] = [
     {
         title: 'Имя',
         key: 'name',
@@ -51,29 +54,30 @@ const FF_TABLE_COLUMNS: TableProps<FeatureFlagTable>['columns'] = [
 export interface FeatureFlag {
     id: number,
     name: string,
-    departmentName: string,
+    departmentId: number,
+    departmentName?: string,
     isEnabled: boolean,
     lastModified: string,
     description: string,
 }
 
-export interface FeatureFlagTable extends FeatureFlag{
-    key: React.Key,
-}
+// export interface FeatureFlag extends FeatureFlag{
+//     key: React.Key,
+// }
 
 interface Props {
-    data: FeatureFlagTable[]
+    featureFlags: FeatureFlag[]
 }
 
-const FFTable = ({data}: Props) => {
+const FFTable = ({featureFlags}: Props) => {
 
     return (
         <Table 
             size="small"
-            
+            rowKey='id'
             rowSelection={{type: 'checkbox'}}
             pagination={{placement: ['bottomCenter'], pageSize: 8}}
-            dataSource={data} 
+            dataSource={featureFlags} 
             columns={FF_TABLE_COLUMNS}
         />
     )

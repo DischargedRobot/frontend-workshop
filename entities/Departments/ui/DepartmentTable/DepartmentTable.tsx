@@ -9,6 +9,9 @@ import Link from "next/link"
 import { TableData } from "../../lib/DepartmentType"
 import { useFFMenu } from '@/app/personal/ffmenu/useFFMenu'
 import { useShallow } from 'zustand/shallow'
+import useDepartmentsStore from '../../model/useDepartmentsStore'
+import useFilteredFFs from '@/entities/FFTable/model/useFilteredFFs'
+import useFFFiltersStore from '@/entities/FFTable/model/useFFFiltersStore'
 
 const COLUMNS: TableProps<TableData>['columns'] = [
 
@@ -55,7 +58,7 @@ function handleClick(e: React.MouseEvent, record: TableData) {
 const TableDepartment = () => {
 
   const departments = useFFMenu(state => state.departments)
-  const data: TableData[] = departments.map((v) => ({...v, key: v.id}))
+  const data: TableData[] = departments.map((department) => ({...department}))
   
   const isHidden: boolean = useFFMenu(state => state.isHidden)
 
@@ -68,11 +71,13 @@ const TableDepartment = () => {
   //     data: state.departments.map((item) => ({...item, key: item.id })),
   //     isHidden: state.isHidden
   //   })))
-
+  const setSelectedDepartments = useFFFiltersStore(state => state.setDepartment)
   return (
     // TODO:  onSelect: (__, _, records) => {console.log(records)}}
+    
       <Table 
-        rowSelection={{type: 'checkbox'}}
+        rowSelection={{type: 'checkbox', onChange: (selectedRowKeys) => setSelectedDepartments(selectedRowKeys)}}
+        rowKey='id'
         dataSource={data}
         columns={COLUMNS}
         pagination={{ placement: ['bottomCenter'], pageSize: 6 }}

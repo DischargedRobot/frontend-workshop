@@ -1,6 +1,6 @@
 'use client'
 
-import FFTable, { FeatureFlag, FeatureFlagTable } from "@/entities/FFTable/FFTable"
+import FFTable, { FeatureFlag, FeatureFlag } from "@/entities/FFTable/FFTable"
 import AddFeatureFlag from "@/features/AddFeatureFlag/AddFeatureFlag"
 import FFSearch from "@/features/FFSearch/FFSearch"
 import ReloadFeaturesFlags from "@/features/ReloadFeatureFlags/ReloadFeaturesFlags"
@@ -9,6 +9,8 @@ import { useState } from "react"
 import { useFFMenu } from "../../app/personal/ffmenu/useFFMenu"
 import { Department } from "@/entities/Departments/lib/DepartmentType"
 import { useShallow } from "zustand/shallow"
+import useFilteredFFs from "@/entities/FFTable/model/useFilteredFFs"
+import useFFFiltersStore from "@/entities/FFTable/model/useFFFiltersStore"
 
 
 
@@ -41,10 +43,9 @@ const FullFeatureFlagsTable = () => {
     // } = props
 
 
-    const {featureFlags, departments, getFeatureFlagsByDepartments} = 
+    const {departments, getFeatureFlagsByDepartments} = 
         useFFMenu(useShallow(state => ({
             getFeatureFlagsByDepartments: state.getFeatureFlagsByDepartments, 
-            featureFlags: state.featureFlags, 
             departments: state.departments,
         })))
 
@@ -57,8 +58,10 @@ const FullFeatureFlagsTable = () => {
         })))
     }
 
-    // const featureFlags: FeatureFlagTable[] = createData(10)
-    const [data, setData] = useState<FeatureFlagTable[]>(featureFlags.map(item => ({
+    const featureFlags = useFilteredFFs()
+    const setFeatureFlagName = useFFFiltersStore(state => state.setName)
+    // const featureFlags: FeatureFlag[] = createData(10)
+    const [data, setData] = useState<FeatureFlag[]>(featureFlags.map(item => ({
             ...item,
             key: item.id,
         })))
@@ -66,16 +69,11 @@ const FullFeatureFlagsTable = () => {
     return(
         <div>
             <Flex align="center" gap={30}>
-                <FFSearch onSearch={(e) => {setData(FilteredByStringParam(e.target.value, featureFlags.map(item => ({
-                        ...item,
-                        key: item.id,
-                    })), 'name'))}}/>
+                <FFSearch onSearch={(e) => {setFeatureFlagName(e.target.value)}}/>
                 <AddFeatureFlag/>
                 <ReloadFeaturesFlags onClick={() => setFeatureFlags(departments)}/>
             </Flex>
-            <FFTable data={data}>
-
-            </FFTable>
+            <FFTable featureFlags={featureFlags}/>
         </div>
     )
 }

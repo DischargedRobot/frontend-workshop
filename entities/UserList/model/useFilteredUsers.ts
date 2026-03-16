@@ -18,7 +18,7 @@ const filterByDepartmentIds = (users: IUser[], departmentsId: number[]) => {
     if (departmentsId.length == 0){
         return users
     }
-    return users.filter((user) => (departmentsId.includes(user.department.id)))
+    return users.filter((user) => (departmentsId.includes(user.departmentId)))
 }
 
 const filterByLogin = (users: IUser[], login: string) => {

@@ -34,10 +34,10 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
             rules={{
                 validate: (value) => {
                     const isExisted = departments.some(department => department.id === value)
-                    return isExisted || "Такого отдела не найдено"
+                    return isExisted || "Отдел не найдено"
                 }   
             }}
-
+            
             render = {({field}) =>(
             <div className={`user-departments-drop ${isCollapsed ? 'user-departments-drop_opened' : ''}`} style={{display: 'flex'}}>
                 <label>
@@ -46,11 +46,12 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
                         placeholder='Отдел'
                         type='text'
                         value={wantedNameDepartment}
-                        onClick={() => setIsCollapsed(prev => !prev)}
+                        onClick={() => setIsCollapsed(true)}
                         onChange={(e) => {
                             setWantedNameDepartment(e.target.value)
                             field.onChange(e.target.value)
                         }}
+                        onBlur={() => setIsCollapsed(false)}
                     />
                 </label>
                 <ul className={`user-departments-drop__list`}>

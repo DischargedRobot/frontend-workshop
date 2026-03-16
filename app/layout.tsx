@@ -24,7 +24,7 @@ const COLOR = {
   buttonBaseBackground: "#8d8d8d",
   hover: "#4d4d4d",
   hoverActive: "#5973e9",
-  activeBackground: "#1544b3",
+  activeBackground: "#2a5cd0",
   stroke: "#58595d76",
   activeBorder: "#ECECEC",
   foregroundSecond: "#292929cb",

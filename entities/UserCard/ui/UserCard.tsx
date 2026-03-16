@@ -150,6 +150,7 @@ const UserCard = (props: Props) => {
                     //     }}
                     control={control}
                 />
+                {errors.departmentId?.message ?? ''}
                 <div>
                     <button 
                         className={!isDirty ? 'disabled' : ''}
