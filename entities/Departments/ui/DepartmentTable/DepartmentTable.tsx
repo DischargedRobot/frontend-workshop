@@ -6,14 +6,16 @@ import DeleteIcon from "@/shared/assets/Icon/DeleteIcon"
 import NextLinkIcon from "@/shared/assets/Icon/NextLinkIcon"
 import {  Table, TableProps } from "antd"
 import Link from "next/link"
-import { TableData } from "../../lib/DepartmentType"
 import { useFFMenu } from '@/app/personal/ffmenu/useFFMenu'
 import { useShallow } from 'zustand/shallow'
 import useDepartmentsStore from '../../model/useDepartmentsStore'
 import useFilteredFFs from '@/entities/FFTable/model/useFilteredFFs'
 import useFFFiltersStore from '@/entities/FFTable/model/useFFFiltersStore'
+import { useDepartment } from '@/widgets/FullDepartmentTable/model/useDepartment'
+import { TableData } from '../../lib'
+import { Department } from '../../lib/DepartmentType'
 
-const COLUMNS: TableProps<TableData>['columns'] = [
+const COLUMNS: TableProps<Omit<Department, 'children'>>['columns'] = [
 
   {
     title: 'Имя отдела',
@@ -46,19 +48,14 @@ const COLUMNS: TableProps<TableData>['columns'] = [
 
 // }
 
-interface Props {
-    data: TableData[]
-    isHidden: boolean
-}
-
 function handleClick(e: React.MouseEvent, record: TableData) {
   console.log(e, record)
 }
 
 const TableDepartment = () => {
 
-  const departments = useFFMenu(state => state.departments)
-  const data: TableData[] = departments.map((department) => ({...department}))
+  const departments = useDepartmentsStore(state => state.departments)
+  const data: Omit<Department, 'children'>[] = departments.map(({children, ...department}) => (department))
   
   const isHidden: boolean = useFFMenu(state => state.isHidden)
 
