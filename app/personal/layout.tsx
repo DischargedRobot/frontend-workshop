@@ -1,4 +1,4 @@
-import NavigationMenu from "@/entities/NavigationMenu/NavigationMenu"
+import NavigationMenu from "@/entities/NavigationMenu/ui/NavigationMenu"
 import React from "react"
 
 interface Props {

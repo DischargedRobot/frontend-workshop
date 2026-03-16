@@ -11,7 +11,7 @@ export interface Department {
 export interface IDepartment {
   id: number,
   name: string,
-  children?: IDepartment[],
-  featureFlags?: FeatureFlag[],
+  children: IDepartment[],
+  featureFlags: FeatureFlag[],
   link: string,
 }

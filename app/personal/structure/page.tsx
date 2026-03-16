@@ -4,6 +4,8 @@ import FullUserList from '@/widgets/FullUserList/FullUserList';
 import { TreeDataNode } from "antd";
 import { Content } from "antd/es/layout/layout"
 import FullDepartmentTree from '@/widgets/FullDepartmentTree';
+import { IDepartment } from '@/entities/Departments/lib';
+
 
 const tree: TreeDataNode[] = [
   {

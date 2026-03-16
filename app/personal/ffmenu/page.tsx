@@ -1,4 +1,4 @@
-import NavigationMenu from "@/entities/NavigationMenu/NavigationMenu"
+import NavigationMenu from "@/entities/NavigationMenu/ui/NavigationMenu"
 import FullDepartmentTable from "@/widgets/FullDepartmentTable/FullDepartmentTable";
 import { Content } from "antd/es/layout/layout";
 

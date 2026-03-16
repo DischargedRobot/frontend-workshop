@@ -2,13 +2,10 @@
 
 import './FullUserList.scss'
 
-import { useUsers } from '@/entities/UserList'
-import useFilteredUsers from '@/entities/UserList/model/useFilteredUsers'
 import useUserFiltersStore from '@/entities/UserList/model/useUserFiltersStore'
 import UserList from '@/entities/UserList/ui/UserList'
 import UserSearch from "@/features/UserSearch/UserSearch"
 import AddButton from "@/shared/AddButton"
-import { useMemo } from 'react'
 
 const FullUserList = () => {
 

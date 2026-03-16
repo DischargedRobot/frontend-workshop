@@ -3,15 +3,17 @@
 import './UserCard.scss'
 
 import Avatar from "@/shared/ui/Avatar"
-import RoleList from "../RoleList"
+import RoleList from "../../RoleList"
 import { IUser } from "./types"
 import { DeleteIcon } from '@/shared/assets/Icon'
-import { useCallback, useMemo, useState } from 'react'
+import { memo, use, useCallback, useMemo, useState } from 'react'
 import RoleStatus from '@/shared/model/RolesStatus/RolesStatus'
 import { IRole } from '@/shared/Role'
-import { useUsers } from '../UserList'
 import { PlusOutlined } from '@ant-design/icons'
 import { useForm } from 'react-hook-form'
+import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore'
+import UserDepartmentsDropDownMenu from '@/shared/model/UserDepartmentsDropDownMenu'
+import { useUsersStore } from '@/entities/UserList/model'
 
 interface Props {
     user: IUser
@@ -30,26 +32,48 @@ const UserCard = (props: Props) => {
         handleSubmit,
         formState: { errors, isDirty},
         reset,
-    } = useForm<Pick<IUser, 'login' | 'password'>>()
+        control,
+        setError,
+    } = useForm<Pick<IUser, 'login' | 'password' | 'departmentId'>>(
+        {defaultValues: {
+            login: user.login,
+            password: user.password,
+            departmentId: user.departmentId,
+        }}
+    )
     
-    const saveData = (data: Pick<IUser, 'login' | 'password'>) =>  {
+    const saveData = (data: Pick<IUser, 'login' | 'password' | 'departmentId'>) =>  {
+
+        const depId = departments.find((department => department.id == data.departmentId))
         setUser({
             ...user,
             login: data.login, 
-            password: data.login, 
-    })}
+            password: data.password, 
+            departmentId: data.departmentId
+        })
+        reset({
+            login: data.login, 
+            password: data.password, 
+            departmentId: data.departmentId
+        })
+        console.log(data)
+    }
 
     const resetData = () => {
-        reset({login: user.login, password: user.password})
-    }
+        reset({
+            login: user.login, 
+            password: user.password, 
+            departmentId: user.departmentId
+    })}
     
     const [isLoading, setIsLoading] = useState(false)
 
+    const departments = useDepartmentsStore(state => state.departments)
     const [roleStatusIsHidden, setRoleStatusIsHidden] = useState(false)
     const [roles, setRoles] = useState<IRole[]>(user.roles)
     const [isSelected, setIsSelected] = useState(false)
 
-    const deleteUserById = useUsers(state => state.deleteUserById)
+    const deleteUserById = useUsersStore(state => state.deleteUserById)
 
     const changeStatusRole = useCallback((): void => {
         setRoles([...user.roles])
@@ -73,11 +97,11 @@ const UserCard = (props: Props) => {
                 className='user-card__personal-data' 
                 onSubmit={handleSubmit(saveData)}
                 >
-                <label>
+                <label className='user-card__field'>
                     <input 
+                        className='user-card__input'
                         type="text" 
                         placeholder="Логин"
-                        defaultValue={user.login}
                         {...register('login', {
                             minLength: {
                                 value: 1,
@@ -88,11 +112,11 @@ const UserCard = (props: Props) => {
                         />
                         {errors.login?.message?.toString()}
                 </label>
-                <label>
+                <label className='user-card__field'>
                     <input 
+                        className='user-card__input'
                         type="text"
                         placeholder="Пароль"
-                        defaultValue={user.password}
                         {...register('password', {
                             minLength: {
                                 value: 6,
@@ -107,6 +131,25 @@ const UserCard = (props: Props) => {
                     />
                     {errors.password?.message?.toString()}
                 </label>
+                {/* //TODO: Сделать выбор выпадающим списком */}
+                {/* <div style={{display: 'flex'}}>
+                    <label onClick={() => console.log('s')}>
+                        <input
+                            placeholder='Отдел'
+                            type='text'
+                            name='department'
+                            defaultValue={user.departmentId}
+                        />
+                    </label>
+                </div> */}
+                <UserDepartmentsDropDownMenu 
+                    departments={departments} 
+                    currentDepartment={user.departmentId} 
+                    // setDepartment={(department) => {
+                    //     console.log(user.departmentId)
+                    //     }}
+                    control={control}
+                />
                 <div>
                     <button 
                         className={!isDirty ? 'disabled' : ''}
@@ -132,11 +175,10 @@ const UserCard = (props: Props) => {
                     </button>
                     {roleStatusIsHidden && <RoleStatus setRoles={setRoles} roles={roles}/>}
                 </div>
-                
                 <RoleList roles={filterRoleList} changeRoles={changeStatusRole}/>
             </div>
         </div>
     )
 }
 
-export default UserCard
+export default memo(UserCard)

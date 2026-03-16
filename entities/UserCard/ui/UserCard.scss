@@ -1,4 +1,4 @@
-@use '../../app/placeholder.scss';
+@use '../../../app/placeholder.scss';
 
 .user-card {
     display: grid;
@@ -24,12 +24,18 @@
 
     transition: background-color ease-in 0.1s;
     
-    & label {
-        @extend %flex-column;
-        input {
-            font-size: 14px;
-        }
-        font-size: 10px
+    &__field {
+        @extend %flex-column;        
+
+        margin: 10px;
+
+        font-size: 10px;
+        
+        border-bottom: 1px solid #fff;
+    }
+
+    &__input {
+        font-size: 14px;
     }
 
     &_selected {
@@ -63,7 +69,12 @@
 
         border-radius: 50;
         background-color: var(--foreground);
+
+        &:hover {
+            box-shadow: 0 0 4px var(--shadow);
+        }
     }
+    
     
     &__circle-selection {
         grid-area: circle-selection;
@@ -87,10 +98,8 @@
 
         padding-right: 10px;
         
-        input,button{
-            margin: 10px;
-            border-bottom: 1px solid #fff;
-
+        button{
+            margin-left: 10px;
             &.disabled {
                 cursor: not-allowed;
 
@@ -130,8 +139,6 @@
     }
 
 }
-
-
 
 .role-list__title {
     position: relative;

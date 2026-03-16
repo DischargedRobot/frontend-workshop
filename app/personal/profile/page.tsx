@@ -1,5 +1,5 @@
 'use client'
-import UserCard from "@/entities/UserCard/UserCard"
+import UserCard from "@/entities/UserCard/ui/UserCard"
 import UserSettings from "@/features/UserSettings/ui/UserSettings"
 import UserTestingPanelForTheme from "@/features/UserTestingPanelForTheme/UserTestingPanelForTheme"
 import { IRole, TROLE } from "@/shared/Role"

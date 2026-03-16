@@ -11,8 +11,8 @@ import { DeleteIcon } from '@/shared/assets/Icon';
 
 interface Props {
     tree: TreeDataNode[]
-
 }
+
 const FullDepartmentTree = (props: Props) => {
     const { 
         tree,

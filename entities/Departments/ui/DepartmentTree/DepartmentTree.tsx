@@ -3,13 +3,51 @@
 import './DepartmentTree.scss'
 
 import { Tree, TreeDataNode } from "antd"
-import { memo } from "react"
+import { Children, memo, useMemo } from "react"
 import useUserFiltersStore from '@/entities/UserList/model/useUserFiltersStore'
+import useDepartmentsStore from '../../model/useDepartmentsStore'
+import { IDepartment } from '../../lib'
+import { title } from 'process'
 
 interface Props {
     tree: TreeDataNode[]
     // onCheck: (departmentsId: number[]) => void
 }
+
+
+const tree: TreeDataNode[] = [
+  {
+    title: 'parent 1',
+    key: 1,
+    children: [
+      {
+        title: 'parent 1-0',
+        key: 2,
+        children: [
+          {
+            title: 'leaf',
+            key: 3,
+          },
+          {
+            title: 'leaf',
+            key: 4,
+          },
+        ],
+      },
+      {
+        title: 'parent 1-1',
+        key: 5,
+        children: [
+          { 
+            title: <span style={{ color: '#1677ff' }}>sss</span>, 
+            key: 6 
+          }
+        ],
+      },
+    ],
+  },
+];
+
 
 const DepartmentTree = (props: Props) => {
     const {
@@ -18,6 +56,20 @@ const DepartmentTree = (props: Props) => {
 
     const setDepartmentIds = useUserFiltersStore(state => state.setDepartmentIds)
     // console.log('DepartmentTree')
+
+    const departments = useDepartmentsStore(state => state.departments)
+
+    const convertToTreeData = (departmentsForConvert: IDepartment[]): TreeDataNode[] => {
+        return departmentsForConvert.map((department) => {
+            return {
+                title: department.name, 
+                key: department.id, 
+                children: convertToTreeData(department.children)
+            }
+        })
+    }
+
+    const departmentsTree: TreeDataNode[] = convertToTreeData(departments)
 
     return (
         <Tree 
@@ -35,7 +87,7 @@ const DepartmentTree = (props: Props) => {
             className={`tree`}
             checkable
             selectable={false}
-            treeData={tree}
+            treeData={departmentsTree}
         />
     )
 }

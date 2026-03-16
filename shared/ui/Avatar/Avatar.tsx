@@ -1,6 +1,7 @@
 import Image from "next/image"
 
 import img from './furryAV.jpeg'
+import { memo } from "react"
 
 const Avatar = () => {
 
@@ -17,4 +18,4 @@ const Avatar = () => {
     )
 }
 
-export default Avatar
+export default memo(Avatar)

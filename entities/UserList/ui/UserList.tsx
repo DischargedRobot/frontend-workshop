@@ -2,14 +2,14 @@
 
 import './UserList.scss'
 
-import { IUser } from "@/entities/UserCard/types"
-import UserCard from "@/entities/UserCard/UserCard"
-import { useFilteredUsers, useUsers } from '../model'
+import { IUser } from "@/entities/UserCard/ui/types"
+import UserCard from "@/entities/UserCard/ui/UserCard"
+import { useFilteredUsers, useUsersStore } from '../model'
 
 const UserList = () => {
 
-    const users = useUsers(state => (state.users))
-    const setUser = useUsers(state => (state.setUser))
+    const users = useUsersStore(state => (state.users))
+    const setUser = useUsersStore(state => (state.setUser))
     const filteredUsers = useFilteredUsers(users)
 
     return (

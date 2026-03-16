@@ -1,4 +1,5 @@
 'use client'
+import { memo } from 'react'
 import './RoleList.scss'
 
 import Role, { IRole, TROLE } from "@/shared/Role"
@@ -29,4 +30,4 @@ const RoleList = (props: Props) => {
     )
 }
 
-export default RoleList
+export default memo(RoleList)

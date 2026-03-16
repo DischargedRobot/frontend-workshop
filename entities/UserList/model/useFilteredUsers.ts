@@ -1,4 +1,4 @@
-import { IUser } from "@/entities/UserCard/types"
+import { IUser } from "@/entities/UserCard/ui/types"
 import { useCallback, useMemo, useState } from "react"
 import useUserFiltersStore from "./useUserFiltersStore"
 import { useShallow } from "zustand/shallow"
@@ -18,7 +18,7 @@ const filterByDepartmentIds = (users: IUser[], departmentsId: number[]) => {
     if (departmentsId.length == 0){
         return users
     }
-    return users.filter((user) => (departmentsId.includes(user.departmentId)))
+    return users.filter((user) => (departmentsId.includes(user.department.id)))
 }
 
 const filterByLogin = (users: IUser[], login: string) => {
@@ -47,7 +47,7 @@ const useFilteredUsers = (users: IUser[]) => {
 
     const filterUsers = useCallback(<T extends TFilterKey>(filters: T[], users: IUser[]): IUser[] => {
         return filters.reduce((filteredUsers, filter) => {
-            console.log(FilteringFunctions[filter](filteredUsers, filterArguments[filter]), filterArguments[filter], filter, 'args')
+            // console.log(FilteringFunctions[filter](filteredUsers, filterArguments[filter]), filterArguments[filter], filter, 'args')
             return FilteringFunctions[filter](filteredUsers, filterArguments[filter])
         }, users)
     }, [filterArguments])

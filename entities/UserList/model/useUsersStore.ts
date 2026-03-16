@@ -1,4 +1,4 @@
-import { IUser } from "@/entities/UserCard/types";
+import { IUser } from "@/entities/UserCard/ui/types";
 import { IRole, TROLE } from "@/shared/Role";
 import { create } from "zustand";
 
@@ -19,12 +19,13 @@ const createIntialRoles = (): IRole[] => {
     }
     return roles
 }
+const dep = {id: 1, name: 'd', children: [], featureFlags: [], link: ''}
 
-const useUsers = create<IUseUsers>((set, get) => ({
+const useUsersStore = create<IUseUsers>((set, get) => ({
 
     users: [
-        {login: 'L', password: 'ss', id:1, roles: createIntialRoles(), departmentId: 3},
-        {login: 'rob', password: 'ss', id:2, roles: createIntialRoles(), departmentId: 4}
+        {login: 'L', password: 'ss', id:1, roles: createIntialRoles(), departmentId: dep.id},
+        {login: 'rob', password: 'ss', id:2, roles: createIntialRoles(), departmentId: dep.id}
     ],
     setUsers: (users) => set({users}),
     setUser: (newUser) => set(() => ({users: get().users.map(user => (user.id == newUser.id ? {...user, ...newUser}: user ))})),
@@ -33,12 +34,12 @@ const useUsers = create<IUseUsers>((set, get) => ({
     }),
 
     filteredUsers: [
-        {login: 'L', password: 'ss', id:1, roles: createIntialRoles(), departmentId: 3},
-        {login: 'rob', password: 'ss', id:2, roles: createIntialRoles(), departmentId: 4}
+        {login: 'L', password: 'ss', id:1, roles: createIntialRoles(), departmentId: dep.id},
+        {login: 'rob', password: 'ss', id:2, roles: createIntialRoles(), departmentId: dep.id}
     ],
     setFilteredUsers: (filteredUsers) => set({filteredUsers}),
 
 
 }))
 
-export default useUsers
+export default useUsersStore

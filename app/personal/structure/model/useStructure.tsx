@@ -1,5 +1,5 @@
 import { IDepartment } from "@/entities/DepartmentTable";
-import { IUser } from "@/entities/UserCard/types";
+import { IUser } from "@/entities/UserCard/ui/types";
 import { IRole, TROLE } from "@/shared/Role";
 import { create } from "zustand";
 
