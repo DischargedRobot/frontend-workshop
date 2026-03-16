@@ -1,7 +1,9 @@
+@use '../../../app/placeholder.scss';
+
 .roles-status {
     position: absolute;
-    bottom: -50px;
-    right: -100px;
+    bottom: -170px;
+    right: -120px;
     z-index: 10;
 
     display: flex;
@@ -11,5 +13,27 @@
     padding: 10px;
 
     border-radius: 20;
-    background-color: var(--stroke);
+    background-color: #373737;
+    box-shadow: 0 2px 2px var(--shadow);
+
+    hr {
+        border: 1px solid var(--stroke)
+    }
+
+    &__containter {
+        @extend %flex-column;
+
+        gap: 7px;
+    }
+
+    &__role-containter {
+        @extend %flex-column;
+        gap: 5px;
+    }
+
+    &__role {
+        @extend %flex;
+
+        gap: 10px;
+    }
 }

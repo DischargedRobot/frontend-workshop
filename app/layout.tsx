@@ -23,7 +23,8 @@ const COLOR = {
   foreground: "#222222",
   buttonBaseBackground: "#8d8d8d",
   hover: "#4d4d4d",
-  activeBackground: "#2a5dd2",
+  hoverActive: "#5973e9",
+  activeBackground: "#1544b3",
   stroke: "#58595d76",
   activeBorder: "#ECECEC",
   foregroundSecond: "#292929cb",
@@ -113,6 +114,7 @@ export default function RootLayout({
           '--foreground-second': COLOR.foregroundSecond, 
           '--background': COLOR.background,
           '--hover': COLOR.hover,
+          '--hover-active': COLOR.hoverActive,
           '--border-for-nav-panel': COLOR.strokeNavPanel,
         } as React.CSSProperties}>
         {/* theme={theme} */}

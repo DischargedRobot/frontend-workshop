@@ -2,9 +2,9 @@
 
 .user-list {
     @extend %flex;
-
     flex-wrap: wrap;
     
     row-gap: 10px;
     gap: 10px;
+
 }

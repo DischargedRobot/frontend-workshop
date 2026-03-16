@@ -5,15 +5,13 @@ import './UserCard.scss'
 import Avatar from "@/shared/ui/Avatar"
 import RoleList from "../RoleList"
 import { IUser } from "./types"
-import { DeleteIcon, PlusIcon } from '@/shared/assets/Icon'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { DeleteIcon } from '@/shared/assets/Icon'
+import { useCallback, useMemo, useState } from 'react'
 import RoleStatus from '@/shared/model/RolesStatus/RolesStatus'
 import { IRole } from '@/shared/Role'
 import { useUsers } from '../UserList'
 import { PlusOutlined } from '@ant-design/icons'
 import { useForm } from 'react-hook-form'
-import { FormValues } from '../RegistraionForm/RegistrationForm'
-import Password from 'antd/es/input/Password'
 
 interface Props {
     user: IUser

@@ -34,11 +34,11 @@
 
     &_selected {
 
-        background-color: #424a61;        
-
-        button {
-            background-color: #424a61;        
-        }
+        background-color: var(--foreground-second);        
+        box-shadow: 0 4px 5px var(--shadow);
+        // button {
+        //     background-color: var(--foreground-second);        
+        // }
 
         .user-card__circle-selection {
             background-color: var(--active);
@@ -74,11 +74,11 @@
         width: 16px;
         height: 16px;
 
-        border-radius: 50px;
-        border: 1px solid var(--stroke);
+        border-radius: 50%;
+        border: 2px solid var(--stroke);
 
         &:hover {
-            background-color:#585a62;
+            background-color:var(--hover-active);
         }
     }
 
@@ -109,18 +109,22 @@
 
         gap: 10px;
         padding: 0 10px 5px 10px;
+        margin-top: 10px;
 
         border-color: black;
 
-        button.add-role svg {
-            font-size: 24px;
+        button.add-role 
+        { 
+            svg {
+                font-size: 24;
 
-            &:hover {
-                color: #5d70aa;
-            }
+                &:hover {
+                    color: var(--hover-active);
+                }
 
-            &:active {
-                color: #475cd3;
+                &:active {
+                    color: var(--active);
+                }
             }
         }
     }
