@@ -1,18 +1,29 @@
 'use client'
 
-import { MouseEventHandler } from 'react'
-import './DepartmentBreadcamb.scss'
+import './DepartmentBreadcrumb.scss'
 
 import { Breadcrumb } from "antd"
 import { useFFMenu } from '@/app/personal/ffmenu/useFFMenu'
 import { useShallow } from 'zustand/shallow'
+import useBreadcrumbStore from '../model/useBreadcrumbStore'
+import { useEffect } from 'react'
+import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore'
 // Promise<{featureFlags: string[]; departments: string[]}>
 
 const DEPARTMENTS_REQUEST_URL = "http://local:3000/"
 
 const DepartmentBreadcamb = () => {
 
-    const {path, setPath, toDepartment} = useFFMenu(useShallow(state => ({path: state.path, setPath: state.setPath, toDepartment: state.toDepartment})))
+    // const toDepartment = useFFMenu(state => state.toDepartment)
+
+    const path = useBreadcrumbStore(state => state.path)
+    const setPath = useBreadcrumbStore(state => state.setPath)
+    
+    const rootDepartment = useDepartmentsStore(state => state.departments[0])
+
+    useEffect(() => {
+        setPath([rootDepartment])
+    }, [])
 
     return (
         <Breadcrumb 
@@ -24,10 +35,11 @@ const DepartmentBreadcamb = () => {
                         className='bredcamb' 
                         onClick={() => {
                             setPath(path.slice(0,index+1)); 
-                            toDepartment(paths)
+                            console.log(path)
+                            // toDepartment(paths)
                             }}
                     >
-                        {item}
+                        {item.name}
                     </button>
                     }   
                 })}

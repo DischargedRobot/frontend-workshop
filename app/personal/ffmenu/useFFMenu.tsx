@@ -77,6 +77,7 @@ const createData = (number: number) : FeatureFlag[] => {
     return Array.from(({length: number}), (_, index) => ({
         id: index,
         name: `FF${index}`,
+        departmentId: index,
         departmentName: `Depart${index}`,
         isEnabled: false ,
         description: 'd'.repeat(index),
@@ -119,7 +120,7 @@ export const useFFMenu = create<IUseFFMenu>( (set, get) => ({
             headers: {'Content-type': 'aplication/json'},
             body: `${JSON.stringify(departments)}`
         })
-
+        
         return await response.json()
     },
 

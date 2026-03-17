@@ -1,12 +1,25 @@
 import { create } from "zustand";
-import { IDepartment } from "../lib";
+import { IDepartment } from "../lib"; 
 
-const InitialDepartments: IDepartment[] = Array.from({length: 5}).map(
-  (_, index) => {
-    return {id: index, name: index.toString(), children: [], featureFlags: [], link: ''}
+const InitialDepartments: IDepartment[] = (() => {
+  const depts: IDepartment[] = []
+  
+  for (let i = 0; i < 5; i++) {
+    depts.push({
+      id: i,
+      name: `Department ${i}`,
+      children: [],
+      featureFlags: [],
+      link: ''
+    })
   }
-)
-
+  
+  for (let i = 0; i < depts.length - 1; i++) {
+    depts[i].children = [depts[i + 1]]
+  }
+  
+  return [depts[0]] 
+})()
 
 interface IUseDepartments {
     departments: IDepartment[]
@@ -14,6 +27,10 @@ interface IUseDepartments {
 
     selectedDepartmentIds: number[]
     setSelectedDepartmentIds: (newSelectedDepartmentIds: number[]) => void
+
+    getDepartmentsByPath: (path: string) => void
+    getFeatureFlagsByDepartments: (departments: IDepartment[]) => void
+    // toDepartment: (path: string) => void
 }
 
 const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
@@ -22,7 +39,44 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
     setDepartments: (newDepartments) => set({departments: newDepartments}),
   
     selectedDepartmentIds: [],
-    setSelectedDepartmentIds: (newSelectedDepartments) => set({selectedDepartmentIds: newSelectedDepartments})
+    setSelectedDepartmentIds: (newSelectedDepartments) => set({selectedDepartmentIds: newSelectedDepartments}),
+
+    getDepartmentsByPath: async (path: string) => {
+        const response = await fetch(`${path}`,{
+            method: 'GET',
+            headers: {'Content-type': 'aplication/json'},
+        })
+
+        if (!response.ok) {
+            throw new Error('getDepartmentsByPath')
+        }
+
+        return await response.json()
+    },
+
+    getFeatureFlagsByDepartments: async (departments: IDepartment[]) => {
+        const response = await fetch(`url`,{
+            method: 'POST',
+            headers: {'Content-type': 'aplication/json'},
+            body: `${JSON.stringify(departments)}`
+        })
+        
+        return await response.json()
+    },
+
+    // toDepartment: async (path: string) => {
+    //     try {
+    //         const newDepartments = await get().getDepartmentsByPath(path)
+    //         const newFeatureFlags = await get().getFeatureFlagsByDepartments(newDepartments)
+    //         set({
+    //             featureFlags: newFeatureFlags, 
+    //             departments: newDepartments,
+    //         })
+    //     }
+    //     catch {
+    //         throw new Error('toDepartmentError')
+    //     }        
+    // }
 }))
 
 export default useDepartmentsStore

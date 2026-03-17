@@ -7,16 +7,17 @@ import NextLinkIcon from "@/shared/assets/Icon/NextLinkIcon"
 import {  Table, TableProps } from "antd"
 import Link from "next/link"
 import { useFFMenu } from '@/app/personal/ffmenu/useFFMenu'
-import { useShallow } from 'zustand/shallow'
 import useDepartmentsStore from '../../model/useDepartmentsStore'
-import useFilteredFFs from '@/entities/FFTable/model/useFilteredFFs'
 import useFFFiltersStore from '@/entities/FFTable/model/useFFFiltersStore'
-import { useDepartment } from '@/widgets/FullDepartmentTable/model/useDepartment'
-import { TableData } from '../../lib'
+import { IDepartment, TableData } from '../../lib'
 import { Department } from '../../lib/DepartmentType'
+import useBreadcrumbStore from '@/entities/DepartmentBreadcamb/model/useBreadcrumbStore'
 
-const COLUMNS: TableProps<Omit<Department, 'children'>>['columns'] = [
 
+
+const createColumns = (
+  nextDepartment: (dep: IDepartment) => void
+): TableProps<IDepartment>['columns'] => [
   {
     title: 'Имя отдела',
     dataIndex: 'name',
@@ -26,8 +27,9 @@ const COLUMNS: TableProps<Omit<Department, 'children'>>['columns'] = [
   {
     title: '',
     dataIndex: 'link',
-    render: (_, record) => (
-      <Link href={record.link}><NextLinkIcon/></Link>
+    render: (_, department) => (
+      <button
+      onClick={() => nextDepartment(department)}><NextLinkIcon/></button>
     ),
     key: 'link',
     width: "64px",
@@ -54,9 +56,6 @@ function handleClick(e: React.MouseEvent, record: TableData) {
 
 const TableDepartment = () => {
 
-  const departments = useDepartmentsStore(state => state.departments)
-  const data: Omit<Department, 'children'>[] = departments.map(({children, ...department}) => (department))
-  
   const isHidden: boolean = useFFMenu(state => state.isHidden)
 
   // const {
@@ -68,15 +67,21 @@ const TableDepartment = () => {
   //     data: state.departments.map((item) => ({...item, key: item.id })),
   //     isHidden: state.isHidden
   //   })))
+  const columns = createColumns(useBreadcrumbStore(state => state.addDepartment))
+  const department = useBreadcrumbStore(state => state.path.at(-1))
   const setSelectedDepartments = useFFFiltersStore(state => state.setDepartment)
   return (
     // TODO:  onSelect: (__, _, records) => {console.log(records)}}
     
       <Table 
-        rowSelection={{type: 'checkbox', onChange: (selectedRowKeys) => setSelectedDepartments(selectedRowKeys)}}
+        rowSelection={{type: 'checkbox', onChange: (selectedRowKeys) => setSelectedDepartments(selectedRowKeys as number[])}}
         rowKey='id'
-        dataSource={data}
-        columns={COLUMNS}
+        expandable={{
+          rowExpandable: () => false,
+          expandIcon: () => false        
+        }}
+        dataSource={department?.children}
+        columns={columns}
         pagination={{ placement: ['bottomCenter'], pageSize: 6 }}
         size="small"
         className={`department-table ${isHidden && 'hidden'}`}

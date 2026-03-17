@@ -1,16 +1,16 @@
 'use client'
 
-import FFTable, { FeatureFlag, FeatureFlag } from "@/entities/FFTable/FFTable"
+import FFTable from "@/entities/FFTable/FFTable"
 import AddFeatureFlag from "@/features/AddFeatureFlag/AddFeatureFlag"
 import FFSearch from "@/features/FFSearch/FFSearch"
 import ReloadFeaturesFlags from "@/features/ReloadFeatureFlags/ReloadFeaturesFlags"
 import { Flex } from "antd"
-import { useState } from "react"
 import { useFFMenu } from "../../app/personal/ffmenu/useFFMenu"
 import { Department } from "@/entities/Departments/lib/DepartmentType"
-import { useShallow } from "zustand/shallow"
 import useFilteredFFs from "@/entities/FFTable/model/useFilteredFFs"
 import useFFFiltersStore from "@/entities/FFTable/model/useFFFiltersStore"
+import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStore"
+import useFFStore from "@/entities/FFTable/model/useFFStrore"
 
 
 
@@ -43,28 +43,27 @@ const FullFeatureFlagsTable = () => {
     // } = props
 
 
-    const {departments, getFeatureFlagsByDepartments} = 
-        useFFMenu(useShallow(state => ({
-            getFeatureFlagsByDepartments: state.getFeatureFlagsByDepartments, 
-            departments: state.departments,
-        })))
+    const getFeatureFlagsByDepartments = useFFMenu(state => state.getFeatureFlagsByDepartments)
+
+    const departments = useDepartmentsStore(state => state.departments)
+    const setFeatureFlag = useFFStore(state => state.setFeatureFlags)
 
     const setFeatureFlags = async (departments: Department[]) => {
         const response = await getFeatureFlagsByDepartments(departments)
-
-        setData(response.map(item => ({
-            ...item,
-            key: item.id,
-        })))
+        setFeatureFlag(response)
+        // setData(response.map(item => ({
+        //     ...item,
+        //     key: item.id,
+        // })))
     }
 
     const featureFlags = useFilteredFFs()
     const setFeatureFlagName = useFFFiltersStore(state => state.setName)
     // const featureFlags: FeatureFlag[] = createData(10)
-    const [data, setData] = useState<FeatureFlag[]>(featureFlags.map(item => ({
-            ...item,
-            key: item.id,
-        })))
+    // const [data, setData] = useState<FeatureFlag[]>(featureFlags.map(item => ({
+    //         ...item,
+    //         key: item.id,
+    //     })))
     // console.log(data)
     return(
         <div>
