@@ -1,14 +1,15 @@
 
 :root {
-  --inter: 'Inter', sans-serif;
-  --roboto-mono: 'Roboto', sans-serif;
---ant-table-row-hover-bg: #fff;
+  --segoe-ui: 'Segoe UI', sans-serif;
+  --roboto: 'Roboto', sans-serif;
+  --roboto-mono: 'Roboto Mono', sans-serif;
   --text-size: 16px;
   --bigText-size: 20px;
 
   --litleTitle-size: 24px; 
   --title-size: 28px;
 
+  // --ant-table-row-hover-bg: #da6060;
   --background-text-color: #cfcfcf;
   --background: #2A2828;
   --text-color: #d9d8d8;
@@ -33,13 +34,21 @@
 }
 
 .title {
-  font-family: var(--inter);
+  font-family: var(--segoe-ui);
   font-weight: 400;
   color: var(--lightwhite);
   font-size: 28px;
 
   &_litle{
-    font-size: 26px;
+    font-size: 20px;
+  }
+
+  &_bold {
+    font-weight: 600;
+  }
+
+  &_tiny {
+    font-weight: 300;
   }
 
   &_big {
@@ -60,6 +69,14 @@
 
   &_big {
     font-size: 20px;
+  }
+
+  &_tiny {
+    font-weight: 300;
+  }
+
+  &_bold {
+    font-weight: 600;
   }
 }
 

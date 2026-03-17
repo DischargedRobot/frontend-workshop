@@ -1,6 +1,13 @@
+
 @use './reset.css';
 @use './globals.scss';
 @use './base.scss';
 
-@use '../common/fonts/stylesheet.css';
+
+@import '../common/fonts/RobotoMono/stylesheet.css';
+@import '../common/fonts/SegoeUI/stylesheet.css';
+
+
+// @use '../common/fonts/stylesheet.css';
+
 
