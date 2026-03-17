@@ -7,7 +7,10 @@ interface IFilter {
 }
 
 interface IFFFiltersStore extends IFilter{
-    setDepartment: (newDepartments: number[]) => void
+    setDepartment: (newDepartmentIds: number[]) => void
+    addDepartment: (newDepartmentId: number) => void
+    addDepartmentAndItChildren: (newDepartment: IDepartment) => void
+
     setName: (newName: string) => void
     setFilters: (filters: IFilter) => void
 }
@@ -18,6 +21,8 @@ const useFFFiltersStore = create<IFFFiltersStore>((set, get) => ({
     name: '',
 
     setDepartment: (newDepartmentIds) => set({departmentIds: newDepartmentIds}),
+    addDepartment: (newDepartmentId) => set({departmentIds: [...get().departmentIds, newDepartmentId]}),
+    addDepartmentAndItChildren: (newDepartment) => set({departmentIds: [...get().departmentIds, newDepartment.id, ...newDepartment.children.map(dep => dep.id)]}),
     setName: (newName) => set({name: newName}),
     setFilters: (newFilters) => set(newFilters)
 

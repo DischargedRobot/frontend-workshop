@@ -10,13 +10,13 @@ import { useFFMenu } from '@/app/personal/ffmenu/useFFMenu'
 import useDepartmentsStore from '../../model/useDepartmentsStore'
 import useFFFiltersStore from '@/entities/FFTable/model/useFFFiltersStore'
 import { IDepartment, TableData } from '../../lib'
-import { Department } from '../../lib/DepartmentType'
 import useBreadcrumbStore from '@/entities/DepartmentBreadcamb/model/useBreadcrumbStore'
 
 
 
 const createColumns = (
-  nextDepartment: (dep: IDepartment) => void
+  addDepartmentToBredcrumb: (department: IDepartment) => void,
+  addDepartmentForFFFilters: (department: IDepartment) => void,
 ): TableProps<IDepartment>['columns'] => [
   {
     title: 'Имя отдела',
@@ -29,7 +29,10 @@ const createColumns = (
     dataIndex: 'link',
     render: (_, department) => (
       <button
-      onClick={() => nextDepartment(department)}><NextLinkIcon/></button>
+      onClick={() => {
+        addDepartmentToBredcrumb(department)
+        addDepartmentForFFFilters(department)
+      }}><NextLinkIcon/></button>
     ),
     key: 'link',
     width: "64px",
@@ -69,26 +72,43 @@ const TableDepartment = () => {
   //     data: state.departments.map((item) => ({...item, key: item.id })),
   //     isHidden: state.isHidden
   //   })))
-  const columns = createColumns(useBreadcrumbStore(state => state.addDepartment))
-  const department = useBreadcrumbStore(state => state.path.at(-1))
+  const columns = createColumns(
+    useBreadcrumbStore(state => state.addDepartment), 
+    useFFFiltersStore(state => state.addDepartmentAndItChildren)
+  )
+  const departments = useBreadcrumbStore(state => state.path)
   const setSelectedDepartments = useFFFiltersStore(state => state.setDepartment)
+
+  const selectRow = (selectedRowKeys: number[]) => {
+    console.log(selectedRowKeys, departments)
+    if (selectedRowKeys.length === 0) {
+      setSelectedDepartments([...departments.map(dep => dep.id), ...departments.at(-1)!.children.map(dep => dep.id)])
+    } else {
+      setSelectedDepartments(selectedRowKeys as number[])
+    }
+  }
+
   return (
     // TODO:  onSelect: (__, _, records) => {console.log(records)}}
     
       <Table 
+      
         rowClassName={'text_litle'}
-        rowSelection={{type: 'checkbox', onChange: (selectedRowKeys) => setSelectedDepartments(selectedRowKeys as number[])}}
+        rowSelection={{
+          type: 'checkbox', 
+          onChange: (selectedRowKeys) => selectRow(selectedRowKeys as number[])}}
         rowKey='id'
         expandable={{
+          // отключает связь с потомками элементов при их выборе, чтобы когда выбрали всех в таблице, мы не брали ещё и их потомков
+          childrenColumnName: '_NEVER_',
           rowExpandable: () => false,
           expandIcon: () => false        
         }}
-        dataSource={department?.children}
+        dataSource={departments.at(-1)?.children}
         columns={columns}
         pagination={{ placement: ['bottomCenter'], pageSize: 6 }}
         size="small"
         className={`department-table ${isHidden && 'hidden'}`}
-        tableLayout={"auto"}
         >
       </Table>
   )

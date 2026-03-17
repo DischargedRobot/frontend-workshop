@@ -74,6 +74,7 @@ interface Props {
 
 const FFTable = ({featureFlags}: Props) => {
 
+    
     return (
         <Table 
             className="ff-table "
