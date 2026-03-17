@@ -1,4 +1,4 @@
-import { FeatureFlag } from "../../FFTable/FFTable";
+import { FeatureFlag } from "../../FFTable/ui/FFTable";
 
 export interface Department {
   id: number,

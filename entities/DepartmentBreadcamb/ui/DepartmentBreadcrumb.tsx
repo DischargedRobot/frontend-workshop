@@ -3,8 +3,6 @@
 import './DepartmentBreadcrumb.scss'
 
 import { Breadcrumb } from "antd"
-import { useFFMenu } from '@/app/personal/ffmenu/useFFMenu'
-import { useShallow } from 'zustand/shallow'
 import useBreadcrumbStore from '../model/useBreadcrumbStore'
 import { useEffect } from 'react'
 import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore'

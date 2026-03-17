@@ -1,32 +1,32 @@
 'use client'
 
-import FFTable from "@/entities/FFTable/FFTable"
+import FFTable from "@/entities/FFTable/ui/FFTable"
 import AddFeatureFlag from "@/features/AddFeatureFlag/AddFeatureFlag"
 import FFSearch from "@/features/FFSearch/FFSearch"
 import ReloadFeaturesFlags from "@/features/ReloadFeatureFlags/ReloadFeaturesFlags"
 import { Flex } from "antd"
-import { useFFMenu } from "../../app/personal/ffmenu/useFFMenu"
-import { Department } from "@/entities/Departments/lib/DepartmentType"
+import { IDepartment } from "@/entities/Departments/lib/DepartmentType"
 import useFilteredFFs from "@/entities/FFTable/model/useFilteredFFs"
 import useFFFiltersStore from "@/entities/FFTable/model/useFFFiltersStore"
 import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStore"
 import useFFStore from "@/entities/FFTable/model/useFFStrore"
+import {FFTableApi} from "@/entities/FFTable"
 
 
 
-const FilteredByStringParam = <T, K extends keyof T>(regular: string, data: T[], field: K): T[] => {
-    if (regular) {
-        return data.filter(item => {
-            if (typeof item[field] == 'string')
-            {
-                return item[field].includes(regular)
-            }
-            return false
-        })
-    }
+// const FilteredByStringParam = <T, K extends keyof T>(regular: string, data: T[], field: K): T[] => {
+//     if (regular) {
+//         return data.filter(item => {
+//             if (typeof item[field] == 'string')
+//             {
+//                 return item[field].includes(regular)
+//             }
+//             return false
+//         })
+//     }
 
-    return data
-}
+//     return data
+// }
 
 // interface Props {
 //     featureFlags: FeatureFlag[]
@@ -43,12 +43,12 @@ const FullFeatureFlagsTable = () => {
     // } = props
 
 
-    const getFeatureFlagsByDepartments = useFFMenu(state => state.getFeatureFlagsByDepartments)
+    const getFeatureFlagsByDepartments = FFTableApi.getFeatureFlagsByDepartments
 
     const departments = useDepartmentsStore(state => state.departments)
     const setFeatureFlag = useFFStore(state => state.setFeatureFlags)
 
-    const setFeatureFlags = async (departments: Department[]) => {
+    const setFeatureFlags = async (departments: IDepartment[]) => {
         const response = await getFeatureFlagsByDepartments(departments)
         setFeatureFlag(response)
         // setData(response.map(item => ({

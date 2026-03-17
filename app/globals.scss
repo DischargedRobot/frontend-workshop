@@ -1,7 +1,7 @@
 
 :root {
   --inter: 'Inter', sans-serif;
-  --roboto: 'Roboto', sans-serif;
+  --roboto-mono: 'Roboto', sans-serif;
 --ant-table-row-hover-bg: #fff;
   --text-size: 16px;
   --bigText-size: 20px;
@@ -36,23 +36,31 @@
   font-family: var(--inter);
   font-weight: 400;
   color: var(--lightwhite);
+  font-size: 28px;
 
-}
+  &_litle{
+    font-size: 26px;
+  }
 
-.title_litle{
+  &_big {
+    font-size: 48px;
+  }
 
-}
-
-.title_big {
-  font-size: 48px;
 }
 
 .text {
-  font-family: var(--roboto);
+  font-family: var(--roboto-mono);
   font-weight: 400;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--lightwhite);
 
+  &_litle {
+    font-size: 14px;
+  }
+
+  &_big {
+    font-size: 20px;
+  }
 }
 
 .button {

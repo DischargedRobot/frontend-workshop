@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import useFFStore from "./useFFStrore"
 import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStore"
 import useFFFiltersStore from "./useFFFiltersStore"
-import { FeatureFlag } from "../FFTable"
+import { FeatureFlag } from "../ui/FFTable"
 import { useShallow } from "zustand/shallow"
 
 type TFilterKey = 'departmentIds' | 'name'

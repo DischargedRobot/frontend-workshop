@@ -1,11 +1,11 @@
 import { IDepartment } from "../lib"
 
-interface IUseDepartment {
+type IUseDepartment = () =>  {
     getDepartmentsByPath: (path: string) => void
     getFeatureFlagsByDepartments: (departments: IDepartment[]) => void
 }
 
-const useDepartments = () => {
+const useDepartments: IUseDepartment = () => {
 
     const getDepartmentsByPath = async (path: string) => {
         const response = await fetch(`${path}`,{
@@ -36,3 +36,5 @@ const useDepartments = () => {
     })
 
 }
+
+// export default useDepartments

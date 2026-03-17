@@ -1,9 +1,12 @@
 // .department-table .ant-table-tbody > tr > td{
 //     height: 16 !important;
 // }
-
+@use '../../../../app/globals.scss';
 .department-table  {
 
+    th {
+        @extend .text
+    }
 
     &.hidden {
         display: none;

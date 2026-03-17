@@ -38,9 +38,11 @@ const createColumns = (
     title: '', 
     key: "delete",
     render: () => (
-        <button onClick={()=> {}}><DeleteIcon/> </button>
+        <button style={{alignItems: 'center'}} onClick={()=> {}}><DeleteIcon/> </button>
     ),
     width: "64px",
+    align: 'center',
+    
   },
 ]
 
@@ -74,6 +76,7 @@ const TableDepartment = () => {
     // TODO:  onSelect: (__, _, records) => {console.log(records)}}
     
       <Table 
+        rowClassName={'text_litle'}
         rowSelection={{type: 'checkbox', onChange: (selectedRowKeys) => setSelectedDepartments(selectedRowKeys as number[])}}
         rowKey='id'
         expandable={{

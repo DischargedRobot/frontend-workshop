@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { FeatureFlag, FeatureFlag } from "../FFTable";
+import { FeatureFlag, FeatureFlag } from "../ui/FFTable";
 
 interface IFFStore {
     featureFlags: FeatureFlag[]
