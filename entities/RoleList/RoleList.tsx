@@ -2,7 +2,7 @@
 import { memo } from 'react'
 import './RoleList.scss'
 
-import Role, { IRole, TROLE } from "@/shared/Role"
+import Role, { IRole } from "@/shared/model/Role"
 
 interface Props {
     roles: IRole[]

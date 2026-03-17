@@ -1,7 +1,7 @@
 import './RolesStatus.scss'
 
 import { Switch } from "antd"
-import { IRole } from "../../Role/types"
+import { IRole } from "../Role/types"
 import { memo } from 'react';
 
 interface Props {

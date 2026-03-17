@@ -8,7 +8,7 @@ import { IUser } from "./types"
 import { DeleteIcon } from '@/shared/assets/Icon'
 import { memo, use, useCallback, useMemo, useState } from 'react'
 import RoleStatus from '@/shared/model/RolesStatus/RolesStatus'
-import { IRole } from '@/shared/Role'
+import { IRole } from '@/shared/model/Role'
 import { PlusOutlined } from '@ant-design/icons'
 import { useForm } from 'react-hook-form'
 import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore'
@@ -45,7 +45,6 @@ const UserCard = (props: Props) => {
     
     const saveData = (data: Pick<IUser, 'login' | 'password' | 'departmentId'>) =>  {
 
-        const depId = allDepartments.find((department => department.id == data.departmentId))
         setUser({
             ...user,
             login: data.login, 

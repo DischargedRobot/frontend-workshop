@@ -1,5 +1,5 @@
 import { IUser } from "@/entities/UserCard/ui/types";
-import { IRole, TROLE } from "@/shared/Role";
+import { IRole, TROLE } from "@/shared/model/Role";
 import { create } from "zustand";
 
 interface IUseUsers {

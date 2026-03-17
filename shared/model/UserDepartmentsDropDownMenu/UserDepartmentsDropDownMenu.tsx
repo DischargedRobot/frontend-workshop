@@ -41,7 +41,10 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
             }}
             
             render = {({field}) =>(
-            <div className={`user-departments-drop ${isCollapsed ? 'user-departments-drop_opened' : ''}`} style={{display: 'flex'}}>
+            <div 
+                className={`user-departments-drop ${isCollapsed ? 'user-departments-drop_opened' : ''}`} 
+                style={{display: 'flex'}}
+            >
                 <label>
                     <input 
                         {...field}
@@ -53,10 +56,12 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
                             setWantedNameDepartment(e.target.value)
                             field.onChange(e.target.value)
                         }}
-                        onBlur={() => setIsCollapsed(false)}
                     />
                 </label>
-                <ul className={`user-departments-drop__list`}>
+                <ul 
+                    className={`user-departments-drop__list`}
+                    onBlur={() => {setIsCollapsed(false)}}
+                >
                     <div style={{padding: '5px', overflow: 'auto'}}>
                         {departments
                         .filter((department => (department.name.toLowerCase().includes(wantedNameDepartment.toLowerCase()))))
@@ -66,6 +71,7 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
                                 key={department.id}
                                 onClick={() => {
                                     setIsCollapsed(false)
+                                    console.log(department)
                                     setWantedNameDepartment(department.name)
                                     // setDepartment(department)
                                     field.onChange(department)

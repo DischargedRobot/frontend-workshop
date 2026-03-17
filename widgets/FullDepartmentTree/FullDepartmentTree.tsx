@@ -1,13 +1,13 @@
 'use client'
 
-import CollapsedIcon from '@/shared/assets/Icon/CollapsedIcon/CollapsedIcon';
 import './FullDepartmentTree.scss'
 
 import DepartmentTree from "@/entities/Departments/ui/DepartmentTree/DepartmentTree"
-import { LeftOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined } from "@ant-design/icons";
 import { TreeDataNode } from "antd";
 import { useState } from "react";
 import { DeleteIcon } from '@/shared/assets/Icon';
+import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore';
 
 interface Props {
     tree: TreeDataNode[]
@@ -19,6 +19,7 @@ const FullDepartmentTree = (props: Props) => {
     } = props
 
     const [isCollapsed, setIsCollapsed] = useState(false)
+
 
     return (
         <div className={`department-tree ${isCollapsed && 'collapsed'}`}>
@@ -32,7 +33,7 @@ const FullDepartmentTree = (props: Props) => {
             {/* <button className='department-tree__button' onClick={() => {console.log(isCollapsed); setIsCollapsed(prev => !prev)}}>
                 <CollapsedIcon isCollapsed={isCollapsed} />
             </button> */}
-            <DepartmentTree tree={tree}/>
+            <DepartmentTree/>
         </div>
     )
 }

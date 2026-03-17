@@ -49,10 +49,7 @@ const tree: TreeDataNode[] = [
 ];
 
 
-const DepartmentTree = (props: Props) => {
-    const {
-        tree,
-    } = props
+const DepartmentTree = () => {
 
     const setDepartmentIds = useUserFiltersStore(state => state.setDepartmentIds)
     // console.log('DepartmentTree')

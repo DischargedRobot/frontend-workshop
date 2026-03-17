@@ -1,6 +1,6 @@
 import './TableName.scss'
 
-import DropArrowIcon from "../assets/Icon/DropArrowIcon/DropArrowIcon"
+import DropArrowIcon from "../../assets/Icon/DropArrowIcon/DropArrowIcon"
 
 interface Props { 
     title: string

@@ -4,7 +4,7 @@ import './FullDepartmentTabe.scss'
 
 import TableDepartment from "@/entities/Departments/ui/DepartmentTable/DepartmentTable"
 import DepartmentBreadcamb from "@/entities/DepartmentBreadcamb/ui/DepartmentBreadcrumb"
-import TableName from "@/shared/TableName/TableName";
+import TableName from "@/shared/ui/TableName/TableName";
 import { useDepartment } from './model/useDepartment';
 import { useFFMenu } from '../../app/personal/ffmenu/useFFMenu';
 import { useShallow } from 'zustand/shallow';
