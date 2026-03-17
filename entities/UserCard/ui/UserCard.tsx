@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form'
 import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore'
 import UserDepartmentsDropDownMenu from '@/shared/model/UserDepartmentsDropDownMenu'
 import { useUsersStore } from '@/entities/UserList/model'
+import { useShallow } from 'zustand/shallow'
 
 interface Props {
     user: IUser
@@ -44,7 +45,7 @@ const UserCard = (props: Props) => {
     
     const saveData = (data: Pick<IUser, 'login' | 'password' | 'departmentId'>) =>  {
 
-        const depId = departments.find((department => department.id == data.departmentId))
+        const depId = allDepartments.find((department => department.id == data.departmentId))
         setUser({
             ...user,
             login: data.login, 
@@ -68,7 +69,7 @@ const UserCard = (props: Props) => {
     
     const [isLoading, setIsLoading] = useState(false)
 
-    const departments = useDepartmentsStore(state => state.departments)
+
     const [roleStatusIsHidden, setRoleStatusIsHidden] = useState(false)
     const [roles, setRoles] = useState<IRole[]>(user.roles)
     const [isSelected, setIsSelected] = useState(false)
@@ -77,7 +78,7 @@ const UserCard = (props: Props) => {
 
     const changeStatusRole = useCallback((): void => {
         setRoles([...user.roles])
-    }, [user.roles])
+    }, [user.roles, setRoles])
     
     const filterRoleList = useMemo(() => roles.filter(role => role.isEnabled), [roles])
     console.log('user card')
@@ -143,7 +144,6 @@ const UserCard = (props: Props) => {
                     </label>
                 </div> */}
                 <UserDepartmentsDropDownMenu 
-                    departments={departments} 
                     currentDepartment={user.departmentId} 
                     // setDepartment={(department) => {
                     //     console.log(user.departmentId)

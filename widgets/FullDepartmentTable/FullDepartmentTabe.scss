@@ -1,5 +1,7 @@
 @use '../../app/placeholder.scss';
 
 .full-department-table {
-    @extend %flex-column
+    @extend %flex-column;
+    
+    gap: 10px;
 }

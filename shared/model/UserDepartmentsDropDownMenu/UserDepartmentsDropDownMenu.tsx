@@ -1,14 +1,15 @@
 'use client'
 
+import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore'
 import './UserDepartmentsDropDownMenu.scss'
 
 import { IDepartment } from "@/entities/Departments/lib"
 import { IUser } from '@/entities/UserCard/ui/types'
 import { memo, useState } from "react"
 import { Control, Controller } from 'react-hook-form'
+import { useShallow } from 'zustand/shallow'
 
 interface Props {
-    departments: IDepartment[]
     currentDepartment: number
     control: Control<Pick<IUser, 'login' | 'password' | 'departmentId'>>
 }
@@ -17,14 +18,15 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
 
     const {
         currentDepartment,
-        departments,
         control,
     } = props
 
     console.log(currentDepartment, 'sss')
     const [isCollapsed, setIsCollapsed] = useState(false)
 
+    const departments = useDepartmentsStore(useShallow(state => state.getDepartmentsIncludingAllChildren()))
     const department = departments.find(dep => dep.id == currentDepartment)
+    
     const [wantedNameDepartment, setWantedNameDepartment] = useState(department?.name ?? "")
     // const [choosenDepart, setChoosenDepart] = useState(currentDepartment)
     return (
@@ -63,7 +65,7 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
                                 className='user-departments-drop__item'
                                 key={department.id}
                                 onClick={() => {
-                                    setIsCollapsed(prev => !prev)
+                                    setIsCollapsed(false)
                                     setWantedNameDepartment(department.name)
                                     // setDepartment(department)
                                     field.onChange(department)

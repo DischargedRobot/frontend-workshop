@@ -5,8 +5,10 @@
 .department-table  {
 
     th {
-        @extend .text
+        @extend .text;
+        @extend .text_bold;
     }
+    
 
     &.hidden {
         display: none;

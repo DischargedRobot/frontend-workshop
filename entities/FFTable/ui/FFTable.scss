@@ -3,5 +3,6 @@
 .ff-table {
     th {
         @extend .text;
+        @extend .text_bold;
     }
 }

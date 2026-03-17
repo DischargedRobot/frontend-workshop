@@ -28,6 +28,7 @@ const DepartmentBreadcamb = () => {
 
     return (
         <Breadcrumb 
+            className='text text_litle text_bold'
             items={path.map((item, index, arr) => 
                 {
                 const paths = DEPARTMENTS_REQUEST_URL+arr.slice(0,index+1).join('/')

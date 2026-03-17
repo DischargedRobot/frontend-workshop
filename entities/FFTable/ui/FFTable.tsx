@@ -74,11 +74,11 @@ interface Props {
 
 const FFTable = ({featureFlags}: Props) => {
 
-    
+
     return (
         <Table 
             className="ff-table "
-            rowClassName={'text_litle'}
+            rowClassName={'text text_litle text_tiny'}
             size="small"
             rowKey='id'
             rowSelection={{type: 'checkbox'}}

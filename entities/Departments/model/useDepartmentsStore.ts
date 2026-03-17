@@ -28,9 +28,22 @@ interface IUseDepartments {
     selectedDepartmentIds: number[]
     setSelectedDepartmentIds: (newSelectedDepartmentIds: number[]) => void
 
+    getDepartmentsIncludingAllChildren: () => IDepartment[]
     getDepartmentsByPath: (path: string) => void
     getFeatureFlagsByDepartments: (departments: IDepartment[]) => void
     // toDepartment: (path: string) => void
+}
+
+const getDepartmentAndAllChildren = (departments: IDepartment[]): IDepartment[] => {
+    return departments.reduce((allDepartments: IDepartment[], department: IDepartment) => {
+        allDepartments.push(department)
+
+        if (department.children.length != 0) {
+            allDepartments.push(...getDepartmentAndAllChildren(department.children))
+        }
+
+        return allDepartments
+    }, [])
 }
 
 const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
@@ -40,6 +53,8 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
   
     selectedDepartmentIds: [],
     setSelectedDepartmentIds: (newSelectedDepartments) => set({selectedDepartmentIds: newSelectedDepartments}),
+
+    getDepartmentsIncludingAllChildren: () => getDepartmentAndAllChildren(get().departments),
 
     getDepartmentsByPath: async (path: string) => {
         const response = await fetch(`${path}`,{

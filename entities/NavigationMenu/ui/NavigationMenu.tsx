@@ -14,9 +14,9 @@ import CollapsedIcon from "@/shared/assets/Icon/CollapsedIcon/CollapsedIcon"
 
 const items: MenuItemType[] = [
     { key: 'logo', icon: <LogoIcon />, label: <Link style={{display: 'flex', alignItems: "center"}} href="#!" > RedFlag </Link>},
-    { key: 'profile', icon: <ProfileIcon />, label: <Link href="#!" style={{ width: '10px' }} > Профиль </Link> },
-    { key: 'structure', icon: <StructureMenuIcon />, label: <Link href="#!" style={{ width: '10px' }} > Структура орагнизации </Link> },
-    { key: 'ffmenu', icon: <FFMenuIcon />, label: <Link href="#!" style={{ width: 'auto' }}> Меню с FF </Link> },
+    { key: 'profile', icon: <ProfileIcon />, label: <Link href="profile" style={{ width: '10px' }} > Профиль </Link> },
+    { key: 'structure', icon: <StructureMenuIcon />, label: <Link href="structure" style={{ width: '10px' }} > Структура орагнизации </Link> },
+    { key: 'ffmenu', icon: <FFMenuIcon />, label: <Link href="ffmenu" style={{ width: 'auto' }}> Меню с FF </Link> },
 ]
 // className={`${window.location.pathname == '/personal/structure' && 'navigation-menu__item_selected'}`}
 const NavigationMenu = () => {
