@@ -1,8 +1,8 @@
 import { FeatureFlag } from "@/entities/FFTable/ui/FFTable";
 import { create } from "zustand";
 
-type TFeatureFlagTable = {
-    [K in keyof Omit<Required<FeatureFlag>, 'id' | 'departmentId'>]: {name: string, isVisible: boolean}
+export type TFeatureFlagTable = {
+    [K in keyof Omit<Required<FeatureFlag>, 'id' | 'departmentId' | 'name'>]: {name: string, isVisible: boolean}
 }
 
 interface IFFTableFiltersStore {
@@ -16,7 +16,6 @@ interface IFFTableFiltersStore {
 const useFFTableFiltersStore = create<IFFTableFiltersStore>((set, get) => ({
 
     visibleColumns: {
-        name: {name:'Имя', isVisible: true},
         departmentName: {name:'Отдел', isVisible: true},
         isEnabled: {name:'Статус', isVisible: true},
         lastModified: {name:'Последнее изменние', isVisible: true},

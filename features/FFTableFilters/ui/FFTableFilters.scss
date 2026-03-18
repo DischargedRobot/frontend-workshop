@@ -1,0 +1,12 @@
+@use '../../../app/placeholder.scss';
+
+.ff-table-filters {
+    @extend %flex;
+    flex-wrap: wrap;
+
+    gap: 5px;
+    padding: 15px;
+
+    border-radius: 20px;
+    background-color: var(--foreground);
+}

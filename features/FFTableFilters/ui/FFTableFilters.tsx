@@ -1,4 +1,5 @@
-import useFFFiltersStore from "@/entities/FFTable/model/useFFFiltersStore"
+import './FFTableFilters.scss'
+// import useFFFiltersStore from "@/entities/FFTable/model/useFFFiltersStore"
 import useFFTableFiltersStore from "../model/useFFTableFiltersStore"
 import { Switch } from "antd"
 
@@ -8,14 +9,14 @@ const FFTableFilters = () => {
     const toggle = useFFTableFiltersStore(state => state.toggleVisibleColumn)
 
     return (
-        <ul>
+        <ul className="ff-table-filters">
             {Object.entries(columns).map(([key, column]) => 
                 <li key={key}>
                     <Switch 
                         checked={column.isVisible}
                         onChange={() => toggle(key as keyof typeof columns)}
                     />
-                    {column.name}
+                    <span>{column.name}</span>
                 </li>
             )}
         </ul>
