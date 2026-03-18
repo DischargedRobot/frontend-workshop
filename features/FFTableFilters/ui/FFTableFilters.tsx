@@ -12,7 +12,10 @@ const FFTableFilters = () => {
 
     const [isCollapsed, setIsCollapsed] = useState(false)
     return (
-        <div className='ff-table-filters'>
+        <div 
+            className='ff-table-filters'
+            onBlur={() => setIsCollapsed(prev => !prev)}
+        >
             <button 
                 className='ff-table-filters__button'
                 onClick={() => setIsCollapsed(prev => !prev)}

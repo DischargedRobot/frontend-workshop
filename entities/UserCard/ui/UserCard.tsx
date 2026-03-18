@@ -43,7 +43,6 @@ const UserCard = (props: Props) => {
     )
     
     const saveData = (data: Pick<IUser, 'login' | 'password' | 'departmentId'>) =>  {
-
         setUser({
             ...user,
             login: data.login, 
@@ -109,7 +108,7 @@ const UserCard = (props: Props) => {
                             required: "Это поле обязательно для заполнения",
                         })}
                         />
-                        {errors.login?.message?.toString()}
+                        <span className='user-card__error'>{errors.login?.message?.toString()}</span>
                 </label>
                 <label className='user-card__field'>
                     <input 
@@ -128,7 +127,7 @@ const UserCard = (props: Props) => {
                             required: "Это поле обязательно для заполнения",
                         })}
                     />
-                    {errors.password?.message?.toString()}
+                    <span className='user-card__error'>{errors.password?.message?.toString()}</span>
                 </label>
                 {/* //TODO: Сделать выбор выпадающим списком */}
                 {/* <div style={{display: 'flex'}}>
@@ -141,14 +140,16 @@ const UserCard = (props: Props) => {
                         />
                     </label>
                 </div> */}
-                <UserDepartmentsDropDownMenu 
-                    currentDepartment={user.departmentId} 
-                    // setDepartment={(department) => {
-                    //     console.log(user.departmentId)
-                    //     }}
-                    control={control}
-                />
-                {errors.departmentId?.message ?? ''}
+                <div className='user-card__field'>
+                    <UserDepartmentsDropDownMenu 
+                        currentDepartment={user.departmentId} 
+                        // setDepartment={(department) => {
+                        //     console.log(user.departmentId)
+                        //     }}
+                        control={control}
+                    />
+                <span className='user-card__error'>{errors.departmentId?.message ?? ''}</span>
+                </div>
                 <div>
                     <button 
                         className={!isDirty ? 'disabled' : ''}

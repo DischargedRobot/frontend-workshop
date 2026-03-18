@@ -9,6 +9,7 @@
 
         position: absolute;
         bottom: 120%;
+        left: 10px;
         transform: translate(-50%, 0);
 
         @extend %flex;

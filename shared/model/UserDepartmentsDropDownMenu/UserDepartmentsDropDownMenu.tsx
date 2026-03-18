@@ -34,7 +34,12 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
             control={control}
             rules={{
                 validate: (value) => {
-                    const isExisted = departments.some(department => department.id === value)
+                    let isExisted
+                    if (typeof value == 'string') {
+                        isExisted = departments.some(department => department.name === value)
+                    } else {
+                        isExisted = departments.some(department => department.id === value)
+                    }
                     return isExisted || "Отдел не найдено"
                 }   
             }}
@@ -54,13 +59,13 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
                         onClick={() => setIsCollapsed(true)}
                         onChange={(e) => {
                             setSearchQuery(e.target.value)
+                            field.onChange(departments.find(dep => dep.name == e.target.value)?.id)
                         }}
                     />
                 </label>
                 <ul 
                     className={`user-departments-drop__list`}
                 >
-                    <div style={{padding: '5px', overflow: 'auto'}}>
                         {departments
                         .filter((department => (department.name.toLowerCase().includes(searchQuery.toLowerCase()))))
                         .map((department) => {
@@ -76,7 +81,6 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
                                 {department.name}
                             </li>
                         })}
-                    </div>
                 </ul>
             </div>
         )}/>
