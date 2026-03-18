@@ -25,7 +25,10 @@ const useUsersStore = create<IUseUsers>((set, get) => ({
 
     users: [
         {login: 'L', password: 'ss', id:1, roles: createIntialRoles(), departmentId: dep.id},
-        {login: 'rob', password: 'ss', id:2, roles: createIntialRoles(), departmentId: dep.id}
+        {login: 'rob', password: 'ss', id:2, roles: createIntialRoles(), departmentId: dep.id},
+        {login: 'L', password: 'ss', id:3, roles: createIntialRoles(), departmentId: dep.id},
+        {login: 'L', password: 'ss', id:4, roles: createIntialRoles(), departmentId: dep.id},
+        {login: 'L', password: 'ss', id:5, roles: createIntialRoles(), departmentId: dep.id},
     ],
     setUsers: (users) => set({users}),
     setUser: (newUser) => set((state) => ({users: state.users.map(user => (user.id == newUser.id ? {...user, ...newUser} : user ))})),

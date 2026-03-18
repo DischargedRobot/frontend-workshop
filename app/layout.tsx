@@ -23,9 +23,9 @@ const COLOR = {
   foreground: "#222222",
   buttonBaseBackground: "#8d8d8d",
   hover: "#4d4d4d",
-  hoverActive: "#5973e9",
+  hoverActive: "#507fdc",
   activeBackground: "#2a5cd0",
-  activeHover: "#4d6aed",
+  // activeHover: "",
   stroke: "#58595d76",
   activeBorder: "#ECECEC",
   foregroundSecond: "#292929cb",
@@ -112,7 +112,7 @@ export default function RootLayout({
     <html lang="en">
       <body style={{
           '--text-color': COLOR.textColor,
-          '--active-hover': COLOR.activeHover,
+          '--active-hover': COLOR.hoverActive,
           '--active-background': COLOR.activeBackground,
           '--foreground': COLOR.foreground,
           '--foreground-second': COLOR.foregroundSecond, 

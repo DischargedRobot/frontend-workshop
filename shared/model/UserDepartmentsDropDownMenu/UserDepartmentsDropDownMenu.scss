@@ -9,7 +9,24 @@
     // overflow: hidden;
 
     // transition: max-height ease-out 0.3s;
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #507fdc rgba(255, 166, 0, 0);
+    }
 
+// /* для Chrome/Edge/Safari */
+// *::-webkit-scrollbar {
+//   height: 12px;
+//   width: 12px;
+// }
+// *::-webkit-scrollbar-track {
+//   background: transparent;
+// }
+// *::-webkit-scrollbar-thumb {
+//   background-color: blue;
+//   border-radius: 5px;
+//   border: 3px solid transparent;
+// }
     &__item {
         cursor: pointer;
         margin: 5px;

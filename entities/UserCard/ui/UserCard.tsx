@@ -175,7 +175,10 @@ const UserCard = (props: Props) => {
                     </button>
                     {roleStatusIsHidden && <RoleStatus setRoles={setRoles} roles={roles}/>}
                 </div>
-                <RoleList roles={filterRoleList} changeRoles={changeStatusRole}/>
+                <RoleList 
+                    roles={filterRoleList} 
+                    changeRoles={changeStatusRole}
+                />
             </div>
         </div>
     )

@@ -1,4 +1,13 @@
 .tree {
-    max-width: 300px;
     width: 100%;
+
+   .ant-tree-node-content-wrapper { 
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .ant-tree-treenode {
+        width: 100%;
+    }
 }
