@@ -5,6 +5,7 @@ import UserSettings from "@/features/UserSettings/ui/UserSettings"
 import UserTestingPanelForTheme from "@/features/UserTestingPanelForTheme/UserTestingPanelForTheme"
 import { IRole, TROLE } from "@/shared/model/Role"
 import { Content } from "antd/es/layout/layout"
+import useProfileStore from "./model/useProfileStore"
 
 const createIntialRoles = (): IRole[] => {
     const roles: IRole[] = [];
@@ -20,10 +21,11 @@ const Profile = () => {
     // , [])
     const setUser = useUsersStore(state => (state.setUser))
 
+    const profile = useProfileStore(state => state.profile)
     return (
         <Content>
             <UserCard 
-                user={{login: 'Robo', password:'password', id: 1, roles: createIntialRoles(), departmentId:1}} 
+                user={profile} 
                 setUser={setUser}/>
             <UserSettings/>
             <UserTestingPanelForTheme/>
