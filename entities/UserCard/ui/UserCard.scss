@@ -3,9 +3,10 @@
 .user-card {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 32px 150px auto;
+    grid-template-rows: 32px 75px 75px auto;
     grid-template-areas: 
     "avatar circle-selection"
+    "avatar personal-data"
     "avatar personal-data"
     "roles roles";
 

@@ -1,0 +1,34 @@
+.add-department {
+    position: relative;
+
+    width: max-content;
+    height: auto;
+
+    &__button {
+        line-height: 0;
+    }
+
+    &__panel {
+
+        z-index: 100;
+        position: absolute;
+        top: 150%;
+        transform: translate(-50%, 0);
+
+        padding: 10px;
+
+        width: max-content;
+        height: auto;
+
+        border-radius: 20px;
+        background-color: var(--foreground);
+        
+        &_collapsed {
+            display: none;
+        }
+    }
+
+    &__field {
+        
+    }
+}

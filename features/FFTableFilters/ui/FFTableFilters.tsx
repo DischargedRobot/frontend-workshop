@@ -10,11 +10,16 @@ const FFTableFilters = () => {
     const columns = useFFTableFiltersStore(state => state.visibleColumns)
     const toggle = useFFTableFiltersStore(state => state.toggleVisibleColumn)
 
-    const [isCollapsed, setIsCollapsed] = useState(false)
+    const [isCollapsed, setIsCollapsed] = useState(true)
     return (
         <div 
-            className='ff-table-filters'
-            onBlur={() => setIsCollapsed(prev => !prev)}
+        className='ff-table-filters'
+        onBlur={(e) => {
+            if (!(e.relatedTarget && e.currentTarget.contains(e.relatedTarget)))
+            {
+                console.log('sssssss')
+                setIsCollapsed(true)}}
+            }
         >
             <button 
                 className='ff-table-filters__button'
@@ -34,7 +39,6 @@ const FFTableFilters = () => {
                 )}
             </ul>
         </div>
-        
     )
 }
 

@@ -3,6 +3,8 @@
 .ff-table-filters {
     position: relative;
 
+    width: auto;
+    height: auto;
     &__panel
     {
         z-index: 100;

@@ -9,6 +9,8 @@ import { DeleteIcon } from '@/shared/assets/Icon';
 import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore';
 import { useUserFiltersStore, useUsersStore } from '@/entities/UserList/model';
 import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore';
+import { IDepartment } from '@/entities/Departments/lib';
+import AddDepartment from '@/features/AddDepartment/ui/AddDepartment';
 
 const FullDepartmentTree = () => {
 
@@ -17,6 +19,7 @@ const FullDepartmentTree = () => {
     const removeSelectedDepartment = useDepartmentsStore(state => state.removeSelectedDepartment)
     const users = useUsersStore(state => state.users)
     const setUsers = useUsersStore(state => state.setUsers)
+    const addDepartment = useDepartmentsStore(state => state.addDepartment)
     const selectedDepartments = useUserFiltersStore(state => state.departmentIds)
 
     const deleteDepartmentsFromUsers = () => {
@@ -28,6 +31,11 @@ const FullDepartmentTree = () => {
         }))
     }
 
+    const addNewDepartment = (department: IDepartment) => {
+        addDepartment(department) 
+    }
+
+    
     const organisation = useOrganisationStore(state => state.organisation)
 
     return (
@@ -35,7 +43,7 @@ const FullDepartmentTree = () => {
             <div className='department-tree__title'>
                 <h2>{organisation.name}</h2>
                 <div className='department-tree__buttons'>
-                    <button onClick={() => {}}><PlusCircleOutlined/></button>
+                    <AddDepartment/>
                     <button onClick={() => {
                             removeSelectedDepartment()
                             deleteDepartmentsFromUsers()
