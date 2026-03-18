@@ -4,11 +4,11 @@ import './FullDepartmentTree.scss'
 
 import DepartmentTree from "@/entities/Departments/ui/DepartmentTree/DepartmentTree"
 import { PlusCircleOutlined } from "@ant-design/icons";
-import { TreeDataNode } from "antd";
 import { useState } from "react";
 import { DeleteIcon } from '@/shared/assets/Icon';
 import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore';
 import { useUserFiltersStore, useUsersStore } from '@/entities/UserList/model';
+import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore';
 
 const FullDepartmentTree = () => {
 
@@ -19,7 +19,7 @@ const FullDepartmentTree = () => {
     const setUsers = useUsersStore(state => state.setUsers)
     const selectedDepartments = useUserFiltersStore(state => state.departmentIds)
 
-    const deleteDepartments = () => {
+    const deleteDepartmentsFromUsers = () => {
         setUsers(users.map((user) => {
             if (user.departmentId != undefined && selectedDepartments.includes(user.departmentId)) {
                 return {...user, departmentId: undefined}
@@ -27,16 +27,18 @@ const FullDepartmentTree = () => {
             return user
         }))
     }
-    
+
+    const organisation = useOrganisationStore(state => state.organisation)
+
     return (
         <div className={`department-tree ${isCollapsed && 'collapsed'}`}>
             <div className='department-tree__title'>
-                <h2>Отделы</h2>
+                <h2>{organisation.name}</h2>
                 <div className='department-tree__buttons'>
                     <button onClick={() => {}}><PlusCircleOutlined/></button>
                     <button onClick={() => {
-                        removeSelectedDepartment()
-                        deleteDepartments()
+                            removeSelectedDepartment()
+                            deleteDepartmentsFromUsers()
                         }}
                     >
                         <DeleteIcon/>

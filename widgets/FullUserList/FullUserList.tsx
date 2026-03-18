@@ -15,7 +15,7 @@ const FullUserList = () => {
         <div className="full-user-list">
 
             <div className="full-user-list__title">
-            <h2>Пользователи</h2>
+            {/* <h2>Пользователи</h2> */}
                 <UserSearch onSearch={(e) => {
                     setLogin(e.target.value)
                     }}

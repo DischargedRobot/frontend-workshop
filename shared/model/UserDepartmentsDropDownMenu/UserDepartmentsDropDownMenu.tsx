@@ -4,7 +4,7 @@ import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStor
 import './UserDepartmentsDropDownMenu.scss'
 
 import { IUser } from '@/entities/UserCard/ui/types'
-import { memo, useEffect, useMemo, useState } from "react"
+import { memo, useState } from "react"
 import { Control, Controller } from 'react-hook-form'
 import { useShallow } from 'zustand/shallow'
 
@@ -27,8 +27,7 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
     
     const [searchQuery, setSearchQuery] = useState('')
     const displayDepartment = searchQuery || (department?.name ?? '')
-    // console.log(setSearchQuery)
-    // const [choosenDepart, setChoosenDepart] = useState(currentDepartment)
+    
     return (
         <Controller
             name='departmentId'
@@ -70,9 +69,7 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
                                 key={department.id}
                                 onClick={() => {
                                     setIsCollapsed(false)
-                                    console.log(department)
                                     setSearchQuery(department.name)
-                                    // setDepartment(department)
                                     field.onChange(department.id)
                                 }}
                             >
