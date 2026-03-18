@@ -110,11 +110,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{
+          '--text-color': COLOR.textColor,
+          '--active-background': COLOR.activeBackground,
           '--foreground': COLOR.foreground,
           '--foreground-second': COLOR.foregroundSecond, 
           '--background': COLOR.background,
           '--hover': COLOR.hover,
-          '--hover-active': COLOR.hoverActive,
+          '--hover-active-background': COLOR.hoverActive,
           '--border-for-nav-panel': COLOR.strokeNavPanel,
         } as React.CSSProperties}>
         {/* theme={theme} */}

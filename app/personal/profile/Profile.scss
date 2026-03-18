@@ -1,0 +1,20 @@
+.profile-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+    flex-direction: column;
+
+    gap: 20px;
+    padding: 20px;
+
+    width: 100%;
+    height: auto;
+
+    &__settings {
+        display: flex;
+        
+        gap: 20px;
+        
+        width: 100%;
+    }
+}

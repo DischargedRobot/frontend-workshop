@@ -7,10 +7,32 @@
     gap: 20px;
     padding: 20px;
     
-    max-width: 400px;
+    width: 100%;
+    // max-width: 400px;
     height: auto;
    
     border: 2px solid var(--stroke);
     border-radius: 20px;
     background-color: var(--foreground);
+
+    &__active-element {
+
+        padding: 4px 10px;
+        margin: 0 auto;
+
+        width: 100%;
+
+        border-radius: 20px;
+        background-color: var(--active-background);
+
+        &:hover {
+            background-color: var(--hover-active-background-background);
+        }
+    }
+
+    &__text {
+        color: var(--text-color);
+
+        font-size: var(--text-size);
+    }
 }

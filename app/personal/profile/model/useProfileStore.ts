@@ -8,6 +8,7 @@ import { create } from "zustand";
 export interface IProfile extends IUser {
 
 }
+
 interface IProfileStore{
     profile: IProfile
     setProfile: (newProfileData: IProfile) => void

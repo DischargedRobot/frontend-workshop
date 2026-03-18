@@ -1,4 +1,7 @@
 'use client'
+
+import './Profile.scss'
+
 import UserCard from "@/entities/UserCard/ui/UserCard"
 import { useUsersStore } from "@/entities/UserList/model"
 import UserSettings from "@/features/UserSettings/ui/UserSettings"
@@ -23,11 +26,15 @@ const Profile = () => {
 
     const profile = useProfileStore(state => state.profile)
     return (
-        <Content>
-            <UserCard 
-                user={profile} 
-                setUser={setUser}/>
-            <UserSettings/>
+        <Content className="profile-page">
+            <div className='profile-page__settings'>
+                <UserCard 
+                    user={profile} 
+                    setUser={setUser}
+                />
+                <UserSettings/>
+            </div>
+            
             <UserTestingPanelForTheme/>
         </Content>
     )

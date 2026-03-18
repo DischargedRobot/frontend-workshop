@@ -4,9 +4,9 @@ const UserTestingPanelForTheme = () => {
 
     return (
         <div className="user-testing-panel">
-            <span> Бла-бла текст </span>
-            <span> Активный элемент </span>
-            <span> Элемент при наведении</span>
+            <span className='user-testing-panel__text'> Бла-бла текст </span>
+            <span className='user-testing-panel__active-element'> Активный элемент </span>
+            <span > Другие элементы </span>
         </div>
     )
 }

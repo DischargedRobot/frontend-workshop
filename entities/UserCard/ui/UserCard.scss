@@ -89,7 +89,7 @@
         border: 2px solid var(--stroke);
 
         &:hover {
-            background-color:var(--hover-active);
+            background-color:var(--hover-active-background);
         }
     }
 
@@ -128,7 +128,7 @@
                 font-size: 24;
 
                 &:hover {
-                    color: var(--hover-active);
+                    color: var(--hover-active-background);
                 }
 
                 &:active {
