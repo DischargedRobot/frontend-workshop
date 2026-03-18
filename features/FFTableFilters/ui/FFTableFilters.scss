@@ -1,12 +1,39 @@
 @use '../../../app/placeholder.scss';
 
 .ff-table-filters {
-    @extend %flex;
-    flex-wrap: wrap;
+    position: relative;
 
-    gap: 5px;
-    padding: 15px;
+    &__panel
+    {
+        z-index: 100;
 
-    border-radius: 20px;
-    background-color: var(--foreground);
+        position: absolute;
+        bottom: 120%;
+        transform: translate(-50%, 0);
+
+        @extend %flex;
+        flex-wrap: wrap;
+
+        gap: 5px;
+        padding: 15px;
+
+        max-width: 200px;
+        width: max-content;
+
+        border-radius: 20px;
+        border: 2px solid var(--drop-down-border-color);
+        background-color: var(--foreground);
+        box-shadow: 0 2px 3px var(--shadow);
+        &_collapsed {
+            display: none;
+        }
+    }
+
+    &__button {
+        width: 32px;
+        height: auto;
+
+        font-size: 24;
+    }
+    
 }

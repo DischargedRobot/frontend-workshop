@@ -133,7 +133,7 @@ const FFTable = ({featureFlags}: Props) => {
     return (
         <Table 
             className="ff-table "
-            rowClassName={'text text_litle text_tiny'}
+            rowClassName={'text-table text-table_litle text-table_tiny'}
             size="small"
             rowKey='id'
             rowSelection={{type: 'checkbox'}}

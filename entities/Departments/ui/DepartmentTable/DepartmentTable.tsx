@@ -92,7 +92,7 @@ const TableDepartment = () => {
     // TODO:  onSelect: (__, _, records) => {console.log(records)}}
     
       <Table 
-        rowClassName={'text text_litle text_tiny'}
+        rowClassName={'text-table text-table_litle text-table_tiny'}
         rowSelection={{
           type: 'checkbox', 
           onChange: (selectedRowKeys) => selectRow(selectedRowKeys as number[])}}
