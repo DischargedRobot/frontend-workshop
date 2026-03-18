@@ -28,7 +28,7 @@ const useUsersStore = create<IUseUsers>((set, get) => ({
         {login: 'rob', password: 'ss', id:2, roles: createIntialRoles(), departmentId: dep.id}
     ],
     setUsers: (users) => set({users}),
-    setUser: (newUser) => set(() => ({users: get().users.map(user => (user.id == newUser.id ? {...user, ...newUser}: user ))})),
+    setUser: (newUser) => set((state) => ({users: state.users.map(user => (user.id == newUser.id ? {...user, ...newUser} : user ))})),
     deleteUserById: (idDeletedUser: number) => set(() => {
         return {users: get().users.filter(user => user.id != idDeletedUser)}
     }),

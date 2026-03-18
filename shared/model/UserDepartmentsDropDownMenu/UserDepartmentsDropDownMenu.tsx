@@ -3,14 +3,13 @@
 import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore'
 import './UserDepartmentsDropDownMenu.scss'
 
-import { IDepartment } from "@/entities/Departments/lib"
 import { IUser } from '@/entities/UserCard/ui/types'
-import { memo, useState } from "react"
+import { memo, useEffect, useMemo, useState } from "react"
 import { Control, Controller } from 'react-hook-form'
 import { useShallow } from 'zustand/shallow'
 
 interface Props {
-    currentDepartment: number
+    currentDepartment?: number
     control: Control<Pick<IUser, 'login' | 'password' | 'departmentId'>>
 }
 
@@ -21,14 +20,14 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
         control,
     } = props
 
-    console.log(currentDepartment, 'sss')
     const [isCollapsed, setIsCollapsed] = useState(false)
 
     const departments = useDepartmentsStore(useShallow(state => state.getDepartmentsIncludingAllChildren()))
     const department = departments.find(dep => dep.id == currentDepartment)
     
-    const [wantedNameDepartment, setWantedNameDepartment] = useState(department?.name ?? "")
-    console.log(wantedNameDepartment)
+    const [searchQuery, setSearchQuery] = useState('')
+    const displayDepartment = searchQuery || (department?.name ?? '')
+    // console.log(setSearchQuery)
     // const [choosenDepart, setChoosenDepart] = useState(currentDepartment)
     return (
         <Controller
@@ -45,27 +44,26 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
             <div 
                 className={`user-departments-drop ${isCollapsed ? 'user-departments-drop_opened' : ''}`} 
                 style={{display: 'flex'}}
+                onBlur={() => {setIsCollapsed(false)}}
             >
                 <label>
                     <input 
                         {...field}
                         placeholder='Отдел'
                         type='text'
-                        value={wantedNameDepartment}
+                        value={displayDepartment}
                         onClick={() => setIsCollapsed(true)}
                         onChange={(e) => {
-                            setWantedNameDepartment(e.target.value)
-                            field.onChange(e.target.value)
+                            setSearchQuery(e.target.value)
                         }}
                     />
                 </label>
                 <ul 
                     className={`user-departments-drop__list`}
-                    onBlur={() => {setIsCollapsed(false)}}
                 >
                     <div style={{padding: '5px', overflow: 'auto'}}>
                         {departments
-                        .filter((department => (department.name.toLowerCase().includes(wantedNameDepartment.toLowerCase()))))
+                        .filter((department => (department.name.toLowerCase().includes(searchQuery.toLowerCase()))))
                         .map((department) => {
                             return <li 
                                 className='user-departments-drop__item'
@@ -73,9 +71,9 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
                                 onClick={() => {
                                     setIsCollapsed(false)
                                     console.log(department)
-                                    setWantedNameDepartment(department.name)
+                                    setSearchQuery(department.name)
                                     // setDepartment(department)
-                                    field.onChange(department)
+                                    field.onChange(department.id)
                                 }}
                             >
                                 {department.name}

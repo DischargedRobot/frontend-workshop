@@ -2,7 +2,6 @@
 
 import './UserList.scss'
 
-import { IUser } from "@/entities/UserCard/ui/types"
 import UserCard from "@/entities/UserCard/ui/UserCard"
 import { useFilteredUsers, useUsersStore } from '../model'
 

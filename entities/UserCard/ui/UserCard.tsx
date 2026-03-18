@@ -34,7 +34,6 @@ const UserCard = (props: Props) => {
         formState: { errors, isDirty},
         reset,
         control,
-        setError,
     } = useForm<Pick<IUser, 'login' | 'password' | 'departmentId'>>(
         {defaultValues: {
             login: user.login,
@@ -66,7 +65,7 @@ const UserCard = (props: Props) => {
             departmentId: user.departmentId
     })}
     
-    const [isLoading, setIsLoading] = useState(false)
+    // const [isLoading, setIsLoading] = useState(false)
 
 
     const [roleStatusIsHidden, setRoleStatusIsHidden] = useState(false)

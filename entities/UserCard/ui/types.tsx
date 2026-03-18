@@ -6,5 +6,5 @@ export interface IUser {
     login: string
     password: string
     roles: IRole[]
-    departmentId: IDepartment['id']
+    departmentId?: IDepartment['id']
 }
