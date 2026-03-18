@@ -85,7 +85,7 @@ const DepartmentTree = () => {
                   // setFilteredUsers(filterUsers(['departmentIds'], users))
               }
           }}
-          className={`tree`}
+          className={`tree text-table text-table_litle text-table_tiny`}
           checkable
           checkStrictly
           selectable={false}

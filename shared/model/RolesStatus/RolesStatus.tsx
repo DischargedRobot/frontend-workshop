@@ -10,7 +10,7 @@ interface Props {
 }
 
 
-const titles = ['Департаменты', 'Пользователи', 'Фич флаги']
+const titles = ['Отделы', 'Пользователи', 'Фич флаги']
 const RoleStatus = (props: Props) => {
     const {
         roles,
@@ -21,9 +21,9 @@ const RoleStatus = (props: Props) => {
         <ul className="roles-status">
             {Array.from({ length: 3 }).map((_, index) => (
                 <li key={index} className='roles-status__containter'>
-                    <h4>{titles[index]}</h4>
+                    <h4 className='title title_very-litle'>{titles[index]}</h4>
                     <hr/>
-                    <ul className='roles-status__role-containter'>
+                    <ul className='roles-status__role-containter text text text_tiny'>
                         {roles.slice(index*3,(index+1)*3).map(role => {
                             return <li key={role.type} className='roles-status__role'>
                                 {role.name}

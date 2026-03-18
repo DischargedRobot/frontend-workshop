@@ -1,7 +1,7 @@
 
 :root {
   --segoe-ui: 'Segoe UI', sans-serif;
-  --roboto: 'Roboto', sans-serif;
+  --inter: 'Inter', sans-serif;
   --roboto-mono: 'Roboto Mono', sans-serif;
   --text-size: 16px;
   --bigText-size: 20px;
@@ -12,9 +12,10 @@
   // --ant-table-row-hover-bg: #da6060;
   --background-text-color: #cfcfcf;
   --background: #2A2828;
-  --text-color: #d9d8d8;
+  --text-color: #e3e3e3;
   --foreground: #323234;
   --active-background: #2d75c8;
+  --active-hover: ;
   --stroke: #544F4F;
   --active-border: #ECECEC;
 
@@ -42,6 +43,10 @@
   color: var(--text-color);
   font-size: 28px;
 
+  &_very-litle {
+    font-size: 16px;
+  }
+
   &_litle{
     font-size: 20px;
   }
@@ -51,7 +56,7 @@
   }
 
   &_tiny {
-    font-weight: 300;
+    font-weight: 200;
   }
 
   &_big {
@@ -84,10 +89,14 @@
 }
 
 .text {
-  font-family: var(--roboto);
+  font-family: var(--inter);
   font-weight: 400;
   font-size: 16px;
   color: var(--text-color);
+
+  &_very-litle {
+    font-size: 12px;
+  }
 
   &_litle {
     font-size: 14px;

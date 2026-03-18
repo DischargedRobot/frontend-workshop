@@ -22,7 +22,6 @@ const AddDepartment = () => {
 
     const {
         handleSubmit,
-        register,
         formState: {errors},
         control,
     } = useForm<AddDepartmentForm>()
@@ -33,7 +32,7 @@ const AddDepartment = () => {
             className="add-department" 
         >
             <button
-            className="add-department__button"
+                className="add-department__button"
                 onClick={() => {setIsCollapsed(prev => !prev)}}
             >
                 <PlusCircleOutlined/>

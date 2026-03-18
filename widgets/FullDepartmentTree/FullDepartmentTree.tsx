@@ -40,7 +40,7 @@ const FullDepartmentTree = () => {
 
     return (
         <div className={`department-tree ${isCollapsed && 'collapsed'}`}>
-            <div className='department-tree__title'>
+            <div className='department-tree__title title text_big'>
                 <h2>{organisation.name}</h2>
                 <div className='department-tree__buttons'>
                     <AddDepartment/>

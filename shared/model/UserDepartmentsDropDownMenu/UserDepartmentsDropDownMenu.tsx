@@ -50,7 +50,7 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
                 style={{display: 'flex'}}
                 onBlur={() => {setIsCollapsed(false)}}
             >
-                <label>
+                <label className='text text_litle text_tiny'>
                     <input 
                         {...field}
                         placeholder='Отдел'
@@ -64,13 +64,13 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
                     />
                 </label>
                 <ul 
-                    className={`user-departments-drop__list`}
+                    className={`user-departments-drop__list `}
                 >
                         {departments
                         .filter((department => (department.name.toLowerCase().includes(searchQuery.toLowerCase()))))
                         .map((department) => {
                             return <li 
-                                className='user-departments-drop__item'
+                                className='user-departments-drop__item text text_litle text_tiny'
                                 key={department.id}
                                 onClick={() => {
                                     setIsCollapsed(false)

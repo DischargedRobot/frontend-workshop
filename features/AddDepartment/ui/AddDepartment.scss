@@ -5,7 +5,14 @@
     height: auto;
 
     &__button {
-        line-height: 0;
+        color: var(--active);
+        padding: 5px;
+        border-radius: 50%;
+        &:hover {
+            color: var(--active-hover);
+            background-color: var(--background);
+            box-shadow: 0 2px 3px var(--shadow);
+        }
     }
 
     &__panel {

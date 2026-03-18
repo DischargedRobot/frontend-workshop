@@ -12,7 +12,7 @@ const UserList = () => {
     const filteredUsers = useFilteredUsers(users)
 
     return (
-        <ul className='user-list'>
+        <ul className='user-list '>
             {filteredUsers.map(user => (
                 <UserCard 
                     key={user.id} 

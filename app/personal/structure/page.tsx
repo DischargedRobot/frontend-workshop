@@ -46,9 +46,7 @@ const StructureOrganisation = () => {
 
   return(
       <Content className="structure-organisation ">
-          <FullDepartmentTree 
-            tree={tree} 
-            />
+          <FullDepartmentTree/>
           <FullUserList/>
       </Content>
   )

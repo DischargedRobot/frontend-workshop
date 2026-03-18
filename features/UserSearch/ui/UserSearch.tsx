@@ -1,4 +1,6 @@
 'use client'
+import './UserSearch.scss'
+
 import { Input } from "antd"
 import React from "react"
 
@@ -15,7 +17,14 @@ const UserSearch = (props: Props) => {
     } = props
 
     return(
-        <Search style={{maxWidth:300}} type={'search'} enterButton onChange={onSearch} placeholder="Логин пользователя"/>
+        <Search 
+            className="user-serch"
+            style={{maxWidth:300}} 
+            type={'search'} 
+            enterButton 
+            onChange={onSearch} 
+            placeholder="Логин пользователя"
+        />
     )
 }
 

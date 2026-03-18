@@ -97,7 +97,7 @@ const UserCard = (props: Props) => {
                 >
                 <label className='user-card__field'>
                     <input 
-                        className='user-card__input'
+                        className='user-card__input text text_litle text_tiny'
                         type="text" 
                         placeholder="Логин"
                         {...register('login', {
@@ -108,11 +108,11 @@ const UserCard = (props: Props) => {
                             required: "Это поле обязательно для заполнения",
                         })}
                         />
-                        <span className='user-card__error'>{errors.login?.message?.toString()}</span>
+                        <span className='user-card__error text text_tiny'>{errors.login?.message?.toString()}</span>
                 </label>
                 <label className='user-card__field'>
                     <input 
-                        className='user-card__input'
+                        className='user-card__input text text_litle text_tiny'
                         type="text"
                         placeholder="Пароль"
                         {...register('password', {
@@ -127,7 +127,7 @@ const UserCard = (props: Props) => {
                             required: "Это поле обязательно для заполнения",
                         })}
                     />
-                    <span className='user-card__error'>{errors.password?.message?.toString()}</span>
+                    <span className='user-card__error text text_tiny'>{errors.password?.message?.toString()}</span>
                 </label>
                 {/* //TODO: Сделать выбор выпадающим списком */}
                 {/* <div style={{display: 'flex'}}>
@@ -152,14 +152,14 @@ const UserCard = (props: Props) => {
                 </div>
                 <div>
                     <button 
-                        className={!isDirty ? 'disabled' : ''}
+                        className={`text text_litle ${!isDirty ? 'disabled' : ''}`}
                         type="submit"
                         disabled={!isDirty}
                     >
                         Сохранить
                     </button>
                     <button 
-                        className={!isDirty ? 'disabled' : ''}
+                        className={`text text_litle ${!isDirty ? 'disabled' : ''}`}
                         disabled={!isDirty}
                         onClick={resetData}
                     >
@@ -167,7 +167,7 @@ const UserCard = (props: Props) => {
                     </button>
                 </div>
             </form>
-            <div className='user-card__role-list'>
+            <div className='user-card__role-list text text_tiny'>
                 <div className='role-list__title'>
                     <h2>Роли</h2>
                     <button className='add-role' onClick={() => {setRoleStatusIsHidden(prev => !prev)}}>

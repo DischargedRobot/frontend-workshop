@@ -17,7 +17,7 @@ const FONTS = {
 }
 
 const COLOR = {
-  textColor: "#e8e8e8",
+  textColor: "#e3e3e3",
   backgroundTextColor: "#cfcfcf",
   background: "#313131",
   foreground: "#222222",
@@ -25,6 +25,7 @@ const COLOR = {
   hover: "#4d4d4d",
   hoverActive: "#5973e9",
   activeBackground: "#2a5cd0",
+  activeHover: "#4d6aed",
   stroke: "#58595d76",
   activeBorder: "#ECECEC",
   foregroundSecond: "#292929cb",
@@ -111,6 +112,7 @@ export default function RootLayout({
     <html lang="en">
       <body style={{
           '--text-color': COLOR.textColor,
+          '--active-hover': COLOR.activeHover,
           '--active-background': COLOR.activeBackground,
           '--foreground': COLOR.foreground,
           '--foreground-second': COLOR.foregroundSecond, 

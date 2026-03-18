@@ -17,7 +17,7 @@ const RoleList = (props: Props) => {
     } = props
 
     return (
-        <ul className="role-list">
+        <ul className="role-list text text_tiny text_litle">
             {roles.map(role => (
                 <li key={crypto?.randomUUID()}>
                     <Role role={role} onClick={() => {

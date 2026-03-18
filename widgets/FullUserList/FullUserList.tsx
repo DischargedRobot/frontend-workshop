@@ -5,7 +5,7 @@ import './FullUserList.scss'
 import { useUserFiltersStore } from '@/entities/UserList'
 import UserList from '@/entities/UserList/ui/UserList'
 import { FFTableFilters } from '@/features/FFTableFilters'
-import UserSearch from "@/features/UserSearch/UserSearch"
+import UserSearch from "@/features/UserSearch/ui/UserSearch"
 import AddButton from "@/shared/AddButton"
 
 const FullUserList = () => {
