@@ -3,11 +3,12 @@
 import './DepartmentTree.scss'
 
 import { Tree, TreeDataNode } from "antd"
-import { Children, memo, useMemo } from "react"
+import { Children, memo, useMemo, useState } from "react"
 import useUserFiltersStore from '@/entities/UserList/model/useUserFiltersStore'
 import useDepartmentsStore from '../../model/useDepartmentsStore'
 import { IDepartment } from '../../lib'
 import { title } from 'process'
+import { useShallow } from 'zustand/shallow'
 
 interface Props {
     tree: TreeDataNode[]
@@ -51,11 +52,13 @@ const tree: TreeDataNode[] = [
 
 const DepartmentTree = () => {
 
-    const setDepartmentIds = useUserFiltersStore(state => state.setDepartmentIds)
+    const setFilterDepartmentIds = useUserFiltersStore(state => state.setDepartmentIds)
+    const filterDepartmentIds = useUserFiltersStore(state => state.departmentIds)
     // console.log('DepartmentTree')
 
     const departments = useDepartmentsStore(state => state.departments)
-
+    // const allDep = useDepartmentsStore(useShallow(state => state.getDepartmentsIncludingAllChildren()))
+    // const [chek, setchek] = useState<number[]>([])
     const convertToTreeData = (departmentsForConvert: IDepartment[]): TreeDataNode[] => {
         return departmentsForConvert.map((department) => {
             return {
@@ -70,21 +73,23 @@ const DepartmentTree = () => {
 
     return (
         <Tree 
-            onCheck={(checkedKeys) => {
-                console.log(checkedKeys)
-                if (Array.isArray(checkedKeys)) {
-                    setDepartmentIds(checkedKeys as number[])
-                    // setFilteredUsers(filterUsers(['departmentIds'], users))
-                }
-                else {
-                    setDepartmentIds(checkedKeys.checked as number[])
-                    // setFilteredUsers(filterUsers(['departmentIds'], users))
-                }
-            }}
-            className={`tree`}
-            checkable
-            selectable={false}
-            treeData={departmentsTree}
+          checkedKeys={filterDepartmentIds}
+          onCheck={(checkedKeys) => {
+              console.log(checkedKeys)
+              if (Array.isArray(checkedKeys)) {
+                  setFilterDepartmentIds(checkedKeys as number[])
+                  // setFilteredUsers(filterUsers(['departmentIds'], users))
+              }
+              else {
+                  setFilterDepartmentIds(checkedKeys.checked as number[])
+                  // setFilteredUsers(filterUsers(['departmentIds'], users))
+              }
+          }}
+          className={`tree`}
+          checkable
+          checkStrictly
+          selectable={false}
+          treeData={departmentsTree}
         />
     )
 }

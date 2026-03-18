@@ -1,4 +1,4 @@
-import { IRole } from "@/shared/Role"
+import { IRole } from "@/shared/model/Role"
 import { IDepartment } from "../../Departments/lib"
 
 export interface IUser {

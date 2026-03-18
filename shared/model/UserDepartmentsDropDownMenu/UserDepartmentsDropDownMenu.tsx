@@ -28,6 +28,7 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
     const department = departments.find(dep => dep.id == currentDepartment)
     
     const [wantedNameDepartment, setWantedNameDepartment] = useState(department?.name ?? "")
+    console.log(wantedNameDepartment)
     // const [choosenDepart, setChoosenDepart] = useState(currentDepartment)
     return (
         <Controller

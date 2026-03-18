@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import { IDepartment } from "../lib"; 
+import { Department } from "../lib/DepartmentType";
+import { useUserFiltersStore } from "@/entities/UserList/model";
 
 const InitialDepartments: IDepartment[] = (() => {
   const depts: IDepartment[] = []
@@ -28,6 +30,10 @@ interface IUseDepartments {
     selectedDepartmentIds: number[]
     setSelectedDepartmentIds: (newSelectedDepartmentIds: number[]) => void
 
+    removeSelectedDepartment: () => void
+
+    removeDepartment: (department: IDepartment) => void
+    addDepartment: (department: IDepartment) => void
     getDepartmentsIncludingAllChildren: () => IDepartment[]
     getDepartmentsByPath: (path: string) => void
     getFeatureFlagsByDepartments: (departments: IDepartment[]) => void
@@ -46,6 +52,16 @@ const getDepartmentAndAllChildren = (departments: IDepartment[]): IDepartment[] 
     }, [])
 }
 
+//TODO: подумать над удалением и добавлением отделов
+
+const removeDep = (departments: IDepartment[], removedDepartmentIds: number[]): IDepartment[] => {
+    return departments.filter((department) => {
+        department.children = removeDep(department.children, removedDepartmentIds)
+
+        return (!removedDepartmentIds.includes(department.id))
+    })
+}
+
 const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
     
     departments: [...InitialDepartments],
@@ -53,6 +69,22 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
   
     selectedDepartmentIds: [],
     setSelectedDepartmentIds: (newSelectedDepartments) => set({selectedDepartmentIds: newSelectedDepartments}),
+
+// TODO: сделать независимым от друго стора, передавая через аргс, предусмотреть, что удаляемые департаменты сидят в дочках
+    removeSelectedDepartment: () => {
+        console.log(removeDep(get().departments, useUserFiltersStore.getState().departmentIds),useUserFiltersStore.getState().departmentIds, 'selected')
+        set((state) => ({departments: removeDep(state.departments, useUserFiltersStore.getState().departmentIds)}))
+        useUserFiltersStore.getState().setDepartmentIds([])
+    },
+
+    // в теории, тут можно и по ссылке, но на всякий по id
+    removeDepartment: (removingDepartment) => {
+        set((state) => ({departments: state.departments.filter(department => department.id != removingDepartment.id)}))
+    },
+
+    addDepartment: (department) => {
+        set((state) => ({departments: [...state.departments, department]}))
+    },
 
     getDepartmentsIncludingAllChildren: () => getDepartmentAndAllChildren(get().departments),
 
