@@ -11,6 +11,7 @@ import useFFFiltersStore from "@/entities/FFTable/model/useFFFiltersStore"
 import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStore"
 import useFFStore from "@/entities/FFTable/model/useFFStrore"
 import {FFTableApi} from "@/entities/FFTable"
+import { FFTableFilters } from "@/features/FFTableFilters"
 
 
 
@@ -68,6 +69,7 @@ const FullFeatureFlagsTable = () => {
     return(
         <div>
             <Flex align="center" gap={30}>
+                <FFTableFilters/>
                 <FFSearch onSearch={(e) => {setFeatureFlagName(e.target.value)}}/>
                 <AddFeatureFlag/>
                 <ReloadFeaturesFlags onClick={() => setFeatureFlags(departments)}/>

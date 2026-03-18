@@ -4,11 +4,11 @@ import './FFTable.scss'
 
 import { DeleteIcon, InfoIcon } from "@/shared/assets/Icon";
 import { Switch, Table, TableProps } from "antd"
-import useFilteredFFs from "../model/useFilteredFFs";
-import { useDepartment } from "@/widgets/FullDepartmentTable/model/useDepartment";
-import useDepartmentsStore from "../../Departments/model/useDepartmentsStore";
 
-const FF_TABLE_COLUMNS: TableProps<FeatureFlag>['columns'] = [
+
+export type TFFTableColumns = TableProps<FeatureFlag>['columns']
+
+const FF_TABLE_COLUMNS: TFFTableColumns = [
     {
         title: 'Имя',
         key: 'name',

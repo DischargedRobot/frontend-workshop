@@ -2,8 +2,9 @@
 
 import './FullUserList.scss'
 
-import useUserFiltersStore from '@/entities/UserList/model/useUserFiltersStore'
+import { useUserFiltersStore } from '@/entities/UserList'
 import UserList from '@/entities/UserList/ui/UserList'
+import { FFTableFilters } from '@/features/FFTableFilters'
 import UserSearch from "@/features/UserSearch/UserSearch"
 import AddButton from "@/shared/AddButton"
 

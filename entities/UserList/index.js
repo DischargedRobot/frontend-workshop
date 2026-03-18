@@ -1,2 +1,4 @@
-export { useUsers } from './model/index'
-export { useFilterOfUserList } from './model/index'
+export { UserList } from './ui'
+export { useFilteredUsers} from './model'
+export { useUserFiltersStore} from './model'
+export { useUsersStore} from './model'

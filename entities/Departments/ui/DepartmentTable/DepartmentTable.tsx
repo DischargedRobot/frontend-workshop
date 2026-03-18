@@ -100,8 +100,8 @@ const TableDepartment = () => {
         expandable={{
           // отключает связь с потомками элементов при их выборе, чтобы когда выбрали всех в таблице, мы не брали ещё и их потомков
           childrenColumnName: '_NEVER_',
-          rowExpandable: () => false,
-          expandIcon: () => false        
+          // rowExpandable: () => false,
+          // expandIcon: () => false        
         }}
         dataSource={departments.at(-1)?.children}
         columns={columns}
