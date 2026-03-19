@@ -1,3 +1,4 @@
+import { RequestOptions } from "http"
 import { IDepartment } from "../lib/DepartmentType"
 
 const URL = process.env.NEXT_PUBLIC_API_ORGANISATIONS_URL_V1
@@ -24,6 +25,7 @@ interface IDepartmentResponse {
 interface IDepartmentsByOrganisationId {
     items: IDepartmentResponse[]
 }
+
 
 const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmentResponse[]): IDepartment[] => {
     // Мапим, чтобы потом было проще обратиться к узлу во время операций, а не писать find 
@@ -58,6 +60,20 @@ const departmentApi: IDepartmentApi = {
         const response = await fetch(`${URL}/${organisation}/nodes?limit=42&offset=0`)
         
         if (!response.ok) {
+
+            switch (response.status) {
+
+                case(400): {
+                    throw new Error('У вас недостаточно прав')
+                }
+                case(400): {
+                    throw new Error('У вас недостаточно прав')
+                }
+
+            }
+        }
+
+        if (!response.ok) {
             throw new Error('Ошибка получения отделов')
         }
 
@@ -71,7 +87,7 @@ const departmentApi: IDepartmentApi = {
             method: 'GET',
             headers: {'Content-type': 'aplication/json'},
         })
-
+        
         if (!response.ok) {
             throw new Error('getDepartmentsByPath')
         }
