@@ -1,14 +1,14 @@
 import { RequestOptions } from "http";
 import { APIError, mapAPIErrors } from "./APIErrors";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL_V1 
+
 
 const APIJsonRequest = async (
     endpoint: string,
     options: RequestOptions = {}
 ) => {
     try {
-        const response = await fetch(`${API_URL}/${endpoint}`, {
+        const response = await fetch(endpoint, {
             credentials: 'include',
             ...options,
             headers: {

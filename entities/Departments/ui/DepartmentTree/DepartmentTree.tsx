@@ -12,6 +12,7 @@ import { useShallow } from 'zustand/shallow'
 import useSWR from 'swr'
 import departmentApi from '../../api/departmentApi'
 import { DataNode } from 'antd/es/tree'
+import useDepartmentTree from '../../model/DepartmentTree/useDepartmentTree'
 
 interface Props {
     tree: TreeDataNode[]
@@ -55,9 +56,9 @@ const tree: TreeDataNode[] = [
 
 const DepartmentTree = () => {
 
+  const { filterDepartmentIds, setFilterDepartmentIds} = useDepartmentTree()
 
-  const setFilterDepartmentIds = useUserFiltersStore(state => state.setDepartmentIds)
-  const filterDepartmentIds = useUserFiltersStore(state => state.departmentIds)
+
   // console.log('DepartmentTree')
 
   const departments = useDepartmentsStore(state => state.departments)

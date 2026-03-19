@@ -13,20 +13,22 @@ import { IDepartment } from '@/entities/Departments/lib';
 import AddDepartment from '@/features/AddDepartment/ui/AddDepartment';
 import useSWR from 'swr';
 import departmentApi from '@/entities/Departments/api/departmentApi';
+import useFullDepartmentTree from './model/useFullDepartmentTree';
 
 const FullDepartmentTree = () => {
 
-    const organisationId = useOrganisationStore(state => state.organisation.id)
-    const {data: departments} = useSWR(['organisation', organisationId], () => departmentApi.getDepartmentsByOrganisationId(organisationId))
-    const setDepartments= useDepartmentsStore(state => state.setDepartments)
+    // const organisationId = useOrganisationStore(state => state.organisation.id)
+    // const {data: departments} = useSWR(['organisation', organisationId], () => departmentApi.getDepartmentsByOrganisationId(organisationId))
+    // const setDepartments= useDepartmentsStore(state => state.setDepartments)
 
-    useEffect(() => {
-       if (departments !== undefined) {
-            setDepartments(departments)
-        }
-    }, [departments, setDepartments])
+    // useEffect(() => {
+    //    if (departments !== undefined) {
+    //         setDepartments(departments)
+    //     }
+    // }, [departments, setDepartments])
 
-
+    useFullDepartmentTree();
+    
     const [isCollapsed, setIsCollapsed] = useState(false)
 
     const removeSelectedDepartment = useDepartmentsStore(state => state.removeSelectedDepartment)
