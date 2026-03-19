@@ -1,1 +1,1 @@
-export { default } from './departmentApi'
+export { default as departmentApi} from './departmentApi'

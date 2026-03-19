@@ -2,17 +2,30 @@
 
 import './FullDepartmentTree.scss'
 
-import DepartmentTree from "@/entities/Departments/ui/DepartmentTree/DepartmentTree"
+import {DepartmentTree} from "@/entities/Departments"
 import { PlusCircleOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DeleteIcon } from '@/shared/assets/Icon';
 import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore';
 import { useUserFiltersStore, useUsersStore } from '@/entities/UserList/model';
 import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore';
 import { IDepartment } from '@/entities/Departments/lib';
 import AddDepartment from '@/features/AddDepartment/ui/AddDepartment';
+import useSWR from 'swr';
+import departmentApi from '@/entities/Departments/api/departmentApi';
 
 const FullDepartmentTree = () => {
+
+    const organisationId = useOrganisationStore(state => state.organisation.id)
+    const {data: departments} = useSWR(['organisation', organisationId], () => departmentApi.getDepartmentsByOrganisationId(organisationId))
+    const setDepartments= useDepartmentsStore(state => state.setDepartments)
+
+    useEffect(() => {
+       if (departments !== undefined) {
+            setDepartments(departments)
+        }
+    }, [departments, setDepartments])
+
 
     const [isCollapsed, setIsCollapsed] = useState(false)
 
@@ -40,6 +53,8 @@ const FullDepartmentTree = () => {
 
     return (
         <div className={`department-tree ${isCollapsed && 'collapsed'}`}>
+            <div style={{position: 'sticky', top: '10px'}}>
+
             <div className='department-tree__title title text_big'>
                 <h2>{organisation.name}</h2>
                 <div className='department-tree__buttons'>
@@ -57,6 +72,7 @@ const FullDepartmentTree = () => {
                 <CollapsedIcon isCollapsed={isCollapsed} />
             </button> */}
             <DepartmentTree/>
+            </div>
         </div>
     )
 }

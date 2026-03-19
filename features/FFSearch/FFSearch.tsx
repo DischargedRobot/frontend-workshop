@@ -11,7 +11,12 @@ const onSearch: SearchProps['onSearch'] = (value, _, info) => {console.log(info?
 
 const FFSearch = ({ onSearch }: { onSearch?: React.ChangeEventHandler<HTMLInputElement> }) => {
     return (
-        <Search type={'search'} enterButton onChange={onSearch} placeholder="Имя фич флага"/>
+        <Search 
+            type={'search'} 
+            enterButton 
+            onChange={onSearch} 
+            placeholder="Имя фич флага"
+        />
     )
 }
 

@@ -2,12 +2,14 @@
     width: 100%;
 
    .ant-tree-node-content-wrapper { 
+    // max-width: 230px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    
+    $width: 100%;
     .ant-tree-treenode {
         width: 100%;
+        max-width: 230px;
     }
 }

@@ -64,7 +64,7 @@ const removeDep = (departments: IDepartment[], removedDepartmentIds: number[]): 
 
 const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
     
-    departments: [...InitialDepartments],
+    departments: [],
     setDepartments: (newDepartments) => set({departments: newDepartments}),
   
     selectedDepartmentIds: [],

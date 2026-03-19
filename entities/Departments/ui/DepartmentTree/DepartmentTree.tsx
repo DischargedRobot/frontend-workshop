@@ -9,6 +9,9 @@ import useDepartmentsStore from '../../model/useDepartmentsStore'
 import { IDepartment } from '../../lib'
 import { title } from 'process'
 import { useShallow } from 'zustand/shallow'
+import useSWR from 'swr'
+import departmentApi from '../../api/departmentApi'
+import { DataNode } from 'antd/es/tree'
 
 interface Props {
     tree: TreeDataNode[]
@@ -52,46 +55,48 @@ const tree: TreeDataNode[] = [
 
 const DepartmentTree = () => {
 
-    const setFilterDepartmentIds = useUserFiltersStore(state => state.setDepartmentIds)
-    const filterDepartmentIds = useUserFiltersStore(state => state.departmentIds)
-    // console.log('DepartmentTree')
 
-    const departments = useDepartmentsStore(state => state.departments)
-    // const allDep = useDepartmentsStore(useShallow(state => state.getDepartmentsIncludingAllChildren()))
-    // const [chek, setchek] = useState<number[]>([])
-    const convertToTreeData = (departmentsForConvert: IDepartment[]): TreeDataNode[] => {
-        return departmentsForConvert.map((department) => {
-            return {
-                title: department.name, 
-                key: department.id, 
-                children: convertToTreeData(department.children)
+  const setFilterDepartmentIds = useUserFiltersStore(state => state.setDepartmentIds)
+  const filterDepartmentIds = useUserFiltersStore(state => state.departmentIds)
+  // console.log('DepartmentTree')
+
+  const departments = useDepartmentsStore(state => state.departments)
+  // const allDep = useDepartmentsStore(useShallow(state => state.getDepartmentsIncludingAllChildren()))
+  // const [chek, setchek] = useState<number[]>([])
+  const convertToTreeData = (departmentsForConvert: IDepartment[]): TreeDataNode[] => {
+      return departmentsForConvert.map((department) => {
+          return {
+              title: department.name, 
+              key: department.id, 
+              children: convertToTreeData(department.children)
+          }
+      })
+  }
+
+  const departmentsTree: TreeDataNode[] = convertToTreeData(departments)
+
+  return (
+      <Tree 
+        checkedKeys={filterDepartmentIds}
+        onCheck={(checkedKeys) => {
+            console.log(checkedKeys)
+            if (Array.isArray(checkedKeys)) {
+                setFilterDepartmentIds(checkedKeys as number[])
+                // setFilteredUsers(filterUsers(['departmentIds'], users))
             }
-        })
-    }
-
-    const departmentsTree: TreeDataNode[] = convertToTreeData(departments)
-
-    return (
-        <Tree 
-          checkedKeys={filterDepartmentIds}
-          onCheck={(checkedKeys) => {
-              console.log(checkedKeys)
-              if (Array.isArray(checkedKeys)) {
-                  setFilterDepartmentIds(checkedKeys as number[])
-                  // setFilteredUsers(filterUsers(['departmentIds'], users))
-              }
-              else {
-                  setFilterDepartmentIds(checkedKeys.checked as number[])
-                  // setFilteredUsers(filterUsers(['departmentIds'], users))
-              }
-          }}
-          className={`tree text-table text-table_litle text-table_tiny`}
-          checkable
-          checkStrictly
-          selectable={false}
-          treeData={departmentsTree}
-        />
-    )
+            else {
+                setFilterDepartmentIds(checkedKeys.checked as number[])
+                // setFilteredUsers(filterUsers(['departmentIds'], users))
+            }
+        }}
+        className={`tree text-table text-table_litle text-table_tiny`}
+        checkable
+        checkStrictly
+        selectable={false}
+        treeData={departments as unknown as DataNode[]}
+        fieldNames={{'key': 'id', 'title': 'name', 'children': 'children'}}
+      />
+  )
 }
 
 export default memo(DepartmentTree)
