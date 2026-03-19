@@ -47,7 +47,7 @@ const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmen
         // условиие обхода корневого, т.к. у него длина 1
         if (path.length == 2)
         {
-            nodes.push(nodeMap.get(parseInt(path[0]))!)
+            nodes.push(nodeMap.get(parseInt(path[1]))!)
         }
         else if (path.length > 2) {
             // console.log(nodeMap.get(parseInt(path.at(-2)!)), path, nodeMap)
@@ -108,6 +108,7 @@ const departmentApi: IDepartmentApi = {
                 switch (error.status) {
                     case 401: {
                         console.log(error.message)
+                        return
                     }
                 }
             }
@@ -116,8 +117,8 @@ const departmentApi: IDepartmentApi = {
         }
     },
 
-    removeDepartmentsByIds: async (organisationId, department) => {
-        const response = await fetch(`${URL}/${department[0]}`)
+    removeDepartmentsByIds: async (organisationId, departments) => {
+        await Promise.all(departments.map((department) => {departmentApi.removeDepartmentById(organisationId, department)}))
     }
 }
 

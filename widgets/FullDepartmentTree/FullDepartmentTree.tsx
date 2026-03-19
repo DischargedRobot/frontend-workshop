@@ -14,6 +14,7 @@ import AddDepartment from '@/features/AddDepartment/ui/AddDepartment';
 import useSWR from 'swr';
 import departmentApi from '@/entities/Departments/api/departmentApi';
 import useFullDepartmentTree from './model/useFullDepartmentTree';
+import DeleteDepartment from '@/features/DeleteDepartment/ui/DeleteDepartment';
 
 const FullDepartmentTree = () => {
 
@@ -32,22 +33,12 @@ const FullDepartmentTree = () => {
     const [isCollapsed, setIsCollapsed] = useState(false)
 
     const removeDep = () => {
-        
-    }
-    const removeSelectedDepartment = useDepartmentsStore(state => state.removeSelectedDepartment)
-    const users = useUsersStore(state => state.users)
-    const setUsers = useUsersStore(state => state.setUsers)
-    const addDepartment = useDepartmentsStore(state => state.addDepartment)
-    const selectedDepartments = useUserFiltersStore(state => state.departmentIds)
 
-    const deleteDepartmentsFromUsers = () => {
-        setUsers(users.map((user) => {
-            if (user.departmentId != undefined && selectedDepartments.includes(user.departmentId)) {
-                return {...user, departmentId: undefined}
-            }
-            return user
-        }))
     }
+   const addDepartment = useDepartmentsStore(state => state.addDepartment)
+    // const selectedDepartments = useUserFiltersStore(state => state.departmentIds)
+
+
 
     const addNewDepartment = (department: IDepartment) => {
         addDepartment(department) 
@@ -64,13 +55,7 @@ const FullDepartmentTree = () => {
                 <h2>{organisation.name}</h2>
                 <div className='department-tree__buttons'>
                     <AddDepartment/>
-                    <button onClick={() => {
-                            removeSelectedDepartment()
-                            deleteDepartmentsFromUsers()
-                        }}
-                    >
-                        <DeleteIcon/>
-                    </button>
+                    <DeleteDepartment/>
                 </div>
             </div>
             {/* <button className='department-tree__button' onClick={() => {console.log(isCollapsed); setIsCollapsed(prev => !prev)}}>

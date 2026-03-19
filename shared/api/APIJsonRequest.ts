@@ -13,7 +13,7 @@ const APIJsonRequest = async <T>(
             ...options,
             headers: {
                 'Content-Type': 'application/json',
-                // 'Accept': 'application/json', 
+                'Accept': 'application/json', 
                 ...options.headers,
             }
         })
