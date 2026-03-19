@@ -31,6 +31,9 @@ const FullDepartmentTree = () => {
     
     const [isCollapsed, setIsCollapsed] = useState(false)
 
+    const removeDep = () => {
+        
+    }
     const removeSelectedDepartment = useDepartmentsStore(state => state.removeSelectedDepartment)
     const users = useUsersStore(state => state.users)
     const setUsers = useUsersStore(state => state.setUsers)

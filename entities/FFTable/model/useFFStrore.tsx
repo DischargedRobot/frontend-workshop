@@ -1,13 +1,13 @@
 import { create } from "zustand";
-import { FeatureFlag, FeatureFlag } from "../ui/FFTable";
+import { IFeatureFlag, IFeatureFlag } from "../ui/FFTable";
 
 interface IFFStore {
-    featureFlags: FeatureFlag[]
-    setFeatureFlags: (newFeatureFlags: FeatureFlag[]) => void
+    featureFlags: IFeatureFlag[]
+    setFeatureFlags: (newFeatureFlags: IFeatureFlag[]) => void
 }
 
 
-const createData = (number: number) : FeatureFlag[] => {
+const createData = (number: number) : IFeatureFlag[] => {
     return Array.from(({length: number}), (_, index) => ({
         key: index,
         id: index,

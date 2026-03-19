@@ -5,9 +5,10 @@ import './FFTable.scss'
 
 import { DeleteIcon, InfoIcon } from "@/shared/assets/Icon";
 import { Switch, Table, TableProps } from "antd"
+import { useFilteredFFs } from '../model';
 
 
-export type TFFTableColumns = TableProps<FeatureFlag>['columns']
+export type TFFTableColumns = TableProps<IFeatureFlag>['columns']
 
 
 
@@ -108,7 +109,7 @@ const FF_TABLE_COLUMNS: TFFTableColumns = [
     },
 ]
 
-export interface FeatureFlag {
+export interface IFeatureFlag {
     id: number,
     name: string,
     departmentId: number,
@@ -118,18 +119,18 @@ export interface FeatureFlag {
     description: string,
 }
 
-// export interface FeatureFlag extends FeatureFlag{
+// export interface IFeatureFlag extends IFeatureFlag{
 //     key: React.Key,
 // }
 
-interface Props {
-    featureFlags: FeatureFlag[]
-}
 
-const FFTable = ({featureFlags}: Props) => {
 
+const FFTable = () => {
+
+    const featureFlags = useFilteredFFs()
 
     const filters = useFFTableFiltersStore(state => state.visibleColumns)
+
     return (
         <Table 
             className="ff-table "

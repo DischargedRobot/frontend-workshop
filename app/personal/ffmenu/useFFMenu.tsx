@@ -1,5 +1,5 @@
 import { Department } from "@/entities/Departments/lib/DepartmentType";
-import { FeatureFlag } from "@/entities/FFTable/ui/FFTable";
+import { IFeatureFlag } from "@/entities/FFTable/ui/FFTable";
 import { create } from "zustand";
 
 
@@ -60,7 +60,7 @@ const data: Department[] = [
   }
 ];
 
-const createData = (number: number) : FeatureFlag[] => {
+const createData = (number: number) : IFeatureFlag[] => {
     return Array.from(({length: number}), (_, index) => ({
         id: index,
         name: `FF${index}`,

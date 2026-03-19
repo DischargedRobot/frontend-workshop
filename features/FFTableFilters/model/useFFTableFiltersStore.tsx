@@ -1,8 +1,8 @@
-import { FeatureFlag } from "@/entities/FFTable/ui/FFTable";
+import { IFeatureFlag } from "@/entities/FFTable/ui/FFTable";
 import { create } from "zustand";
 
 export type TFeatureFlagTable = {
-    [K in keyof Omit<Required<FeatureFlag>, 'id' | 'departmentId' | 'name'>]: {name: string, isVisible: boolean}
+    [K in keyof Omit<Required<IFeatureFlag>, 'id' | 'departmentId' | 'name'>]: {name: string, isVisible: boolean}
 }
 
 interface IFFTableFiltersStore {

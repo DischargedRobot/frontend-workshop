@@ -1,29 +1,28 @@
-import { RequestOptions } from "http";
+import { RequestOptions } from "https";
 import { APIError, mapAPIErrors } from "./APIErrors";
 
 
 
-const APIJsonRequest = async (
+const APIJsonRequest = async <T>(
     endpoint: string,
-    options: RequestOptions = {}
-) => {
+    options: RequestInit = {}
+): Promise<T> => {
     try {
         const response = await fetch(endpoint, {
-            credentials: 'include',
+            // credentials: 'include',
             ...options,
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json', 
-                ...(options.headers as Record<string, string> || {}),
+                // 'Accept': 'application/json', 
+                ...options.headers,
             }
-            
         })
 
         if (!response.ok) {
             throw mapAPIErrors(response.status)
         }
 
-        const data = await response.json()
+        const data: T = await response.json()
 
         return data
 

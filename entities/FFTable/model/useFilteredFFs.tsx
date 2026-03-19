@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import useFFStore from "./useFFStrore"
 import useFFFiltersStore from "./useFFFiltersStore"
-import { FeatureFlag } from "../ui/FFTable"
+import { IFeatureFlag } from "../ui/FFTable"
 import { useShallow } from "zustand/shallow"
 
 type TFilterKey = 'departmentIds' | 'name'
@@ -10,19 +10,19 @@ interface IFilterFunctionsArguments {
     departmentIds: number[],
     name: string
 }
-const filterByDepartmentIds = (featureFlags: FeatureFlag[], departmentIds: number[]): FeatureFlag[] => {
+const filterByDepartmentIds = (featureFlags: IFeatureFlag[], departmentIds: number[]): IFeatureFlag[] => {
     if (departmentIds.length === 0) {
         return featureFlags
     }
     return featureFlags.filter((featureFlag) => (departmentIds.includes(featureFlag.departmentId)))
 }
 
-const filterByName = (featureFlags: FeatureFlag[], name: string): FeatureFlag[] => {
+const filterByName = (featureFlags: IFeatureFlag[], name: string): IFeatureFlag[] => {
     return featureFlags.filter((featureFlag) => featureFlag.name.includes(name))
 }
 
 type TFilterFunction = {
-    [K in TFilterKey]: (featureFlags: FeatureFlag[], ars: IFilterFunctionsArguments[K]) => FeatureFlag[]
+    [K in TFilterKey]: (featureFlags: IFeatureFlag[], ars: IFilterFunctionsArguments[K]) => IFeatureFlag[]
 }
 
 const filterFunction: TFilterFunction = {
@@ -30,7 +30,7 @@ const filterFunction: TFilterFunction = {
     name: filterByName,
 }
 
-type filterFF = <T extends TFilterKey>(filters: T[], featureFlags: FeatureFlag[], filterArguments: IFilterFunctionsArguments) => FeatureFlag[]
+type filterFF = <T extends TFilterKey>(filters: T[], featureFlags: IFeatureFlag[], filterArguments: IFilterFunctionsArguments) => IFeatureFlag[]
 
 const filterFF: filterFF = (filters, featureFlags, filterArguments) => {
     return filters.reduce((filteredFeatureFlags, filter) => {

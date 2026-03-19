@@ -10,7 +10,7 @@ import useFilteredFFs from "@/entities/FFTable/model/useFilteredFFs"
 import useFFFiltersStore from "@/entities/FFTable/model/useFFFiltersStore"
 import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStore"
 import useFFStore from "@/entities/FFTable/model/useFFStrore"
-import {FFTableApi} from "@/entities/FFTable"
+import {FFApi} from "@/entities/FFTable"
 import { FFTableFilters } from "@/features/FFTableFilters"
 
 
@@ -30,10 +30,10 @@ import { FFTableFilters } from "@/features/FFTableFilters"
 // }
 
 // interface Props {
-//     featureFlags: FeatureFlag[]
+//     featureFlags: IFeatureFlag[]
 //     departments: Department[]
 //     // setFeatureFlags: (departments: Department[]) => void
-//     getFeatureFlagsByDepartments: (departments: Department[]) => Promise<FeatureFlag[]>
+//     getFeatureFlagsByDepartments: (departments: Department[]) => Promise<IFeatureFlag[]>
 // }
 
 const FullFeatureFlagsTable = () => {
@@ -44,7 +44,7 @@ const FullFeatureFlagsTable = () => {
     // } = props
 
 
-    const getFeatureFlagsByDepartments = FFTableApi.getFeatureFlagsByDepartments
+    const getFeatureFlagsByDepartments = FFApi.getFeatureFlagsByDepartments
 
     const departments = useDepartmentsStore(state => state.departments)
     const setFeatureFlag = useFFStore(state => state.setFeatureFlags)
@@ -58,10 +58,9 @@ const FullFeatureFlagsTable = () => {
         // })))
     }
 
-    const featureFlags = useFilteredFFs()
     const setFeatureFlagName = useFFFiltersStore(state => state.setName)
-    // const featureFlags: FeatureFlag[] = createData(10)
-    // const [data, setData] = useState<FeatureFlag[]>(featureFlags.map(item => ({
+    // const featureFlags: IFeatureFlag[] = createData(10)
+    // const [data, setData] = useState<IFeatureFlag[]>(featureFlags.map(item => ({
     //         ...item,
     //         key: item.id,
     //     })))
@@ -74,7 +73,7 @@ const FullFeatureFlagsTable = () => {
                 <AddFeatureFlag/>
                 <ReloadFeaturesFlags onClick={() => setFeatureFlags(departments)}/>
             </Flex>
-            <FFTable featureFlags={featureFlags}/>
+            <FFTable/>
         </div>
     )
 }

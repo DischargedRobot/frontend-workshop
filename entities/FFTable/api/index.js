@@ -1,1 +1,1 @@
-export { default as FFTableApi } from './FFTableApi'
+export { default as FFApi } from './FFApi'

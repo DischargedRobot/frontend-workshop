@@ -13,7 +13,15 @@ export class APIError extends Error implements IResponseError{
         super(message || `Error ${errorType}`)
         this.name = 'APIError'
     }
+    checkStatus (errorStatus: number): boolean {
+        return errorStatus === this.status
+    }
 }
+
+export function isAPIError(error: unknown): error is APIError {
+    return ( error instanceof APIError)
+}
+
 
 // все ошибки с бека
 const APIErrors = {
