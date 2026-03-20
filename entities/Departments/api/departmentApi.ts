@@ -58,9 +58,18 @@ const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmen
 }
 
 const departmentApi = {
-    getDepartmentsByOrganisationId: async (organisation: IOrganisation): Promise<IDepartment[]> => {
+    getDepartmentsByOrganisation: async (organisation: IOrganisation): Promise<IDepartment[]> => {
         const responseData = await APIJsonRequest<IDepartmentsByOrganisationId>(
             `${URL_ORGANISATION}/${organisation.id}/nodes?limit=42&offset=0`,
+            {method: 'GET'}
+        )
+
+        return convertIDepartmentResponseToIDepartment(responseData.items, organisation) 
+    },
+    
+    getDescedantsOfDepartmentsByOrganisation: async (organisation: IOrganisation, departmentId: number, depthLevel: number | '' = '',): Promise<IDepartment[]> => {
+        const responseData = await APIJsonRequest<IDepartmentsByOrganisationId>(
+            `${URL_ORGANISATION}/${organisation.id}/nodes/${departmentId}/descendants?depth=${depthLevel}`,
             {method: 'GET'}
         )
 

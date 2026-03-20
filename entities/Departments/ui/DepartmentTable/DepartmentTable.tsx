@@ -13,6 +13,8 @@ import { IDepartment, TableData } from '../../lib'
 import useBreadcrumbStore from '@/entities/DepartmentBreadcamb/model/useBreadcrumbStore'
 import { useShallow } from 'zustand/shallow'
 import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore'
+import useSWR from 'swr'
+import { departmentApi } from '../../api'
 
 
 
@@ -51,8 +53,6 @@ const createColumns = (
   },
 ]
 
-
-
 // const rowSelection: TableProps<TableData>['rowSelection'] = {
 
 // }
@@ -78,8 +78,12 @@ const TableDepartment = () => {
     useBreadcrumbStore(state => state.addDepartment), 
     useFFFiltersStore(state => state.addDepartmentAndItChildren)
   )
+
+  const organisation = useOrganisationStore(state => state.organisation)
+  const {data: deps} = useSWR(['organisation', organisation], () => departmentApi.getDepartmentsByOrganisation(organisation))
   const departments = useBreadcrumbStore(useShallow(state => state.path))
   const setSelectedDepartments = useFFFiltersStore(state => state.setDepartment)
+  console.log(deps, 'deps', departments)
 
   const selectRow = (selectedRowKeys: number[]) => {
     // console.log(selectedRowKeys, departments, deps)

@@ -19,7 +19,7 @@ import DeleteDepartment from '@/features/DeleteDepartment/ui/DeleteDepartment';
 const FullDepartmentTree = () => {
 
     // const organisationId = useOrganisationStore(state => state.organisation.id)
-    // const {data: departments} = useSWR(['organisation', organisationId], () => departmentApi.getDepartmentsByOrganisationId(organisationId))
+    // const {data: departments} = useSWR(['organisation', organisationId], () => departmentApi.getDepartmentsByOrganisation(organisationId))
     // const setDepartments= useDepartmentsStore(state => state.setDepartments)
 
     // useEffect(() => {
