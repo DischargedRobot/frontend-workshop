@@ -168,10 +168,10 @@ const departmentApi = {
         return convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
     },
 
-    // Возвращает первых детей, запрашивает потомков и потомков потомков **/
-    getDescedantOfDepartmentsByOrganisation: async (organisation: IOrganisation, department: IDepartment, depthLevel: number | '' = '',): Promise<IDepartment[]> => {
+    /** @desciption Возвращает первых детей, запрашивает потомков и потомков потомков **/
+    getDescedantOfDepartments: async (organisationId: number, department: IDepartment, depthLevel: number | '' = '',): Promise<IDepartment[]> => {
         const responseData = await APIJsonRequest<IDepartmentsByOrganisationId>(
-            `${URL_ORGANISATION}/${organisation.id}/nodes/${department.id}/descendants?depth=${depthLevel}`,
+            `${URL_ORGANISATION}/${organisationId}/nodes/${department.id}/descendants?depth=${depthLevel}`,
             {method: 'GET'}
         )
         // convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))

@@ -67,6 +67,32 @@ const removeDep = (departments: IDepartment[], removedDepartmentIds: number[]): 
     })
 }
 
+// const updateDep = (departments: IDepartment[], newDepartment: IDepartment): IDepartment => {
+//     console.log('update',  departments, newDepartment)
+//     return departments.map(department => {
+//         if (department.id === newDepartment.id) {
+//             return {...newDepartment}
+//         }
+//         updateDep(department.children, newDepartment)
+//         return department
+//     })
+// }
+
+const updateDep = (departments: IDepartment[], newDepartment: IDepartment): IDepartment[] => {
+    return departments.map(department => {
+        if (department.id === newDepartment.id) {
+            return {...newDepartment}
+        }
+        if (department.children.length !== 0) {
+            const updatedDepartments = updateDep(department.children, newDepartment)
+            if (updatedDepartments !== department.children) {
+                return {...department, children: updatedDepartments}
+            }
+        }
+        return department
+    })
+}
+
 const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
     
     departments: [],
@@ -99,15 +125,23 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
         )}))
     },
 
+    changeDepartment: (department: IDepartment) => {
+        // set(state => ({departments: [...state.departments.map(dep => 
+        //     dep.id === department.id 
+        //         ? { ...dep, children: children }
+        //         : dep
+        // )]}))
+        set(state => ({departments: updateDep(state.departments
+        , {...department})}))
+    },
+
     changeDepartmentChildren: (department: IDepartment, children: IDepartment[]) => {
-        set(state => ({departments: state.departments.map(dep => 
-            dep.id === department.id 
-                ? { ...dep, children: children }
-                : dep
+        set(state => ({departments: updateDep(
+            state.departments, 
+            {...department, children: children}
         )}))
     },
 
-    changeDepartment: () => {},
 
     getDepartmentsIncludingAllChildren: () => getDepartmentAndAllChildren(get().departments),
 

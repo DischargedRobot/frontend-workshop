@@ -13,6 +13,7 @@ import useOrganisationStore from '@/entities/Organisation/model/useOrganisationS
 import { departmentApi } from '../../api'
 import useSWR, { useSWRConfig } from 'swr'
 import { APIError } from '@/shared/api/APIErrors'
+import { useShallow } from 'zustand/shallow'
 
 interface Props {
     tree: TreeDataNode[]
@@ -85,17 +86,18 @@ const DepartmentTree = () => {
   const loadData = async (node: IDepartmentNode) => {
     if (node.isLeaf) return;
     // мутируем исходник, чтобы при повторном нажатии была повторная проверка (возможно, придётся убрать revalidate)
-    try {const children = await mutate(
+    try {
+      const children = await mutate(
         [['organisationId', 'departmentId'], [organisationId, node.id]],
-        () => departmentApi.getChildrenOfDepartments(organisation.id, node.id),
+        () => departmentApi.getDescedantOfDepartments(organisation.id, node, 2),
         { revalidate: true }
       );
     
       if (children != undefined) {
+      console.log(children, 'child')
+
         changeDepartmentChildren(node, children);
-      } else {
-        changeDepartmentChildren(node, []);
-      }
+      } 
     } catch (error) {
       if (error instanceof APIError && error.status === 404) {
         changeDepartmentChildren(node, []);
@@ -105,13 +107,13 @@ const DepartmentTree = () => {
 
   const organisationId = useOrganisationStore(state => state.organisation.id)
   const organisation = useOrganisationStore(state => state.organisation)
-console.log(departments, 'eeee')
   const treeData = useMemo(() => (
     departments.map(department => ({
       ...department, 
       isLeaf: department.children.length === 0 || department.isService ? true : false
     } as IDepartmentNode
   ))), [departments])
+  console.log(treeData, 'tree', departments)
 
   return (
     <>

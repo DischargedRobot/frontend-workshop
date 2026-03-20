@@ -15,8 +15,8 @@ const useDepartmentTree = () => {
     const setDepartments= useDepartmentsStore(state => state.setDepartments)
 
     const {data: departments, error} = useSWR<IDepartment[], APIError>(
-        ['organisationId, departmentId', organisation.id, organisation.children.id], 
-        () => departmentApi.getChildrenOfDepartments(organisation.id, organisation.children.id)
+        [['organisationId, departmentId'], [organisation.id, organisation.children.id]], 
+        () => departmentApi.getDescedantOfDepartments(organisation.id, organisation.children, 2)
     )
     console.log(departments, 'dddsds')
 

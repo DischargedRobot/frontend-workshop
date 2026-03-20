@@ -86,7 +86,7 @@ const TableDepartment = () => {
   const setSelectedDepartments = useFFFiltersStore(state => state.setDepartment)
   
   // в пути всегда минимум родительский есть, только если сеть\бек не накосячит
-  const {data: deps2} = useSWR(['organisationId, departmentId', organisation.id, departments.at(-1)?.id], () => departmentApi.getChildrenOfDepartments(organisation.id, departments.at(-1)!.id))
+  const {data: deps2} = useSWR([['organisationId, departmentId'], [organisation.id, departments.at(-1)?.id]], () => departmentApi.getChildrenOfDepartments(organisation.id, departments.at(-1)!.id))
   // useEffect(() => {
     
   // },[]) 
