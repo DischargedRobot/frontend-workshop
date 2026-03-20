@@ -9,7 +9,7 @@ const URL_ORGANISATION = process.env.NEXT_PUBLIC_API_ORGANISATIONS_URL_V1
 interface IDepartmentApi {
     getDepartmentsByOrganisationId: (organisation: number) => Promise<IDepartment[]>
     getDepartmentsByPath: (path: string) => Promise<IDepartment[]>
-    addDepartment: (department: Omit<IDepartment, 'id'>, organisation: number) => Promise<void>
+    addDepartment: (departmentName: string, organisation: number, parentId: number) => Promise<void>
 
     removeDepartmentById: (organisationId: number, departmentId: number) => Promise<void>
     removeDepartmentsByIds: (organisationId: number, departmentId: number[]) => Promise<void>
@@ -81,16 +81,13 @@ const departmentApi: IDepartmentApi = {
         return await response.json()
     },
 
-    addDepartment: async (department, organisation) => {
-        const response = await fetch(`${URL_ORGANISATION}/${organisation}/nodes?limit=42&offset=0`,{
-            method: 'POST',
-            headers: {'Content-type': 'aplication/json'},
-            body: JSON.stringify(department)
+    addDepartment: async (departmentName, organisation, parentId) => {
+        const response = APIJsonRequest(
+            `${URL_ORGANISATION}/${organisation}/nodes`, 
+            {method: 'POST',
+            body: JSON.stringify({name: departmentName, isService: false, parentId: parentId})
         })
-
-        if (!response.ok) {
-            throw new Error('getDepartmentsByPath')
-        }
+        
     },
 
 
@@ -117,6 +114,7 @@ const departmentApi: IDepartmentApi = {
         }
     },
 
+    
     removeDepartmentsByIds: async (organisationId, departments) => {
         await Promise.all(departments.map((department) => {departmentApi.removeDepartmentById(organisationId, department)}))
     }

@@ -7,6 +7,7 @@ import UserList from '@/entities/UserList/ui/UserList'
 import { FFTableFilters } from '@/features/FFTableFilters'
 import UserSearch from "@/features/UserSearch/ui/UserSearch"
 import AddButton from "@/shared/AddButton"
+import Toast from '@/shared/ui/Toast/Toast'
 
 const FullUserList = () => {
 
@@ -23,6 +24,7 @@ const FullUserList = () => {
                 />
                 <AddButton/>
             </div>
+        <Toast type='warning' text='плохо всё(('/>
             
             <UserList/>
         </div>

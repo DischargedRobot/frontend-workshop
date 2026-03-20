@@ -34,6 +34,11 @@
         font-size: 14px;
         
         border-bottom: 1px solid #fff;
+        
+        &:hover{
+            border-color: var(--hover-active-background);
+
+        }
     }
 
     &__input {
