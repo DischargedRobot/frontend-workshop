@@ -41,9 +41,9 @@ const filterFF: filterFF = (filters, featureFlags, filterArguments) => {
 const useFilteredFFs = () => {
 
     const featureFlags = useFFStore(state => state.featureFlags)
-    console.log(featureFlags, 'filtered')
+    // console.log(featureFlags, 'filtered')
     const filters = useFFFiltersStore(useShallow(state => ({name: state.name, departmentIds: state.departmentIds})))
-    console.log(filters, 'filters')
+    // console.log(filters, 'filters')
 
     return useMemo(() => 
         filterFF(['departmentIds', 'name'],featureFlags, filters)

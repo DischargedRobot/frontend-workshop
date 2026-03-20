@@ -3,13 +3,16 @@
 import './DepartmentTree.scss'
 
 import { Empty, Tree, TreeDataNode } from "antd"
-import {  memo } from "react"
+import {  memo, useEffect, useMemo, useState } from "react"
 import useDepartmentsStore from '../../model/useDepartmentsStore'
-import { DataNode } from 'antd/es/tree'
+import { DataNode, EventDataNode } from 'antd/es/tree'
 import useDepartmentTree from '../../model/DepartmentTree/useDepartmentTree'
 import { IDepartment } from '../../lib'
 import TitleRender, { IDepartmentNode } from './TitleRender'
 import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore'
+import { departmentApi } from '../../api'
+import useSWR, { useSWRConfig } from 'swr'
+import { APIError } from '@/shared/api/APIErrors'
 
 interface Props {
     tree: TreeDataNode[]
@@ -63,6 +66,7 @@ const DepartmentTree = () => {
   // console.log('DepartmentTree')
 
   const departments = useDepartmentsStore(state => state.departments)
+  const changeDepartmentChildren = useDepartmentsStore(state => state.changeDepartmentChildren)
   // const allDep = useDepartmentsStore(useShallow(state => state.getDepartmentsIncludingAllChildren()))
   // const [chek, setchek] = useState<number[]>([])
   // const convertToTreeData = (departmentsForConvert: IDepartment[]): TreeDataNode[] => {
@@ -76,9 +80,38 @@ const DepartmentTree = () => {
   // }
 
   // const departmentsTree: TreeDataNode[] = convertToTreeData(departments)
+  const { mutate } = useSWRConfig();
 
+  const loadData = async (node: IDepartmentNode) => {
+    if (node.isLeaf) return;
+    // мутируем исходник, чтобы при повторном нажатии была повторная проверка (возможно, придётся убрать revalidate)
+    try {const children = await mutate(
+        [['organisationId', 'departmentId'], [organisationId, node.id]],
+        () => departmentApi.getChildrenOfDepartments(organisation.id, node.id),
+        { revalidate: true }
+      );
+    
+      if (children != undefined) {
+        changeDepartmentChildren(node, children);
+      } else {
+        changeDepartmentChildren(node, []);
+      }
+    } catch (error) {
+      if (error instanceof APIError && error.status === 404) {
+        changeDepartmentChildren(node, []);
+      }
+    }
+  };
 
   const organisationId = useOrganisationStore(state => state.organisation.id)
+  const organisation = useOrganisationStore(state => state.organisation)
+console.log(departments, 'eeee')
+  const treeData = useMemo(() => (
+    departments.map(department => ({
+      ...department, 
+      isLeaf: department.children.length === 0 || department.isService ? true : false
+    } as IDepartmentNode
+  ))), [departments])
 
   return (
     <>
@@ -101,10 +134,12 @@ const DepartmentTree = () => {
         }}
         className={`tree text-table text-table_litle text-table_tiny`}
         checkable
+        loadData={loadData}
         checkStrictly
         selectable={true}
         titleRender={(node) => <TitleRender node={node as unknown as IDepartmentNode} organisationId={organisationId} key={node.key}/>}
-        treeData={departments as unknown as DataNode[]}
+        // treeData={departments as unknown as IDepartmentNode[]}
+        treeData={treeData}
         fieldNames={{'key': 'id', 'title': 'name', 'children': 'children'}}
       />}
    </>

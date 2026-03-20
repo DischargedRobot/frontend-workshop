@@ -10,8 +10,15 @@ import { IDepartment } from "../../lib"
 const useDepartmentTree = () => {
 
     const organisation = useOrganisationStore(state => state.organisation)
-    const {data: departments, error} = useSWR<IDepartment[], APIError>(['organisation', organisation], () => departmentApi.getDepartmentsByOrganisation(organisation))
+    // TODO: жду когда допилят аутс сервис
+    // const {data: orgChild, error} = useSWR<IDepartment[], APIError>(['organisation', organisation], () => departmentApi.getDepartmentsByOrganisation(organisation))
     const setDepartments= useDepartmentsStore(state => state.setDepartments)
+
+    const {data: departments, error} = useSWR<IDepartment[], APIError>(
+        ['organisationId, departmentId', organisation.id, organisation.children.id], 
+        () => departmentApi.getChildrenOfDepartments(organisation.id, organisation.children.id)
+    )
+    console.log(departments, 'dddsds')
 
     useEffect(() => {
         if (departments !== undefined && !(departments instanceof APIError)) {

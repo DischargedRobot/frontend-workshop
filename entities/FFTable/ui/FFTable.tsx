@@ -130,7 +130,7 @@ const FFTable = () => {
     const featureFlags = useFilteredFFs()
 
     const filters = useFFTableFiltersStore(state => state.visibleColumns)
-    console.log(featureFlags)
+    // console.log(featureFlags)
     return (
         <Table 
             className="ff-table "

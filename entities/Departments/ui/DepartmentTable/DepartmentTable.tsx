@@ -15,6 +15,7 @@ import { useShallow } from 'zustand/shallow'
 import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore'
 import useSWR from 'swr'
 import { departmentApi } from '../../api'
+import { useEffect } from 'react'
 
 
 
@@ -80,16 +81,23 @@ const TableDepartment = () => {
   )
 
   const organisation = useOrganisationStore(state => state.organisation)
-  const {data: deps} = useSWR(['organisation', organisation], () => departmentApi.getDepartmentsByOrganisation(organisation))
+  // const {data: deps} = useSWR(['organisation, departmentId', organisation], () => departmentApi.getDepartmentsByOrganisation(organisation))
   const departments = useBreadcrumbStore(useShallow(state => state.path))
   const setSelectedDepartments = useFFFiltersStore(state => state.setDepartment)
-  console.log(deps, 'deps', departments)
-
+  
+  // в пути всегда минимум родительский есть, только если сеть\бек не накосячит
+  const {data: deps2} = useSWR(['organisationId, departmentId', organisation.id, departments.at(-1)?.id], () => departmentApi.getChildrenOfDepartments(organisation.id, departments.at(-1)!.id))
+  // useEffect(() => {
+    
+  // },[]) 
+  console.log(deps2, 'deps', departments.at(-1))
   const selectRow = (selectedRowKeys: number[]) => {
     // console.log(selectedRowKeys, departments, deps)
     if (selectedRowKeys.length === 0) {
+      // когда не выбран ни 1, мы показываем все что приндлежат отделам по пути и те, которые находятся в отделах, кторые приписанны к последнему отделу в пути
       setSelectedDepartments([...departments.map(dep => dep.id), ...departments.at(-1)!.children.map(dep => dep.id)])
     } else {
+      // когда выбран в таблице хотя бы 1
       setSelectedDepartments(selectedRowKeys as number[])
     }
   }
@@ -109,7 +117,7 @@ const TableDepartment = () => {
           // rowExpandable: () => false,
           // expandIcon: () => false        
         }}
-        dataSource={departments.at(-1)?.children}
+        dataSource={deps2}
         columns={columns}
         pagination={{ placement: ['bottomCenter'], pageSize: 6 }}
         size="small"

@@ -23,7 +23,7 @@ const FFApi = {
         const responseData = await APIJsonRequest<IFeatureFlagByDepartmentResponse>(
             `${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}/feature-flags/linked?limit=42&offset=0&relation=descendant`
         )
-        console.log(responseData.items)
+        // console.log(responseData.items)
         return responseData.items.map(({featureFlag: {nodeId, ...featureFlag}, belongsToNode: belongsToNode}) => ({
             ...featureFlag, 
             departmentId: nodeId, 
@@ -52,7 +52,7 @@ const FFApi = {
 
             return ([...departments, ...allDepartments])
         }, [])
-        console.log(l)
+        // console.log(l)
         return l
     },
     
