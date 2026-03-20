@@ -3,6 +3,7 @@ import { IDepartment } from "../lib/DepartmentType"
 import APIJsonRequest from "@/shared/api/APIJsonRequest"
 import { error } from "console"
 import { APIError, isAPIError } from "@/shared/api/APIErrors"
+import { IOrganisation } from "@/entities/Organisation/model/useOrganisationStore"
 
 const URL_ORGANISATION = process.env.NEXT_PUBLIC_API_ORGANISATIONS_URL_V1
     
@@ -29,7 +30,7 @@ interface IDepartmentApi {
     removeDepartmentsByIds: (organisationId: number, departmentId: number[]) => Promise<void>
 }
 
-const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmentResponse[]): IDepartment[] => {
+const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmentResponse[], organisation: IOrganisation): IDepartment[] => {
     // Мапим, чтобы потом было проще обратиться к узлу во время операций, а не писать find 
     const nodeMap = new Map<number, IDepartment>()
 
@@ -44,9 +45,14 @@ const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmen
         const path = item.path.split('.')
         // тут не может быть undefined, толькое если бекенд накосячил накосячил...
         // условиие обхода корневого, т.к. у него длина 1
+        if (path.length == 1) {
+            organisation.children = (nodeMap.get(parseInt(path[0]))!)
+        }
         if (path.length == 2)
         {
-            nodes.push(nodeMap.get(parseInt(path[1]))!)
+            const node = nodeMap.get(parseInt(path[1]))!
+            organisation.children.children.push(node)
+            nodes.push(node)
         }
         else if (path.length > 2) {
             // console.log(nodeMap.get(parseInt(path.at(-2)!)), path, nodeMap)
@@ -58,13 +64,13 @@ const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmen
 }
 
 const departmentApi = {
-    getDepartmentsByOrganisationId: async (organisationId: number): Promise<IDepartment[]> => {
+    getDepartmentsByOrganisationId: async (organisation: IOrganisation): Promise<IDepartment[]> => {
         const responseData = await APIJsonRequest<IDepartmentsByOrganisationId>(
-            `${URL_ORGANISATION}/${organisationId}/nodes?limit=42&offset=0`,
+            `${URL_ORGANISATION}/${organisation.id}/nodes?limit=42&offset=0`,
             {method: 'GET'}
         )
 
-        return convertIDepartmentResponseToIDepartment(responseData.items) 
+        return convertIDepartmentResponseToIDepartment(responseData.items, organisation) 
     },
 
     getDepartmentsByPath: async (path: string) => {

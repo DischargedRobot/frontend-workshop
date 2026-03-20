@@ -1,9 +1,11 @@
+import { IDepartment } from "@/entities/Departments"
 import { create } from "zustand"
 
-interface IOrganisation {
+export interface IOrganisation {
     id: number
     name: string
     adminId: number
+    children: IDepartment
 }
 
 interface IOrganisationStore {
@@ -13,7 +15,7 @@ interface IOrganisationStore {
 
 const useOrganisationStore = create<IOrganisationStore>((set) => ({
 
-    organisation: {id: 10, name: 'Рога и копыта', adminId: 1},
+    organisation: {id: 10, name: 'Рога и копыта', adminId: 1, children: {id: 1, name: 's', children: [], featureFlags:[], link:''}},
     setOrganisation: (newOrganisation) => set({organisation: newOrganisation})
 
 }))

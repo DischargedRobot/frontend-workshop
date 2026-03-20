@@ -9,8 +9,8 @@ import { IDepartment } from "../../lib"
 
 const useDepartmentTree = () => {
 
-    const organisationId = useOrganisationStore(state => state.organisation.id)
-    const {data: departments, error} = useSWR<IDepartment[], APIError>(['organisation', organisationId], () => departmentApi.getDepartmentsByOrganisationId(organisationId))
+    const organisation = useOrganisationStore(state => state.organisation)
+    const {data: departments, error} = useSWR<IDepartment[], APIError>(['organisation', organisation.id], () => departmentApi.getDepartmentsByOrganisationId(organisation))
     const setDepartments= useDepartmentsStore(state => state.setDepartments)
 
     useEffect(() => {

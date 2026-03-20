@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore'
 import useFFFiltersStore from '@/entities/FFTable/model/useFFFiltersStore'
 import departmentApi from '@/entities/Departments/api/departmentApi'
+import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore'
 // Promise<{featureFlags: string[]; departments: string[]}>
 
 const DEPARTMENTS_REQUEST_URL = "http://local:3000/"
@@ -19,7 +20,7 @@ const DepartmentBreadcamb = () => {
     const path = useBreadcrumbStore(state => state.path)
     const setPath = useBreadcrumbStore(state => state.setPath)
     
-    const rootDepartment = useDepartmentsStore(state => state.departments[0])
+    const rootDepartment = useOrganisationStore(state => state.organisation.children)
 
     const setDepartmentFilters = useFFFiltersStore(state => state.setDepartment)
     useEffect(() => {
