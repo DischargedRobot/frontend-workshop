@@ -14,7 +14,7 @@ const filterByDepartmentIds = (featureFlags: IFeatureFlag[], departmentIds: numb
     if (departmentIds.length === 0) {
         return featureFlags
     }
-    return featureFlags.filter((featureFlag) => (departmentIds.includes(featureFlag.nodeId)))
+    return featureFlags.filter((featureFlag) => (departmentIds.includes(featureFlag.departmentId)))
 }
 
 const filterByName = (featureFlags: IFeatureFlag[], name: string): IFeatureFlag[] => {

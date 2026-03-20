@@ -12,7 +12,7 @@ const createData = (number: number) : IFeatureFlag[] => {
         key: index,
         id: index,
         name: `FF${index}`,
-        nodeId: index,
+        departmentId: index,
         departmentName: `Depart${index}`,
         value: false ,
         description: 'd'.repeat(index),

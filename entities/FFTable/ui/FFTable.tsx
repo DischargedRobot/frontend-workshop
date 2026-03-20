@@ -112,7 +112,7 @@ const FF_TABLE_COLUMNS: TFFTableColumns = [
 export interface IFeatureFlag {
     id: number,
     name: string,
-    nodeId: number,
+    departmentId: number,
     departmentName?: string,
     value: boolean,
     lastModified: string,

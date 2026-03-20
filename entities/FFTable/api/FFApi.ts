@@ -5,10 +5,15 @@ import { IFeatureFlag } from "../ui/FFTable"
 const URL_ORGANISATION = process.env.NEXT_PUBLIC_API_ORGANISATIONS_URL_V1
 
 interface IFeatureFlagByDepartmentResponse {
-    items: IFeatureFlag[]
+    items: IFeatureFlagResponse[]
     limit: number
     offset: number
     total: number
+}
+
+interface IFeatureFlagResponse {
+    featureFlag: Omit<IFeatureFlag, 'departmentName' | 'departmentId'> & {nodeId: number}
+    belongsToNode: Omit<IDepartment, 'children' | 'featureFlags'>
 }
 
 const FFApi = {
@@ -16,10 +21,15 @@ const FFApi = {
 
     getFeatureFlagsByDepartment: async (departmentId: number, organisationId: number,): Promise<IFeatureFlag[]> => {
         const responseData = await APIJsonRequest<IFeatureFlagByDepartmentResponse>(
-            `${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}/feature-flags?limit=42&offset=0`
+            `${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}/feature-flags/linked?limit=42&offset=0&relation=descendant`
         )
+        console.log(responseData.items)
+        return responseData.items.map(({featureFlag: {nodeId, ...featureFlag}, belongsToNode: belongsToNode}) => ({
+            ...featureFlag, 
+            departmentId: nodeId, 
+            departmentName: belongsToNode.name
+        }))
 
-        return responseData.items
     },
 
     getFeatureFlagsByDepartments: async (departmentIds: number[], organisationId: number): Promise<IFeatureFlag[]> => {
