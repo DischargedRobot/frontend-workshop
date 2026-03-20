@@ -90,14 +90,11 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
     },
 
     changeDepartmentName: (department, newName) => {
-        set(state => ({departments: [...state.departments.map(dep => 
-            {
-                if (dep.id != department.id) {
-                    department.name = newName
-                }
-                return dep
-            }
-        )]}))
+        set(state => ({departments: state.departments.map(dep => 
+            dep.id === department.id 
+                ? { ...dep, name: newName }
+                : dep
+        )}))
     },
 
     changeDepartment: () => {},

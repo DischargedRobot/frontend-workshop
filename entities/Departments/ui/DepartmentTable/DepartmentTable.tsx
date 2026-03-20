@@ -11,6 +11,8 @@ import useDepartmentsStore from '../../model/useDepartmentsStore'
 import useFFFiltersStore from '@/entities/FFTable/model/useFFFiltersStore'
 import { IDepartment, TableData } from '../../lib'
 import useBreadcrumbStore from '@/entities/DepartmentBreadcamb/model/useBreadcrumbStore'
+import { useShallow } from 'zustand/shallow'
+import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore'
 
 
 
@@ -76,11 +78,11 @@ const TableDepartment = () => {
     useBreadcrumbStore(state => state.addDepartment), 
     useFFFiltersStore(state => state.addDepartmentAndItChildren)
   )
-  const departments = useBreadcrumbStore(state => state.path)
+  const departments = useBreadcrumbStore(useShallow(state => state.path))
   const setSelectedDepartments = useFFFiltersStore(state => state.setDepartment)
 
   const selectRow = (selectedRowKeys: number[]) => {
-    console.log(selectedRowKeys, departments)
+    // console.log(selectedRowKeys, departments, deps)
     if (selectedRowKeys.length === 0) {
       setSelectedDepartments([...departments.map(dep => dep.id), ...departments.at(-1)!.children.map(dep => dep.id)])
     } else {

@@ -40,7 +40,7 @@ const TitleRender = (props: Props): React.ReactNode => {
                     value={title}
                     onBlur={(e) => {
                         changeName(node, e.target.value)
-                        departmentApi.changeDepartmentName(node, organisationId)
+                        departmentApi.changeDepartmentName({...node, name: e.target.value}, organisationId)
                         setIsEditable(false)
                     }}
                 />

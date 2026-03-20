@@ -20,7 +20,7 @@ const createFFTableColumns = (columnVisible: TFeatureFlagTable ): TFFTableColumn
             dataIndex: 'name',
         },
         {
-            hidden: !columnVisible.isEnabled.isVisible,
+            hidden: !columnVisible.value.isVisible,
             align: "center",
             title: 'Включён',
             key: 'isEnabled',
@@ -112,9 +112,9 @@ const FF_TABLE_COLUMNS: TFFTableColumns = [
 export interface IFeatureFlag {
     id: number,
     name: string,
-    departmentId: number,
+    nodeId: number,
     departmentName?: string,
-    isEnabled: boolean,
+    value: boolean,
     lastModified: string,
     description: string,
 }
@@ -130,7 +130,7 @@ const FFTable = () => {
     const featureFlags = useFilteredFFs()
 
     const filters = useFFTableFiltersStore(state => state.visibleColumns)
-
+    console.log(featureFlags)
     return (
         <Table 
             className="ff-table "

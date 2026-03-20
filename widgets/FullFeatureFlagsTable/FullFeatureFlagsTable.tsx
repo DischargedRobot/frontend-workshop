@@ -12,6 +12,8 @@ import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStor
 import useFFStore from "@/entities/FFTable/model/useFFStrore"
 import {FFApi} from "@/entities/FFTable"
 import { FFTableFilters } from "@/features/FFTableFilters"
+import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore"
+import { useShallow } from "zustand/shallow"
 
 
 
@@ -46,11 +48,13 @@ const FullFeatureFlagsTable = () => {
 
     const getFeatureFlagsByDepartments = FFApi.getFeatureFlagsByDepartments
 
-    const departments = useDepartmentsStore(state => state.departments)
+    const departmentIds = useDepartmentsStore(useShallow(state => state.departments.map(department => department.id)))
     const setFeatureFlag = useFFStore(state => state.setFeatureFlags)
 
-    const setFeatureFlags = async (departments: IDepartment[]) => {
-        const response = await getFeatureFlagsByDepartments(departments)
+    const organisationId = useOrganisationStore(state => state.organisation.id)
+    const setFeatureFlags = async (departments: number[]) => {
+        const response = await getFeatureFlagsByDepartments(departments, organisationId)
+        console.log(response)
         setFeatureFlag(response)
         // setData(response.map(item => ({
         //     ...item,
@@ -71,7 +75,7 @@ const FullFeatureFlagsTable = () => {
                 <FFTableFilters/>
                 <FFSearch onSearch={(e) => {setFeatureFlagName(e.target.value)}}/>
                 <AddFeatureFlag/>
-                <ReloadFeaturesFlags onClick={() => setFeatureFlags(departments)}/>
+                <ReloadFeaturesFlags onClick={() => setFeatureFlags(departmentIds)}/>
             </Flex>
             <FFTable/>
         </div>

@@ -14,7 +14,7 @@ const filterByDepartmentIds = (featureFlags: IFeatureFlag[], departmentIds: numb
     if (departmentIds.length === 0) {
         return featureFlags
     }
-    return featureFlags.filter((featureFlag) => (departmentIds.includes(featureFlag.departmentId)))
+    return featureFlags.filter((featureFlag) => (departmentIds.includes(featureFlag.nodeId)))
 }
 
 const filterByName = (featureFlags: IFeatureFlag[], name: string): IFeatureFlag[] => {
@@ -41,8 +41,9 @@ const filterFF: filterFF = (filters, featureFlags, filterArguments) => {
 const useFilteredFFs = () => {
 
     const featureFlags = useFFStore(state => state.featureFlags)
-
+    console.log(featureFlags, 'filtered')
     const filters = useFFFiltersStore(useShallow(state => ({name: state.name, departmentIds: state.departmentIds})))
+    console.log(filters, 'filters')
 
     return useMemo(() => 
         filterFF(['departmentIds', 'name'],featureFlags, filters)
