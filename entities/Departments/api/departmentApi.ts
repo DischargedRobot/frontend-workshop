@@ -6,15 +6,6 @@ import { APIError, isAPIError } from "@/shared/api/APIErrors"
 
 const URL_ORGANISATION = process.env.NEXT_PUBLIC_API_ORGANISATIONS_URL_V1
     
-interface IDepartmentApi {
-    getDepartmentsByOrganisationId: (organisation: number) => Promise<IDepartment[]>
-    getDepartmentsByPath: (path: string) => Promise<IDepartment[]>
-    addDepartment: (departmentName: string, organisation: number, parentId: number) => Promise<void>
-
-    removeDepartmentById: (organisationId: number, departmentId: number) => Promise<void>
-    removeDepartmentsByIds: (organisationId: number, departmentId: number[]) => Promise<void>
-}
-
 interface IDepartmentResponse {
     "id": number,
     "organizationId": number,
@@ -29,6 +20,14 @@ interface IDepartmentsByOrganisationId {
     items: IDepartmentResponse[]
 }
 
+interface IDepartmentApi {
+    // getDepartmentsByOrganisationId: (organisation: number) => 
+    getDepartmentsByPath: (path: string) => Promise<IDepartment[]>
+    addDepartment: (departmentName: string, organisation: number, parentId: number) => Promise<void>
+
+    removeDepartmentById: (organisationId: number, departmentId: number) => Promise<void>
+    removeDepartmentsByIds: (organisationId: number, departmentId: number[]) => Promise<void>
+}
 
 const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmentResponse[]): IDepartment[] => {
     // Мапим, чтобы потом было проще обратиться к узлу во время операций, а не писать find 
@@ -58,9 +57,9 @@ const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmen
     return nodes
 }
 
-const departmentApi: IDepartmentApi = {
-    getDepartmentsByOrganisationId: async (organisationId: number) => {
-        const responseData: IDepartmentsByOrganisationId = await APIJsonRequest(
+const departmentApi = {
+    getDepartmentsByOrganisationId: async (organisationId: number): Promise<IDepartment[]> => {
+        const responseData = await APIJsonRequest<IDepartmentsByOrganisationId>(
             `${URL_ORGANISATION}/${organisationId}/nodes?limit=42&offset=0`,
             {method: 'GET'}
         )
@@ -82,7 +81,8 @@ const departmentApi: IDepartmentApi = {
     },
 
     addDepartment: async (departmentName, organisation, parentId) => {
-        const response = APIJsonRequest(
+
+        APIJsonRequest(
             `${URL_ORGANISATION}/${organisation}/nodes`, 
             {method: 'POST',
             body: JSON.stringify({name: departmentName, isService: false, parentId: parentId})

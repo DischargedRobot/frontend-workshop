@@ -30,7 +30,7 @@ const APIJsonRequest = async <T>(
 
         // если нет сети
         if (error instanceof TypeError && error.message === "Failed to fetch") {
-            throw mapAPIErrors(400)
+            throw mapAPIErrors(null)
         }
 
         // если не наша, то пусть будет серверной (на всякий случай, мало ли)
@@ -38,7 +38,12 @@ const APIJsonRequest = async <T>(
             throw mapAPIErrors(500)
         }
 
-        throw error
+        if (error !instanceof APIError) {
+            // Возвращаем неизвестную
+            throw mapAPIErrors(0)
+        }
+
+        throw error as APIError
     }
 
 

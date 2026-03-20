@@ -2,15 +2,9 @@
 
 import './DepartmentTree.scss'
 
-import { Tree, TreeDataNode } from "antd"
-import { Children, memo, useMemo, useState } from "react"
-import useUserFiltersStore from '@/entities/UserList/model/useUserFiltersStore'
+import { Empty, Tree, TreeDataNode } from "antd"
+import {  memo} from "react"
 import useDepartmentsStore from '../../model/useDepartmentsStore'
-import { IDepartment } from '../../lib'
-import { title } from 'process'
-import { useShallow } from 'zustand/shallow'
-import useSWR from 'swr'
-import departmentApi from '../../api/departmentApi'
 import { DataNode } from 'antd/es/tree'
 import useDepartmentTree from '../../model/DepartmentTree/useDepartmentTree'
 
@@ -56,27 +50,31 @@ const tree: TreeDataNode[] = [
 
 const DepartmentTree = () => {
 
-  const { filterDepartmentIds, setFilterDepartmentIds} = useDepartmentTree()
-
+  const { filterDepartmentIds, setFilterDepartmentIds, error} = useDepartmentTree()
 
   // console.log('DepartmentTree')
 
   const departments = useDepartmentsStore(state => state.departments)
   // const allDep = useDepartmentsStore(useShallow(state => state.getDepartmentsIncludingAllChildren()))
   // const [chek, setchek] = useState<number[]>([])
-  const convertToTreeData = (departmentsForConvert: IDepartment[]): TreeDataNode[] => {
-      return departmentsForConvert.map((department) => {
-          return {
-              title: department.name, 
-              key: department.id, 
-              children: convertToTreeData(department.children)
-          }
-      })
-  }
+  // const convertToTreeData = (departmentsForConvert: IDepartment[]): TreeDataNode[] => {
+  //     return departmentsForConvert.map((department) => {
+  //         return {
+  //             title: department.name, 
+  //             key: department.id, 
+  //             children: convertToTreeData(department.children)
+  //         }
+  //     })
+  // }
 
-  const departmentsTree: TreeDataNode[] = convertToTreeData(departments)
+  // const departmentsTree: TreeDataNode[] = convertToTreeData(departments)
 
   return (
+    <>
+      {departments.length == 0 
+      ? 
+      <Empty description={<span style={{color: 'var(--text-color) !important'}}>{error?.message ?? 'Отделов нет :(' }</span>}/>
+      : 
       <Tree 
         checkedKeys={filterDepartmentIds}
         onCheck={(checkedKeys) => {
@@ -96,7 +94,8 @@ const DepartmentTree = () => {
         selectable={false}
         treeData={departments as unknown as DataNode[]}
         fieldNames={{'key': 'id', 'title': 'name', 'children': 'children'}}
-      />
+      />}
+   </>
   )
 }
 
