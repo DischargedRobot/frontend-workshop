@@ -5,13 +5,11 @@ import './DepartmentBreadcrumb.scss'
 import { Breadcrumb } from "antd"
 import useBreadcrumbStore from '../model/useBreadcrumbStore'
 import { useEffect } from 'react'
-import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore'
 import useFFFiltersStore from '@/entities/FFTable/model/useFFFiltersStore'
-import departmentApi from '@/entities/Departments/api/departmentApi'
 import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore'
 // Promise<{featureFlags: string[]; departments: string[]}>
 
-const DEPARTMENTS_REQUEST_URL = "http://local:3000/"
+// const DEPARTMENTS_REQUEST_URL = "http://local:3000/"
 
 const DepartmentBreadcamb = () => {
 
@@ -25,14 +23,13 @@ const DepartmentBreadcamb = () => {
     const setDepartmentFilters = useFFFiltersStore(state => state.setDepartment)
     useEffect(() => {
         setPath([rootDepartment])
-    }, [])
+    }, [rootDepartment, setPath])
 
     return (
         <Breadcrumb 
             className='text text_litle text_bold'
-            items={path.map((item, index, arr) => 
+            items={path.map((item, index) => 
                 {
-                const paths = DEPARTMENTS_REQUEST_URL+arr.slice(0,index+1).join('/')
                 return {title: 
                     <button 
                         className='bredcamb' 

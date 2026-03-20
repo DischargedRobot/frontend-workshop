@@ -28,7 +28,7 @@ const AddDepartment = () => {
         if (selectedDepartmentIds.at(-1) != undefined)
         {
             departmentApi.addDepartment(date.nameDepartment, organisationId, selectedDepartmentIds.at(-1)!)
-            addDepart({id: 10, name: date.nameDepartment, children: [], featureFlags: [], link: ''})
+            addDepart({id: 10, name: date.nameDepartment, children: [], featureFlags: [], link: '', isService: false, version: 1})
         }
     }
 

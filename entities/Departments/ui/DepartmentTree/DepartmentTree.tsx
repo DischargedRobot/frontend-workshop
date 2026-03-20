@@ -3,12 +3,13 @@
 import './DepartmentTree.scss'
 
 import { Empty, Tree, TreeDataNode } from "antd"
-import {  memo, useState} from "react"
+import {  memo } from "react"
 import useDepartmentsStore from '../../model/useDepartmentsStore'
 import { DataNode } from 'antd/es/tree'
 import useDepartmentTree from '../../model/DepartmentTree/useDepartmentTree'
 import { IDepartment } from '../../lib'
-import TitleRender, { IDepartmentNode } from './Title'
+import TitleRender, { IDepartmentNode } from './TitleRender'
+import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore'
 
 interface Props {
     tree: TreeDataNode[]
@@ -77,7 +78,7 @@ const DepartmentTree = () => {
   // const departmentsTree: TreeDataNode[] = convertToTreeData(departments)
 
 
-
+  const organisationId = useOrganisationStore(state => state.organisation.id)
 
   return (
     <>
@@ -102,7 +103,7 @@ const DepartmentTree = () => {
         checkable
         checkStrictly
         selectable={true}
-        titleRender={(node) => <TitleRender node={node as unknown as IDepartmentNode} key={node.key}/>}
+        titleRender={(node) => <TitleRender node={node as unknown as IDepartmentNode} organisationId={organisationId} key={node.key}/>}
         treeData={departments as unknown as DataNode[]}
         fieldNames={{'key': 'id', 'title': 'name', 'children': 'children'}}
       />}

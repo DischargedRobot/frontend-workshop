@@ -1,6 +1,6 @@
-import { IDepartment } from "@/entities/DepartmentTable";
+import { IDepartment } from "@/entities/Departments";
 import { IUser } from "@/entities/UserCard/ui/types";
-import { IRole, TROLE } from "@/shared/Role";
+import { IRole, TROLE } from "@/shared/model/Role";
 import { create } from "zustand";
 
 const API_URL = 'api/'

@@ -9,9 +9,11 @@ export interface Department {
 }
 
 export interface IDepartment {
-  id: number,
-  name: string,
-  children: IDepartment[],
-  featureFlags: IFeatureFlag[],
-  link: string,
+  id: number
+  name: string
+  children: IDepartment[]
+  featureFlags: IFeatureFlag[]
+  link: string
+  version: number
+  isService: boolean
 }

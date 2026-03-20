@@ -1,12 +1,9 @@
-import { RequestOptions } from "http"
 import { IDepartment } from "../lib/DepartmentType"
 import APIJsonRequest from "@/shared/api/APIJsonRequest"
-import { error } from "console"
-import { APIError, isAPIError } from "@/shared/api/APIErrors"
+import { isAPIError } from "@/shared/api/APIErrors"
 import { IOrganisation } from "@/entities/Organisation/model/useOrganisationStore"
 
 const URL_ORGANISATION = process.env.NEXT_PUBLIC_API_ORGANISATIONS_URL_V1
-    
 interface IDepartmentResponse {
     "id": number,
     "organizationId": number,
@@ -19,15 +16,9 @@ interface IDepartmentResponse {
 
 interface IDepartmentsByOrganisationId {
     items: IDepartmentResponse[]
-}
-
-interface IDepartmentApi {
-    // getDepartmentsByOrganisationId: (organisation: number) => 
-    getDepartmentsByPath: (path: string) => Promise<IDepartment[]>
-    addDepartment: (departmentName: string, organisation: number, parentId: number) => Promise<void>
-
-    removeDepartmentById: (organisationId: number, departmentId: number) => Promise<void>
-    removeDepartmentsByIds: (organisationId: number, departmentId: number[]) => Promise<void>
+    limit: number
+    offset: number
+    total: number
 }
 
 const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmentResponse[], organisation: IOrganisation): IDepartment[] => {
@@ -36,24 +27,27 @@ const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmen
 
     // Обрабатываем вход в map
     departmentsResponse.forEach((depResp) => {
-        nodeMap.set(depResp.id, {id: depResp.id, name: depResp.name, children: [], featureFlags: [], link: ''})
+        nodeMap.set(depResp.id, {id: depResp.id, name: depResp.name, children: [], featureFlags: [], link: '', isService: depResp.isService, version: depResp.version})
     })
 
     // Тут мы закидывает департаменты в детей других узлов
     const nodes: IDepartment[] = []
     departmentsResponse.forEach(item => {
         const path = item.path.split('.')
+        //TODO поменять условия местави, т.к. так будет быстрее
         // тут не может быть undefined, толькое если бекенд накосячил накосячил...
+        if (path.length <= 2) {
+            if (path.length == 2)
+            {
+                const node = nodeMap.get(parseInt(path[1]))!
+                organisation.children.children.push(node)
+                nodes.push(node)
+            } else {
+                organisation.children = (nodeMap.get(parseInt(path[0]))!)
+
+            }
+        }
         // условиие обхода корневого, т.к. у него длина 1
-        if (path.length == 1) {
-            organisation.children = (nodeMap.get(parseInt(path[0]))!)
-        }
-        if (path.length == 2)
-        {
-            const node = nodeMap.get(parseInt(path[1]))!
-            organisation.children.children.push(node)
-            nodes.push(node)
-        }
         else if (path.length > 2) {
             // console.log(nodeMap.get(parseInt(path.at(-2)!)), path, nodeMap)
             nodeMap.get(parseInt(path.at(-2)!))?.children.push(nodeMap.get(item.id)!)
@@ -86,18 +80,17 @@ const departmentApi = {
         return await response.json()
     },
 
-    addDepartment: async (departmentName, organisation, parentId) => {
+    addDepartment: async (departmentName: string, organisationId: number, parentId: number) => {
 
         APIJsonRequest(
-            `${URL_ORGANISATION}/${organisation}/nodes`, 
+            `${URL_ORGANISATION}/${organisationId}/nodes`, 
             {method: 'POST',
             body: JSON.stringify({name: departmentName, isService: false, parentId: parentId})
         })
         
     },
 
-
-    removeDepartmentById: async (organisationId, departmentId) => {
+    removeDepartmentById: async (organisationId: number, departmentId: number) => {
         try { 
             await APIJsonRequest(
                 `${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}`,
@@ -121,9 +114,19 @@ const departmentApi = {
     },
 
     
-    removeDepartmentsByIds: async (organisationId, departments) => {
-        await Promise.all(departments.map((department) => {departmentApi.removeDepartmentById(organisationId, department)}))
-    }
+    removeDepartmentsByIds: async (organisationId: number, departmentIds: number[]) => {
+        await Promise.all(departmentIds.map((departmentId) => {departmentApi.removeDepartmentById(organisationId, departmentId)}))
+    },
+
+    changeDepartmentName: async (newDepartment: IDepartment, organisationId: number): Promise<void> => {
+        await APIJsonRequest(
+            `${URL_ORGANISATION}/${organisationId}/nodes/${newDepartment.id}`,
+            {method: 'PATCH',
+            body: JSON.stringify({name: `${newDepartment.name}`,  isService: newDepartment.isService, version: newDepartment.version})
+        })
+
+        newDepartment.version++
+    },
 }
 
 export default departmentApi

@@ -15,7 +15,7 @@ interface IOrganisationStore {
 
 const useOrganisationStore = create<IOrganisationStore>((set) => ({
 
-    organisation: {id: 10, name: 'Рога и копыта', adminId: 1, children: {id: 1, name: 's', children: [], featureFlags:[], link:''}},
+    organisation: {id: 10, name: 'Рога и копыта', adminId: 1, children: {id: 1, name: 's', children: [], featureFlags:[], link:'', isService: false, version: 1}},
     setOrganisation: (newOrganisation) => set({organisation: newOrganisation})
 
 }))

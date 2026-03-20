@@ -1,4 +1,3 @@
-import { RequestOptions } from "https";
 import { APIError, mapAPIErrors } from "./APIErrors";
 
 

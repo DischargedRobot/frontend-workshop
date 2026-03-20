@@ -1,5 +1,5 @@
 import { IUser } from "@/entities/UserCard/ui/types"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useMemo } from "react"
 import useUserFiltersStore from "./useUserFiltersStore"
 import { useShallow } from "zustand/shallow"
 
@@ -18,7 +18,13 @@ const filterByDepartmentIds = (users: IUser[], departmentsId: number[]) => {
     if (departmentsId.length == 0){
         return users
     }
-    return users.filter((user) => (departmentsId.includes(user.departmentId)))
+
+    return users.filter((user) => {
+        if (user.departmentId !== undefined) {
+            return departmentsId.includes(user.departmentId)
+        }
+        return false
+    })
 }
 
 const filterByLogin = (users: IUser[], login: string) => {

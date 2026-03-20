@@ -1,22 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IDepartment } from "../../lib";
-import { Input } from "antd";
 import { DataNode } from "antd/es/tree";
+import { departmentApi } from "../../api";
+import useDepartmentsStore from "../../model/useDepartmentsStore";
 
 
 export interface IDepartmentNode extends IDepartment, Omit<DataNode, 'children' > {
-
 }
 
 interface Props {
     node: IDepartmentNode
+    organisationId: number
 }
 
 const TitleRender = (props: Props): React.ReactNode => {
 
-
     const {
         node,
+        organisationId,
     } = props
     
     const [isEditable, setIsEditable] = useState(false) 
@@ -27,7 +28,7 @@ const TitleRender = (props: Props): React.ReactNode => {
             inputRef.current.focus()
         }
     }, [isEditable])
-
+    const changeName = useDepartmentsStore(state => state.changeDepartmentName) 
     return (
         <>
             { isEditable 
@@ -37,7 +38,11 @@ const TitleRender = (props: Props): React.ReactNode => {
                     // onClick={(e) => {e.stopPropagation()}}
                     onChange={(e) => setTitle(e.target.value)} 
                     value={title}
-                    onBlur={() => setIsEditable(false)}
+                    onBlur={(e) => {
+                        changeName(node, e.target.value)
+                        departmentApi.changeDepartmentName(node, organisationId)
+                        setIsEditable(false)
+                    }}
                 />
             :   <span 
                     // onClick={(e) => {e.stopPropagation()}} 

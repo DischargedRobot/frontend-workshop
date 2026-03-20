@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { IDepartment } from "../lib"; 
-import { Department } from "../lib/DepartmentType";
 import { useUserFiltersStore } from "@/entities/UserList/model";
 
 const InitialDepartments: IDepartment[] = (() => {
@@ -12,7 +11,9 @@ const InitialDepartments: IDepartment[] = (() => {
       name: `Department ${i}`,
       children: [],
       featureFlags: [],
-      link: ''
+      link: '',
+      isService: false,
+      version: 1
     })
   }
   
@@ -34,6 +35,8 @@ interface IUseDepartments {
 
     removeDepartment: (department: IDepartment) => void
     addDepartment: (department: IDepartment) => void
+    changeDepartmentName: (department: IDepartment, newName: string) => void
+    changeDepartment: (department: IDepartment) => void
     getDepartmentsIncludingAllChildren: () => IDepartment[]
     getDepartmentsByPath: (path: string) => void
     getFeatureFlagsByDepartments: (departments: IDepartment[]) => void
@@ -85,6 +88,19 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
     addDepartment: (department) => {
         set((state) => ({departments: [...state.departments, department]}))
     },
+
+    changeDepartmentName: (department, newName) => {
+        set(state => ({departments: [...state.departments.map(dep => 
+            {
+                if (dep.id != department.id) {
+                    department.name = newName
+                }
+                return dep
+            }
+        )]}))
+    },
+
+    changeDepartment: () => {},
 
     getDepartmentsIncludingAllChildren: () => getDepartmentAndAllChildren(get().departments),
 

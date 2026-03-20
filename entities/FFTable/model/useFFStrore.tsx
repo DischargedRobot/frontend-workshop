@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IFeatureFlag, IFeatureFlag } from "../ui/FFTable";
+import { IFeatureFlag } from "../ui/FFTable";
 
 interface IFFStore {
     featureFlags: IFeatureFlag[]
@@ -20,7 +20,7 @@ const createData = (number: number) : IFeatureFlag[] => {
     }))
 }
 
-const useFFStore = create<IFFStore>((set, get) => ({
+const useFFStore = create<IFFStore>((set) => ({
 
     featureFlags: createData(10),
     setFeatureFlags: (newFeatureFlags) => set({featureFlags: newFeatureFlags}),
