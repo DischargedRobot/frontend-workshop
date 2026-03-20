@@ -3,9 +3,7 @@
 import './Toast.scss'
 
 import { useEffect, useRef, useState } from 'react'
-
 import { CheckOutlined, ExclamationOutlined, WarningOutlined } from "@ant-design/icons"
-import { time } from 'console'
 
 type TToast = 'warning' | 'success' | 'error'
 const defaultTitle = new Map<TToast, string>([
@@ -40,7 +38,6 @@ const Toast = (props: Props) => {
     const [isFade, setIsFade] = useState(false)
     
     const timer = useRef<number>(null)
-
     const startTimer = () => {
         // на слуай, если мышка уже была в тосте и чтобы при выходе не дублировалось
         if (timer.current) {
@@ -51,8 +48,6 @@ const Toast = (props: Props) => {
             setIsFade(true)
         }, duration)
     }
-
-    
 
     useEffect(() => {
         startTimer()
@@ -68,7 +63,7 @@ const Toast = (props: Props) => {
         }
 
         const handleMouseOver = () => {
-            setIsFade(false)
+            setIsFade(false) // чтобы после возвращение цвета он не исчез
             if (timer.current) {
                 clearTimeout(timer.current)
             }
@@ -91,15 +86,6 @@ const Toast = (props: Props) => {
         }
     }, [])
 
-
-    // useEffect(() => {
-    //     const toast = document.getElementById('toast')
-        
-    //     toast.addEventListener('mousemove', () => {
-
-    //     })
-    // }, [])
-
     if (!isVisible) {
         return null
     }
@@ -114,3 +100,19 @@ const Toast = (props: Props) => {
 }
 
 export default Toast
+
+export const showToast = (props: Props): React.ReactNode => {
+    const {
+        type,
+        text,
+        title = defaultTitle.get(type),
+        duration,
+    } = props
+    return <Toast 
+        key={crypto?.randomUUID() ?? Date.now().toString()} 
+        type={type} 
+        text={text} 
+        title={title} 
+        duration={duration}
+    />
+}
