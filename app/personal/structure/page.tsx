@@ -1,11 +1,12 @@
+'use client'
 import './StructureOrganisation.scss'
-
 import FullUserList from '@/widgets/FullUserList/FullUserList';
 import { TreeDataNode } from "antd";
 import { Content } from "antd/es/layout/layout"
 import FullDepartmentTree from '@/widgets/FullDepartmentTree';
 import { IDepartment } from '@/entities/Departments/lib';
 import Toast from '@/shared/ui/Toast/Toast';
+import { useState } from 'react';
 
 
 const tree: TreeDataNode[] = [
@@ -45,10 +46,17 @@ const StructureOrganisation = () => {
 
   // const departments = useStructure(state => (state.departments))
 
+  // const [key, setKey ] = useState(1)
+  // setInterval(() => {
+  //   setKey(prev => prev + 1)
+  // }, 4000)
+
   return(
       <Content className="structure-organisation ">
           <FullDepartmentTree/>
           <FullUserList/>
+        <Toast key={10} type='warning' text='плохо всё((' duration={3000}/>
+
       </Content>
   )
 }

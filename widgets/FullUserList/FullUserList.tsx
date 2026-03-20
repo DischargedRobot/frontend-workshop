@@ -24,7 +24,6 @@ const FullUserList = () => {
                 />
                 <AddButton/>
             </div>
-        <Toast type='warning' text='плохо всё(('/>
             
             <UserList/>
         </div>

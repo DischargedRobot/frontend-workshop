@@ -1,7 +1,9 @@
 .toast {
 
-    position: absolute;
+    position: fixed;
     bottom: 0;
+    right: 50%;
+    transform: translate(50%, 0);
 
     display: grid;
     grid-template-rows: 30px auto;
@@ -17,7 +19,16 @@
     
     border-radius: 20px;
 
-    opacity: 0.9;
+    transition: opacity 0.6s ease-in;
+    
+    &_fade-in {
+        opacity: 1;
+    }
+
+    &_fade-out {
+        opacity: 0;
+    }
+
     &_warning {
         background-color: var(--toast-warning);
     }
