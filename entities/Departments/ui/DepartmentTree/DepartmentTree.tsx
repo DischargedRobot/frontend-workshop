@@ -2,63 +2,60 @@
 
 import './DepartmentTree.scss'
 
-import { Empty, Tree, TreeDataNode } from "antd"
-import {  memo, useEffect, useMemo, useState } from "react"
+import { Empty, Tree } from "antd"
+import {  memo, useMemo } from "react"
 import useDepartmentsStore from '../../model/useDepartmentsStore'
-import { DataNode, EventDataNode } from 'antd/es/tree'
 import useDepartmentTree from '../../model/DepartmentTree/useDepartmentTree'
-import { IDepartment } from '../../lib'
 import TitleRender, { IDepartmentNode } from './TitleRender'
 import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore'
 import { departmentApi } from '../../api'
-import useSWR, { useSWRConfig } from 'swr'
+import { useSWRConfig } from 'swr'
 import { APIError } from '@/shared/api/APIErrors'
-import { useShallow } from 'zustand/shallow'
 
-interface Props {
-    tree: TreeDataNode[]
-    // onCheck: (departmentsId: number[]) => void
-}
+// interface Props {
+//     tree: TreeDataNode[]
+//     // onCheck: (departmentsId: number[]) => void
+// }
 
 
-const tree: TreeDataNode[] = [
-  {
-    title: 'parent 1',
-    key: 1,
-    children: [
-      {
-        title: 'parent 1-0',
-        key: 2,
-        children: [
-          {
-            title: 'leaf',
-            key: 3,
-          },
-          {
-            title: 'leaf',
-            key: 4,
-          },
-        ],
-      },
-      {
-        title: 'parent 1-1',
-        key: 5,
-        children: [
-          { 
-            title: <span style={{ color: '#1677ff' }}>sss</span>, 
-            key: 6 
-          }
-        ],
-      },
-    ],
-  },
-];
-const titleRender = (node: IDepartment) => {
-  console.log(node)
-  return (
-    <span onClick={(e) => {e.stopPropagation();}}>{node.name}</span>
-  )
-}
+// const tree: TreeDataNode[] = [
+//   {
+//     title: 'parent 1',
+//     key: 1,
+//     children: [
+//       {
+//         title: 'parent 1-0',
+//         key: 2,
+//         children: [
+//           {
+//             title: 'leaf',
+//             key: 3,
+//           },
+//           {
+//             title: 'leaf',
+//             key: 4,
+//           },
+//         ],
+//       },
+//       {
+//         title: 'parent 1-1',
+//         key: 5,
+//         children: [
+//           { 
+//             title: <span style={{ color: '#1677ff' }}>sss</span>, 
+//             key: 6 
+//           }
+//         ],
+//       },
+//     ],
+//   },
+// ];
+// const titleRender = (node: IDepartment) => {
+//   console.log(node)
+//   return (
+//     <span onClick={(e) => {e.stopPropagation();}}>{node.name}</span>
+//   )
+// }
 
 const DepartmentTree = () => {
 
@@ -66,7 +63,7 @@ const DepartmentTree = () => {
 
   // console.log('DepartmentTree')
 
-  const departments = useDepartmentsStore(state => state.departments)
+  const departments = useDepartmentsStore(state => state.departments[0].children)
   const changeDepartmentChildren = useDepartmentsStore(state => state.changeDepartmentChildren)
   // const allDep = useDepartmentsStore(useShallow(state => state.getDepartmentsIncludingAllChildren()))
   // const [chek, setchek] = useState<number[]>([])

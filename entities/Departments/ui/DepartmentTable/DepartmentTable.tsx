@@ -55,24 +55,40 @@ const createColumns = (
   },
 ]
 
-const rev = (departments: IDepartment[], departmentPath: IDepartment[] | undefined): IDepartment[] => {
+const getChildrenByPath = (departments: IDepartment[], departmentPath: IDepartment[] | undefined): IDepartment[] => {
   if (departmentPath === undefined) {
     return []
   }
-  return departmentPath.reduce((allDepartments: IDepartment[], dep: IDepartment) => {
-    return (allDepartments.find(de => de.id === dep.id)?.children ?? [])
-  }, departments)
+
+
+  let children = departments
+  // обходим, проникая в департамены, и ища отдел, который записан в пути
+  for (let i = 0; i < departmentPath.length; i ++) {
+    const currentDep = children.find(dep => departmentPath[i].id == dep.id)
+    if (currentDep === undefined) {
+      return []
+    }
+    children = currentDep.children
+  }
+
+
+  return children
+
+  // return departmentPath.reduce((allDepartments: IDepartment[], dep: IDepartment) => {
+  //   return (allDepartments.find(de => de.id === dep.id)?.children ?? [])
+  // }, departments)
 }
 
 
 const TableDepartment = () => {
+
   const { mutate } = useSWRConfig();
   const isHidden: boolean = useFFMenu(state => state.isHidden)
 
   const organisationId = useOrganisationStore(state => state.organisation.id)
   const departmentPath = useBreadcrumbStore(useShallow(state => state.path))
 
-  const depa = useDepartmentsStore(useShallow(state => rev(state.departments, departmentPath)))
+  const departments = useDepartmentsStore(useShallow(state => getChildrenByPath(state.departments, departmentPath)))
 
   const changeDepartmentChildren = useDepartmentsStore(state => state.changeDepartmentChildren)
 
@@ -130,7 +146,7 @@ const TableDepartment = () => {
           // rowExpandable: () => false,
           // expandIcon: () => false        
         }}
-        dataSource={depa}
+        dataSource={departments}
         columns={columns}
         pagination={{ placement: ['bottomCenter'], pageSize: 6 }}
         size="small"
