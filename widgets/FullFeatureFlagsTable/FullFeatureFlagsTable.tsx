@@ -48,7 +48,6 @@ const FullFeatureFlagsTable = () => {
     const organisationId = useOrganisationStore(state => state.organisation.id)
     const setFeatureFlags = async (departments: number[]) => {
         const response = await getFeatureFlagsByDepartments(departments, organisationId, 50, 0)
-        console.log(response)
         setFeatureFlag(response.FFs)
     }
 

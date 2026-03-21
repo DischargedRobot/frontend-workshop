@@ -24,7 +24,6 @@ const useDepartmentTree = () => {
         [['organisationId, departmentId'], [organisation.id, organisation.children.id]], 
         () => departmentApi.getDescedantOfDepartments(organisation.id, organisation.children.id, 2)
     )
-    console.log(departments, 'dddsds')
 
     useEffect(() => {
         if (departments !==  undefined) {

@@ -17,7 +17,6 @@ const FFTableFilters = () => {
         onBlur={(e) => {
             if (!(e.relatedTarget && e.currentTarget.contains(e.relatedTarget)))
             {
-                console.log('sssssss')
                 setIsCollapsed(true)}}
             }
         >

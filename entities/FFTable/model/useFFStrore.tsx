@@ -28,7 +28,13 @@ const useFFStore = create<IFFStore>((set) => ({
     featureFlags: createData(10),
     setFeatureFlags: (newFeatureFlags) => set({featureFlags: newFeatureFlags}),
     
-    addFeatureFlags: (newFeatureFlags) => set(state => ({featureFlags: [...state.featureFlags, ...newFeatureFlags]}))
+    addFeatureFlags: (newFeatureFlags) => set(state => {
+        const uniqueNewFlags = newFeatureFlags.filter(newFlag => 
+            !state.featureFlags.some(existingFlag => existingFlag.id === newFlag.id)
+        )
+
+        return {featureFlags: [...state.featureFlags, ...uniqueNewFlags]}
+    })
 }))
 
 export default useFFStore

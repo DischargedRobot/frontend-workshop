@@ -1,6 +1,7 @@
 import { IDepartment } from "@/entities/Departments/lib"
 import APIJsonRequest from "@/shared/api/APIJsonRequest"
 import { IFeatureFlag } from "../ui/FFTable"
+import { error } from "console"
 
 const URL_ORGANISATION = process.env.NEXT_PUBLIC_API_ORGANISATIONS_URL_V1
 
@@ -44,16 +45,17 @@ const FFApi = {
 
 
     getFeatureFlagsByDepartment: async (departmentId: number, organisationId: number, count: number, offset: number): Promise<IFFsResponse> => {
+        // console.log('я тут getFeatureFlagsByDepartment')
         const responseData = await APIJsonRequest<IFFByDepartmentLinkedResponse>(
             `${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}/feature-flags?limit=${count}&offset=${offset}`
         )
-        // console.log(responseData.items)
         const {items, ...other} = responseData
         return {FFs: items.map(({featureFlag: {nodeId, ...featureFlag}, belongsToNode: belongsToNode}) => ({
             ...featureFlag, 
             departmentId: nodeId, 
             departmentName: belongsToNode.name
         })), ...other}
+
     },
 
     // Получаем фича флаги по отделам
@@ -61,14 +63,21 @@ const FFApi = {
         
         const FFs: IFeatureFlag[] = []
         let numberDepartment = departmentIds.length
-        while (count > 0 && numberDepartment > 0) { // запрашиваем у каждого отдела потихоньку пока не закончатся
-            numberDepartment--
-            const response = await FFApi.getFeatureFlagsByDepartment(departmentIds[numberDepartment], organisationId, count, offset)
-            count -= response.total
-            FFs.concat(response.FFs)
-        }
-        
         let isEnd = false
+        
+        while (count > 0 && numberDepartment > 0) { // запрашиваем у каждого отдела потихоньку пока не закончатся
+            --numberDepartment
+            try {
+                const response = await FFApi.getFeatureFlagsByDepartment(departmentIds[numberDepartment], organisationId, count, offset)
+                count -= response.total
+                FFs.push(...response.FFs)
+            }
+            catch {
+                continue
+            }
+        }
+            
+            
         // count не может быть < 0, так как total <= count всегда
         // тут count > 0
         if (count > 0 && numberDepartment > 0) { // тут 100% только > либо ===

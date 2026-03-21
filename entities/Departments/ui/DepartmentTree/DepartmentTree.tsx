@@ -88,7 +88,7 @@ const DepartmentTree = () => {
       const children = await mutate(
         [['organisationId', 'departmentId'], [organisationId, node.id]],
         () => departmentApi.getDescedantOfDepartments(organisation.id, node.id, 2),
-        { revalidate: true }
+        // { revalidate: true }
       );
     
       if (children != undefined) {
@@ -110,7 +110,6 @@ const DepartmentTree = () => {
       isLeaf: department.children.length === 0 || department.isService ? true : false
     } as IDepartmentNode
   ))), [departments])
-  console.log(treeData, 'tree', departments)
 
   return (
     <>
@@ -121,7 +120,6 @@ const DepartmentTree = () => {
       <Tree 
         checkedKeys={filterDepartmentIds}
         onCheck={(checkedKeys) => {
-            console.log(checkedKeys)
             if (Array.isArray(checkedKeys)) {
                 setFilterDepartmentIds(checkedKeys as number[])
                 // setFilteredUsers(filterUsers(['departmentIds'], users))

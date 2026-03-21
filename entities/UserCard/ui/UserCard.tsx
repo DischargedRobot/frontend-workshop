@@ -54,7 +54,6 @@ const UserCard = (props: Props) => {
             password: data.password, 
             departmentId: data.departmentId
         })
-        console.log(data)
     }
 
     const resetData = () => {
@@ -78,7 +77,6 @@ const UserCard = (props: Props) => {
     }, [user.roles, setRoles])
     
     const filterRoleList = useMemo(() => roles.filter(role => role.isEnabled), [roles])
-    console.log('user card')
     return (
         <div className={`user-card ${isSelected ? 'user-card_selected' : ''}`}>
             <button 

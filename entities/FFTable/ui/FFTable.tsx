@@ -129,24 +129,17 @@ export interface IFeatureFlag {
 
 const FFTable = () => {
 
-
-
     const {
         FFs,
         isLoading,
         error,
     } = useGetFFsFromServer()
-    const setFF = useFFStore(state => state.setFeatureFlags)
-
-    useEffect(() => {
-        setFF(FFs);
-    }, [FFs, setFF]);
-    
     const featureFlags = useFilteredFFs()
 
+    console.log('FFTableRender')
     const filters = useFFTableFiltersStore(state => state.visibleColumns)
 
-    // console.log(featureFlags)
+    // console.log(featureFlags, 'ff')
     return (
         <Table 
             className="ff-table "
@@ -165,7 +158,7 @@ const FFTable = () => {
                     image={Empty.PRESENTED_IMAGE_SIMPLE}
                     description={
                     <span style={{ color: 'var(--text-color)' }}>
-                        {'Отделов нет :('}
+                        {'Фич флагов нет :('}
                     </span>
                     }
                 />

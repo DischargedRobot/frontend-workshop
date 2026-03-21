@@ -8,7 +8,7 @@ interface IFilter {
 
 interface IFFFiltersStore extends IFilter{
     setDepartment: (newDepartmentIds: number[]) => void
-    addDepartment: (newDepartmentId: number) => void
+    addDepartmentId: (newDepartmentId: number) => void
     addDepartmentAndItChildren: (newDepartment: IDepartment) => void
 
     setName: (newName: string) => void
@@ -21,8 +21,20 @@ const useFFFiltersStore = create<IFFFiltersStore>((set, get) => ({
     name: '',
 
     setDepartment: (newDepartmentIds) => set({departmentIds: newDepartmentIds}),
-    addDepartment: (newDepartmentId) => set({departmentIds: [...get().departmentIds, newDepartmentId]}),
-    addDepartmentAndItChildren: (newDepartment) => set({departmentIds: [...get().departmentIds, newDepartment.id, ...newDepartment.children.map(dep => dep.id)]}),
+    addDepartmentId: (newDepartmentId) => set(state => ({
+        departmentIds: [...new Set([...state.departmentIds, newDepartmentId])]
+    })),
+
+    addDepartmentAndItChildren: (newDepartment) => set(state => {
+        const newDepIdAndItsChildrenIds = newDepartment.children.map(dep => dep.id).concat(newDepartment.id)
+        
+        const filteredDepartment = newDepIdAndItsChildrenIds.filter(newDepId => {
+            return !state.departmentIds.includes(newDepId)
+        })
+        
+        return {departmentIds: [...new Set([...state.departmentIds, ...filteredDepartment])]}
+    }),
+    
     setName: (newName) => set({name: newName}),
     setFilters: (newFilters) => set(newFilters)
 

@@ -39,8 +39,6 @@ const DepartmentBreadcamb = () => {
                                 ...item.children.map((department) => department.id)
                             ])
                             setPath(path.slice(0,index+1)); 
-                            console.log(path.slice(0,index+1), index)
-                            // toDepartment(paths)
                             }}
                     >
                         {item.name}

@@ -110,7 +110,6 @@ const TableDepartment = () => {
       );
     
       if (children != undefined ) {
-        console.log(children, 'childTable')
         changeDepartmentChildren(department, children);
       } 
     } catch (error) {
@@ -129,10 +128,9 @@ const TableDepartment = () => {
       const FFs = await mutate (
         [['organisationId', 'departmentId', 'featureflags'], [organisationId, departmentId]],
         () => FFApi.getFFsByDepAndItsChildren(departmentId, organisationId),
-        {revalidate: true}
+        // {revalidate: true}
       )
       if (FFs !== undefined) {
-        console.log(FFs, 'FFS')
         addFFToStore(FFs)
       }
     } catch (error) {
