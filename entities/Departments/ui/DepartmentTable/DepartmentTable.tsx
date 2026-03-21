@@ -15,12 +15,17 @@ import useOrganisationStore from '@/entities/Organisation/model/useOrganisationS
 import { useSWRConfig } from 'swr'
 import { departmentApi } from '../../api'
 import { APIError } from '@/shared/api/APIErrors'
+import { FFApi, useFFStore } from '@/entities/FFTable'
+import { mutate } from 'swr'
+// import { showToast } from '@/shared/ui/Toast/Toast'
+import { text } from 'stream/consumers'
+import { useToastStore } from '@/shared/ui/Toast/Toast'
 
-
-
+// TODO: переместить в lib
 const createColumns = (
   addDepartmentToBredcrumb: (department: IDepartment) => void,
   addDepartmentForFFFilters: (department: IDepartment) => void,
+  requesFFByDepAndItsChildren: (department: number) => Promise<void>,
   loadData: (department: IDepartment) => Promise<void>,
 ): TableProps<IDepartment>['columns'] => [
   {
@@ -38,6 +43,7 @@ const createColumns = (
         addDepartmentToBredcrumb(department)
         addDepartmentForFFFilters(department)
         loadData(department)
+        requesFFByDepAndItsChildren(department.id)
       }}><NextLinkIcon/></button>
     ),
     key: 'link',
@@ -54,7 +60,7 @@ const createColumns = (
     
   },
 ]
-
+// TODO: переместить в lib
 const getChildrenByPath = (departments: IDepartment[], departmentPath: IDepartment[] | undefined): IDepartment[] => {
   if (departmentPath === undefined) {
     return []
@@ -82,7 +88,6 @@ const getChildrenByPath = (departments: IDepartment[], departmentPath: IDepartme
 
 const TableDepartment = () => {
 
-  const { mutate } = useSWRConfig();
   const isHidden: boolean = useFFMenu(state => state.isHidden)
 
   const organisationId = useOrganisationStore(state => state.organisation.id)
@@ -92,14 +97,14 @@ const TableDepartment = () => {
 
   const changeDepartmentChildren = useDepartmentsStore(state => state.changeDepartmentChildren)
 
-  const loadData = async (department: IDepartment ) => {
+  const loadData = async (department: IDepartment ): Promise<void> => {
     const childrenLastDepartment = department.children
 
     if (childrenLastDepartment.length === 0 && !department.isService)
     // мутируем исходник, чтобы при повторном нажатии была повторная проверка (возможно, придётся убрать revalidate)
     try {
       const children = await mutate(
-        [['organisationId, departmentId'], [organisationId, department.id]], 
+        [['organisationId', 'departmentId'], [organisationId, department.id]], 
         () => departmentApi.getChildrenOfDepartments(organisationId, department.id),
         { revalidate: true }
       );
@@ -115,10 +120,36 @@ const TableDepartment = () => {
     }
   };
 
+  const addFFToStore = useFFStore(state => state.addFeatureFlags)
+  
+  const setToast = useToastStore(state => state.setToast)
+
+  const getFFAndAddToStore = async (departmentId: number) => {
+    try {
+      const FFs = await mutate (
+        [['organisationId', 'departmentId', 'featureflags'], [organisationId, departmentId]],
+        () => FFApi.getFFsByDepAndItsChildren(departmentId, organisationId),
+        {revalidate: true}
+      )
+      if (FFs !== undefined) {
+        console.log(FFs, 'FFS')
+        addFFToStore(FFs)
+      }
+    } catch (error) {
+      setToast({
+        type: 'error', 
+        text: (error as { message?: string })?.message ?? 'Что-то пошло не так', 
+        duration: 3000
+      })
+    }
+  }
+
+
   const columns = createColumns(
     useBreadcrumbStore(state => state.addDepartment), 
     useFFFiltersStore(state => state.addDepartmentAndItChildren),
-    loadData
+    getFFAndAddToStore,
+    loadData,
   )
   
   const setSelectedDepartments = useFFFiltersStore(state => state.setDepartment)

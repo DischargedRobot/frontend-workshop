@@ -4,8 +4,10 @@ import useFFTableFiltersStore, { TFeatureFlagTable } from '@/features/FFTableFil
 import './FFTable.scss'
 
 import { DeleteIcon, InfoIcon } from "@/shared/assets/Icon";
-import { Switch, Table, TableProps } from "antd"
-import { useFilteredFFs } from '../model';
+import { Empty, Switch, Table, TableProps } from "antd"
+import { useFFStore, useFilteredFFs, useGetFFsFromServer } from '../model';
+import useSWR from 'swr';
+import { useEffect } from 'react';
 
 
 export type TFFTableColumns = TableProps<IFeatureFlag>['columns']
@@ -115,8 +117,8 @@ export interface IFeatureFlag {
     departmentId: number,
     departmentName?: string,
     value: boolean,
-    lastModified: string,
-    description: string,
+    lastModified?: string,
+    description?: string,
 }
 
 // export interface IFeatureFlag extends IFeatureFlag{
@@ -127,9 +129,23 @@ export interface IFeatureFlag {
 
 const FFTable = () => {
 
+
+
+    const {
+        FFs,
+        isLoading,
+        error,
+    } = useGetFFsFromServer()
+    const setFF = useFFStore(state => state.setFeatureFlags)
+
+    useEffect(() => {
+        setFF(FFs);
+    }, [FFs, setFF]);
+    
     const featureFlags = useFilteredFFs()
 
     const filters = useFFTableFiltersStore(state => state.visibleColumns)
+
     // console.log(featureFlags)
     return (
         <Table 
@@ -142,6 +158,19 @@ const FFTable = () => {
             dataSource={featureFlags} 
             columns={createFFTableColumns(filters)}
             tableLayout='fixed'
+            loading={isLoading}
+            locale={{
+                emptyText: (
+                <Empty
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    description={
+                    <span style={{ color: 'var(--text-color)' }}>
+                        {'Отделов нет :('}
+                    </span>
+                    }
+                />
+                )
+            }}
         />
     )
 }

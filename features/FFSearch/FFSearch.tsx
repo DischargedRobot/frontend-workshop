@@ -1,4 +1,5 @@
 'use client'
+import useFFFiltersStore from "@/entities/FFTable/model/useFFFiltersStore"
 import { GetProps, Input } from "antd"
 import React from "react"
 
@@ -9,12 +10,16 @@ type SearchProps = GetProps<typeof Input.Search>
 // TODO:: заглушка
 const onSearch: SearchProps['onSearch'] = (value, _, info) => {console.log(info?.source, value)}
 
+
 const FFSearch = ({ onSearch }: { onSearch?: React.ChangeEventHandler<HTMLInputElement> }) => {
+    
+    const setFeatureFlagName = useFFFiltersStore(state => state.setName)
+    
     return (
         <Search 
             type={'search'} 
             enterButton 
-            onChange={onSearch} 
+            onChange={(e) => setFeatureFlagName(e.target.value)} 
             placeholder="Имя фич флага"
         />
     )

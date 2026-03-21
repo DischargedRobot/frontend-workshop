@@ -3,12 +3,17 @@ import useFFStore from "./useFFStrore"
 import useFFFiltersStore from "./useFFFiltersStore"
 import { IFeatureFlag } from "../ui/FFTable"
 import { useShallow } from "zustand/shallow"
+import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore"
+import useSWR from "swr"
+import { FFApi } from "../api"
+import { set } from "react-hook-form"
 
+// TODO: в lib
 type TFilterKey = 'departmentIds' | 'name'
 
 interface IFilterFunctionsArguments {
     departmentIds: number[],
-    name: string
+    name: string,
 }
 const filterByDepartmentIds = (featureFlags: IFeatureFlag[], departmentIds: number[]): IFeatureFlag[] => {
     if (departmentIds.length === 0) {
@@ -39,14 +44,18 @@ const filterFF: filterFF = (filters, featureFlags, filterArguments) => {
 }
 
 const useFilteredFFs = () => {
-
-    const featureFlags = useFFStore(state => state.featureFlags)
     // console.log(featureFlags, 'filtered')
-    const filters = useFFFiltersStore(useShallow(state => ({name: state.name, departmentIds: state.departmentIds})))
-    // console.log(filters, 'filters')
+    const filters = useFFFiltersStore(useShallow(state => ({
+        name: state.name, 
+        departmentIds: state.departmentIds
+    })))
+    
+    const featureFlags = useFFStore(state => state.featureFlags)
+
+    console.log(featureFlags)
 
     return useMemo(() => 
-        filterFF(['departmentIds', 'name'],featureFlags, filters)
+        filterFF(['departmentIds', 'name'], featureFlags, filters)
     , [featureFlags, filters])
 }
 

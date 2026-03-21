@@ -40,16 +40,16 @@ import AddButton from "@/shared/AddButton"
 // }
 
 const FullFeatureFlagsTable = () => {
-    const getFeatureFlagsByDepartments = FFApi.getFeatureFlagsByDepartments
+    const getFeatureFlagsByDepartments = FFApi.getFFsByDepartments
 
     const departmentIds = useDepartmentsStore(useShallow(state => state.departments.map(department => department.id)))
     const setFeatureFlag = useFFStore(state => state.setFeatureFlags)
 
     const organisationId = useOrganisationStore(state => state.organisation.id)
     const setFeatureFlags = async (departments: number[]) => {
-        const response = await getFeatureFlagsByDepartments(departments, organisationId)
+        const response = await getFeatureFlagsByDepartments(departments, organisationId, 50, 0)
         console.log(response)
-        setFeatureFlag(response)
+        setFeatureFlag(response.FFs)
     }
 
     const setFeatureFlagName = useFFFiltersStore(state => state.setName)

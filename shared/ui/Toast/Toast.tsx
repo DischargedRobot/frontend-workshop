@@ -4,6 +4,7 @@ import './Toast.scss'
 
 import { useEffect, useRef, useState } from 'react'
 import { CheckOutlined, ExclamationOutlined, WarningOutlined } from "@ant-design/icons"
+import { create } from 'zustand'
 
 type TToast = 'warning' | 'success' | 'error'
 const defaultTitle = new Map<TToast, string>([
@@ -18,28 +19,27 @@ const icons = new Map<TToast, React.ReactNode>([
     [ 'error', <ExclamationOutlined className="toast__icon" key={'error'}/>],
 ])
 
-interface Props {
+interface IToast {
     type: TToast
     text: string
     title?: string 
     duration: number
 }
 
-const Toast = (props: Props) => {
+const Toast = () => {
 
-    const {
-        type,
-        text,
-        title = defaultTitle.get(type),
-        duration,
-    } = props
+    const type = useToastStore(state => state.type)
+    const text = useToastStore(state => state.text)
+    const title = useToastStore(state => state.title)
+    const duration = useToastStore(state => state.duration)
+    const key = useToastStore(state => state.key)
 
     const [isVisible, setIsVisible] = useState(true)
     const [isFade, setIsFade] = useState(false)
     
     const timer = useRef<number>(null)
     const startTimer = () => {
-        // на слуай, если мышка уже была в тосте и чтобы при выходе не дублировалось
+        // на случай, если мышка уже была в тосте и чтобы при выходе не дублировалось
         if (timer.current) {
             clearTimeout(timer.current)
         }
@@ -49,6 +49,7 @@ const Toast = (props: Props) => {
         }, duration)
     }
 
+    // запускатор
     useEffect(() => {
         startTimer()
 
@@ -84,7 +85,7 @@ const Toast = (props: Props) => {
                 clearTimeout(timer.current)
             }
         }
-    }, [])
+    }, [key])
 
     if (!isVisible) {
         return null
@@ -101,18 +102,35 @@ const Toast = (props: Props) => {
 
 export default Toast
 
-export const showToast = (props: Props): React.ReactNode => {
-    const {
-        type,
-        text,
-        title = defaultTitle.get(type),
-        duration,
-    } = props
-    return <Toast 
-        key={crypto?.randomUUID() ?? Date.now().toString()} 
-        type={type} 
-        text={text} 
-        title={title} 
-        duration={duration}
-    />
+// export const showToast = (props: IToast): React.ReactNode => {
+//     const {
+//         type,
+//         text,
+//         title = defaultTitle.get(type),
+//         duration,
+//     } = props
+//     return <Toast 
+//         key={crypto?.randomUUID() ?? Date.now().toString()} 
+//         type={type} 
+//         text={text} 
+//         title={title} 
+//         duration={duration}
+//     />
+// }
+
+interface IToastStore extends IToast{
+    key: number,
+
+    setToast: (toast: IToast) => void
 }
+
+export const useToastStore = create<IToastStore>((set, get) => ({
+    type: "warning",
+    text: 'Тут текст тоста',
+    title: defaultTitle.get("warning"),
+    duration: 3000,
+    key: 0,
+
+    setToast: (newToast) => set(state => ({...newToast, title: newToast?.title ?? defaultTitle.get(newToast.type), key: ++state.key}))
+}))
+
