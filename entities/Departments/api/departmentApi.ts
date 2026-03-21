@@ -104,6 +104,39 @@ const reduceDepRespToParentDep = (departmentsResponse: IDepartmentResponse[], pa
 }
 
 
+// Собираем ответ в массив !! на входе не должно быть в списке родительского узла
+const reduceDepRespToChildrenArray = (departmentsResponse: IDepartmentResponse[]): IDepartment[] => {
+    // Мапим, чтобы потом было проще обратиться к узлу во время операций, а не писать find 
+    const nodeMap = new Map<number, IDepartment>()
+
+    departmentsResponse.forEach(depResp => {
+        nodeMap.set(depResp.id, {id: depResp.id, name: depResp.name, children: [], featureFlags: [], link: '', isService: depResp.isService, version: depResp.version})
+    })
+
+    const children: IDepartment[] = []
+
+    departmentsResponse.forEach(depResp => {
+        const path = depResp.path.split('.').map(item => parseInt(item))
+        // Если нету пути, то корявые данные
+        if (path.at(-1) === undefined) {
+            throw mapAPIErrors(500)
+        } else {
+            // Второй с конца - родитель, если наш, то кидаем
+            if (path.at(-2) !== undefined && nodeMap.get(path.at(-2)!) === undefined) {
+                children.push(nodeMap.get(depResp.id)!)
+            }
+            else {
+                nodeMap.get(path.at(-2)!)!.children.push(nodeMap.get(depResp.id)!)
+            }
+        }
+    })
+
+    return children
+}
+
+
+
+
 const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmentResponse[]): IDepartment[] => {
     return departmentsResponse.map(depResp => ({
         id: depResp.id, 
@@ -169,14 +202,14 @@ const departmentApi = {
     },
 
     /** @desciption Возвращает первых детей, запрашивает потомков и потомков потомков **/
-    getDescedantOfDepartments: async (organisationId: number, department: IDepartment, depthLevel: number | '' = '',): Promise<IDepartment[]> => {
+    getDescedantOfDepartments: async (organisationId: number, departmentId: number, depthLevel: number | '' = '',): Promise<IDepartment[]> => {
         const responseData = await APIJsonRequest<IDepartmentsByOrganisationId>(
-            `${URL_ORGANISATION}/${organisationId}/nodes/${department.id}/descendants?depth=${depthLevel}`,
+            `${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}/descendants?depth=${depthLevel}`,
             {method: 'GET'}
         )
         // convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
         // reduceDepartmentResponceToParentDepartment(responseData.items.filter((dep) => dep.id != department.id), department) 
-        return reduceDepRespToParentDep(responseData.items.filter((dep) => dep.id != department.id), department)
+        return reduceDepRespToChildrenArray(responseData.items.filter((dep) => dep.id != departmentId))
     },
 
     getDepartmentsByPath: async (path: string) => {

@@ -1,14 +1,15 @@
 interface IResponseError {
     status: number | null
     errorType: string
-    message?: string
+    customMessage?: string
 }
 
 export class APIError extends Error implements IResponseError{
     constructor (
         public status: number | null,
         public errorType: string,
-        public message: string
+        public message: string,
+        public customMessage?: string,
     ) {
         super(message || `Error ${errorType}`)
         this.name = 'APIError'
@@ -32,7 +33,6 @@ const APIErrors = {
     NOT_FOUND: new APIError(404, 'NOT_FOUND', 'Ресурс не найден :('),
     SERVER: new APIError(500, 'SERVER_ERROR', 'Ошибка сервера')
 }
-
 // можно и просто map, но мне показалось, что в случае правок, будет проще написать кейс, 
 // если ошибка уже есть, просто код другой, чем повторять в мап объекты
 export const mapAPIErrors = (status: number | null) =>  {

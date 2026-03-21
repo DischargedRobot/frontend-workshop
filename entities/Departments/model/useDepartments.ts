@@ -7,6 +7,7 @@ type IUseDepartment = () =>  {
 
 const useDepartments: IUseDepartment = () => {
 
+
     const getDepartmentsByPath = async (path: string) => {
         const response = await fetch(`${path}`,{
             method: 'GET',

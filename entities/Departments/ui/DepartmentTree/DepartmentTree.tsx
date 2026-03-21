@@ -89,13 +89,11 @@ const DepartmentTree = () => {
     try {
       const children = await mutate(
         [['organisationId', 'departmentId'], [organisationId, node.id]],
-        () => departmentApi.getDescedantOfDepartments(organisation.id, node, 2),
+        () => departmentApi.getDescedantOfDepartments(organisation.id, node.id, 2),
         { revalidate: true }
       );
     
       if (children != undefined) {
-      console.log(children, 'child')
-
         changeDepartmentChildren(node, children);
       } 
     } catch (error) {
@@ -107,6 +105,7 @@ const DepartmentTree = () => {
 
   const organisationId = useOrganisationStore(state => state.organisation.id)
   const organisation = useOrganisationStore(state => state.organisation)
+  
   const treeData = useMemo(() => (
     departments.map(department => ({
       ...department, 

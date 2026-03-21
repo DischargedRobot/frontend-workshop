@@ -11,13 +11,14 @@ export interface IOrganisation {
 interface IOrganisationStore {
     organisation: IOrganisation
     setOrganisation: (newOrganisation: IOrganisation) => void
+    changeChildren: (newChildren: IDepartment[]) => void
 }
 
 const useOrganisationStore = create<IOrganisationStore>((set) => ({
 
     organisation: {id: 10, name: 'Рога и копыта', adminId: 1, children: {id: 23, name: 's', children: [], featureFlags:[], link:'', isService: false, version: 1}},
-    setOrganisation: (newOrganisation) => set({organisation: newOrganisation})
-
+    setOrganisation: (newOrganisation) => set({organisation: newOrganisation}),
+    changeChildren: (newChildren) => set(state => ({organisation: {...state.organisation, children: {...state.organisation.children, children: newChildren}}})) 
 }))
 
 export default useOrganisationStore

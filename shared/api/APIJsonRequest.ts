@@ -1,7 +1,5 @@
 import { APIError, mapAPIErrors } from "./APIErrors";
 
-
-
 const APIJsonRequest = async <T>(
     endpoint: string,
     options: RequestInit = {}
@@ -33,19 +31,17 @@ const APIJsonRequest = async <T>(
         }
 
         // если не наша, то пусть будет серверной (на всякий случай, мало ли)
-        if (error instanceof APIError) {
-            throw mapAPIErrors(500)
-        }
-
-        if (error !instanceof APIError) {
-            // Возвращаем неизвестную
+        if (!(error instanceof APIError)) {
             throw mapAPIErrors(0)
         }
 
+        // if (error !instanceof APIError) {
+        //     // Возвращаем неизвестную
+        //     throw mapAPIErrors(0)
+        // }
+
         throw error as APIError
     }
-
-
 }
 
 export default APIJsonRequest

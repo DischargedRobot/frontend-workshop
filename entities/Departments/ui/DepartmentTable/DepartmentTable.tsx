@@ -5,23 +5,23 @@ import './DepartmentTable.scss'
 import DeleteIcon from "@/shared/assets/Icon/DeleteIcon"
 import NextLinkIcon from "@/shared/assets/Icon/NextLinkIcon"
 import {  Table, TableProps } from "antd"
-import Link from "next/link"
 import { useFFMenu } from '@/app/personal/ffmenu/useFFMenu'
 import useDepartmentsStore from '../../model/useDepartmentsStore'
 import useFFFiltersStore from '@/entities/FFTable/model/useFFFiltersStore'
-import { IDepartment, TableData } from '../../lib'
+import { IDepartment} from '../../lib'
 import useBreadcrumbStore from '@/entities/DepartmentBreadcamb/model/useBreadcrumbStore'
 import { useShallow } from 'zustand/shallow'
 import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore'
-import useSWR from 'swr'
+import { useSWRConfig } from 'swr'
 import { departmentApi } from '../../api'
-import { useEffect } from 'react'
+import { APIError } from '@/shared/api/APIErrors'
 
 
 
 const createColumns = (
   addDepartmentToBredcrumb: (department: IDepartment) => void,
   addDepartmentForFFFilters: (department: IDepartment) => void,
+  loadData: (department: IDepartment) => Promise<void>,
 ): TableProps<IDepartment>['columns'] => [
   {
     title: 'Имя отдела',
@@ -37,6 +37,7 @@ const createColumns = (
       onClick={() => {
         addDepartmentToBredcrumb(department)
         addDepartmentForFFFilters(department)
+        loadData(department)
       }}><NextLinkIcon/></button>
     ),
     key: 'link',
@@ -54,48 +55,61 @@ const createColumns = (
   },
 ]
 
-// const rowSelection: TableProps<TableData>['rowSelection'] = {
-
-// }
-
-function handleClick(e: React.MouseEvent, record: TableData) {
-  console.log(e, record)
+const rev = (departments: IDepartment[], departmentPath: IDepartment[] | undefined): IDepartment[] => {
+  if (departmentPath === undefined) {
+    return []
+  }
+  return departmentPath.reduce((allDepartments: IDepartment[], dep: IDepartment) => {
+    return (allDepartments.find(de => de.id === dep.id)?.children ?? [])
+  }, departments)
 }
 
-const TableDepartment = () => {
 
+const TableDepartment = () => {
+  const { mutate } = useSWRConfig();
   const isHidden: boolean = useFFMenu(state => state.isHidden)
 
-  // const {
-  //   data, 
-  //   isHidden
-  // }: Props = useFFMenu(
-  //   useShallow(
-  //   (state) => ({
-  //     data: state.departments.map((item) => ({...item, key: item.id })),
-  //     isHidden: state.isHidden
-  //   })))
+  const organisationId = useOrganisationStore(state => state.organisation.id)
+  const departmentPath = useBreadcrumbStore(useShallow(state => state.path))
+
+  const depa = useDepartmentsStore(useShallow(state => rev(state.departments, departmentPath)))
+
+  const changeDepartmentChildren = useDepartmentsStore(state => state.changeDepartmentChildren)
+
+  const loadData = async (department: IDepartment ) => {
+    const childrenLastDepartment = department.children
+
+    if (childrenLastDepartment.length === 0 && !department.isService)
+    // мутируем исходник, чтобы при повторном нажатии была повторная проверка (возможно, придётся убрать revalidate)
+    try {
+      const children = await mutate(
+        [['organisationId, departmentId'], [organisationId, department.id]], 
+        () => departmentApi.getChildrenOfDepartments(organisationId, department.id),
+        { revalidate: true }
+      );
+    
+      if (children != undefined ) {
+        console.log(children, 'childTable')
+        changeDepartmentChildren(department, children);
+      } 
+    } catch (error) {
+      if (error instanceof APIError && error.status === 404) {
+        changeDepartmentChildren(department, []);
+      }
+    }
+  };
+
   const columns = createColumns(
     useBreadcrumbStore(state => state.addDepartment), 
-    useFFFiltersStore(state => state.addDepartmentAndItChildren)
+    useFFFiltersStore(state => state.addDepartmentAndItChildren),
+    loadData
   )
-
-  const organisation = useOrganisationStore(state => state.organisation)
-  // const {data: deps} = useSWR(['organisation, departmentId', organisation], () => departmentApi.getDepartmentsByOrganisation(organisation))
-  const departments = useBreadcrumbStore(useShallow(state => state.path))
-  const setSelectedDepartments = useFFFiltersStore(state => state.setDepartment)
   
-  // в пути всегда минимум родительский есть, только если сеть\бек не накосячит
-  const {data: deps2} = useSWR([['organisationId, departmentId'], [organisation.id, departments.at(-1)?.id]], () => departmentApi.getChildrenOfDepartments(organisation.id, departments.at(-1)!.id))
-  // useEffect(() => {
-    
-  // },[]) 
-  console.log(deps2, 'deps', departments.at(-1))
+  const setSelectedDepartments = useFFFiltersStore(state => state.setDepartment)
   const selectRow = (selectedRowKeys: number[]) => {
-    // console.log(selectedRowKeys, departments, deps)
     if (selectedRowKeys.length === 0) {
       // когда не выбран ни 1, мы показываем все что приндлежат отделам по пути и те, которые находятся в отделах, кторые приписанны к последнему отделу в пути
-      setSelectedDepartments([...departments.map(dep => dep.id), ...departments.at(-1)!.children.map(dep => dep.id)])
+      setSelectedDepartments([...departmentPath.map(dep => dep.id), ...departmentPath.at(-1)!.children.map(dep => dep.id)])
     } else {
       // когда выбран в таблице хотя бы 1
       setSelectedDepartments(selectedRowKeys as number[])
@@ -104,7 +118,6 @@ const TableDepartment = () => {
 
   return (
     // TODO:  onSelect: (__, _, records) => {console.log(records)}}
-    
       <Table 
         rowClassName={'text-table text-table_litle text-table_tiny'}
         rowSelection={{
@@ -117,7 +130,7 @@ const TableDepartment = () => {
           // rowExpandable: () => false,
           // expandIcon: () => false        
         }}
-        dataSource={deps2}
+        dataSource={depa}
         columns={columns}
         pagination={{ placement: ['bottomCenter'], pageSize: 6 }}
         size="small"

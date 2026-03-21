@@ -17,7 +17,7 @@ const useBreadcrumbStore = create<IBreadcrumbStore>((set, get) => ({
 
     path: [],
     setPath: (newPath) => set({path: newPath}),
-
+    
     addDepartment: (department) => set({path: [...get().path, department]})
 
 }))
