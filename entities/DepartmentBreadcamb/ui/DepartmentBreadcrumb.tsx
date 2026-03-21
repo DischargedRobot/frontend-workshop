@@ -26,6 +26,7 @@ const DepartmentBreadcamb = () => {
         setPath([rootDepartment])
     }, [rootDepartment, setPath])
 
+    console.log(path, 'path')
     // const removeFFs = useFFStore(state => state.removeFeatureFlags)
     return (
         <Breadcrumb 

@@ -24,7 +24,7 @@ import { useToastStore } from '@/shared/ui/Toast/Toast'
 // TODO: переместить в lib
 const createColumns = (
   addDepartmentToBredcrumb: (department: IDepartment) => void,
-  addDepartmentForFFFilters: (department: IDepartment) => void,
+  selectDepartmentFFFilters: (department: IDepartment) => void,
   requesFFByDepAndItsChildren: (department: number) => Promise<void>,
   loadData: (department: IDepartment) => Promise<void>,
 ): TableProps<IDepartment>['columns'] => [
@@ -39,9 +39,9 @@ const createColumns = (
     dataIndex: 'link',
     render: (_, department) => (
       <button
-      onClick={() => {
+      onClick={() => {        
+        selectDepartmentFFFilters(department)
         addDepartmentToBredcrumb(department)
-        addDepartmentForFFFilters(department)
         loadData(department)
         requesFFByDepAndItsChildren(department.id)
       }}><NextLinkIcon/></button>
@@ -142,10 +142,15 @@ const TableDepartment = () => {
     }
   }
 
-
+  const path = useBreadcrumbStore(state => state.path)
+  const setFFFilterDepartment = useFFFiltersStore(state => state.setDepartment)
   const columns = createColumns(
     useBreadcrumbStore(state => state.addDepartment), 
-    useFFFiltersStore(state => state.addDepartmentAndItChildren),
+    (nextDep: IDepartment) => {setFFFilterDepartment([
+      nextDep.id, 
+      ...path.map(pathsDep => pathsDep.id), 
+      ...nextDep.children.map(child => child.id)]
+    )},
     getFFAndAddToStore,
     loadData,
   )
