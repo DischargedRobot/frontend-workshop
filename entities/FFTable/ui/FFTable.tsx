@@ -136,10 +136,10 @@ const FFTable = () => {
     } = useGetFFsFromServer()
     const featureFlags = useFilteredFFs()
 
-    console.log('FFTableRender')
+    // console.log('FFTableRender')
     const filters = useFFTableFiltersStore(state => state.visibleColumns)
 
-    // console.log(featureFlags, 'ff')
+    console.log(featureFlags, 'ff')
     return (
         <Table 
             className="ff-table "

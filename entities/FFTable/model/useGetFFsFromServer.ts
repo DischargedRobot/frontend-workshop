@@ -20,16 +20,20 @@ const useGetFFsFromServer = () => {
         return ['organisationId', 'departmentIds', 'featureflags', organisationId, sortedIds]
         
     }, [filterDepartmentIds, organisationId])
-    const setFF = useFFStore(state => state.setFeatureFlags)
+    const addFF = useFFStore(state => state.addFeatureFlags)
 
     const {data: response, error, isLoading} = useSWR<Awaited<ReturnType<typeof FFApi.getFFsByDepartments>>, APIError>(
         key,
         () => FFApi.getFFsByDepartments(filterDepartmentIds, organisationId, 50, 0),
-        {onSuccess: (data) => {
-            setFF(data?.FFs ?? EMPTY_ARRAY);
-        }}
+        // {onSuccess: (data) => {
+        //     console.log(data)
+        //     addFF(data?.FFs ?? EMPTY_ARRAY);
+        // }}
     )
 
+    useEffect(() => {
+        addFF(response?.FFs ?? EMPTY_ARRAY);
+    }, [response?.FFs, addFF])
     // if (error) {
     //     return showToast({type: 'error', text: error.message, duration: 3000})
     // }

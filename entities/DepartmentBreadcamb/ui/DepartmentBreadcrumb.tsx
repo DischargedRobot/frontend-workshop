@@ -7,6 +7,7 @@ import useBreadcrumbStore from '../model/useBreadcrumbStore'
 import { useEffect } from 'react'
 import useFFFiltersStore from '@/entities/FFTable/model/useFFFiltersStore'
 import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore'
+import { useFFStore } from '@/entities/FFTable'
 // Promise<{featureFlags: string[]; departments: string[]}>
 
 // const DEPARTMENTS_REQUEST_URL = "http://local:3000/"
@@ -25,6 +26,7 @@ const DepartmentBreadcamb = () => {
         setPath([rootDepartment])
     }, [rootDepartment, setPath])
 
+    // const removeFFs = useFFStore(state => state.removeFeatureFlags)
     return (
         <Breadcrumb 
             className='text text_litle text_bold'
@@ -34,6 +36,7 @@ const DepartmentBreadcamb = () => {
                     <button 
                         className='bredcamb' 
                         onClick={() => {
+                            // removeFFs([])
                             setDepartmentFilters([
                                 ...path.slice(0,index+1).map((department) => (department.id)),
                                 ...item.children.map((department) => department.id)
