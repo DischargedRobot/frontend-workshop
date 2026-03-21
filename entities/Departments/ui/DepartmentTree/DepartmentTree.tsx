@@ -11,6 +11,7 @@ import useOrganisationStore from '@/entities/Organisation/model/useOrganisationS
 import { departmentApi } from '../../api'
 import { useSWRConfig } from 'swr'
 import { APIError } from '@/shared/api/APIErrors'
+import { useShallow } from 'zustand/shallow'
 
 // interface Props {
 //     tree: TreeDataNode[]
@@ -63,7 +64,7 @@ const DepartmentTree = () => {
 
   // console.log('DepartmentTree')
 
-  const departments = useDepartmentsStore(state => state.departments[0].children)
+  const departments = useDepartmentsStore(state => state.departments[0]?.children)
   const changeDepartmentChildren = useDepartmentsStore(state => state.changeDepartmentChildren)
   // const allDep = useDepartmentsStore(useShallow(state => state.getDepartmentsIncludingAllChildren()))
   // const [chek, setchek] = useState<number[]>([])
@@ -104,7 +105,7 @@ const DepartmentTree = () => {
   const organisation = useOrganisationStore(state => state.organisation)
   
   const treeData = useMemo(() => (
-    departments.map(department => ({
+    departments?.map(department => ({
       ...department, 
       isLeaf: department.children.length === 0 || department.isService ? true : false
     } as IDepartmentNode
@@ -113,7 +114,7 @@ const DepartmentTree = () => {
 
   return (
     <>
-      {departments.length == 0 
+      {departments?.length === 0 
       ? 
       <Empty description={<span style={{color: 'var(--text-color) !important'}}>{error?.message ?? 'Отделов нет :(' }</span>}/>
       : 

@@ -5,7 +5,7 @@ import { PlusCircleOutlined } from "@ant-design/icons"
 const AddButton = () => {
 
     return (
-        <button className="add-feature-flag text text_litle text_tiny" onClick={()=>{}}>
+        <button className="add-button text text_litle text_tiny" onClick={()=>{}}>
             <PlusCircleOutlined/>
             Добавить
         </button>

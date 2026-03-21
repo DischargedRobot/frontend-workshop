@@ -1,10 +1,6 @@
 import { create } from "zustand";
 import { IFeatureFlag } from "../ui/FFTable";
 
-interface IFFStore {
-    featureFlags: IFeatureFlag[]
-    setFeatureFlags: (newFeatureFlags: IFeatureFlag[]) => void
-}
 
 
 const createData = (number: number) : IFeatureFlag[] => {
@@ -20,11 +16,19 @@ const createData = (number: number) : IFeatureFlag[] => {
     }))
 }
 
+interface IFFStore {
+    featureFlags: IFeatureFlag[]
+    setFeatureFlags: (newFeatureFlags: IFeatureFlag[]) => void
+    addFeatureFlags: (newFeatureFlags: IFeatureFlag[]) => void
+}
+
+
 const useFFStore = create<IFFStore>((set) => ({
 
     featureFlags: createData(10),
     setFeatureFlags: (newFeatureFlags) => set({featureFlags: newFeatureFlags}),
     
+    addFeatureFlags: (newFeatureFlags) => set(state => ({featureFlags: [...state.featureFlags, ...newFeatureFlags]}))
 }))
 
 export default useFFStore
