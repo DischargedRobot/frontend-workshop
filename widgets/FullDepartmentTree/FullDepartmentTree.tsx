@@ -3,16 +3,11 @@
 import './FullDepartmentTree.scss'
 
 import {DepartmentTree} from "@/entities/Departments"
-import { PlusCircleOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
-import { DeleteIcon } from '@/shared/assets/Icon';
+import { useState } from "react";
 import useDepartmentsStore from '@/entities/Departments/model/useDepartmentsStore';
-import { useUserFiltersStore, useUsersStore } from '@/entities/UserList/model';
 import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore';
 import { IDepartment } from '@/entities/Departments/lib';
 import AddDepartment from '@/features/AddDepartment/ui/AddDepartment';
-import useSWR from 'swr';
-import departmentApi from '@/entities/Departments/api/departmentApi';
 import useFullDepartmentTree from './model/useFullDepartmentTree';
 import DeleteDepartment from '@/features/DeleteDepartment/ui/DeleteDepartment';
 
@@ -50,18 +45,20 @@ const FullDepartmentTree = () => {
     return (
         <div className={`department-tree ${isCollapsed && 'collapsed'}`}>
             <div style={{position: 'sticky', top: '10px'}}>
-
-            <div className='department-tree__title title text_big'>
-                <h2>{organisation.name}</h2>
-                <div className='department-tree__buttons'>
-                    <AddDepartment/>
-                    <DeleteDepartment/>
+            <div style={{display: 'flex', flexDirection: 'column', gap: "10px"}}>
+                <div className='department-tree__title title text_big'>
+                    <h2>{organisation.name}</h2>
+                    <div className='department-tree__buttons'>
+                        <AddDepartment/>
+                        <DeleteDepartment/>
+                    </div>
                 </div>
+                {/* <button className='department-tree__button' onClick={() => {console.log(isCollapsed); setIsCollapsed(prev => !prev)}}>
+                    <CollapsedIcon isCollapsed={isCollapsed} />
+                </button> */}
+                <DepartmentTree/>
             </div>
-            {/* <button className='department-tree__button' onClick={() => {console.log(isCollapsed); setIsCollapsed(prev => !prev)}}>
-                <CollapsedIcon isCollapsed={isCollapsed} />
-            </button> */}
-            <DepartmentTree/>
+            
             </div>
         </div>
     )
