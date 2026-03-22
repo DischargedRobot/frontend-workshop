@@ -3,9 +3,6 @@ import { IDepartment } from "../../lib";
 import { DataNode } from "antd/es/tree";
 import { departmentApi } from "../../api";
 import useDepartmentsStore from "../../model/useDepartmentsStore";
-import useSWR from "swr";
-import { APIError } from "@/shared/api/APIErrors";
-import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore";
 
 
 export interface IDepartmentNode extends IDepartment, Omit<DataNode, 'children' | 'isService' > {
@@ -33,8 +30,6 @@ const TitleRender = (props: Props): React.ReactNode => {
     }, [isEditable])
     const changeName = useDepartmentsStore(state => state.changeDepartmentName) 
 
-
-
     return (
         <>
             { isEditable 
@@ -50,7 +45,7 @@ const TitleRender = (props: Props): React.ReactNode => {
                         setIsEditable(false)
                     }}
                 />
-            :   <span 
+            :   <span style={{margin: '10px 0'}}
                     // onClick={(e) => {e.stopPropagation()}} 
                     onDoubleClick={() => {setIsEditable(true); console.log('ssss')}}
                     >

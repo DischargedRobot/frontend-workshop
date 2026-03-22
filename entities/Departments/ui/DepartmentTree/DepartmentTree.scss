@@ -1,18 +1,31 @@
 .tree {
     width: 100%;
 
+    // чтобы любой контент не выходил за пределы, даже если навели при dragAndDrop
+        overflow: hidden ;
    .ant-tree-node-content-wrapper { 
-    // max-width: 230px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    // для ..., чтобы не ставить фиксированный width
+        overflow: hidden ;
     }
-    $width: 100%;
+    // класс появляющийся при перетаскивании и наложении объекта на другой
+    .drop-target {
+        .ant-tree-node-content-wrapper { 
+            // делаем видимой черту
+            overflow: visible !important;
+        }
+    }
+
     .ant-tree-treenode {
         width: 100%;
         max-width: 230px;
     }
+    
     .ant-tree-title {
-        position: relative
+        max-width: 230px !important;
+        line-height: 1;
+        display: block;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }

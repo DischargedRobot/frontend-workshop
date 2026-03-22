@@ -29,20 +29,18 @@ interface IUseDepartments {
     departments: IDepartment[]
     setDepartments: (newDepartments: IDepartment[]) => void
 
-    selectedDepartmentIds: number[]
-    setSelectedDepartmentIds: (newSelectedDepartmentIds: number[]) => void
-
-    removeSelectedDepartment: () => void
-
     removeDepartment: (department: IDepartment) => void
     addDepartment: (department: IDepartment) => void
     changeDepartmentName: (department: IDepartment, newName: string) => void
     changeDepartment: (department: IDepartment) => void
     changeDepartmentChildren: (dep: IDepartment, children: IDepartment[]) => void
     getDepartmentsIncludingAllChildren: () => IDepartment[]
-    getDepartmentsByPath: (path: string) => void
-    getFeatureFlagsByDepartments: (departments: IDepartment[]) => void
-    // toDepartment: (path: string) => void
+    changeParentDepartment: (dep: IDepartment, newParentDepId: number) => void
+
+    selectedDepartmentIds: number[]
+    setSelectedDepartmentIds: (newSelectedDepartmentIds: number[]) => void
+
+    removeSelectedDepartment: () => void
 }
 
 const getDepartmentAndAllChildren = (departments: IDepartment[]): IDepartment[] => {
@@ -101,7 +99,7 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
     selectedDepartmentIds: [],
     setSelectedDepartmentIds: (newSelectedDepartments) => set({selectedDepartmentIds: newSelectedDepartments}),
 
-// TODO: сделать независимым от друго стора, передавая через аргс, предусмотреть, что удаляемые департаменты сидят в дочках
+    // TODO: сделать независимым от друго стора, передавая через аргс, предусмотреть, что удаляемые департаменты сидят в дочках
     removeSelectedDepartment: () => {
         console.log(removeDep(get().departments, useUserFiltersStore.getState().departmentIds),useUserFiltersStore.getState().departmentIds, 'selected')
         set((state) => ({departments: removeDep(state.departments, useUserFiltersStore.getState().departmentIds)}))
@@ -143,45 +141,34 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
         )}))
     },
 
-
     getDepartmentsIncludingAllChildren: () => getDepartmentAndAllChildren(get().departments),
 
-    getDepartmentsByPath: async (path: string) => {
-        const response = await fetch(`${path}`,{
-            method: 'GET',
-            headers: {'Content-type': 'aplication/json'},
-        })
+    changeParentDepartment: (department, newParentId) => set(state => {
+        const updateTree = (departments: IDepartment[]): IDepartment[] => {
+            return departments.map(dep => {
+                // просматриваем и ищем текущего родителя
+                const childrenWithoutTarget = dep.children.filter(c => c.id !== department.id);
 
-        if (!response.ok) {
-            throw new Error('getDepartmentsByPath')
-        }
-
-        return await response.json()
-    },
-
-    getFeatureFlagsByDepartments: async (departments: IDepartment[]) => {
-        const response = await fetch(`url`,{
-            method: 'POST',
-            headers: {'Content-type': 'aplication/json'},
-            body: `${JSON.stringify(departments)}`
-        })
-        
-        return await response.json()
-    },
-
-    // toDepartment: async (path: string) => {
-    //     try {
-    //         const newDepartments = await get().getDepartmentsByPath(path)
-    //         const newFeatureFlags = await get().getFeatureFlagsByDepartments(newDepartments)
-    //         set({
-    //             featureFlags: newFeatureFlags, 
-    //             departments: newDepartments,
-    //         })
-    //     }
-    //     catch {
-    //         throw new Error('toDepartmentError')
-    //     }        
-    // }
+                if (dep.id === newParentId) {
+                    return {
+                        ...dep,
+                        children: [...childrenWithoutTarget, department]
+                    };
+                }
+                // смотрим дальше
+                return {
+                    ...dep,
+                    children: updateTree(childrenWithoutTarget)
+                };
+            });
+        };
+    
+        return {
+            ...state,
+            departments: updateTree(state.departments)
+        };
+    })
+,
 }))
 
 export default useDepartmentsStore

@@ -11,7 +11,6 @@ import useOrganisationStore from '@/entities/Organisation/model/useOrganisationS
 import { departmentApi } from '../../api'
 import { useSWRConfig } from 'swr'
 import { APIError } from '@/shared/api/APIErrors'
-import { useShallow } from 'zustand/shallow'
 
 // interface Props {
 //     tree: TreeDataNode[]
@@ -59,6 +58,9 @@ import { useShallow } from 'zustand/shallow'
 // }
 
 const DepartmentTree = () => {
+
+
+
 
   const { filterDepartmentIds, setFilterDepartmentIds, error} = useDepartmentTree()
 
@@ -111,6 +113,7 @@ const DepartmentTree = () => {
     } as IDepartmentNode
   ))), [departments])
 
+  const changeParentDep = useDepartmentsStore(state => state.changeParentDepartment)
   return (
     <>
       {departments?.length === 0 
@@ -138,6 +141,17 @@ const DepartmentTree = () => {
         // treeData={departments as unknown as IDepartmentNode[]}
         treeData={treeData}
         fieldNames={{'key': 'id', 'title': 'name', 'children': 'children'}}
+        // drag and drop
+        draggable
+        onDrop={(info) =>{
+          const toDropNode = info.node
+          console.log(toDropNode, info.dropPosition, info.dropToGap)
+          // dropPosition - расположение в горизонтальной иерархии узла (кто первый, кто последний, но все на 1 уровне)
+          // dropToGap - false = внутрь узла кинули true = не внутрь
+          if (!info.dropToGap) {// новый родитель, текущий узел
+            changeParentDep(info.dragNode, toDropNode.id)
+          }
+        }}
       />}
    </>
   )
