@@ -110,6 +110,8 @@ export default Toast
 //         title = defaultTitle.get(type),
 //         duration,
 //     } = props
+
+
 //     return <Toast 
 //         key={crypto?.randomUUID() ?? Date.now().toString()} 
 //         type={type} 
@@ -135,6 +137,6 @@ export const useToastStore = create<IToastStore>((set, get) => ({
     key: 0,
     isVisible: false,
 
-    setToast: (newToast) => set(state => ({...newToast, title: newToast?.title ?? defaultTitle.get(newToast.type), key: ++state.key})),
+    setToast: (newToast) => set(state => ({...newToast, title: newToast?.title ?? defaultTitle.get(newToast.type), key: ++state.key, isVisible: true})),
     setIsVisible: (newIsVisible) => set({isVisible: newIsVisible}),
 }))

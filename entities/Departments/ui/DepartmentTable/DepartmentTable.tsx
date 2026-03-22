@@ -24,7 +24,7 @@ import { useToastStore } from '@/shared/ui/Toast/Toast'
 // TODO: переместить в lib
 const createColumns = (
   addDepartmentToBredcrumb: (department: IDepartment) => void,
-  selectDepartmentFFFilters: (department: IDepartment) => void,
+  // selectDepartmentFFFilters: (department: IDepartment) => void,
   requesFFByDepAndItsChildren: (department: number) => Promise<void>,
   loadData: (department: IDepartment) => Promise<void>,
 ): TableProps<IDepartment>['columns'] => [
@@ -40,7 +40,7 @@ const createColumns = (
     render: (_, department) => (
       <button
       onClick={() => {        
-        selectDepartmentFFFilters(department)
+        // selectDepartmentFFFilters(department)
         addDepartmentToBredcrumb(department)
         loadData(department)
         requesFFByDepAndItsChildren(department.id)
@@ -99,23 +99,35 @@ const TableDepartment = () => {
 
   const loadData = async (department: IDepartment ): Promise<void> => {
     const childrenLastDepartment = department.children
-
-    if (childrenLastDepartment.length === 0 && !department.isService)
-    // мутируем исходник, чтобы при повторном нажатии была повторная проверка (возможно, придётся убрать revalidate)
-    try {
-      const children = await mutate(
-        [['organisationId', 'departmentId'], [organisationId, department.id]], 
-        () => departmentApi.getChildrenOfDepartments(organisationId, department.id),
-        { revalidate: true }
-      );
     
-      if (children != undefined ) {
-        changeDepartmentChildren(department, children);
-      } 
-    } catch (error) {
-      if (error instanceof APIError && error.status === 404) {
-        changeDepartmentChildren(department, []);
+    // TODO: мб стоит поставить ограничения на то,что если есть дети, то не спрашивать повторно
+    if (!department.isService){
+      // мутируем исходник, чтобы при повторном нажатии была повторная проверка (возможно, придётся убрать revalidate)
+      try {
+        const children = await mutate(
+          [['organisationId', 'departmentId'], [organisationId, department.id]], 
+          () => departmentApi.getChildrenOfDepartments(organisationId, department.id),
+        );
+      
+        if (children != undefined ) {
+          changeDepartmentChildren(department, children);
+          setFFFilterDepartment([ // после успешной загрузки ставим фильтры
+            department.id, 
+            ...path.map(pathsDep => pathsDep.id), 
+            ...children.map(child => child.id)]
+          )
+        } 
+      } catch (error) {
+        if (error instanceof APIError && error.status === 404) {
+          changeDepartmentChildren(department, []);
+        }
       }
+    } else {
+        setFFFilterDepartment([// если есть в кеше, то ставим, что есть
+        department.id, 
+        ...path.map(pathsDep => pathsDep.id), 
+        ...childrenLastDepartment.map(child => child.id)]
+      )
     }
   };
 
@@ -146,11 +158,11 @@ const TableDepartment = () => {
   const setFFFilterDepartment = useFFFiltersStore(state => state.setDepartment)
   const columns = createColumns(
     useBreadcrumbStore(state => state.addDepartment), 
-    (nextDep: IDepartment) => {setFFFilterDepartment([
-      nextDep.id, 
-      ...path.map(pathsDep => pathsDep.id), 
-      ...nextDep.children.map(child => child.id)]
-    )},
+    // (nextDep: IDepartment) => {setFFFilterDepartment([
+    //   nextDep.id, 
+    //   ...path.map(pathsDep => pathsDep.id), 
+    //   ...nextDep.children.map(child => child.id)]
+    // )},
     getFFAndAddToStore,
     loadData,
   )
