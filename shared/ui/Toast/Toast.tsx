@@ -32,9 +32,10 @@ const Toast = () => {
     const text = useToastStore(state => state.text)
     const title = useToastStore(state => state.title)
     const duration = useToastStore(state => state.duration)
-    const key = useToastStore(state => state.key)
+    const key = useToastStore(state => state.key) // TODO: мб это просто убрать и зависитьмость от isVisible
+    const isVisible = useToastStore(state => state.isVisible)
+    const setIsVisible = useToastStore(state => state.setIsVisible)
 
-    const [isVisible, setIsVisible] = useState(true)
     const [isFade, setIsFade] = useState(false)
     
     const timer = useRef<number>(null)
@@ -120,8 +121,10 @@ export default Toast
 
 interface IToastStore extends IToast{
     key: number,
+    isVisible: boolean
 
     setToast: (toast: IToast) => void
+    setIsVisible: (isVisible: boolean) => void
 }
 
 export const useToastStore = create<IToastStore>((set, get) => ({
@@ -130,7 +133,8 @@ export const useToastStore = create<IToastStore>((set, get) => ({
     title: defaultTitle.get("warning"),
     duration: 3000,
     key: 0,
+    isVisible: false,
 
-    setToast: (newToast) => set(state => ({...newToast, title: newToast?.title ?? defaultTitle.get(newToast.type), key: ++state.key}))
+    setToast: (newToast) => set(state => ({...newToast, title: newToast?.title ?? defaultTitle.get(newToast.type), key: ++state.key})),
+    setIsVisible: (newIsVisible) => set({isVisible: newIsVisible}),
 }))
-

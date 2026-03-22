@@ -55,7 +55,6 @@ const StructureOrganisation = () => {
       <Content className="structure-organisation ">
           <FullDepartmentTree/>
           <FullUserList/>
-        <Toast key={10} type='warning' text='плохо всё((' duration={3000}/>
 
       </Content>
   )
