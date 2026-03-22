@@ -108,7 +108,17 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
 
     // в теории, тут можно и по ссылке, но на всякий по id
     removeDepartment: (removingDepartment) => {
-        set((state) => ({departments: state.departments.filter(department => department.id != removingDepartment.id)}))
+        set((state) => {
+            const removeDep = (departments: IDepartment[]): IDepartment[] => {
+                return departments.map(dep => {
+                    const updatedDepChildren = removeDep(dep.children);
+
+                    return {...dep, children: updatedDepChildren.filter(child => child.id !== removingDepartment.id)}
+                })
+            }            
+
+            return {departments: removeDep(state.departments)}
+        })
     },
 
     addDepartment: (department) => {
@@ -146,7 +156,6 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
     changeParentDepartment: (department, newParentId) => set(state => {
         const updateTree = (departments: IDepartment[]): IDepartment[] => {
             return departments.map(dep => {
-                
                 const newChildren = updateTree(dep.children)
 
                 // просматриваем и ищем текущего родителя
@@ -168,7 +177,6 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
         };
     
         return {
-            ...state,
             departments: updateTree(state.departments)
         };
     })

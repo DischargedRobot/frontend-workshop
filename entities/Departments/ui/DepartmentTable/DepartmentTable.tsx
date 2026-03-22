@@ -27,6 +27,7 @@ const createColumns = (
   // selectDepartmentFFFilters: (department: IDepartment) => void,
   requesFFByDepAndItsChildren: (department: number) => Promise<void>,
   loadData: (department: IDepartment) => Promise<void>,
+  removeDepartment: (dep: IDepartment) => Promise<void>
 ): TableProps<IDepartment>['columns'] => [
   {
     title: 'Имя отдела',
@@ -52,8 +53,8 @@ const createColumns = (
   {
     title: '', 
     key: "delete",
-    render: () => (
-        <button style={{alignItems: 'center'}} onClick={()=> {}}><DeleteIcon/> </button>
+    render: (_, department) => (
+        <button style={{alignItems: 'center'}} onClick={() => removeDepartment(department)}><DeleteIcon/> </button>
     ),
     width: "64px",
     align: 'center',
@@ -99,6 +100,7 @@ const TableDepartment = () => {
 
   const loadData = async (department: IDepartment ): Promise<void> => {
     const childrenLastDepartment = department.children
+    console.log('loadData')
     
     // TODO: мб стоит поставить ограничения на то,что если есть дети, то не спрашивать повторно
     if (!department.isService){
@@ -136,6 +138,7 @@ const TableDepartment = () => {
   const setToast = useToastStore(state => state.setToast)
 
   const getFFAndAddToStore = async (departmentId: number) => {
+    console.log('getFFAndAddToStore')
     try {
       const FFs = await mutate (
         [['organisationId', 'departmentId', 'featureflags'], [organisationId, departmentId]],
@@ -153,6 +156,18 @@ const TableDepartment = () => {
       })
     }
   }
+  const removeDepFromLocal = useDepartmentsStore(state => state.removeDepartment)
+
+  const removeDepartment = async (dep: IDepartment) => {
+    try {
+      await departmentApi.removeDepartmentById(organisationId, dep.id)
+      console.log('меняем')
+      removeDepFromLocal(dep)
+
+    } catch (error) {
+      console.log(error, 'error')
+    }
+  }
 
   const path = useBreadcrumbStore(state => state.path)
   const setFFFilterDepartment = useFFFiltersStore(state => state.setDepartment)
@@ -165,6 +180,7 @@ const TableDepartment = () => {
     // )},
     getFFAndAddToStore,
     loadData,
+    removeDepartment,
   )
   
   const setSelectedDepartments = useFFFiltersStore(state => state.setDepartment)
@@ -178,6 +194,8 @@ const TableDepartment = () => {
     }
   }
 
+
+  console.log(departments)
   return (
     // TODO:  onSelect: (__, _, records) => {console.log(records)}}
       <Table 

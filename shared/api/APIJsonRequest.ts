@@ -14,7 +14,6 @@ const APIJsonRequest = async <T>(
                 ...options.headers,
             }
         })
-
         if (!response.ok) {
             throw mapAPIErrors(response.status)
         }
@@ -24,7 +23,6 @@ const APIJsonRequest = async <T>(
         return data
 
     } catch(error) {
-
         // если нет сети
         if (error instanceof TypeError && error.message === "Failed to fetch") {
             throw mapAPIErrors(null)

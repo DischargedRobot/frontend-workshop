@@ -12,6 +12,7 @@
 
     border-right: var(--border-for-nav-panel);
     box-shadow: 2px 0 5px var(--shadow);
+    
     &.collapsed {
         max-width: 0;
 

@@ -12,75 +12,14 @@ import { departmentApi } from '../../api'
 import { useSWRConfig } from 'swr'
 import { APIError } from '@/shared/api/APIErrors'
 
-// interface Props {
-//     tree: TreeDataNode[]
-//     // onCheck: (departmentsId: number[]) => void
-// }
-
-
-// const tree: TreeDataNode[] = [
-//   {
-//     title: 'parent 1',
-//     key: 1,
-//     children: [
-//       {
-//         title: 'parent 1-0',
-//         key: 2,
-//         children: [
-//           {
-//             title: 'leaf',
-//             key: 3,
-//           },
-//           {
-//             title: 'leaf',
-//             key: 4,
-//           },
-//         ],
-//       },
-//       {
-//         title: 'parent 1-1',
-//         key: 5,
-//         children: [
-//           { 
-//             title: <span style={{ color: '#1677ff' }}>sss</span>, 
-//             key: 6 
-//           }
-//         ],
-//       },
-//     ],
-//   },
-// ];
-// const titleRender = (node: IDepartment) => {
-//   console.log(node)
-//   return (
-//     <span onClick={(e) => {e.stopPropagation();}}>{node.name}</span>
-//   )
-// }
 
 const DepartmentTree = () => {
 
-
-
-
   const { filterDepartmentIds, setFilterDepartmentIds, error} = useDepartmentTree()
-
-  // console.log('DepartmentTree')
 
   const departments = useDepartmentsStore(state => state.departments[0]?.children)
   const changeDepartmentChildren = useDepartmentsStore(state => state.changeDepartmentChildren)
-  // const allDep = useDepartmentsStore(useShallow(state => state.getDepartmentsIncludingAllChildren()))
-  // const [chek, setchek] = useState<number[]>([])
-  // const convertToTreeData = (departmentsForConvert: IDepartment[]): TreeDataNode[] => {
-  //     return departmentsForConvert.map((department) => {
-  //         return {
-  //             title: department.name, 
-  //             key: department.id, 
-  //             children: convertToTreeData(department.children)
-  //         }
-  //     })
-  // }
 
-  // const departmentsTree: TreeDataNode[] = convertToTreeData(departments)
   const { mutate } = useSWRConfig();
 
   const loadData = async (node: IDepartmentNode) => {
@@ -90,7 +29,6 @@ const DepartmentTree = () => {
       const children = await mutate(
         [['organisationId', 'departmentId'], [organisationId, node.id]],
         () => departmentApi.getDescedantOfDepartments(organisation.id, node.id, 2),
-        // { revalidate: true }
       );
     
       if (children != undefined) {
@@ -102,6 +40,7 @@ const DepartmentTree = () => {
       }
     }
   };
+
 
   const organisationId = useOrganisationStore(state => state.organisation.id)
   const organisation = useOrganisationStore(state => state.organisation)
