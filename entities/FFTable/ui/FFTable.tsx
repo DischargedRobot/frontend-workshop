@@ -8,13 +8,15 @@ import { Empty, Switch, Table, TableProps } from "antd"
 import { useFFStore, useFilteredFFs, useGetFFsFromServer } from '../model';
 import useSWR from 'swr';
 import { useEffect } from 'react';
+import { FFApi } from '../api';
+import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore';
 
 
 export type TFFTableColumns = TableProps<IFeatureFlag>['columns']
 
 
 
-const createFFTableColumns = (columnVisible: TFeatureFlagTable ): TFFTableColumns => {
+const createFFTableColumns = (columnVisible: TFeatureFlagTable, removeFF: (FF: IFeatureFlag) => Promise<void>): TFFTableColumns => {
     return [
         {
             title: 'Имя',
@@ -58,58 +60,58 @@ const createFFTableColumns = (columnVisible: TFeatureFlagTable ): TFFTableColumn
             align: "center",
             title: '', 
             key: "delete",
-            render: () => (
-                <button onClick={()=> {}}><DeleteIcon/> </button>
+            render: (_, FF) => (
+                <button onClick={()=> {removeFF(FF)}}><DeleteIcon/> </button>
             ),
             width: "64px",
         },
     ]
 }
-const FF_TABLE_COLUMNS: TFFTableColumns = [
-    {
-        title: 'Имя',
-        key: 'name',
-        dataIndex: 'name',
-    },
-    {
-        align: "center",
-        title: 'Включён',
-        key: 'isEnabled',
-        dataIndex: 'isEnabled',
-        render: (value) => (
-            <Switch defaultChecked={value}></Switch>
-        )
-    },
-    {
-        title: 'Отдел/Проект',
-        key: 'departmentName',
-        dataIndex: 'departmentName',
-    },    
-    {
-        align: "center",
-        title: 'Последнее изменение',
-        key: 'lastModified',
-        dataIndex: 'lastModified',
-    },
-    {
-        align: "center",
-        title: 'Описание',
-        key: 'description',
-        dataIndex: 'description',
-        render: (value: string) => (
-            <InfoIcon info={value}/>
-        ),
-    },
-    {
-        align: "center",
-        title: '', 
-        key: "delete",
-        render: () => (
-            <button onClick={()=> {}}><DeleteIcon/> </button>
-        ),
-        width: "64px",
-    },
-]
+// const FF_TABLE_COLUMNS: TFFTableColumns = [
+//     {
+//         title: 'Имя',
+//         key: 'name',
+//         dataIndex: 'name',
+//     },
+//     {
+//         align: "center",
+//         title: 'Включён',
+//         key: 'isEnabled',
+//         dataIndex: 'isEnabled',
+//         render: (value) => (
+//             <Switch defaultChecked={value}></Switch>
+//         )
+//     },
+//     {
+//         title: 'Отдел/Проект',
+//         key: 'departmentName',
+//         dataIndex: 'departmentName',
+//     },    
+//     {
+//         align: "center",
+//         title: 'Последнее изменение',
+//         key: 'lastModified',
+//         dataIndex: 'lastModified',
+//     },
+//     {
+//         align: "center",
+//         title: 'Описание',
+//         key: 'description',
+//         dataIndex: 'description',
+//         render: (value: string) => (
+//             <InfoIcon info={value}/>
+//         ),
+//     },
+//     {
+//         align: "center",
+//         title: '', 
+//         key: "delete",
+//         render: (_, FF) => (
+//             <button onClick={()=> {}}><DeleteIcon/> </button>
+//         ),
+//         width: "64px",
+//     },
+// ]
 
 export interface IFeatureFlag {
     id: number,
@@ -138,7 +140,12 @@ const FFTable = () => {
 
     // console.log('FFTableRender')
     const filters = useFFTableFiltersStore(state => state.visibleColumns)
-
+    const organisationId = useOrganisationStore(state => state.organisation.id)
+    const removeFFFromLocal = useFFStore(state => state.removeFeatureFlags)
+    const removeFF = async (FF: IFeatureFlag) =>  {
+        await FFApi.removeFF(organisationId, FF.departmentId, FF.id)
+        removeFFFromLocal([FF])
+    }
     // console.log(featureFlags, 'ff')
     return (
         <Table 
@@ -149,7 +156,7 @@ const FFTable = () => {
             rowSelection={{type: 'checkbox'}}
             pagination={{placement: ['bottomCenter'], pageSize: 8}}
             dataSource={featureFlags} 
-            columns={createFFTableColumns(filters)}
+            columns={createFFTableColumns(filters, removeFF)}
             tableLayout='fixed'
             loading={isLoading}
             locale={{

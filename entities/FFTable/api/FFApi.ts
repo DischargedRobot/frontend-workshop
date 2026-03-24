@@ -122,6 +122,13 @@ const FFApi = {
             {body: JSON.stringify({value: isEnabled, version: 1})}
         )
     },
+
+    removeFF: async (organisationId: number, departmentId: number, featureFlagId: number) => {
+        const resp = APIJsonRequest(
+            `${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}/feature-flags/${featureFlagId}`,
+            {method: "DELETE"}
+        )
+    }
 }
 
 export default FFApi
