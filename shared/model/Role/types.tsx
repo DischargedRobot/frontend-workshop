@@ -13,7 +13,21 @@ export const TROLE = {
 export type TROLE = typeof TROLE[keyof typeof TROLE]
 
 export interface IRole {
-    name: string
+    name: typeof ROLE_NAMES[keyof typeof ROLE_NAMES]
     type: TROLE
     isEnabled: boolean
+}
+
+export const ROLE_NAMES: Record<TROLE, string> = {
+    [TROLE.DC]: "Создание",
+    [TROLE.DD]: "Удаление",
+    [TROLE.DU]: "Редактирование",
+    
+    [TROLE.UC]: "Создание",
+    [TROLE.UD]: "Удаление",
+    [TROLE.UU]: "Редактирование",
+    
+    [TROLE.FFC]: "Создание",
+    [TROLE.FFD]: "Удаление",
+    [TROLE.FFU]: "Редактирование",
 }

@@ -89,6 +89,7 @@ const getChildrenByPath = (departments: IDepartment[], departmentPath: IDepartme
 
 const TableDepartment = () => {
 
+  // TODO: переместить в хук
   const isHidden: boolean = useFFMenu(state => state.isHidden)
 
   const organisationId = useOrganisationStore(state => state.organisation.id)

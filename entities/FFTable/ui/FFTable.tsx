@@ -6,15 +6,11 @@ import './FFTable.scss'
 import { DeleteIcon, InfoIcon } from "@/shared/assets/Icon";
 import { Empty, Switch, Table, TableProps } from "antd"
 import { useFFStore, useFilteredFFs, useGetFFsFromServer } from '../model';
-import useSWR from 'swr';
-import { useEffect } from 'react';
 import { FFApi } from '../api';
 import useOrganisationStore from '@/entities/Organisation/model/useOrganisationStore';
 
 
 export type TFFTableColumns = TableProps<IFeatureFlag>['columns']
-
-
 
 const createFFTableColumns = (columnVisible: TFeatureFlagTable, removeFF: (FF: IFeatureFlag) => Promise<void>): TFFTableColumns => {
     return [
@@ -67,51 +63,6 @@ const createFFTableColumns = (columnVisible: TFeatureFlagTable, removeFF: (FF: I
         },
     ]
 }
-// const FF_TABLE_COLUMNS: TFFTableColumns = [
-//     {
-//         title: 'Имя',
-//         key: 'name',
-//         dataIndex: 'name',
-//     },
-//     {
-//         align: "center",
-//         title: 'Включён',
-//         key: 'isEnabled',
-//         dataIndex: 'isEnabled',
-//         render: (value) => (
-//             <Switch defaultChecked={value}></Switch>
-//         )
-//     },
-//     {
-//         title: 'Отдел/Проект',
-//         key: 'departmentName',
-//         dataIndex: 'departmentName',
-//     },    
-//     {
-//         align: "center",
-//         title: 'Последнее изменение',
-//         key: 'lastModified',
-//         dataIndex: 'lastModified',
-//     },
-//     {
-//         align: "center",
-//         title: 'Описание',
-//         key: 'description',
-//         dataIndex: 'description',
-//         render: (value: string) => (
-//             <InfoIcon info={value}/>
-//         ),
-//     },
-//     {
-//         align: "center",
-//         title: '', 
-//         key: "delete",
-//         render: (_, FF) => (
-//             <button onClick={()=> {}}><DeleteIcon/> </button>
-//         ),
-//         width: "64px",
-//     },
-// ]
 
 export interface IFeatureFlag {
     id: number,
@@ -123,16 +74,9 @@ export interface IFeatureFlag {
     description?: string,
 }
 
-// export interface IFeatureFlag extends IFeatureFlag{
-//     key: React.Key,
-// }
-
-
-
 const FFTable = () => {
 
     const {
-        FFs,
         isLoading,
         error,
     } = useGetFFsFromServer()

@@ -1,7 +1,7 @@
 import './RolesStatus.scss'
 
 import { Switch } from "antd"
-import { IRole } from "../Role/types"
+import { IRole, ROLE_NAMES, TROLE } from "../Role/types"
 import { memo } from 'react';
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
 
 
 const titles = ['Отделы', 'Пользователи', 'Фич флаги']
+
 const RoleStatus = (props: Props) => {
     const {
         roles,
@@ -26,7 +27,7 @@ const RoleStatus = (props: Props) => {
                     <ul className='roles-status__role-containter text text text_tiny'>
                         {roles.slice(index*3,(index+1)*3).map(role => {
                             return <li key={role.type} className='roles-status__role'>
-                                {role.name}
+                                {ROLE_NAMES[role.type]}
                                 <Switch value={role.isEnabled} onChange={(value) => {
                                     role.isEnabled = value
                                     setRoles([...roles]) 

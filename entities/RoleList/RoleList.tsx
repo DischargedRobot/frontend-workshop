@@ -20,10 +20,13 @@ const RoleList = (props: Props) => {
         <ul className="role-list text text_tiny text_litle">
             {roles.map(role => (
                 <li key={crypto?.randomUUID()}>
-                    <Role role={role} onClick={() => {
-                        role.isEnabled = false
-                        changeRoles()
-                    }}/>
+                    <Role
+                        role={role} 
+                        onClick={() => {
+                            role.isEnabled = false
+                            changeRoles()
+                        }
+                    }/>
                 </li>
             ))} 
         </ul>

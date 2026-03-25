@@ -66,7 +66,7 @@ const UserCard = (props: Props) => {
     // const [isLoading, setIsLoading] = useState(false)
 
 
-    const [roleStatusIsHidden, setRoleStatusIsHidden] = useState(false)
+    const [roleStatusIsVisible, setRoleStatusIsVisible] = useState(false)
     const [roles, setRoles] = useState<IRole[]>(user.roles)
     const [isSelected, setIsSelected] = useState(false)
 
@@ -166,12 +166,16 @@ const UserCard = (props: Props) => {
                 </div>
             </form>
             <div className='user-card__role-list text text_tiny'>
-                <div className='role-list__title'>
+                <div className='role-list__title' onBlur={(e) => {
+                        if (!e.currentTarget.contains(e.relatedTarget)) {
+                            setRoleStatusIsVisible(false)
+                        }
+                    }}>
                     <h2>Роли</h2>
-                    <button className='add-role' onClick={() => {setRoleStatusIsHidden(prev => !prev)}}>
+                    <button className='add-role' onClick={() => {setRoleStatusIsVisible(prev => !prev)}}>
                         <PlusOutlined/>
                     </button>
-                    {roleStatusIsHidden && <RoleStatus setRoles={setRoles} roles={roles}/>}
+                    {roleStatusIsVisible && <RoleStatus setRoles={setRoles} roles={roles}/>}
                 </div>
                 <RoleList 
                     roles={filterRoleList} 

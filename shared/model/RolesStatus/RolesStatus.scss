@@ -3,7 +3,8 @@
 .roles-status {
     position: absolute;
     bottom: -170px;
-    right: -120px;
+    right: -10px;
+    transform: translate(100%, 0);
     z-index: 10;
 
     display: flex;
@@ -15,7 +16,6 @@
     border-radius: 20;
     background-color: #373737;
     box-shadow: 0 2px 2px var(--shadow);
-
     
     hr {
         border: 1px solid var(--stroke)
@@ -29,11 +29,13 @@
 
     &__role-containter {
         @extend %flex-column;
+        
         gap: 5px;
     }
 
     &__role {
         @extend %flex;
+        justify-content: space-between;
 
         gap: 10px;
     }

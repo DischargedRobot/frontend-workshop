@@ -8,7 +8,9 @@ import { APIError } from "@/shared/api/APIErrors"
 import { useEffect, useMemo } from "react"
 import { IFeatureFlag } from "../ui/FFTable"
 import { useShallow } from "zustand/shallow"
+
 const EMPTY_ARRAY: IFeatureFlag[] = []
+
 const useGetFFsFromServer = () => {
         // console.log(filters, 'filters')
     const filterDepartmentIds = useFFFiltersStore(useShallow(state => state.departmentIds))
@@ -20,6 +22,7 @@ const useGetFFsFromServer = () => {
         return ['organisationId', 'departmentIds', 'featureflags', organisationId, sortedIds]
         
     }, [filterDepartmentIds, organisationId])
+    // TODO: сделать set?
     const addFF = useFFStore(state => state.addFeatureFlags)
 
     const {data: response, error, isLoading} = useSWR<Awaited<ReturnType<typeof FFApi.getFFsByDepartments>>, APIError>(
@@ -37,9 +40,8 @@ const useGetFFsFromServer = () => {
     // if (error) {
     //     return showToast({type: 'error', text: error.message, duration: 3000})
     // }
-    const FFs = response?.FFs ?? EMPTY_ARRAY
+    // const FFs = response?.FFs ?? EMPTY_ARRAY
     return {
-        FFs,
         error,
         isLoading,
     }
