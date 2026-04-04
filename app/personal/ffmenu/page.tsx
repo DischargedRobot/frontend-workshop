@@ -1,6 +1,6 @@
 import "./ffmenu.scss"
 
-import NavigationMenu from "@/entities/NavigationMenu/ui/NavigationMenu"
+import NavigationMenu from "@/features/NavigationMenu/ui/NavigationMenu"
 import FullDepartmentTable from "@/widgets/FullDepartmentTable/FullDepartmentTable"
 import { Content } from "antd/es/layout/layout"
 import { FullFeatureFlagsTable } from "@/widgets/FullFeatureFlagsTable"
