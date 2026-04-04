@@ -1,5 +1,5 @@
 import { Department } from "@/entities/Departments/lib/DepartmentType"
-import { IFeatureFlag } from "@/entities/FFT/ui/FFTable"
+import { IFeatureFlag } from "@/entities/FF/ui/FFTable"
 import { create } from "zustand"
 
 interface IUseFFMenu {

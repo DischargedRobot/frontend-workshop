@@ -70,15 +70,7 @@ const createFFTableColumns = (
 	]
 }
 
-export interface IFeatureFlag {
-	id: number
-	name: string
-	departmentId: number
-	departmentName?: string
-	value: boolean
-	lastModified?: string
-	description?: string
-}
+import { IFeatureFlag } from "../lib/types"
 
 const FFTable = () => {
 	const { isLoading, error } = useGetFFsFromServer()

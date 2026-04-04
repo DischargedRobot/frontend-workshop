@@ -71,7 +71,7 @@ const FullFeatureFlagsTable = () => {
 						setFeatureFlagName(e.target.value)
 					}}
 				/>
-				<AddButton />
+				<AddFeatureFlag />
 				<ReloadFeaturesFlags
 					onClick={() => setFeatureFlags(departmentIds)}
 				/>

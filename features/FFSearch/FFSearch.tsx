@@ -1,5 +1,5 @@
 "use client"
-import useFFFiltersStore from "@/entities/FFT/model/useFFFiltersStore"
+import useFFFiltersStore from "@/entities/FF/model/useFFFiltersStore"
 import { GetProps, Input } from "antd"
 import React from "react"
 

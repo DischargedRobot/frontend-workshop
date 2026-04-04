@@ -1,4 +1,4 @@
-import { IFeatureFlag } from "@/entities/FFT/ui/FFTable"
+import { IFeatureFlag } from "@/entities/FF/ui/FFTable"
 import { create } from "zustand"
 
 export type TFeatureFlagTable = {

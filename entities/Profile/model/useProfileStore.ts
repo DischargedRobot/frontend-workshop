@@ -13,6 +13,7 @@ export const useProfileStore = create<IProfileStore>((set) => ({
 		login: "",
 		password: "",
 	},
+
 	setLogin: (login) =>
 		set((state) => ({ profile: { ...state.profile, login } })),
 	setPassword: (password) =>

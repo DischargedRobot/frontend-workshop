@@ -2,7 +2,7 @@
 
 import "./RegistrationForm.scss"
 
-import AuthTextInput from "@/shared/AuthTextInput/AuthTextInput"
+import { TextInput } from "@/shared/ui"
 import { useRouter } from "next/navigation"
 import { ChangeEvent, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -21,6 +21,7 @@ interface RegistrationError {
 	AdminPassword?: string
 }
 
+// TODO: в фичи
 export const RegistrationForm = () => {
 	const router = useRouter()
 
@@ -59,7 +60,7 @@ export const RegistrationForm = () => {
 		>
 			<div className="registration-table__item">
 				<h3>Организация</h3>
-				<AuthTextInput
+				<TextInput
 					name="OrganisationName"
 					placeholder="Name"
 					register={register}
@@ -68,14 +69,14 @@ export const RegistrationForm = () => {
 			</div>
 			<div className="registration-table__item">
 				<h3>Профиль администрации</h3>
-				<AuthTextInput
+				<TextInput
 					placeholder="Name"
 					name="AdminName"
 					type="login"
 					register={register}
 					error={serverErrors?.AdminName}
 				/>
-				<AuthTextInput
+				<TextInput
 					placeholder="Name"
 					name="AdminPassword"
 					type="password"

@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { IFeatureFlag } from "../ui/FFTable"
+import { IFeatureFlag } from "../lib"
 
 const createData = (number: number): IFeatureFlag[] => {
 	return Array.from({ length: number }, (_, index) => ({

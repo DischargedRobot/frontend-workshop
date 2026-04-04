@@ -1,9 +1,9 @@
 .add-feature-flag {
+	position: relative;
 	display: flex;
 	align-items: center;
 
 	gap: 10px;
-	padding: 10px;
 	border-radius: 20px;
 	background-color: rgb(47, 47, 47);
 
@@ -22,5 +22,31 @@
 		min-height: 16px;
 
 		color: rgb(63, 143, 234);
+	}
+
+	&__feature-flag-form {
+		position: absolute;
+		top: 120%;
+
+		z-index: 10;
+	}
+}
+
+.feature-flag-form {
+	display: flex;
+	flex-direction: column;
+
+	gap: 10px;
+	padding: 10px 10px;
+
+	width: auto;
+	height: auto;
+
+	border-radius: 20px;
+	background-color: var(--foreground);
+
+	&__data {
+		display: flex;
+		gap: 10px;
 	}
 }

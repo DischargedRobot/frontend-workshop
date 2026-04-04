@@ -1,5 +1,5 @@
 import { RegistrationForm } from "@/entities/RegistraionForm"
-import AuthTextInput from "@/shared/AuthTextInput/AuthTextInput"
+import { TextInput } from "@/shared/ui"
 import Image from "next/image"
 // import styles from "./page.module.css";
 

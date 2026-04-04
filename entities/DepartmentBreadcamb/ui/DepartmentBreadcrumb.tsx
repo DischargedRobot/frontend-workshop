@@ -5,9 +5,8 @@ import "./DepartmentBreadcrumb.scss"
 import { Breadcrumb } from "antd"
 import useBreadcrumbStore from "../model/useBreadcrumbStore"
 import { useEffect } from "react"
-import useFFFiltersStore from "@/entities/FFT/model/useFFFiltersStore"
+import { useFFFiltersStore, useFFStore } from "@/entities/FF"
 import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore"
-import { useFFStore } from "@/entities/FFT"
 // Promise<{featureFlags: string[]; departments: string[]}>
 
 // const DEPARTMENTS_REQUEST_URL = "http://local:3000/"
