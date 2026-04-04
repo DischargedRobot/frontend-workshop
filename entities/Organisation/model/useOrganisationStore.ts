@@ -16,11 +16,11 @@ interface IOrganisationStore {
 
 const useOrganisationStore = create<IOrganisationStore>((set) => ({
 	organisation: {
-		id: 1,
+		id: 2,
 		name: "Рога и копыта",
 		adminId: 1,
 		children: {
-			id: 23,
+			id: 1,
 			name: "s",
 			children: [],
 			featureFlags: [],

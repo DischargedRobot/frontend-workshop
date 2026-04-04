@@ -1,13 +1,18 @@
 import "./AddFeatureFlag.scss"
 
-import { PlusCircleOutlined } from "@ant-design/icons"
 import { AddButton, TextInput } from "@/shared/ui"
-import { Button } from "antd"
+import { Button, Switch } from "antd"
 import { useAddFeatureFlag } from "../model"
+import { Controller } from "react-hook-form"
 
-export const AddFeatureFlag = () => {
-	const { onSubmit, errors, register, isVisible, setIsVisible } =
-		useAddFeatureFlag()
+type Props = {
+	organisationId: number
+	nodeId: number
+}
+
+export const AddFeatureFlag = ({ organisationId, nodeId }: Props) => {
+	const { onSubmit, errors, register, isVisible, setIsVisible, control } =
+		useAddFeatureFlag(organisationId, nodeId)
 
 	return (
 		<div className="add-feature-flag">
@@ -35,11 +40,10 @@ export const AddFeatureFlag = () => {
 							register={register}
 							error={errors?.name?.message}
 						/>
-						<TextInput
+						<Controller
 							name="value"
-							register={register}
-							type="checkbox"
-							label="Включён"
+							control={control}
+							render={({ field }) => <Switch {...field} />}
 						/>
 					</div>
 					<Button type="primary" htmlType="submit">

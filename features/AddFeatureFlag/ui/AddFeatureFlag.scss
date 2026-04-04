@@ -27,6 +27,8 @@
 	&__feature-flag-form {
 		position: absolute;
 		top: 120%;
+		left: 50%;
+		transform: translate(-50%, 0);
 
 		z-index: 10;
 	}
