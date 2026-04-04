@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import './Profile.scss'
+import "./Profile.scss"
 
 import UserCard from "@/entities/UserCard/ui/UserCard"
 import { useUsersStore } from "@/entities/UserList/model"
@@ -11,33 +11,29 @@ import { Content } from "antd/es/layout/layout"
 import useProfileStore from "./model/useProfileStore"
 
 const createIntialRoles = (): IRole[] => {
-    const roles: IRole[] = [];
-    for ( const [key, value] of Object.entries(TROLE)) {
-        roles.push({name: key, type: value, isEnabled: false})
-    }
-    return roles
+	const roles: IRole[] = []
+	for (const [key, value] of Object.entries(TROLE)) {
+		roles.push({ name: key, type: value, isEnabled: false })
+	}
+	return roles
 }
 const Profile = () => {
+	// useEffect(
+	//     () => redirect('/ffmenu', RedirectType.push)
+	// , [])
+	const setUser = useUsersStore((state) => state.setUser)
 
-    // useEffect( 
-    //     () => redirect('/ffmenu', RedirectType.push)
-    // , [])
-    const setUser = useUsersStore(state => (state.setUser))
+	const profile = useProfileStore((state) => state.profile)
+	return (
+		<Content className="profile-page">
+			<div className="profile-page__settings">
+				<UserCard user={profile} setUser={setUser} />
+				<UserSettings />
+			</div>
 
-    const profile = useProfileStore(state => state.profile)
-    return (
-        <Content className="profile-page">
-            <div className='profile-page__settings'>
-                <UserCard 
-                    user={profile} 
-                    setUser={setUser}
-                />
-                <UserSettings/>
-            </div>
-            
-            <UserTestingPanelForTheme/>
-        </Content>
-    )
+			<UserTestingPanelForTheme />
+		</Content>
+	)
 }
 
 export default Profile

@@ -1,41 +1,39 @@
 .add-department {
-    position: relative;
+	position: relative;
 
-    width: max-content;
-    height: auto;
+	width: max-content;
+	height: auto;
 
-    &__button {
-        color: var(--active);
-        padding: 5px;
-        border-radius: 50%;
-        &:hover {
-            color: var(--active-hover);
-            background-color: var(--background);
-            box-shadow: 0 2px 3px var(--shadow);
-        }
-    }
+	&__button {
+		color: var(--active);
+		padding: 5px;
+		border-radius: 50%;
+		&:hover {
+			color: var(--active-hover);
+			background-color: var(--background);
+			box-shadow: 0 2px 3px var(--shadow);
+		}
+	}
 
-    &__panel {
+	&__panel {
+		z-index: 100;
+		position: absolute;
+		top: 150%;
+		transform: translate(-50%, 0);
 
-        z-index: 100;
-        position: absolute;
-        top: 150%;
-        transform: translate(-50%, 0);
+		padding: 10px;
 
-        padding: 10px;
+		width: max-content;
+		height: auto;
 
-        width: max-content;
-        height: auto;
+		border-radius: 20px;
+		background-color: var(--foreground);
 
-        border-radius: 20px;
-        background-color: var(--foreground);
-        
-        &_collapsed {
-            display: none;
-        }
-    }
+		&_collapsed {
+			display: none;
+		}
+	}
 
-    &__field {
-        
-    }
+	&__field {
+	}
 }

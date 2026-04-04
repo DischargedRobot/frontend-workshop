@@ -1,7 +1,7 @@
-@use '../../placeholder.scss';
+@use "../../placeholder.scss";
 
 .structure-organisation {
-    @extend %flex;
-    
-    gap: 30px;
+	@extend %flex;
+
+	gap: 30px;
 }

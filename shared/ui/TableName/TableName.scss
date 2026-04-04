@@ -1,8 +1,8 @@
-@use '../../../app/placeholder.scss';
+@use "../../../app/placeholder.scss";
 
 .table-name {
-    @extend %flex;
-    align-items: center;
+	@extend %flex;
+	align-items: center;
 
-    font-size: var(--litleTitle-size);
+	font-size: var(--litleTitle-size);
 }

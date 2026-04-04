@@ -1,8 +1,0 @@
-@use '../../../app/globals.scss';
-
-.ff-table {
-    th {
-        @extend .text;
-        @extend .text_bold;
-    }
-}

@@ -1,31 +1,29 @@
 .add-button {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 
-    gap: 10px;
-    padding: 10px;
-    border-radius: 20px;
-    background-color: var(--background);
+	gap: 10px;
+	padding: 10px;
+	border-radius: 20px;
+	background-color: var(--background);
 
-    // TODO:объединить класы в reload и заихпандерить
-    &:hover 
-    {
-        // background-color: var(--foreground);
-            background-color: var(--);
+	// TODO:объединить класы в reload и заихпандерить
+	&:hover {
+		// background-color: var(--foreground);
+		background-color: var(--);
 
-        box-shadow: 0 2px 3px var(--shadow);
+		box-shadow: 0 2px 3px var(--shadow);
 
-        color: var(--text-color);
+		color: var(--text-color);
 
-        svg{
-            color: var(--active-hover);
-        }
-    }
-    & svg {
-        min-width: 16px;
-        min-height: 16px;
+		svg {
+			color: var(--active-hover);
+		}
+	}
+	& svg {
+		min-width: 16px;
+		min-height: 16px;
 
-        color: var(--active);
-
-    }
+		color: var(--active);
+	}
 }

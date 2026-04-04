@@ -1,4 +1,4 @@
-import { IDepartment } from "./DepartmentType";
+import { IDepartment } from "./DepartmentType"
 
 // const departmentFucntion = {
 

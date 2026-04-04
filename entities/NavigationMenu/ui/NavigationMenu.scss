@@ -1,61 +1,60 @@
 .navigation-menu {
+	position: relative;
+	color: var(--ant-color-text);
 
-    position: relative;
-    color: var(--ant-color-text);
+	align-items: center;
+	min-width: 80px;
 
-    align-items: center;
-    min-width: 80px;
+	ul {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 
-    ul {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+		padding: 20px 10px 0;
+		border-inline-end: none;
+	}
 
-        padding: 20px 10px 0 ;
-        border-inline-end: none;
-    }
+	li {
+		display: flex !important;
+		padding-left: 10px !important;
+		// align-items: center;
+	}
+	svg {
+		margin-right: 16px;
+		min-width: 32px;
+		// max-width: 32px; // на всякий случай, чтобы в ширь тоже не колбасило
+	}
 
-    li {
-        display: flex !important;
-        padding-left: 10px !important;
-        // align-items: center;
-    }
-    svg {
-        margin-right: 16px;
-        min-width: 32px;
-        // max-width: 32px; // на всякий случай, чтобы в ширь тоже не колбасило
-    }
+	&__item_selected {
+		background-color: var(--ant-color-primary-active);
+	}
 
-    &__item_selected {
-        background-color: var(--ant-color-primary-active);
-    }
+	&__collapsing-button {
+		position: absolute;
+		right: 0;
+		top: 18px;
+		transform: translate(50%, 0);
 
-    &__collapsing-button {
-        position: absolute;
-        right: 0;
-        top: 18px;
-        transform: translate(50%,0);
+		padding: 4px;
+		font-size: 16;
 
-        padding: 4px;
-        font-size: 16;
-        
-        border-radius: 50%;
+		border-radius: 50%;
 
-        background-color:  var(--foreground-second);
-        box-shadow: 2px 0 2px #00000081;
-        
-        &:hover {
-            box-shadow: 4px 0 5px #00000081;
-        }
-        
-        line-height: 0;
-    }
+		background-color: var(--foreground-second);
+		box-shadow: 2px 0 2px #00000081;
+
+		&:hover {
+			box-shadow: 4px 0 5px #00000081;
+		}
+
+		line-height: 0;
+	}
 }
 
 .collapsed-icon {
-    svg {
-        min-width: 16px;
-        width: 16px;
-        margin-right: 0;
-    }
+	svg {
+		min-width: 16px;
+		width: 16px;
+		margin-right: 0;
+	}
 }

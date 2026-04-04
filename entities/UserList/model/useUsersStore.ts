@@ -1,48 +1,95 @@
-import { IUser } from "@/entities/UserCard/ui/types";
-import { IRole, TROLE } from "@/shared/model/Role";
-import { create } from "zustand";
+import { IUser } from "@/entities/UserCard/ui/types"
+import { IRole, TROLE } from "@/shared/model/Role"
+import { create } from "zustand"
 
 interface IUseUsers {
-    users: IUser[]
-    setUsers: (newUsers: IUser[]) => void
-    setUser: (newDataOfUser: IUser) => void
+	users: IUser[]
+	setUsers: (newUsers: IUser[]) => void
+	setUser: (newDataOfUser: IUser) => void
 
-    filteredUsers: IUser[]
-    setFilteredUsers: (newfilteredUsers: IUser[]) => void
-    deleteUserById: (userId: number) => void
+	filteredUsers: IUser[]
+	setFilteredUsers: (newfilteredUsers: IUser[]) => void
+	deleteUserById: (userId: number) => void
 }
 
 const createIntialRoles = (): IRole[] => {
-    const roles: IRole[] = [];
-    for ( const [key, value] of Object.entries(TROLE)) {
-        roles.push({name: key, type: value, isEnabled: false})
-    }
-    return roles
+	const roles: IRole[] = []
+	for (const [key, value] of Object.entries(TROLE)) {
+		roles.push({ name: key, type: value, isEnabled: false })
+	}
+	return roles
 }
-const dep = {id: 1, name: 'd', children: [], featureFlags: [], link: ''}
+const dep = { id: 1, name: "d", children: [], featureFlags: [], link: "" }
 
 const useUsersStore = create<IUseUsers>((set, get) => ({
+	users: [
+		{
+			login: "L",
+			password: "ss",
+			id: 1,
+			roles: createIntialRoles(),
+			departmentId: dep.id,
+		},
+		{
+			login: "rob",
+			password: "ss",
+			id: 2,
+			roles: createIntialRoles(),
+			departmentId: dep.id,
+		},
+		{
+			login: "L",
+			password: "ss",
+			id: 3,
+			roles: createIntialRoles(),
+			departmentId: dep.id,
+		},
+		{
+			login: "L",
+			password: "ss",
+			id: 4,
+			roles: createIntialRoles(),
+			departmentId: dep.id,
+		},
+		{
+			login: "L",
+			password: "ss",
+			id: 5,
+			roles: createIntialRoles(),
+			departmentId: dep.id,
+		},
+	],
+	setUsers: (users) => set({ users }),
+	setUser: (newUser) =>
+		set((state) => ({
+			users: state.users.map((user) =>
+				user.id == newUser.id ? { ...user, ...newUser } : user,
+			),
+		})),
+	deleteUserById: (idDeletedUser: number) =>
+		set(() => {
+			return {
+				users: get().users.filter((user) => user.id != idDeletedUser),
+			}
+		}),
 
-    users: [
-        {login: 'L', password: 'ss', id:1, roles: createIntialRoles(), departmentId: dep.id},
-        {login: 'rob', password: 'ss', id:2, roles: createIntialRoles(), departmentId: dep.id},
-        {login: 'L', password: 'ss', id:3, roles: createIntialRoles(), departmentId: dep.id},
-        {login: 'L', password: 'ss', id:4, roles: createIntialRoles(), departmentId: dep.id},
-        {login: 'L', password: 'ss', id:5, roles: createIntialRoles(), departmentId: dep.id},
-    ],
-    setUsers: (users) => set({users}),
-    setUser: (newUser) => set((state) => ({users: state.users.map(user => (user.id == newUser.id ? {...user, ...newUser} : user ))})),
-    deleteUserById: (idDeletedUser: number) => set(() => {
-        return {users: get().users.filter(user => user.id != idDeletedUser)}
-    }),
-
-    filteredUsers: [
-        {login: 'L', password: 'ss', id:1, roles: createIntialRoles(), departmentId: dep.id},
-        {login: 'rob', password: 'ss', id:2, roles: createIntialRoles(), departmentId: dep.id}
-    ],
-    setFilteredUsers: (filteredUsers) => set({filteredUsers}),
-
-
+	filteredUsers: [
+		{
+			login: "L",
+			password: "ss",
+			id: 1,
+			roles: createIntialRoles(),
+			departmentId: dep.id,
+		},
+		{
+			login: "rob",
+			password: "ss",
+			id: 2,
+			roles: createIntialRoles(),
+			departmentId: dep.id,
+		},
+	],
+	setFilteredUsers: (filteredUsers) => set({ filteredUsers }),
 }))
 
 export default useUsersStore

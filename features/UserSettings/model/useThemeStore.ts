@@ -1,18 +1,18 @@
 import { create } from "zustand"
 
 interface ITheme {
-    activeColor: string
-    textColor: string
-    hoverColor: string
-    strokeColor: string
+	activeColor: string
+	textColor: string
+	hoverColor: string
+	strokeColor: string
 }
 
 interface IThemeStore {
-    themes: ITheme[]
+	themes: ITheme[]
 }
 
 const useThemeStore = create<IThemeStore>((set, get) => ({
-    themes: []
+	themes: [],
 }))
 
 export default useThemeStore

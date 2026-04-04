@@ -1,2 +1,2 @@
-export { type IDepartment } from './DepartmentType'
-export { type TableData } from './DepartmentTable'
+export { type IDepartment } from "./DepartmentType"
+export { type TableData } from "./DepartmentTable"

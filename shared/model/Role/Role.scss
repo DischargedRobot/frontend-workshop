@@ -1,21 +1,17 @@
 .role {
-    display: flex;
+	display: flex;
 
-    gap: 2px;
-    padding: 5px;
+	gap: 2px;
+	padding: 5px;
 
-    border-radius: 10;
-    background-color: #464649;
+	border-radius: 10;
+	background-color: #464649;
 
-    &:hover {
+	&:hover {
+		background-color: #818181;
+	}
 
-        background-color: #818181;
-
-    }
-
-    &:active {
-
-        background-color: #a22e2ed1;
-
-    }
+	&:active {
+		background-color: #a22e2ed1;
+	}
 }

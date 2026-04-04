@@ -1,42 +1,40 @@
-@use '../../../app/placeholder.scss';
+@use "../../../app/placeholder.scss";
 
 .ff-table-filters {
-    position: relative;
+	position: relative;
 
-    width: auto;
-    height: auto;
-    &__panel
-    {
-        z-index: 100;
+	width: auto;
+	height: auto;
+	&__panel {
+		z-index: 100;
 
-        position: absolute;
-        bottom: 120%;
-        left: 10px;
-        transform: translate(-50%, 0);
+		position: absolute;
+		bottom: 120%;
+		left: 10px;
+		transform: translate(-50%, 0);
 
-        @extend %flex;
-        flex-wrap: wrap;
+		@extend %flex;
+		flex-wrap: wrap;
 
-        gap: 5px;
-        padding: 15px;
+		gap: 5px;
+		padding: 15px;
 
-        max-width: 200px;
-        width: max-content;
+		max-width: 200px;
+		width: max-content;
 
-        border-radius: 20px;
-        border: 2px solid var(--drop-down-border-color);
-        background-color: var(--foreground);
-        box-shadow: 0 2px 3px var(--shadow);
-        &_collapsed {
-            display: none;
-        }
-    }
+		border-radius: 20px;
+		border: 2px solid var(--drop-down-border-color);
+		background-color: var(--foreground);
+		box-shadow: 0 2px 3px var(--shadow);
+		&_collapsed {
+			display: none;
+		}
+	}
 
-    &__button {
-        width: 32px;
-        height: auto;
+	&__button {
+		width: 32px;
+		height: auto;
 
-        font-size: 24;
-    }
-    
+		font-size: 24;
+	}
 }

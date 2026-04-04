@@ -1,83 +1,80 @@
-@use '../../app/placeholder.scss';
+@use "../../app/placeholder.scss";
 
 .department-tree {
-    position: relative;
-    background-color: var(--foreground-second);
+	position: relative;
+	background-color: var(--foreground-second);
 
-    padding: 10px;
-    padding-right: 10px;
-    
-    max-width: 250px;
-    width: 100%;
+	padding: 10px;
+	padding-right: 10px;
 
-    border-right: var(--border-for-nav-panel);
-    box-shadow: 2px 0 5px var(--shadow);
-    
-    &.collapsed {
-        max-width: 0;
+	max-width: 250px;
+	width: 100%;
 
-        & .department-tree__tree {
-            overflow: hidden;
-            width: 0px;
-        }
+	border-right: var(--border-for-nav-panel);
+	box-shadow: 2px 0 5px var(--shadow);
 
-    }
-    &__title {
-        @extend %flex;
-        justify-content: space-between;
+	&.collapsed {
+		max-width: 0;
 
-        gap: 10px;
-        padding: 20px 0  5px 10px;
-    }
+		& .department-tree__tree {
+			overflow: hidden;
+			width: 0px;
+		}
+	}
+	&__title {
+		@extend %flex;
+		justify-content: space-between;
 
-    &__buttons {
-        @extend %flex;
-        align-items: center;
+		gap: 10px;
+		padding: 20px 0 5px 10px;
+	}
 
-        
-        font-size: 16;
+	&__buttons {
+		@extend %flex;
+		align-items: center;
 
-        & *{
-            line-height: 0;
-        }
-        gap: 10px;
-    }
+		font-size: 16;
 
-    &__button {
-        z-index: 1;
-        position: absolute;
-        top: 40px;
-        right: 0;
-        transform: translate(50%, 0);
+		& * {
+			line-height: 0;
+		}
+		gap: 10px;
+	}
 
-        padding: 3px;
+	&__button {
+		z-index: 1;
+		position: absolute;
+		top: 40px;
+		right: 0;
+		transform: translate(50%, 0);
 
-        width: auto;
+		padding: 3px;
 
-        border-radius: 50%;
+		width: auto;
 
-        background-color: var(--ant-color-primary);
+		border-radius: 50%;
 
-        svg {
-            transition: transform linear 0.2s;
-            font-size: 16;
-        }
+		background-color: var(--ant-color-primary);
 
-        // &::after {
-        //     content: "";
-        //     position: absolute;
-        //     top: 0;
-        //     right: 0;
-    
-        //     width: 43%;
-        //     height: 100%;
+		svg {
+			transition: transform linear 0.2s;
+			font-size: 16;
+		}
 
-        //     border-top-right-radius: 10px;
-        //     border-bottom-right-radius: 10px;
+		// &::after {
+		//     content: "";
+		//     position: absolute;
+		//     top: 0;
+		//     right: 0;
 
-        //     border: 2px solid #535353;
-        //     border-left: none;
-        // }
-    }
-    
+		//     width: 43%;
+		//     height: 100%;
+
+		//     border-top-right-radius: 10px;
+		//     border-bottom-right-radius: 10px;
+
+		//     border: 2px solid #535353;
+		//     border-left: none;
+		// }
+	}
 }

@@ -1,5 +1,5 @@
 export interface IResponseError {
-  code: string
-  errorType: string
-  message: string
+	code: string
+	errorType: string
+	message: string
 }

@@ -1,0 +1,3 @@
+const organisationApi = {
+	getOrganisation: async () => {},
+}

@@ -1,42 +1,42 @@
-@use '../../../app/placeholder.scss';
+@use "../../../app/placeholder.scss";
 
 .roles-status {
-    position: absolute;
-    bottom: -170px;
-    right: -10px;
-    transform: translate(100%, 0);
-    z-index: 10;
+	position: absolute;
+	bottom: -170px;
+	right: -10px;
+	transform: translate(100%, 0);
+	z-index: 10;
 
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 
-    gap: 10px;
-    padding: 10px;
+	gap: 10px;
+	padding: 10px;
 
-    border-radius: 20;
-    background-color: #373737;
-    box-shadow: 0 2px 2px var(--shadow);
-    
-    hr {
-        border: 1px solid var(--stroke)
-    }
+	border-radius: 20;
+	background-color: #373737;
+	box-shadow: 0 2px 2px var(--shadow);
 
-    &__containter {
-        @extend %flex-column;
+	hr {
+		border: 1px solid var(--stroke);
+	}
 
-        gap: 7px;
-    }
+	&__containter {
+		@extend %flex-column;
 
-    &__role-containter {
-        @extend %flex-column;
-        
-        gap: 5px;
-    }
+		gap: 7px;
+	}
 
-    &__role {
-        @extend %flex;
-        justify-content: space-between;
+	&__role-containter {
+		@extend %flex-column;
 
-        gap: 10px;
-    }
+		gap: 5px;
+	}
+
+	&__role {
+		@extend %flex;
+		justify-content: space-between;
+
+		gap: 10px;
+	}
 }

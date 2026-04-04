@@ -1,7 +1,7 @@
-@use '../placeholder.scss';
+@use "../placeholder.scss";
 
 .login {
-    @extend %center_content;
+	@extend %center_content;
 
-    gap: 10px;
+	gap: 10px;
 }

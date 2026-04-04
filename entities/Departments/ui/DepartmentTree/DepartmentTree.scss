@@ -1,31 +1,31 @@
 .tree {
-    width: 100%;
+	width: 100%;
 
-    // чтобы любой контент не выходил за пределы, даже если навели при dragAndDrop
-        overflow: hidden ;
-   .ant-tree-node-content-wrapper { 
-    // для ..., чтобы не ставить фиксированный width
-        overflow: hidden ;
-    }
-    // класс появляющийся при перетаскивании и наложении объекта на другой
-    .drop-target {
-        .ant-tree-node-content-wrapper { 
-            // делаем видимой черту
-            overflow: visible !important;
-        }
-    }
+	// чтобы любой контент не выходил за пределы, даже если навели при dragAndDrop
+	overflow: hidden;
+	.ant-tree-node-content-wrapper {
+		// для ..., чтобы не ставить фиксированный width
+		overflow: hidden;
+	}
+	// класс появляющийся при перетаскивании и наложении объекта на другой
+	.drop-target {
+		.ant-tree-node-content-wrapper {
+			// делаем видимой черту
+			overflow: visible !important;
+		}
+	}
 
-    .ant-tree-treenode {
-        width: 100%;
-        max-width: 230px;
-    }
-    
-    .ant-tree-title {
-        max-width: 230px !important;
-        line-height: 1;
-        display: block;
-        overflow: hidden !important;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+	.ant-tree-treenode {
+		width: 100%;
+		max-width: 230px;
+	}
+
+	.ant-tree-title {
+		max-width: 230px !important;
+		line-height: 1;
+		display: block;
+		overflow: hidden !important;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 }

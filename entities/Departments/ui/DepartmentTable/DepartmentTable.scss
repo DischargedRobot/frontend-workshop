@@ -1,24 +1,21 @@
 // .department-table .ant-table-tbody > tr > td{
 //     height: 16 !important;
 // }
-@use '../../../../app/globals.scss';
-.department-table  {
+@use "../../../../app/globals.scss";
+.department-table {
+	th {
+		@extend .text;
+		@extend .text_bold;
+	}
 
-    th {
-        @extend .text;
-        @extend .text_bold;
-    }
-    
+	&.hidden {
+		display: none;
+	}
 
-    &.hidden {
-        display: none;
-    }
-
-    .ant-table-thead > tr > th{
-        color: var(--text-color);
-        font-size: var(--text-size);
-        font-weight: 700;
-    }
-    // max-height: 16 !important;
-    
+	.ant-table-thead > tr > th {
+		color: var(--text-color);
+		font-size: var(--text-size);
+		font-weight: 700;
+	}
+	// max-height: 16 !important;
 }

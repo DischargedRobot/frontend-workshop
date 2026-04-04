@@ -1,57 +1,55 @@
 .toast {
+	position: fixed;
+	bottom: 0;
+	right: 50%;
+	transform: translate(50%, 0);
 
-    position: fixed;
-    bottom: 0;
-    right: 50%;
-    transform: translate(50%, 0);
+	display: grid;
+	grid-template-rows: 30px auto;
+	grid-template-columns: 64px 128px;
+	grid-template-areas:
+		"icon title"
+		"icon text";
 
-    display: grid;
-    grid-template-rows: 30px auto;
-    grid-template-columns: 64px 128px;
-    grid-template-areas: 
-    "icon title"
-    "icon text";
+	justify-items: center;
+	padding: 5px;
 
-    justify-items: center;
-    padding: 5px;
+	width: calc(150px + 10vw);
 
-    width: calc(150px + 10vw);
-    
-    border-radius: 20px 20px 0 0;
+	border-radius: 20px 20px 0 0;
 
-    transition: opacity 0.6s ease-in;
-    
-    &_fade-in {
-        opacity: 1;
-    }
+	transition: opacity 0.6s ease-in;
 
-    &_fade-out {
-        opacity: 0;
-    }
+	&_fade-in {
+		opacity: 1;
+	}
 
-    &_warning {
-        background-color: var(--toast-warning);
-    }
+	&_fade-out {
+		opacity: 0;
+	}
 
-    &_error {
-        background-color: var(--toast-error);
-    }
+	&_warning {
+		background-color: var(--toast-warning);
+	}
 
-    &_succes {
-        background-color: var(--toast-success);
-    }
+	&_error {
+		background-color: var(--toast-error);
+	}
 
-    &__icon {
-        grid-area: icon;
-        font-size: 32;
-    }
+	&_succes {
+		background-color: var(--toast-success);
+	}
 
-    &__title {
-        grid-area: title;
-    }
+	&__icon {
+		grid-area: icon;
+		font-size: 32;
+	}
 
-    &__text {
-        grid-area: text;
-    }
+	&__title {
+		grid-area: title;
+	}
+
+	&__text {
+		grid-area: text;
+	}
 }
-

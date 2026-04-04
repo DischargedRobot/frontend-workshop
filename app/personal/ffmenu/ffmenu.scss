@@ -1,10 +1,10 @@
-@use '../../placeholder.scss';
+@use "../../placeholder.scss";
 
 // $l: ca10vw*1px;
 
 .ff-menu {
-    @extend %flex-column;
+	@extend %flex-column;
 
-    gap: 15px;
-    margin: clamp(15px, 2vw, 20px) clamp(10px, 2vw, 20px);
+	gap: 15px;
+	margin: clamp(15px, 2vw, 20px) clamp(10px, 2vw, 20px);
 }

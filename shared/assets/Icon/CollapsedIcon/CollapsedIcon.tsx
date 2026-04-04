@@ -1,22 +1,19 @@
-import './CollapsedIcon.scss'
+import "./CollapsedIcon.scss"
 import { RightOutlined } from "@ant-design/icons"
 
 interface Props {
-    isCollapsed: boolean
+	isCollapsed: boolean
 }
 
 const CollapsedIcon = (props: Props) => {
+	const { isCollapsed } = props
 
-    const {
-        isCollapsed
-    } = props
-
-    return (
-        <RightOutlined 
-            className="collapsed-icon" 
-            style={isCollapsed ? {rotate: '180deg'} : {}}
-        />
-    )
+	return (
+		<RightOutlined
+			className="collapsed-icon"
+			style={isCollapsed ? { rotate: "180deg" } : {}}
+		/>
+	)
 }
 
 export default CollapsedIcon

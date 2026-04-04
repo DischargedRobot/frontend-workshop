@@ -11,10 +11,10 @@
 // }
 
 .registration {
-    @extend %center_content;
+	@extend %center_content;
 }
 
 .registration__content {
-    @extend %flex-column;
-    align-items: center;
+	@extend %flex-column;
+	align-items: center;
 }

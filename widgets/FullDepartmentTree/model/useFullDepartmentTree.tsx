@@ -4,9 +4,6 @@ import useOrganisationStore from "@/entities/Organisation/model/useOrganisationS
 import { useEffect } from "react"
 import useSWR from "swr"
 
-const useFullDepartmentTree = () => {
-
-
-}
+const useFullDepartmentTree = () => {}
 
 export default useFullDepartmentTree

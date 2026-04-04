@@ -1,168 +1,162 @@
-@use '../../../app/placeholder.scss';
+@use "../../../app/placeholder.scss";
 
 .user-card {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 32px 75px 75px auto;
-    grid-template-areas: 
-    "avatar circle-selection"
-    "avatar personal-data"
-    "avatar personal-data"
-    "roles roles";
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: 32px 75px 75px auto;
+	grid-template-areas:
+		"avatar circle-selection"
+		"avatar personal-data"
+		"avatar personal-data"
+		"roles roles";
 
-    align-items: center;
-    
-    padding: 5px;
+	align-items: center;
 
-    max-width: 315px;
-    // max-height: 258px;
-    height: auto;
+	padding: 5px;
 
-    background-color: var(--foreground);
-    border-radius: 20px;
+	max-width: 315px;
+	// max-height: 258px;
+	height: auto;
 
-    color: #fff;
+	background-color: var(--foreground);
+	border-radius: 20px;
 
-    transition: background-color ease-in 0.1s;
-    
-    &__field {
-        position: relative;
-        @extend %flex-column;        
+	color: #fff;
 
-        margin: 10px 5px;
+	transition: background-color ease-in 0.1s;
 
-        font-size: 14px;
-        
-        border-bottom: 1px solid #fff;
-        
-        &:hover{
-            border-color: var(--hover-active-background);
+	&__field {
+		position: relative;
+		@extend %flex-column;
 
-        }
-    }
+		margin: 10px 5px;
 
-    &__input {
-    }
+		font-size: 14px;
 
-    &_selected {
+		border-bottom: 1px solid #fff;
 
-        background-color: var(--foreground-second);        
-        box-shadow: 0 4px 5px var(--shadow);
-        // button {
-        //     background-color: var(--foreground-second);        
-        // }
+		&:hover {
+			border-color: var(--hover-active-background);
+		}
+	}
 
-        .user-card__circle-selection {
-            background-color: var(--active);
-        }
-    }
+	&__input {
+	}
 
-    
-    &__avatar {
-        position: relative;
-        grid-area: avatar;
-        align-self: center;
-        justify-self: center;
+	&_selected {
+		background-color: var(--foreground-second);
+		box-shadow: 0 4px 5px var(--shadow);
+		// button {
+		//     background-color: var(--foreground-second);
+		// }
 
-        margin: 0 auto;
+		.user-card__circle-selection {
+			background-color: var(--active);
+		}
+	}
 
-        border-radius: 50%;
-        border: 2px solid var(--stroke);
-    }
+	&__avatar {
+		position: relative;
+		grid-area: avatar;
+		align-self: center;
+		justify-self: center;
 
-    &__delete-button {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        transform: translate(25%, 25%);
+		margin: 0 auto;
 
-        border-radius: 50;
-        background-color: var(--foreground);
+		border-radius: 50%;
+		border: 2px solid var(--stroke);
+	}
 
-        &:hover {
-            box-shadow: 0 0 4px var(--shadow);
-        }
-    }
-    
-    
-    &__circle-selection {
-        grid-area: circle-selection;
-        justify-self: end;
+	&__delete-button {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		transform: translate(25%, 25%);
 
-        margin-right: 10px;
+		border-radius: 50;
+		background-color: var(--foreground);
 
-        width: 16px;
-        height: 16px;
+		&:hover {
+			box-shadow: 0 0 4px var(--shadow);
+		}
+	}
 
-        border-radius: 50%;
-        border: 2px solid var(--stroke);
+	&__circle-selection {
+		grid-area: circle-selection;
+		justify-self: end;
 
-        &:hover {
-            background-color:var(--hover-active-background);
-        }
-    }
+		margin-right: 10px;
 
-    &__personal-data {
-        grid-area: personal-data;
+		width: 16px;
+		height: 16px;
 
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        padding-right: 10px;
-        
-        button{
-            margin-left: 10px;
-            &.disabled {
-                cursor: not-allowed;
+		border-radius: 50%;
+		border: 2px solid var(--stroke);
 
-                border-bottom-color: #ffffff00;
-                color: #bcbcbc;
-            }
-        }
-    }
+		&:hover {
+			background-color: var(--hover-active-background);
+		}
+	}
 
-    &__role-list {
-        grid-area: roles;
-        align-self: self-start;
+	&__personal-data {
+		grid-area: personal-data;
 
-        @extend %flex-column;
-        justify-content: flex-start;
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		padding-right: 10px;
 
-        gap: 15x;
-        padding: 0 10px 5px 10px;
+		button {
+			margin-left: 10px;
+			&.disabled {
+				cursor: not-allowed;
 
-        border-color: black;
+				border-bottom-color: #ffffff00;
+				color: #bcbcbc;
+			}
+		}
+	}
 
-        button.add-role 
-        { 
-            svg {
-                font-size: 24;
+	&__role-list {
+		grid-area: roles;
+		align-self: self-start;
 
-                &:hover {
-                    color: var(--hover-active-background);
-                }
+		@extend %flex-column;
+		justify-content: flex-start;
 
-                &:active {
-                    color: var(--active);
-                }
-            }
-        }
-    }
+		gap: 15x;
+		padding: 0 10px 5px 10px;
 
-    &__error {
-        position: absolute;
-        bottom: 0;
-        transform: translate(0, 100%);
+		border-color: black;
 
-        font-size: 10px;
+		button.add-role {
+			svg {
+				font-size: 24;
 
-        color: var(--error-text-color)
-    }
+				&:hover {
+					color: var(--hover-active-background);
+				}
 
+				&:active {
+					color: var(--active);
+				}
+			}
+		}
+	}
+
+	&__error {
+		position: absolute;
+		bottom: 0;
+		transform: translate(0, 100%);
+
+		font-size: 10px;
+
+		color: var(--error-text-color);
+	}
 }
 
 .role-list__title {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
+	position: relative;
+	display: flex;
+	justify-content: space-between;
 }

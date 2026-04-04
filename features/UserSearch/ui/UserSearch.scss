@@ -1,9 +1,9 @@
-@use '../../../app/globals.scss';
+@use "../../../app/globals.scss";
 
 .user-serch {
-    input{
-        @extend .text;
-        @extend .text_litle;
-        @extend .text_tiny;
-    }
+	input {
+		@extend .text;
+		@extend .text_litle;
+		@extend .text_tiny;
+	}
 }

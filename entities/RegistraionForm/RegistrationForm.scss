@@ -1,36 +1,32 @@
 /* app/main.scss */
 @use "../../app/placeholder.scss";
 .registration-table {
-    @extend %flex-column;
+	@extend %flex-column;
 
-    padding: 38px 60px;
-    gap: 32px;
+	padding: 38px 60px;
+	gap: 32px;
 
-    max-width: 705px;
-    max-height: 611px;
+	max-width: 705px;
+	max-height: 611px;
 
-    border: 2px solid var(--gray);
-    border-radius: 40px;
+	border: 2px solid var(--gray);
+	border-radius: 40px;
 }
 
-
-
 .registration-table__item {
-    @extend %flex-column;
-    gap: 18px;
-    
+	@extend %flex-column;
+	gap: 18px;
 }
 
 .registration-table__title {
-
 }
 
 .form__table-rows {
-    @extend %flex-column;
+	@extend %flex-column;
 
-    gap: 10px;
+	gap: 10px;
 }
 
 .registration-table__row {
-    @extend %flex-column;
+	@extend %flex-column;
 }

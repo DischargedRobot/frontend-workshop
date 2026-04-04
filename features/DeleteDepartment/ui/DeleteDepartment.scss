@@ -1,10 +1,10 @@
 .delete-department {
-    color: var(--active);
-    padding: 1px;
-    border-radius: 50%;
-    &:hover {
-        color: var(--active-hover);
-        background-color: var(--background);
-        box-shadow: 0 2px 3px var(--shadow);
-    }
+	color: var(--active);
+	padding: 1px;
+	border-radius: 50%;
+	&:hover {
+		color: var(--active-hover);
+		background-color: var(--background);
+		box-shadow: 0 2px 3px var(--shadow);
+	}
 }
