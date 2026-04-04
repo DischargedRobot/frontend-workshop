@@ -1,7 +1,8 @@
-import { create } from "zustand"
+import { create, UseBoundStore } from "zustand"
 import { IDepartment } from "../lib"
 import { useUserFiltersStore } from "@/entities/User/UserList/model"
 import { Department } from "../lib/DepartmentType"
+import { StoreApi } from "zustand"
 
 const InitialDepartments: IDepartment[] = (() => {
 	const depts: IDepartment[] = []
@@ -113,6 +114,7 @@ const updateDep = (
 	})
 }
 
+// TODO: разделить на фабрику и 2 стора (1 просто депс, другие выбранные)
 const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
 	departments: [],
 	setDepartments: (newDepartments) => set({ departments: newDepartments }),
@@ -123,14 +125,14 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
 
 	// TODO: сделать независимым от друго стора, передавая через аргс, предусмотреть, что удаляемые департаменты сидят в дочках
 	removeSelectedDepartment: () => {
-		console.log(
-			removeDep(
-				get().departments,
-				useUserFiltersStore.getState().departmentIds,
-			),
-			useUserFiltersStore.getState().departmentIds,
-			"selected",
-		)
+		// console.log(
+		// 	removeDep(
+		// 		get().departments,
+		// 		useUserFiltersStore.getState().departmentIds,
+		// 	),
+		// 	useUserFiltersStore.getState().departmentIds,
+		// 	"selected",
+		// )
 		set((state) => ({
 			departments: removeDep(
 				state.departments,
@@ -229,5 +231,61 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
 			}
 		}),
 }))
+
+// TODO: доделать фабрику
+interface BaseDepStore {
+	departments: IDepartment[]
+	setDepartments: (newDepartments: IDepartment[]) => void
+
+	removeDepartment: (department: IDepartment) => void
+	addDepartment: (department: IDepartment) => void
+}
+
+type ExtendedDepStore<T> = BaseDepStore & T
+
+const createDepartmentStore = <ExtStore = object>(
+	extensions?: (
+		set: (
+			partial:
+				| Partial<ExtendedDepStore<ExtStore>>
+				| ((
+						state: Partial<ExtendedDepStore<ExtStore>>,
+				  ) => Partial<ExtendedDepStore<ExtStore>>),
+		) => void,
+		get: () => ExtendedDepStore<ExtStore>,
+	) => ExtStore,
+): UseBoundStore<StoreApi<ExtendedDepStore<ExtStore>>> => {
+	const baseStore = (
+		set: (
+			partial:
+				| Partial<BaseDepStore>
+				| ((state: BaseDepStore) => Partial<BaseDepStore>),
+		) => void,
+		get: () => BaseDepStore,
+	): BaseDepStore => ({
+		departments: [],
+		setDepartments: (departments) => set({ departments }),
+
+		removeDepartment: (departments) => set({ departments: [] }),
+		addDepartment: (departments) => set({ departments: [] }),
+	})
+
+	return create((set, get) => {
+		const baseSet = set as (
+			partial:
+				| Partial<BaseDepStore>
+				| ((state: BaseDepStore) => Partial<BaseDepStore>),
+		) => void
+		const baseGet = get as () => BaseDepStore
+
+		const baseActions = baseStore(baseSet, baseGet)
+		const addingAction = extensions ? extensions(set, get) : {}
+
+		return {
+			...baseActions,
+			...addingAction,
+		} as ExtendedDepStore<ExtStore>
+	}) as UseBoundStore<StoreApi<ExtendedDepStore<ExtStore>>>
+}
 
 export default useDepartmentsStore
