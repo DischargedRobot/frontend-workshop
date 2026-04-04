@@ -1,15 +1,14 @@
 "use client"
 
-import useFFTableFiltersStore, {
-	TFeatureFlagTable,
-} from "@/features/FFTableFilters/model/useFFTableFiltersStore"
+import { TFeatureFlagTable } from "@/features/FFTableFilters/model/useFFTableFiltersStore"
+import useFFTableFiltersStore from "@/features/FFTableFilters/model/useFFTableFiltersStore"
 import "./FFTable.scss"
 
 import { DeleteIcon, InfoIcon } from "@/shared/assets/Icon"
 import { Empty, Switch, Table, TableProps } from "antd"
-import { useFFStore, useFilteredFFs, useGetFFsFromServer } from "../model"
-import { FFApi } from "../api"
-import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore"
+import { useFilteredFFs, useGetFFsFromServer } from "../model"
+import { IFeatureFlag } from "../lib/types"
+import { useFFTable } from "../model/useFFTable"
 
 export type TFFTableColumns = TableProps<IFeatureFlag>["columns"]
 
@@ -57,39 +56,25 @@ const createFFTableColumns = (
 			title: "",
 			key: "delete",
 			render: (_, FF) => (
-				<button
-					onClick={() => {
-						removeFF(FF)
-					}}
-				>
-					<DeleteIcon />{" "}
+				<button onClick={() => removeFF(FF)}>
+					<DeleteIcon />
 				</button>
 			),
 			width: "64px",
 		},
 	]
 }
-
-import { IFeatureFlag } from "../lib/types"
-
-const FFTable = () => {
-	const { isLoading, error } = useGetFFsFromServer()
-	const featureFlags = useFilteredFFs()
-
-	// console.log('FFTableRender')
+interface Props {
+	featureFlags: IFeatureFlag[]
+}
+const FFTable = ({ featureFlags }: Props) => {
+	const { isLoading } = useGetFFsFromServer()
 	const filters = useFFTableFiltersStore((state) => state.visibleColumns)
-	const organisationId = useOrganisationStore(
-		(state) => state.organisation.id,
-	)
-	const removeFFFromLocal = useFFStore((state) => state.removeFeatureFlags)
-	const removeFF = async (FF: IFeatureFlag) => {
-		await FFApi.removeFF(organisationId, FF.departmentId, FF.id)
-		removeFFFromLocal([FF])
-	}
-	// console.log(featureFlags, 'ff')
+	const { removeFF } = useFFTable()
+
 	return (
 		<Table
-			className="ff-table "
+			className="ff-table"
 			rowClassName={"text-table text-table_litle text-table_tiny"}
 			size="small"
 			rowKey="id"

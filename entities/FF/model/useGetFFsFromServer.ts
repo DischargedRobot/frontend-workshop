@@ -6,8 +6,8 @@ import { FFApi } from "../api"
 // import { showToast } from "@/shared/ui/Toast/Toast"
 import { APIError } from "@/shared/api/APIErrors"
 import { useEffect, useMemo } from "react"
-import { IFeatureFlag } from "../ui/FFTable"
 import { useShallow } from "zustand/shallow"
+import { IFeatureFlag } from "../lib"
 
 const EMPTY_ARRAY: IFeatureFlag[] = []
 

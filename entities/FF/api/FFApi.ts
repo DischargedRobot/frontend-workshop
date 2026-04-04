@@ -1,6 +1,6 @@
 import { IDepartment } from "@/entities/Departments/lib"
 import APIJsonRequest from "@/shared/api/APIJsonRequest"
-import { IFeatureFlag } from "../ui/FFTable"
+import { IFeatureFlag } from "../lib/types"
 import { error } from "console"
 
 const URL_ORGANISATION = process.env.NEXT_PUBLIC_API_ORGANISATIONS_URL_V1
@@ -162,6 +162,20 @@ const FFApi = {
 		const resp = APIJsonRequest(
 			`${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}/feature-flags/${featureFlagId}`,
 			{ method: "DELETE" },
+		)
+	},
+
+	createFF: async (
+		organisationId: number,
+		nodeId: number,
+		data: Pick<IFeatureFlag, "name" | "value">,
+	): Promise<IFeatureFlag> => {
+		return APIJsonRequest<IFeatureFlag>(
+			`${URL_ORGANISATION}/${organisationId}/nodes/${nodeId}/feature-flags`,
+			{
+				method: "POST",
+				body: JSON.stringify(data),
+			},
 		)
 	},
 }

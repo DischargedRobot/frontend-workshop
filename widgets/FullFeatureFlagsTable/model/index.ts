@@ -1,0 +1,1 @@
+export { useFullFeatureFlagsTable } from "./useFullFeatureFlagsTable"
