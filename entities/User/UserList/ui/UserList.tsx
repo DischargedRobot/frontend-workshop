@@ -2,7 +2,7 @@
 
 import "./UserList.scss"
 
-import UserCard from "@/entities/UserCard/ui/UserCard"
+import UserCard from "@/entities/User/UserCard/ui/UserCard"
 import { useFilteredUsers, useUsersStore } from "../model"
 
 const UserList = () => {

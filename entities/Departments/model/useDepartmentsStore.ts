@@ -1,6 +1,6 @@
 import { create } from "zustand"
 import { IDepartment } from "../lib"
-import { useUserFiltersStore } from "@/entities/UserList/model"
+import { useUserFiltersStore } from "@/entities/User/UserList/model"
 import { Department } from "../lib/DepartmentType"
 
 const InitialDepartments: IDepartment[] = (() => {

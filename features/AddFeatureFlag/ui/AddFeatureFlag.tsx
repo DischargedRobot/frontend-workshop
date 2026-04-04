@@ -2,13 +2,14 @@ import "./AddFeatureFlag.scss"
 
 import { PlusCircleOutlined } from "@ant-design/icons"
 
-const AddFeatureFlag = () => {
+export const AddFeatureFlag = () => {
 	return (
 		<button className="add-feature-flag" onClick={() => {}}>
-			<PlusCircleOutlined />
-			Добавить
+			<p>
+				<PlusCircleOutlined />
+				Добавить
+			</p>
+			<div></div>
 		</button>
 	)
 }
-
-export default AddFeatureFlag

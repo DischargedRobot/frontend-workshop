@@ -2,8 +2,8 @@
 
 import "./Profile.scss"
 
-import UserCard from "@/entities/UserCard/ui/UserCard"
-import { useUsersStore } from "@/entities/UserList/model"
+import UserCard from "@/entities/User/UserCard/ui/UserCard"
+import { useUsersStore } from "@/entities/User/UserList/model"
 import UserSettings from "@/features/UserSettings/ui/UserSettings"
 import UserTestingPanelForTheme from "@/features/UserTestingPanelForTheme/UserTestingPanelForTheme"
 import { IRole, TROLE } from "@/shared/model/Role"

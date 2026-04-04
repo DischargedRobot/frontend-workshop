@@ -1,4 +1,4 @@
-@use "../../app/placeholder.scss";
+@use "@/common/styles/placeholder.scss";
 
 .full-department-table {
 	@extend %flex-column;

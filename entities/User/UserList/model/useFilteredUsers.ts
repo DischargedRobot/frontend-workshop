@@ -1,4 +1,4 @@
-import { IUser } from "@/entities/UserCard/ui/types"
+import { IUser } from "@/entities/User/UserCard/ui/types"
 import { useCallback, useMemo } from "react"
 import useUserFiltersStore from "./useUserFiltersStore"
 import { useShallow } from "zustand/shallow"

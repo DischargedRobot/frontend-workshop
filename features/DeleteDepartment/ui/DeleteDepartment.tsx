@@ -3,7 +3,7 @@ import "./DeleteDepartment.scss"
 import { departmentApi } from "@/entities/Departments"
 import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStore"
 import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore"
-import { useUsersStore } from "@/entities/UserList"
+import { useUsersStore } from "@/entities/User/UserList"
 import { DeleteIcon } from "@/shared/assets/Icon"
 
 const DeleteDepartment = () => {

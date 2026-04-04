@@ -3,7 +3,7 @@ import useSWR from "swr"
 import useDepartmentsStore from "../useDepartmentsStore"
 import { departmentApi } from "../../api"
 import { useEffect, useMemo } from "react"
-import { useUserFiltersStore } from "@/entities/UserList"
+import { useUserFiltersStore } from "@/entities/User/UserList"
 import { APIError } from "@/shared/api/APIErrors"
 import { IDepartment } from "../../lib"
 

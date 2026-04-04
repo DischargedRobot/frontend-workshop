@@ -1,4 +1,4 @@
-import { IUser } from "@/entities/UserCard/ui/types"
+import { IUser } from "@/entities/User/UserCard/ui/types"
 import loginApi from "@/shared/api/loginApi"
 import { IRole, TROLE } from "@/shared/model/Role"
 import { profile } from "console"

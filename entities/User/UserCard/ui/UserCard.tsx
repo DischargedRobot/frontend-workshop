@@ -3,7 +3,7 @@
 import "./UserCard.scss"
 
 import Avatar from "@/shared/ui/Avatar"
-import RoleList from "../../RoleList"
+import RoleList from "../../../RoleList"
 import { IUser } from "./types"
 import { DeleteIcon } from "@/shared/assets/Icon"
 import { memo, use, useCallback, useMemo, useState } from "react"
@@ -13,7 +13,7 @@ import { PlusOutlined } from "@ant-design/icons"
 import { useForm } from "react-hook-form"
 import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStore"
 import UserDepartmentsDropDownMenu from "@/shared/model/UserDepartmentsDropDownMenu"
-import { useUsersStore } from "@/entities/UserList/model"
+import { useUsersStore } from "@/entities/User/UserList/model"
 import { useShallow } from "zustand/shallow"
 
 interface Props {

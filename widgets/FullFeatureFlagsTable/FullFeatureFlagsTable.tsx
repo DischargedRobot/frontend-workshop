@@ -1,16 +1,17 @@
 "use client"
 
-import FFTable from "@/entities/FFT/ui/FFTable"
-import AddFeatureFlag from "@/features/AddFeatureFlag/AddFeatureFlag"
+import {
+	FFTable,
+	useFilteredFFs,
+	useFFStore,
+	useFFFiltersStore,
+	FFApi,
+} from "@/entities/FF"
+import { AddFeatureFlag } from "@/features/AddFeatureFlag"
 import FFSearch from "@/features/FFSearch/FFSearch"
 import ReloadFeaturesFlags from "@/features/ReloadFeatureFlags/ReloadFeaturesFlags"
 import { Flex } from "antd"
-import { IDepartment } from "@/entities/Departments/lib/DepartmentType"
-import useFilteredFFs from "@/entities/FFT/model/useFilteredFFs"
-import useFFFiltersStore from "@/entities/FFT/model/useFFFiltersStore"
 import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStore"
-import useFFStore from "@/entities/FFT/model/useFFStrore"
-import { FFApi } from "@/entities/FFT"
 import { FFTableFilters } from "@/features/FFTableFilters"
 import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore"
 import { useShallow } from "zustand/shallow"

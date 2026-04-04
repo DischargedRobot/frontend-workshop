@@ -1,5 +1,5 @@
 import { IDepartment } from "@/entities/Departments"
-import { IUser } from "@/entities/UserCard/ui/types"
+import { IUser } from "@/entities/User/UserCard/ui/types"
 import { IRole, TROLE } from "@/shared/model/Role"
 import { create } from "zustand"
 

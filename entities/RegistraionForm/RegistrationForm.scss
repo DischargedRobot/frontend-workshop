@@ -1,5 +1,5 @@
 /* app/main.scss */
-@use "../../app/placeholder.scss";
+@use "@/common/styles/placeholder.scss";
 .registration-table {
 	@extend %flex-column;
 
