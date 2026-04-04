@@ -1,1 +1,1 @@
-export { default } from "./FullFeatureFlagsTable"
+export { FullFeatureFlagsTable } from "./ui"

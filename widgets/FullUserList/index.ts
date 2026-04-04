@@ -1,1 +1,1 @@
-export { default } from "./FullUserList"
+export { FullUserList } from "./ui"

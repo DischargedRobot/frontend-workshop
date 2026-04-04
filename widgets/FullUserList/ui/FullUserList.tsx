@@ -5,11 +5,12 @@ import "./FullUserList.scss"
 import { useUserFiltersStore } from "@/entities/User/UserList"
 import UserList from "@/entities/User/UserList/ui/UserList"
 import { FFTableFilters } from "@/features/FFTableFilters"
+import { RegistrationQrCode } from "@/features/RegistrationQrCode/ui/RegistrationQrCode"
 import UserSearch from "@/features/UserSearch/ui/UserSearch"
 import { AddButton } from "@/shared/ui"
 import Toast from "@/shared/ui/Toast/Toast"
 
-const FullUserList = () => {
+export const FullUserList = () => {
 	const setLogin = useUserFiltersStore((state) => state.setLogin)
 
 	return (
@@ -21,12 +22,10 @@ const FullUserList = () => {
 						setLogin(e.target.value)
 					}}
 				/>
-				<AddButton />
+				<RegistrationQrCode url="yandex.ru" />
 			</div>
 
 			<UserList />
 		</div>
 	)
 }
-
-export default FullUserList
