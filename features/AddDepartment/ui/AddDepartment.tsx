@@ -4,12 +4,13 @@ import "./AddDepartment.scss"
 import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { Button, Form, Input } from "antd"
-import { useDepartmentsStore } from "@/entities/Departments"
+import { IDepartment, useDepartmentsStore } from "@/entities/Departments"
 import { departmentApi } from "@/entities/Departments"
 import { useOrganisationStore } from "@/entities/Organisation"
 
 interface AddDepartmentForm {
-	nameDepartment: string
+	name: string
+	parent: IDepartment
 }
 
 const AddDepartment = () => {
@@ -22,20 +23,15 @@ const AddDepartment = () => {
 		(state) => state.selectedDepartmentIds,
 	)
 	const addDepartment = async (date: AddDepartmentForm) => {
-		// const response = await fetch('', {
-		//     method: 'POST',
-		//     headers: {'Content-Type': 'application/json'},
-		//     // body: JSON.stringify(data)
-		// })
 		if (selectedDepartmentIds.at(-1) != undefined) {
 			departmentApi.addDepartment(
-				date.nameDepartment,
+				date.name,
 				organisationId,
 				selectedDepartmentIds.at(-1)!,
 			)
 			addDepart({
 				id: 10,
-				name: date.nameDepartment,
+				name: date.name,
 				children: [],
 				featureFlags: [],
 				link: "",
@@ -68,18 +64,24 @@ const AddDepartment = () => {
 			>
 				<Form.Item
 					className="add-department__field"
-					validateStatus={errors.nameDepartment ? "error" : ""}
-					help={
-						errors.nameDepartment
-							? errors.nameDepartment.message
-							: ""
-					}
+					validateStatus={errors.name ? "error" : ""}
+					help={errors.name ? errors.name.message : ""}
 				>
 					<Controller
 						control={control}
-						name="nameDepartment"
+						name="name"
 						rules={{
 							required: "Введите название отдела",
+						}}
+						render={({ field }) => (
+							<Input placeholder="Название отдела" {...field} />
+						)}
+					/>
+					<Controller
+						control={control}
+						name="parent"
+						rules={{
+							required: "Выберите родительский отдел",
 						}}
 						render={({ field }) => (
 							<Input placeholder="Название отдела" {...field} />
