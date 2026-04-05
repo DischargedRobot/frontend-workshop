@@ -34,7 +34,7 @@ const loginApi = {
 		)
 	},
 
-	login: async (data: LoginRequest): Promise<void> => {
+	login: async (data: LoginRequest) => {
 		const response = await APIJsonRequest<LoginResponse>(
 			`${process.env.NEXT_PUBLIC_AUTH_URL_V1}/login`,
 			{
@@ -45,15 +45,20 @@ const loginApi = {
 
 		const userRoles = response.roles.map<IRole>((role) => ({
 			id: role.id,
-			name: role.name,
+			type: role.name,
 			isEnabled: true,
 		}))
 
-		return
+		return {
+			login: data.username,
+			password: data.password,
+			roles: userRoles,
+			uuidDepartment: response.uuidDepartment,
+		}
 	},
 
-	refreshAuth: async (sessionId: string): Promise<RegistrationResponse> => {
-		const response = await APIJsonRequest<RegistrationResponse>(
+	refreshAuth: async (sessionId: string): Promise<void> => {
+		const response = await APIJsonRequest<void>(
 			`${process.env.NEXT_PUBLIC_AUTH_URL_V1}/refresh` as string,
 			{
 				method: "POST",

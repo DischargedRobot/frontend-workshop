@@ -10,7 +10,7 @@ export const useDepartmentBreadcrumb = () => {
 
 	// изначально ставим корневой узел организации
 	const rootDepartment = useOrganisationStore(
-		(state) => state.organisation.children,
+		(state) => state.organisation.child,
 	)
 
 	const setDepartmentFilters = useFFFiltersStore(

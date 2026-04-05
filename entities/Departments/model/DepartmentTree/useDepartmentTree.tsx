@@ -17,7 +17,7 @@ const useDepartmentTree = () => {
 
 	const organisation = useOrganisationStore((state) => state.organisation)
 	// const setOrganisation = useOrganisationStore(state => state.setOrganisation)
-	const changeChild = useOrganisationStore((state) => state.changeChildren)
+	const changeChild = useOrganisationStore((state) => state.changeChild)
 
 	// TODO: жду когда допилят аутс сервис
 	// const {data: orgChild, error} = useSWR<IDepartment[], APIError>(['organisation', organisation], () => departmentApi.getDepartmentsByOrganisation(organisation))
@@ -26,12 +26,12 @@ const useDepartmentTree = () => {
 	const { data: departments, error } = useSWR<IDepartment[], APIError>(
 		[
 			["organisationId, departmentId"],
-			[organisation.id, organisation.children.id],
+			[organisation.id, organisation.child.id],
 		],
 		() =>
 			departmentApi.getDescedantOfDepartments(
 				organisation.id,
-				organisation.children.id,
+				organisation.child.id,
 				2,
 			),
 	)
@@ -44,10 +44,10 @@ const useDepartmentTree = () => {
 
 	useEffect(() => {
 		if (
-			organisation.children !== undefined &&
-			!(organisation.children instanceof APIError)
+			organisation.child !== undefined &&
+			!(organisation.child instanceof APIError)
 		) {
-			setDepartments([organisation.children])
+			setDepartments([organisation.child])
 		}
 	}, [organisation, setDepartments, error])
 

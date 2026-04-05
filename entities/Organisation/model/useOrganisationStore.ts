@@ -4,22 +4,22 @@ import { create } from "zustand"
 export interface IOrganisation {
 	id: number
 	name: string
-	adminId: number
-	children: IDepartment
+	// adminId: number
+	child: IDepartment
 }
 
 interface IOrganisationStore {
 	organisation: IOrganisation
 	setOrganisation: (newOrganisation: IOrganisation) => void
-	changeChildren: (newChildren: IDepartment[]) => void
+	changeChild: (newChildren: IDepartment[]) => void
 }
 
 const useOrganisationStore = create<IOrganisationStore>((set) => ({
 	organisation: {
 		id: 2,
 		name: "Рога и копыта",
-		adminId: 1,
-		children: {
+		// adminId: 1,
+		child: {
 			id: 1,
 			name: "s",
 			children: [],
@@ -31,12 +31,12 @@ const useOrganisationStore = create<IOrganisationStore>((set) => ({
 	},
 	setOrganisation: (newOrganisation) =>
 		set({ organisation: newOrganisation }),
-	changeChildren: (newChildren) =>
+	changeChild: (newChildren) =>
 		set((state) => ({
 			organisation: {
 				...state.organisation,
-				children: {
-					...state.organisation.children,
+				child: {
+					...state.organisation.child,
 					children: newChildren,
 				},
 			},

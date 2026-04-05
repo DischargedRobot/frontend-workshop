@@ -10,9 +10,7 @@ export const useFullFeatureFlagsTable = () => {
 	// Последний депаратмент в хлебных крошках
 	// Всегда есть (самый первый - узел органзиации)
 	const lastDep = useBreadcrumbStore(
-		useShallow(
-			(state) => state.getLastDepartment() ?? organisation.children,
-		),
+		useShallow((state) => state.getLastDepartment() ?? organisation.child),
 	)
 
 	const setFeatureFlag = useFFStore((state) => state.setFeatureFlags)

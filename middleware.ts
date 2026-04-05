@@ -1,6 +1,6 @@
 import { connection, NextRequest, NextResponse } from "next/server"
 
-const protectRoutes = ["/personal: path"]
+const protectRoutes = ["/personal"]
 
 const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL_V1
 
@@ -72,15 +72,11 @@ export const middleware = async (request: NextRequest) => {
 
 	await connection()
 
-	const isProtectedRoute = protectRoutes.some((route) => {
-		const baseRoute = route.replace("/:path*", "")
-		return pathname === baseRoute || pathname.startsWith(`${baseRoute}/`)
-	})
 	const hasSession = !!request.cookies.get("SESSION")
 	// если без кук получает доступ к защищёному пути - редиректим,
 	// если не защищёный и нет куки то пофиг на куки
 	// если не защищённый и есть куки то надо рефрешить куки
-	if (!isProtectedRoute && !hasSession) {
+	if (!protectRoutes.includes(pathname) && !hasSession) {
 		return NextResponse.next()
 	} else if (!hasSession) {
 		return NextResponse.redirect(autURL)
@@ -113,5 +109,5 @@ export const middleware = async (request: NextRequest) => {
 }
 
 export const config = {
-	matcher: [...protectRoutes],
+	matcher: ["/personal:path"],
 }

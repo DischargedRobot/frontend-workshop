@@ -1,7 +1,7 @@
 import "./RolesStatus.scss"
 
 import { Switch } from "antd"
-import { IRole, ROLE_NAMES, TROLE } from "../Role/types"
+import { IRole, NAMES_OF_ROLE_ACTIONS, TROLE } from "../Role/types"
 import { memo } from "react"
 
 interface Props {
@@ -27,7 +27,7 @@ const RoleStatus = (props: Props) => {
 									key={role.type}
 									className="roles-status__role"
 								>
-									{ROLE_NAMES[role.type]}
+									{NAMES_OF_ROLE_ACTIONS[role.type]}
 									<Switch
 										value={role.isEnabled}
 										onChange={(value) => {

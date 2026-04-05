@@ -52,10 +52,10 @@ const convertIDepartmentResponseToIDepartmentWithOrganisation = (
 		if (path.length <= 2) {
 			if (path.length == 2) {
 				const node = nodeMap.get(parseInt(path[1]))!
-				organisation.children.children.push(node)
+				organisation.child.children.push(node)
 				nodes.push(node)
 			} else {
-				organisation.children = nodeMap.get(parseInt(path[0]))!
+				organisation.child = nodeMap.get(parseInt(path[0]))!
 			}
 		}
 		// условиие обхода корневого, т.к. у него длина 1

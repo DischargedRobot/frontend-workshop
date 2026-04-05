@@ -1,4 +1,4 @@
-export { default as loginAPi } from "./loginApi"
+export { default as loginApi } from "./loginApi"
 export { type IResponseError } from "./types"
 export { mapAPIErrors, APIError, isAPIError } from "./APIErrors"
 export { default as APIJsonRequest } from "./APIJsonRequest"

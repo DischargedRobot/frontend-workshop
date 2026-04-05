@@ -42,21 +42,25 @@ const APIErrors = {
 }
 // можно и просто map, но мне показалось, что в случае правок, будет проще написать кейс,
 // если ошибка уже есть, просто код другой, чем повторять в мап объекты
-export const mapAPIErrors = (status: number | null) => {
+export const mapAPIErrors = (status: number | null): APIError => {
 	switch (status) {
 		case null:
 			return APIErrors.NETWORK
 		case 400:
 			return APIErrors.BAD_REQUEST
-		case 401:
-			return APIErrors.FORBIDEN
 		case 403:
+			return APIErrors.FORBIDEN
+		case 401:
 			return APIErrors.UNAUTHORIZED
 		case 404:
 			return APIErrors.NOT_FOUND
 		case 500:
 			return APIErrors.SERVER
 		default:
-			return new APIError(status, "UNKNOW", "Неизвестная ошибка")
+			return new APIError(
+				status ? status : 1,
+				"UNKNOW",
+				"Неизвестная ошибка",
+			)
 	}
 }
