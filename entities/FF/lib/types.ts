@@ -6,4 +6,5 @@ export interface IFeatureFlag {
 	value: boolean
 	lastModified?: string
 	description?: string
+	version: number
 }
