@@ -3,8 +3,8 @@ import APIJsonRequest from "./APIJsonRequest"
 
 interface RegistrationRequest {
 	login: string
-	pasword: string
-	organisation_name: string
+	password: string
+	organization_name: string
 }
 
 interface LoginRequest {
@@ -15,7 +15,7 @@ interface LoginRequest {
 interface LoginResponse {
 	login: string
 	roles: RoleResponse[]
-	uuidDepartment: string
+	uuidDepartament: string
 }
 
 interface RoleResponse {
@@ -25,13 +25,16 @@ interface RoleResponse {
 
 const loginApi = {
 	registerOrganization: async (data: RegistrationRequest): Promise<void> => {
-		await APIJsonRequest<void>(
-			`${process.env.NEXT_PUBLIC_AUTH_URL_V1}/register-organization`,
-			{
-				method: "POST",
-				body: JSON.stringify(data),
-			},
-		)
+		try {
+			await APIJsonRequest<void>(
+				`${process.env.NEXT_PUBLIC_AUTH_URL_V1}/register-organization`,
+				{
+					method: "POST",
+					body: JSON.stringify(data),
+				},
+			)
+		} catch (error) {}
+		console.log("dsds")
 	},
 
 	login: async (data: LoginRequest) => {
@@ -48,12 +51,18 @@ const loginApi = {
 			type: role.name,
 			isEnabled: true,
 		}))
+		console.log({
+			login: data.username,
+			password: data.password,
+			roles: userRoles,
+			uuidDepartament: response.uuidDepartament,
+		})
 
 		return {
 			login: data.username,
 			password: data.password,
 			roles: userRoles,
-			uuidDepartment: response.uuidDepartment,
+			uuidDepartment: response.uuidDepartament,
 		}
 	},
 

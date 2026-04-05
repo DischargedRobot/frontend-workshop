@@ -1,11 +1,11 @@
-import { IFeatureFlag } from "../../FFT/ui/FFTable"
+import { IFeatureFlag } from "@/entities/FF"
 
 export interface Department {
 	id: number
 	name: string
 	children?: Department[]
 	featureFlags?: IFeatureFlag[]
-	link: string
+	path: string
 }
 
 export interface IDepartment {
@@ -13,7 +13,7 @@ export interface IDepartment {
 	name: string
 	children: IDepartment[]
 	featureFlags: IFeatureFlag[]
-	link: string
+	path: string
 	version: number
 	isService: boolean
 }

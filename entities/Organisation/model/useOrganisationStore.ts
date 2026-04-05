@@ -29,8 +29,7 @@ const useOrganisationStore = create<IOrganisationStore>((set) => ({
 			version: 1,
 		},
 	},
-	setOrganisation: (newOrganisation) =>
-		set({ organisation: newOrganisation }),
+	setOrganisation: (organisation) => set({ organisation }),
 	changeChild: (newChildren) =>
 		set((state) => ({
 			organisation: {

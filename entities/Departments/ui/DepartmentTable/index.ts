@@ -1,1 +1,1 @@
-export { default } from "./DepartmentTable"
+export { default as DepartmentTable } from "./DepartmentTable"

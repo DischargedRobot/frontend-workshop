@@ -19,10 +19,14 @@ const APIJsonRequest = async <T>(
 			throw mapAPIErrors(response.status)
 		}
 
+		if (response.headers.get("content-length") === "0") {
+			return {} as T
+		}
 		const data: T = await response.json()
 
 		return data
 	} catch (error) {
+		console.log(error)
 		// если нет сети
 		if (error instanceof TypeError && error.message === "Failed to fetch") {
 			throw mapAPIErrors(null)

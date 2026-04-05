@@ -5,7 +5,7 @@ import { IOrganisation } from "@/entities/Organisation/model/useOrganisationStor
 import { SassNumber } from "sass"
 
 const URL_ORGANISATION = process.env.NEXT_PUBLIC_API_ORGANISATIONS_URL_V1
-interface IDepartmentResponse {
+export interface IDepartmentResponse {
 	id: number
 	organizationId: number
 	uuid: string
@@ -36,7 +36,7 @@ const convertIDepartmentResponseToIDepartmentWithOrganisation = (
 			name: depResp.name,
 			children: [],
 			featureFlags: [],
-			link: "",
+			path: "",
 			isService: depResp.isService,
 			version: depResp.version,
 		})
@@ -79,7 +79,7 @@ const reduceChilrenDepRespToParentDepartment = (
 			name: depResp.name,
 			children: [],
 			featureFlags: [],
-			link: "",
+			path: "",
 			isService: depResp.isService,
 			version: depResp.version,
 		})
@@ -100,7 +100,7 @@ const reduceDepRespToParentDep = (
 			name: depResp.name,
 			children: [],
 			featureFlags: [],
-			link: "",
+			path: "",
 			isService: depResp.isService,
 			version: depResp.version,
 		})
@@ -141,7 +141,7 @@ const reduceDepRespToChildrenArray = (
 			name: depResp.name,
 			children: [],
 			featureFlags: [],
-			link: "",
+			path: "",
 			isService: depResp.isService,
 			version: depResp.version,
 		})
@@ -180,7 +180,7 @@ const convertIDepartmentResponseToIDepartment = (
 		name: depResp.name,
 		children: [],
 		featureFlags: [],
-		link: "",
+		path: "",
 		isService: depResp.isService,
 		version: depResp.version,
 	}))

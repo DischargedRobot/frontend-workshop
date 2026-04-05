@@ -2,7 +2,7 @@ import { connection, NextRequest, NextResponse } from "next/server"
 
 const protectRoutes = ["/personal"]
 
-const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL_V1
+const AUTH_URL = process.env.API_AUT_URL_V1
 
 // ставим полученный куки из респонса в некст респонс
 const setCookieFromApiResponse = (
@@ -66,17 +66,22 @@ const setCookieFromApiResponse = (
 	nextResponse.cookies.set(nameOfCookie, cookieValue, cookieOptions)
 }
 
-export const middleware = async (request: NextRequest) => {
-	const { pathname } = request.nextUrl
-	const autURL = new URL("/auth", pathname)
+export default async function proxy(request: NextRequest) {
+	await connection() // чтобы в рантайме брал прееменные окружения
 
-	await connection()
+	const pathname = request.nextUrl.pathname
+	const origin = request.nextUrl.origin
 
+	const autURL = new URL("/login", origin)
+
+	const isProtectedPath = protectRoutes.some((route) =>
+		pathname.startsWith(route),
+	)
 	const hasSession = !!request.cookies.get("SESSION")
 	// если без кук получает доступ к защищёному пути - редиректим,
 	// если не защищёный и нет куки то пофиг на куки
 	// если не защищённый и есть куки то надо рефрешить куки
-	if (!protectRoutes.includes(pathname) && !hasSession) {
+	if (!isProtectedPath && !hasSession) {
 		return NextResponse.next()
 	} else if (!hasSession) {
 		return NextResponse.redirect(autURL)
@@ -94,11 +99,13 @@ export const middleware = async (request: NextRequest) => {
 
 			// если не смогли срефрешить, то на логин
 			if (!response.ok) {
+				console.log("ошибка при рефреше", response)
 				return NextResponse.redirect(autURL)
 			}
 
 			const next = NextResponse.next()
 			setCookieFromApiResponse(response, next, "SESSION")
+			console.log("всё ок")
 
 			return next
 		} catch (error) {
@@ -109,5 +116,5 @@ export const middleware = async (request: NextRequest) => {
 }
 
 export const config = {
-	matcher: ["/personal:path"],
+	matcher: ["/personal/:path*"],
 }

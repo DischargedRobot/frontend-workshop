@@ -1,19 +1,20 @@
 import { APIJsonRequest } from "@/shared/api"
 import { IOrganisation } from "../model/useOrganisationStore"
-import { IDepartment } from "@/entities/Departments"
+import { IDepartment, IDepartmentResponse } from "@/entities/Departments"
 
 const URL = process.env.NEXT_PUBLIC_API_URL_V1
 // /api/v1/find-node
+
 export const organisationApi = {
 	getOrganisation: async (uuidDepartment: string): Promise<IOrganisation> => {
-		const dep = await APIJsonRequest<
-			IDepartment & { organisationId: number }
-		>(`${URL}/find-node`)
-
+		const dep = await APIJsonRequest<IDepartmentResponse>(
+			`${URL}/find-node?organizationNodeUuid=${uuidDepartment}`,
+		)
+		const { organizationId, uuid, ...child } = dep
 		return {
-			id: dep.organisationId,
-			name: dep.name,
-			child: dep,
+			id: organizationId,
+			name: child.name,
+			child: { ...child, children: [], featureFlags: [] },
 		}
 	},
 }

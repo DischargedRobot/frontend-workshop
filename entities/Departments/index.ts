@@ -1,5 +1,6 @@
-export { DepartmentTable } from "./ui/index"
+export { DepartmentTable } from "./ui"
 export { DepartmentTree } from "./ui"
+export { type IDepartmentResponse } from "./api"
 
 export { type TableData, type IDepartment } from "./lib"
 

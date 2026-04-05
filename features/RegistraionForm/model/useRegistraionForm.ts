@@ -33,13 +33,11 @@ export const useRegistrationForm = () => {
 	const onSubmit = async (data: FormValues) => {
 		try {
 			await loginApi.registerOrganization({
-				organisation_name: data.OrganisationName,
+				organization_name: data.OrganisationName,
 				login: data.AdminName,
-				pasword: data.AdminPassword,
+				password: data.AdminPassword,
 			})
-		} catch {}
-
-		try {
+			console.log("всё ок")
 			const response = await loginApi.login({
 				username: data.AdminName,
 				password: data.AdminPassword,
@@ -50,8 +48,8 @@ export const useRegistrationForm = () => {
 			)
 
 			setOrganisation(organisation)
-
-			router.push("/ffMenu")
+			console.log(organisation, "orga")
+			router.push("/personal/ffmenu")
 		} catch {}
 	}
 
