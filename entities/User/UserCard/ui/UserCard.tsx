@@ -6,15 +6,13 @@ import Avatar from "@/shared/ui/Avatar"
 import RoleList from "../../../RoleList"
 import { IUser } from "./types"
 import { DeleteIcon } from "@/shared/assets/Icon"
-import { memo, use, useCallback, useMemo, useState } from "react"
+import { memo, useCallback, useMemo, useState } from "react"
 import RoleStatus from "@/shared/model/RolesStatus/RolesStatus"
 import { IRole } from "@/shared/model/Role"
 import { PlusOutlined } from "@ant-design/icons"
 import { useForm } from "react-hook-form"
-import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStore"
-import UserDepartmentsDropDownMenu from "@/shared/model/UserDepartmentsDropDownMenu"
+import UserDepartmentsDropDownMenu from "@/features/UserDepartmentsDropDownMenu"
 import { useUsersStore } from "@/entities/User/UserList/model"
-import { useShallow } from "zustand/shallow"
 
 interface Props {
 	user: IUser
@@ -149,7 +147,7 @@ const UserCard = (props: Props) => {
                         />
                     </label>
                 </div> */}
-				<div className="user-card__field">
+				<div>
 					<UserDepartmentsDropDownMenu
 						currentDepartment={user.departmentId}
 						// setDepartment={(department) => {

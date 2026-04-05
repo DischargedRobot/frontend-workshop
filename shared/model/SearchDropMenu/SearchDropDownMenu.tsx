@@ -18,7 +18,7 @@ export interface DropdownOption<T> {
 
 interface SearchableDropdownProps<T> {
 	options: DropdownOption<T>[]
-	value: T | null
+	defaultValue?: T
 	onSelect: (value: T | null) => void
 	placeholder?: string
 	disabled?: boolean
@@ -27,29 +27,23 @@ interface SearchableDropdownProps<T> {
 
 export const SearchDropDownMenu = <T,>({
 	options,
-	value,
+	defaultValue,
 	onSelect,
 	placeholder = "Выберите...",
 	disabled = false,
 	className = "",
 }: SearchableDropdownProps<T>) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
-	const [userInput, setUserInput] = useState<string>("")
+	const [selected, setSelected] = useState<T | null>(defaultValue ?? null)
+	const [userInput, setUserInput] = useState<string>(() => {
+		if (defaultValue === undefined) return ""
+		const found = options.find((opt) => opt.value === defaultValue)
+		return found ? found.label : ""
+	})
 	const containerRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLInputElement>(null)
 
-	const searchTerm = useMemo(() => {
-		if (isOpen) return userInput
-
-		if (userInput.length === 0 && value !== null) return userInput
-
-		if (value !== null && value !== undefined) {
-			const selected = options.find((opt) => opt.value === value)
-			return selected ? selected.label : ""
-		}
-
-		return ""
-	}, [isOpen, userInput, value, options])
+	// const searchTerm = isOpen ? userInput : userInput
 
 	const filteredOptions = useMemo(
 		() =>
@@ -59,12 +53,13 @@ export const SearchDropDownMenu = <T,>({
 		[options, userInput],
 	)
 
+	// провермяем, есть ли опция с таким именем
 	const isUserInputValid = useMemo(() => {
-		const selected = options.find((opt) => opt.value === value)
-		return selected
-			? userInput.toLowerCase() === selected.label.toLowerCase()
+		const found = options.find((opt) => opt.value === selected)
+		return found
+			? userInput.toLowerCase() === found.label.toLowerCase()
 			: false
-	}, [userInput, value, options])
+	}, [userInput, selected, options])
 
 	useEffect(() => {
 		const handleClickOutside = (e: MouseEvent) => {
@@ -86,6 +81,7 @@ export const SearchDropDownMenu = <T,>({
 
 	const handleSelect = (option: DropdownOption<T> | null): void => {
 		onSelect(option?.value ?? null)
+		setSelected(option?.value ?? null)
 		setUserInput(option?.label ?? "")
 		setIsOpen(false)
 	}
@@ -120,7 +116,7 @@ export const SearchDropDownMenu = <T,>({
 			<input
 				ref={inputRef}
 				type="text"
-				value={searchTerm}
+				value={userInput}
 				onChange={handleInputChange}
 				onClick={handleInputClick}
 				onKeyDown={handleKeyDown}
@@ -167,7 +163,7 @@ export const SearchDropDownMenu = <T,>({
 									key={String(option.value)}
 									onClick={() => handleSelect(option)}
 									onMouseDown={(e) => e.preventDefault()}
-									className={`search-dropdown__option ${option.value === value ? "search-dropdown__option_selected" : ""}`}
+									className={`search-dropdown__option ${option.value === selected ? "search-dropdown__option_selected" : ""}`}
 								>
 									{option.label}
 								</li>
