@@ -1,0 +1,1 @@
+export { DeleteSelectedDepartments } from "./ui"

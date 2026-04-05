@@ -1,8 +1,9 @@
 export { DepartmentTable } from "./ui/index"
 export { DepartmentTree } from "./ui"
 
-export { TableData, IDepartment } from "./lib/index"
+export { type TableData, type IDepartment } from "./lib"
 
 export { departmentApi } from "./api"
 
-export { default as useDepartmentsStore } from "./model/useDepartmentsStore"
+export { useDepartmentsStore } from "./model/useDepartmentsStore"
+export { useDepartmentTableColumns } from "./model"

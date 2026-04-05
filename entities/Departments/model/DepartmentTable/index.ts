@@ -1,0 +1,1 @@
+export { useDepartmentTableColumns } from "./useDepartmentTableColumns"

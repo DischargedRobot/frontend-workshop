@@ -1,1 +1,0 @@
-export { useDeleteDepartment } from "./useDeleteDepartment"

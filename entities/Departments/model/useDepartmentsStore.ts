@@ -115,7 +115,7 @@ const updateDep = (
 }
 
 // TODO: разделить на фабрику и 2 стора (1 просто депс, другие выбранные)
-const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
+export const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
 	departments: [],
 	setDepartments: (newDepartments) => set({ departments: newDepartments }),
 
@@ -232,7 +232,7 @@ const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
 		}),
 }))
 
-// TODO: доделать фабрику
+// TODO: gприменить фабрику к Select
 interface BaseDepStore {
 	departments: IDepartment[]
 	setDepartments: (newDepartments: IDepartment[]) => void
@@ -287,5 +287,3 @@ const createDepartmentStore = <ExtStore = object>(
 		} as ExtendedDepStore<ExtStore>
 	}) as UseBoundStore<StoreApi<ExtendedDepStore<ExtStore>>>
 }
-
-export default useDepartmentsStore

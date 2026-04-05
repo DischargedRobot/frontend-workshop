@@ -1,6 +1,6 @@
 "use client"
 
-import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStore"
+import { useDepartmentsStore } from "@/entities/Departments/model/useDepartmentsStore"
 import "./UserDepartmentsDropDownMenu.scss"
 
 import { IUser } from "@/entities/User/UserCard/ui/types"
@@ -13,6 +13,7 @@ interface Props {
 	control: Control<Pick<IUser, "login" | "password" | "departmentId">>
 }
 
+// TODO: отрефакторить под fsd
 const UserDepartmentsDropDownMenu = (props: Props) => {
 	const { currentDepartment, control } = props
 

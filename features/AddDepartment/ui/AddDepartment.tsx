@@ -4,9 +4,9 @@ import "./AddDepartment.scss"
 import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { Button, Form, Input } from "antd"
-import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStore"
+import { useDepartmentsStore } from "@/entities/Departments"
 import { departmentApi } from "@/entities/Departments"
-import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore"
+import { useOrganisationStore } from "@/entities/Organisation"
 
 interface AddDepartmentForm {
 	nameDepartment: string

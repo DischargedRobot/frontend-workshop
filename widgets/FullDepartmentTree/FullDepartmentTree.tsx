@@ -4,12 +4,12 @@ import "./FullDepartmentTree.scss"
 
 import { DepartmentTree } from "@/entities/Departments"
 import { useState } from "react"
-import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStore"
-import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore"
+import { useDepartmentsStore } from "@/entities/Departments"
+import { useOrganisationStore } from "@/entities/Organisation"
 import { IDepartment } from "@/entities/Departments/lib"
-import AddDepartment from "@/features/AddDepartment/ui/AddDepartment"
+import { AddDepartment } from "@/features/AddDepartment"
 import useFullDepartmentTree from "./model/useFullDepartmentTree"
-import DeleteDepartment from "@/features/DeleteDepartment/ui/DeleteDepartment"
+import { DeleteSelectedDepartments } from "@/features/DeleteSelectedDepartments"
 
 const FullDepartmentTree = () => {
 	// const organisationId = useOrganisationStore(state => state.organisation.id)
@@ -50,7 +50,7 @@ const FullDepartmentTree = () => {
 						<h2>{organisation.name}</h2>
 						<div className="department-tree__buttons">
 							<AddDepartment />
-							<DeleteDepartment />
+							<DeleteSelectedDepartments />
 						</div>
 					</div>
 					{/* <button className='department-tree__button' onClick={() => {console.log(isCollapsed); setIsCollapsed(prev => !prev)}}>

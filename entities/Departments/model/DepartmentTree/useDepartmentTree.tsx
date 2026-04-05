@@ -1,6 +1,6 @@
 import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore"
 import useSWR from "swr"
-import useDepartmentsStore from "../useDepartmentsStore"
+import { useDepartmentsStore } from "../useDepartmentsStore"
 import { departmentApi } from "../../api"
 import { useEffect, useMemo } from "react"
 import { useUserFiltersStore } from "@/entities/User/UserList"

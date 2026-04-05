@@ -110,22 +110,16 @@ const Toast = () => {
 
 export default Toast
 
-// export const showToast = (props: IToast): React.ReactNode => {
-//     const {
-//         type,
-//         text,
-//         title = defaultTitle.get(type),
-//         duration,
-//     } = props
+export const showToast = (props: IToast) => {
+	const {
+		type,
+		text = "",
+		title = defaultTitle.get(type),
+		duration = 3000,
+	} = props
 
-//     return <Toast
-//         key={crypto?.randomUUID() ?? Date.now().toString()}
-//         type={type}
-//         text={text}
-//         title={title}
-//         duration={duration}
-//     />
-// }
+	useToastStore.getState().setToast({ type, text, title, duration })
+}
 
 interface IToastStore extends IToast {
 	key: number

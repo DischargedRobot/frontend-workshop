@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { IDepartment } from "../../lib"
 import { DataNode } from "antd/es/tree"
 import { departmentApi } from "../../api"
-import useDepartmentsStore from "../../model/useDepartmentsStore"
+import { useDepartmentsStore } from "../../model"
 
 export interface IDepartmentNode
 	extends IDepartment, Omit<DataNode, "children" | "isService"> {}

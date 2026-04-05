@@ -2,7 +2,7 @@ import { departmentApi, useDepartmentsStore } from "@/entities/Departments"
 import { useOrganisationStore } from "@/entities/Organisation"
 import { useUsersStore } from "@/entities/User"
 
-export const useDeleteDepartment = () => {
+export const useDeleteSelectedDepartments = () => {
 	const organisationId = useOrganisationStore(
 		(state) => state.organisation.id,
 	)

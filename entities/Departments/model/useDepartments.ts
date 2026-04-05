@@ -5,7 +5,7 @@ type IUseDepartment = () => {
 	getFeatureFlagsByDepartments: (departments: IDepartment[]) => void
 }
 
-const useDepartments: IUseDepartment = () => {
+export const useDepartments: IUseDepartment = () => {
 	const getDepartmentsByPath = async (path: string) => {
 		const response = await fetch(`${path}`, {
 			method: "GET",
