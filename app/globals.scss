@@ -15,7 +15,8 @@
 	--foreground: #323234;
 	--active-background: #2d75c8;
 	--active-hover: #507fdc;
-	--stroke: #544f4f;
+	--stroke: rgb(84, 79, 79);
+	--stroke-opacity: color-mix(in srgb, var(--stroke), transparent 70%);
 	--active-border: #ececec;
 
 	--error-text-color: #f55858;

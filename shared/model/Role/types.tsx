@@ -1,33 +1,47 @@
 export const TROLE = {
-	DC: "department_create",
-	DD: "department_delete",
-	DU: "department_update",
-	UC: "user_create",
-	UD: "user_delete",
-	UU: "user_update",
-	FFC: "featureFlag_create",
-	FFD: "featureFlag_delete",
-	FFU: "featureFlag_update",
+	DC: "CREATE_DEPARTMENT_ROLE",
+	DR: "READ_DEPARTMENT_ROLE",
+	DU: "UPDATE_DEPARTMENT_ROLE",
+	DD: "DELETE_DEPARTMENT_ROLE",
+
+	EC: "CREATE_EMPLOYEE_ROLE",
+	ER: "READ_EMPLOYEE_ROLE",
+	EU: "UPDATE_EMPLOYEE_ROLE",
+	ED: "DELETE_EMPLOYEE_ROLE",
+
+	FFC: "CREATE_FEATURE_FLAG_ROLE",
+	FFR: "READ_FEATURE_FLAG_ROLE",
+	FFU: "UPDATE_FEATURE_FLAG_ROLE",
+	FFD: "DELETE_FEATURE_FLAG_ROLE",
 } as const
 
 export type TROLE = (typeof TROLE)[keyof typeof TROLE]
 
 export interface IRole {
-	name: (typeof ROLE_NAMES)[keyof typeof ROLE_NAMES]
-	type: TROLE
+	id: number
+	name: TROLE
 	isEnabled: boolean
 }
 
-export const ROLE_NAMES: Record<TROLE, string> = {
-	[TROLE.DC]: "Создание",
-	[TROLE.DD]: "Удаление",
-	[TROLE.DU]: "Редактирование",
+export type NameOfRoleAction =
+	| "Создание"
+	| "Просмотр"
+	| "Редактирование"
+	| "Удаление"
 
-	[TROLE.UC]: "Создание",
-	[TROLE.UD]: "Удаление",
-	[TROLE.UU]: "Редактирование",
+export const NAMES_OF_ROLE_ACTIONS: Record<TROLE, NameOfRoleAction> = {
+	[TROLE.DC]: "Создание",
+	[TROLE.DR]: "Просмотр",
+	[TROLE.DU]: "Редактирование",
+	[TROLE.DD]: "Удаление",
+
+	[TROLE.EC]: "Создание",
+	[TROLE.ER]: "Просмотр",
+	[TROLE.EU]: "Редактирование",
+	[TROLE.ED]: "Удаление",
 
 	[TROLE.FFC]: "Создание",
-	[TROLE.FFD]: "Удаление",
+	[TROLE.FFR]: "Просмотр",
 	[TROLE.FFU]: "Редактирование",
+	[TROLE.FFD]: "Удаление",
 }

@@ -1,7 +1,7 @@
-import { Content } from "antd/es/layout/layout"
 import "./RegistrationPage.scss"
 
-import { RegistrationForm } from "@/entities/RegistraionForm"
+import { Content } from "antd/es/layout/layout"
+import { RegistrationForm } from "@/features/RegistraionForm"
 
 const Registration = async () => {
 	return (

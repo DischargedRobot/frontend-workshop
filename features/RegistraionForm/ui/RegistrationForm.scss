@@ -1,5 +1,6 @@
 /* app/main.scss */
 @use "@/common/styles/placeholder.scss";
+
 .registration-table {
 	@extend %flex-column;
 
@@ -13,7 +14,7 @@
 	border-radius: 40px;
 }
 
-.registration-table__item {
+.registration-table__items {
 	@extend %flex-column;
 	gap: 18px;
 }

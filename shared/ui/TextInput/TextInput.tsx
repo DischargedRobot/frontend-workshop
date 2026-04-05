@@ -25,13 +25,13 @@ const TextInput = <T extends FieldValues>(props: Props<T>) => {
 		rules,
 		register,
 		error,
-		type,
+		type = "text",
 		label,
 		className = "",
 	} = props
 
 	return (
-		<label className="text-filed text">
+		<label className="text-filed text text_litle">
 			{label && <span>{label}</span>}
 			<input
 				type={type}

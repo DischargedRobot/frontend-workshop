@@ -2,22 +2,28 @@
 	display: flex;
 	flex-direction: column;
 
-	background-color: var(--background-color);
+	background-color: var(--background);
+	border-radius: 10px 10px 0 0;
+	overflow: hidden;
 }
 
 .text-filed__input {
 	color: var(--text-color);
 
-	padding: 2px 4px;
+	padding: 8px 12px;
 
 	background: var(--foreground);
-	border: 2px solid var(--stroke);
-	border-radius: 20px;
+	border-bottom: 1px solid var(--stroke-opacity);
+	border-radius: 10px 10px 0 0;
 
 	width: auto;
 	height: auto;
 
-	&::placeholder {
-		color: var(--text-color);
+	&:-webkit-autofill,
+	&:-webkit-autofill:hover,
+	&:-webkit-autofill:focus {
+		-webkit-box-shadow: 0 0 0px 1000px var(--foreground) inset;
+		-webkit-text-fill-color: var(--text-color);
+		transition: background-color ease-in-out 5000s;
 	}
 }
