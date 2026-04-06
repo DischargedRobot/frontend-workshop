@@ -22,7 +22,7 @@ export const useDepartmentTableColumns = () => {
 		(state) => state.changeDepartmentChildren,
 	)
 	const removeDepFromLocal = useDepartmentsStore(
-		(state) => state.removeDepartment,
+		(state) => state.removeDepartments,
 	)
 
 	const addFFToStore = useFFStore((state) => state.addFeatureFlags)
@@ -100,7 +100,7 @@ export const useDepartmentTableColumns = () => {
 	const removeDepartment = async (dep: IDepartment) => {
 		try {
 			await departmentApi.removeDepartmentById(organisationId, dep.id)
-			removeDepFromLocal(dep)
+			removeDepFromLocal([dep])
 		} catch (error) {
 			console.log(error, "error")
 		}

@@ -1,18 +1,8 @@
 "use client"
 import { AddButton } from "@/shared/ui"
 import "./AddDepartment.scss"
-import { useState } from "react"
 import { Button, Form, Input, Switch } from "antd"
-import { useDepartmentsStore } from "@/entities/Departments"
-import { departmentApi } from "@/entities/Departments"
-import { useOrganisationStore } from "@/entities/Organisation"
-import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
-
-interface AddDepartmentForm {
-	name: string
-	isService: boolean
-	parentId: number
-}
+import { useAddDepartment } from "../model/useAddDepartment"
 
 type DepartmentSelectorComponent = React.ComponentType<{
 	onChange: (id: number) => void
@@ -23,37 +13,7 @@ type Props = {
 }
 
 const AddDepartment = ({ DepartmentSelector }: Props) => {
-	const [form] = Form.useForm<AddDepartmentForm>()
-	const [isCollapsed, setIsCollapsed] = useState(true)
-
-	const addDepartToParent = useDepartmentsStore(
-		(state) => state.addDepartmentToParent,
-	)
-	const organisationId = useOrganisationStore(
-		(state) => state.organisation.id,
-	)
-	const selectedDepartmentIds = useDepartmentsStore(
-		(state) => state.selectedDepartmentIds,
-	)
-	const handleError = useAPIErrorHandler()
-	const onFinish = async (values: AddDepartmentForm) => {
-		const parentId = values.parentId ?? selectedDepartmentIds.at(-1)
-		if (parentId == undefined) return
-
-		try {
-			const newDep = await departmentApi.addDepartment(
-				values.name,
-				organisationId,
-				parentId,
-				values.isService,
-			)
-			addDepartToParent(parentId, newDep)
-			form.resetFields()
-			setIsCollapsed(true)
-		} catch (error) {
-			handleError(error as Error)
-		}
-	}
+	const { form, isCollapsed, setIsCollapsed, onFinish } = useAddDepartment()
 
 	return (
 		<div className="add-department">

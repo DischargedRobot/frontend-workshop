@@ -15,20 +15,7 @@ interface IOrganisationStore {
 }
 
 export const useOrganisationStore = create<IOrganisationStore>((set) => ({
-	organisation: {
-		id: 2,
-		name: "Рога и копыта",
-		// adminId: 1,
-		child: {
-			id: 1,
-			name: "s",
-			children: [],
-			featureFlags: [],
-			path: "",
-			isService: false,
-			version: 1,
-		},
-	},
+	organisation: {} as IOrganisation, // только в начале так, потом сразу подгружается
 	setOrganisation: (organisation) => set({ organisation }),
 	changeChild: (newChildren) =>
 		set((state) => ({

@@ -7,6 +7,26 @@ import { APIError } from "@/shared/api/APIErrors"
 import { IDepartment } from "../../lib"
 import { useUserFiltersStore } from "@/entities/User"
 import type { IDepartmentNode } from "../../ui/DepartmentTree/TitleRender"
+import { useSelectedDepartmentsStore } from "../useSelectedDepartmentsStore"
+
+const getDepartmentAndAllChildren = (
+	departments: IDepartment[],
+): IDepartment[] => {
+	return departments.reduce(
+		(allDepartments: IDepartment[], department: IDepartment) => {
+			allDepartments.push(department)
+
+			if (department.children.length != 0) {
+				allDepartments.push(
+					...getDepartmentAndAllChildren(department.children),
+				)
+			}
+
+			return allDepartments
+		},
+		[],
+	)
+}
 
 const useDepartmentTree = () => {
 	const setFilterDepartmentIds = useUserFiltersStore(
@@ -91,13 +111,15 @@ const useDepartmentTree = () => {
 		[mutate, organisationId, organisation.id, changeDepartmentChildren],
 	)
 
-	const setSelectedDepIds = useDepartmentsStore(
-		(state) => state.setSelectedDepartmentIds,
-	)
+	const { setDepartments: setSelectedDepartments } =
+		useSelectedDepartmentsStore()
 
 	const handleCheck = (checkedKeys: number[]) => {
 		setFilterDepartmentIds(checkedKeys)
-		setSelectedDepIds(checkedKeys)
+		const selectedDeps = getDepartmentAndAllChildren(
+			departments || [],
+		).filter((dep) => checkedKeys.includes(dep.id))
+		setSelectedDepartments(selectedDeps)
 	}
 
 	const handleDrop = (

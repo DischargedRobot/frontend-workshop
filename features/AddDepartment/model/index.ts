@@ -1,0 +1,1 @@
+export { useAddDepartment } from "./useAddDepartment"

@@ -2,5 +2,6 @@ export { useDepartmentTree } from "./DepartmentTree"
 
 export { useDepartmentTableColumns } from "./DepartmentTable"
 
-export { useDepartments } from "./useDepartments"
 export { useDepartmentsStore } from "./useDepartmentsStore"
+export { useSelectedDepartmentsStore } from "./useSelectedDepartmentsStore"
+export { createDepartmentStore } from "./createDepartmentStoreFactory"
