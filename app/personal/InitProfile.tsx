@@ -13,7 +13,8 @@ import { useRouter } from "next/navigation"
 export const InitApplication = () => {
 	const router = useRouter()
 
-	const { profile, organisation, isLoading } = useInitApplication()
+	const { profile, organisation, isLoading, setIsLoading } =
+		useInitApplication()
 	const setProfile = useProfileStore((state) => state.setProfile)
 	const setOrganisation = useOrganisationStore(
 		(state) => state.setOrganisation,
@@ -28,10 +29,19 @@ export const InitApplication = () => {
 			// console.log(profile, "profile")
 			setProfile(profile)
 			setOrganisation(organisation)
+			setIsLoading(false)
 		} else {
 			router.push("/login")
 		}
-	}, [profile, organisation, setProfile, setOrganisation, router, isLoading])
+	}, [
+		profile,
+		organisation,
+		setProfile,
+		setOrganisation,
+		router,
+		setIsLoading,
+		isLoading,
+	])
 
 	return null
 }

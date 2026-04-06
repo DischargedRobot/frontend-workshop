@@ -55,6 +55,8 @@ const useDepartmentTree = () => {
 
 	const { mutate } = useSWRConfig()
 
+	console.log(organisation)
+
 	const { data, error } = useSWR<IDepartment[], APIError>(
 		[
 			["organisationId, departmentId"],

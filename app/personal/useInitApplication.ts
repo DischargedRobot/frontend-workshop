@@ -12,11 +12,7 @@ const fetcher = async () => {
 	return { profile, organisation }
 }
 
-export function useInitApplication(): {
-	profile?: IProfile
-	organisation?: IOrganisation
-	isLoading: boolean
-} {
+export function useInitApplication() {
 	const router = useRouter()
 	const setIsLoading = useApplicationStore((state) => state.setIsLoading)
 
@@ -28,14 +24,12 @@ export function useInitApplication(): {
 		onError: () => {
 			router.push("/login")
 		},
-		onSuccess: () => {
-			setIsLoading(false)
-		},
 	})
 	return {
 		profile: data?.profile,
 		organisation: data?.organisation,
 		isLoading,
+		setIsLoading,
 	}
 }
 
