@@ -82,10 +82,15 @@ const loginApi = {
 		})
 	},
 
-	getMe: async (): Promise<IProfile & { uuidDepartment: string }> => {
+	getMe: async (
+		cookiesString?: string,
+	): Promise<IProfile & { uuidDepartment: string }> => {
 		const response = await APIJsonRequest<GetMeResponse>(
 			`${process.env.NEXT_PUBLIC_AUTH_SERVICE_URL_V1}/clients/me`,
-			{ method: "GET" },
+			{
+				headers: cookiesString ? { Cookie: cookiesString } : {},
+				method: "GET",
+			},
 		)
 
 		return {

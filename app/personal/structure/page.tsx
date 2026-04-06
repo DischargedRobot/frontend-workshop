@@ -6,11 +6,11 @@ import { FullDepartmentTree } from "@/widgets/FullDepartmentTree"
 import { useApplicationStore } from "@/shared/model/Application"
 
 const StructureOrganisation = () => {
-	const isLoading = useApplicationStore((state) => state.isLoading)
+	// const isLoading = useApplicationStore((state) => state.isLoading)
 
-	if (isLoading) {
-		return <Content className="structure-organisation">Loading...</Content>
-	}
+	// if (isLoading) {
+	// 	return <Content className="structure-organisation">Loading...</Content>
+	// }
 
 	return (
 		<Content className="structure-organisation">
