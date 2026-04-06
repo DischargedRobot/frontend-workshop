@@ -1,8 +1,8 @@
 import { create, UseBoundStore } from "zustand"
 import { IDepartment } from "../lib"
-import { useUserFiltersStore } from "@/entities/User/UserList/model"
 import { Department } from "../lib/DepartmentType"
 import { StoreApi } from "zustand"
+import { useUserFiltersStore } from "@/entities/User"
 
 const InitialDepartments: IDepartment[] = (() => {
 	const depts: IDepartment[] = []
@@ -13,7 +13,7 @@ const InitialDepartments: IDepartment[] = (() => {
 			name: `Department ${i}`,
 			children: [],
 			featureFlags: [],
-			link: "",
+			path: "",
 			isService: false,
 			version: 1,
 		})

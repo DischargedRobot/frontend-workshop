@@ -38,7 +38,7 @@ export const useRegistrationForm = () => {
 				password: data.AdminPassword,
 			})
 			console.log("всё ок")
-			const response = await loginApi.login({
+			const response = await loginApi.logIn({
 				username: data.AdminName,
 				password: data.AdminPassword,
 			})

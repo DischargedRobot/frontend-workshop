@@ -3,7 +3,7 @@
 import { useDepartmentsStore } from "@/entities/Departments/model/useDepartmentsStore"
 import "./UserDepartmentsDropDownMenu.scss"
 
-import { IUser } from "@/entities/User/UserCard/ui/types"
+import { IUser } from "@/entities/User/lib/types"
 import { memo, useState } from "react"
 import { Control, Controller } from "react-hook-form"
 import { useShallow } from "zustand/shallow"

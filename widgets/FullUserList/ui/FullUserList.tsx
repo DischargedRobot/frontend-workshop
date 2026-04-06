@@ -2,8 +2,8 @@
 
 import "./FullUserList.scss"
 
-import { useUserFiltersStore } from "@/entities/User/UserList"
-import UserList from "@/entities/User/UserList/ui/UserList"
+import { useUserFiltersStore } from "@/entities/User"
+import UserList from "@/entities/User/ui/UserList/UserList"
 import { FFTableFilters } from "@/features/FFTableFilters"
 import { RegistrationQrCode } from "@/features/RegistrationQrCode/ui/RegistrationQrCode"
 import UserSearch from "@/features/UserSearch/ui/UserSearch"

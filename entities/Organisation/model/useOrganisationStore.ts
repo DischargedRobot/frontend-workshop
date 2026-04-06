@@ -24,7 +24,7 @@ const useOrganisationStore = create<IOrganisationStore>((set) => ({
 			name: "s",
 			children: [],
 			featureFlags: [],
-			link: "",
+			path: "",
 			isService: false,
 			version: 1,
 		},

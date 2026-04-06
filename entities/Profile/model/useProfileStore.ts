@@ -11,8 +11,10 @@ interface IProfileStore {
 
 export const useProfileStore = create<IProfileStore>((set) => ({
 	profile: {
+		id: 0,
 		login: "",
 		password: "",
+		roles: [],
 	},
 
 	setLogin: (login) =>

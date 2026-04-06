@@ -1,11 +1,11 @@
-import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore"
+import { useOrganisationStore } from "@/entities/Organisation"
 import useSWR from "swr"
 import { useDepartmentsStore } from "../useDepartmentsStore"
 import { departmentApi } from "../../api"
 import { useEffect, useMemo } from "react"
-import { useUserFiltersStore } from "@/entities/User/UserList"
 import { APIError } from "@/shared/api/APIErrors"
 import { IDepartment } from "../../lib"
+import { useUserFiltersStore } from "@/entities/User"
 
 const useDepartmentTree = () => {
 	const setFilterDepartmentIds = useUserFiltersStore(

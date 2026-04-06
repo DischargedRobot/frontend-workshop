@@ -1,8 +1,9 @@
 import "./RolesStatus.scss"
 
 import { Switch } from "antd"
-import { IRole, NAMES_OF_ROLE_ACTIONS, TROLE } from "../Role/types"
-import { memo } from "react"
+import { IRole, NAMES_OF_ROLE_ACTIONS } from "../Role/types"
+import { memo, useState } from "react"
+import { PlusOutlined } from "@ant-design/icons"
 
 interface Props {
 	roles: IRole[]
@@ -11,37 +12,53 @@ interface Props {
 
 const titles = ["Отделы", "Пользователи", "Фич флаги"]
 
-const RoleStatus = (props: Props) => {
-	const { roles, setRoles } = props
+const RoleStatus = ({ roles, setRoles }: Props) => {
+	const [isVisible, setIsVisible] = useState(false)
 
+	const blockSize = roles.length / 3
 	return (
-		<ul className="roles-status">
-			{Array.from({ length: 3 }).map((_, index) => (
-				<li key={index} className="roles-status__containter">
-					<h4 className="title title_very-litle">{titles[index]}</h4>
-					<hr />
-					<ul className="roles-status__role-containter text text text_tiny">
-						{roles.slice(index * 3, (index + 1) * 3).map((role) => {
-							return (
-								<li
-									key={role.type}
-									className="roles-status__role"
-								>
-									{NAMES_OF_ROLE_ACTIONS[role.type]}
-									<Switch
-										value={role.isEnabled}
-										onChange={(value) => {
-											role.isEnabled = value
-											setRoles([...roles])
-										}}
-									/>
-								</li>
-							)
-						})}
-					</ul>
-				</li>
-			))}
-		</ul>
+		<>
+			<button
+				className="add-role"
+				onClick={() => setIsVisible((prev) => !prev)}
+			>
+				<PlusOutlined />
+			</button>
+			{isVisible && (
+				<ul className="roles-status">
+					{Array.from({ length: blockSize - 1 }).map((_, index) => (
+						<li key={index} className="roles-status__containter">
+							<h4 className="title title_very-litle">
+								{titles[index]}
+							</h4>
+							<hr />
+							<ul className="roles-status__role-containter text text text_tiny">
+								{roles
+									.slice(
+										index * blockSize,
+										(index + 1) * blockSize,
+									)
+									.map((role) => (
+										<li
+											key={role.type}
+											className="roles-status__role"
+										>
+											{NAMES_OF_ROLE_ACTIONS[role.type]}
+											<Switch
+												value={role.isEnabled}
+												onChange={(value) => {
+													role.isEnabled = value
+													setRoles([...roles])
+												}}
+											/>
+										</li>
+									))}
+							</ul>
+						</li>
+					))}
+				</ul>
+			)}
+		</>
 	)
 }
 

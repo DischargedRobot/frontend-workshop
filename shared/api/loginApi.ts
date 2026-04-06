@@ -7,12 +7,12 @@ interface RegistrationRequest {
 	organization_name: string
 }
 
-interface LoginRequest {
+interface LogInRequest {
 	username: string
 	password: string
 }
 
-interface LoginResponse {
+interface LogInResponse {
 	login: string
 	roles: RoleResponse[]
 	uuidDepartament: string
@@ -23,6 +23,7 @@ interface RoleResponse {
 	name: TROLE
 }
 
+// В shared т.к. часто используется другими
 const loginApi = {
 	registerOrganization: async (data: RegistrationRequest): Promise<void> => {
 		try {
@@ -34,11 +35,10 @@ const loginApi = {
 				},
 			)
 		} catch (error) {}
-		console.log("dsds")
 	},
 
-	login: async (data: LoginRequest) => {
-		const response = await APIJsonRequest<LoginResponse>(
+	logIn: async (data: LogInRequest) => {
+		const response = await APIJsonRequest<LogInResponse>(
 			`${process.env.NEXT_PUBLIC_AUTH_URL_V1}/login`,
 			{
 				method: "POST",
@@ -51,12 +51,6 @@ const loginApi = {
 			type: role.name,
 			isEnabled: true,
 		}))
-		console.log({
-			login: data.username,
-			password: data.password,
-			roles: userRoles,
-			uuidDepartament: response.uuidDepartament,
-		})
 
 		return {
 			login: data.username,
@@ -66,17 +60,21 @@ const loginApi = {
 		}
 	},
 
+	logOut: async (): Promise<void> => {
+		await APIJsonRequest<void>(
+			`${process.env.NEXT_PUBLIC_AUTH_URL_V1}/logout`,
+			{ method: "POST" },
+		)
+	},
+
 	refreshAuth: async (sessionId: string): Promise<void> => {
-		const response = await APIJsonRequest<void>(
-			`${process.env.NEXT_PUBLIC_AUTH_URL_V1}/refresh` as string,
+		await APIJsonRequest<void>(
+			`${process.env.NEXT_PUBLIC_AUTH_URL_V1}/refresh`,
 			{
 				method: "POST",
 				body: JSON.stringify({ sessionId }),
 			},
 		)
-
-		return response
-		// TODO:: обработать 401 и 403
 	},
 }
 

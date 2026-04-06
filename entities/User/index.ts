@@ -1,5 +1,8 @@
-export { UserList } from "./UserList"
-export { useFilteredUsers } from "./UserList"
-export { useUserFiltersStore } from "./UserList"
-export { useUsersStore } from "./UserList"
-export { UserCard } from "./UserCard"
+export { UserCard, UserList } from "./ui"
+export {
+	useUserCard,
+	useUserCardForm,
+	useFilteredUsers,
+	useUserFiltersStore,
+	useUsersStore,
+} from "./model"
