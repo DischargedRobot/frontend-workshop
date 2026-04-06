@@ -22,6 +22,9 @@ export const useAPIErrorHandler = () => {
 				case 404:
 					router.push("/notFound")
 					break
+				case 409:
+					router.push("/notFound")
+					break
 				case 500:
 					router.push("/internal")
 					break

@@ -1,18 +1,24 @@
 "use client"
 import "./UserRegistrationForm.scss"
 
-import { Button, Form, Input, Alert } from "antd"
+import { Button, Form, Alert } from "antd"
 import { useRegistrationForm } from "../model"
 import { TextInput } from "@/shared/ui"
+import { error } from "console"
+import { memo } from "react"
 
 interface RegistrationForm {
 	login: string
 	password: string
 }
 
-export const UserRegistrationForm = () => {
+interface Props {
+	token: string
+}
+
+const UserRegistrationForm = ({ token }: Props) => {
 	const [form] = Form.useForm<RegistrationForm>()
-	const { onSubmit, loading, error } = useRegistrationForm()
+	const { onSubmit, loading, loginError } = useRegistrationForm(token)
 
 	return (
 		<Form
@@ -21,7 +27,7 @@ export const UserRegistrationForm = () => {
 			layout="vertical"
 			onFinish={onSubmit}
 		>
-			{error && (
+			{/* {loginError && (
 				<Form.Item>
 					<Alert
 						title="Ошибка регистрации"
@@ -31,7 +37,7 @@ export const UserRegistrationForm = () => {
 						closable
 					/>
 				</Form.Item>
-			)}
+			)} */}
 
 			<Form.Item
 				label="Логин"
@@ -52,7 +58,7 @@ export const UserRegistrationForm = () => {
 					},
 				]}
 			>
-				<TextInput placeholder="Логин" />
+				<TextInput error={loginError} placeholder="Логин" />
 			</Form.Item>
 
 			<Form.Item
@@ -89,3 +95,5 @@ export const UserRegistrationForm = () => {
 		</Form>
 	)
 }
+
+export default memo(UserRegistrationForm)

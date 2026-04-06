@@ -1,45 +1,53 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
+import loginApi from "@/shared/api/loginApi"
+import { APIError, mapAPIErrors } from "@/shared/api"
+import { showToast } from "@/shared/ui"
 
 interface RegistrationFormData {
 	login: string
 	password: string
 }
 
-interface RegistrationError {
-	message: string
-	field?: string
-}
-
-export const useRegistrationForm = () => {
+export const useRegistrationForm = (token: string) => {
 	const [loading, setLoading] = useState(false)
-	const [error, setError] = useState<RegistrationError | null>(null)
+	const [loginError, seLogintError] = useState<string>()
 	const router = useRouter()
+
+	const handleAPIError = useAPIErrorHandler()
 
 	const onSubmit = async (data: RegistrationFormData) => {
 		try {
 			setLoading(true)
-			setError(null)
+			seLogintError(undefined)
 
-			// TODO: Реализовать API запрос для регистрации
-			// const response = await registrationApi.register({
-			//   username: data.login,
-			//   email: data.email,
-			//   password: data.password,
-			//   firstName: data.firstName,
-			//   lastName: data.lastName,
-			// })
+			await loginApi.registerUser(
+				{
+					login: data.login,
+					password: data.password,
+				},
+				token,
+			)
 
-			// Временно просто редирект
-			router.push("/login")
+			router.push("/ffmenu")
 		} catch (err) {
-			setError({
-				message: "Ошибка при регистрации",
-			})
+			const error = err as APIError
+			switch (error.status) {
+				case 409:
+					seLogintError(error.customMessage ?? error.message)
+				case 404:
+					showToast({
+						type: "error",
+						text: "Ваша ссылка уже истекла",
+					})
+			}
+
+			handleAPIError(error)
 		} finally {
 			setLoading(false)
 		}
 	}
 
-	return { onSubmit, loading, error }
+	return { onSubmit, loading, loginError }
 }

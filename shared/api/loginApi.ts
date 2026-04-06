@@ -106,6 +106,22 @@ const loginApi = {
 			settings: response.settings,
 		}
 	},
+
+	registerUser: async (
+		data: {
+			login: string
+			password: string
+		},
+		token: string,
+	): Promise<void> => {
+		await APIJsonRequest<void>(
+			`${AUTH_URL}/register-employee?token=${token}`,
+			{
+				method: "POST",
+				body: JSON.stringify(data),
+			},
+		)
+	},
 }
 
 export const ConverterRoleRespToIRol = (roles: RoleResponse[]): IRole[] => {

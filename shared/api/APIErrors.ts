@@ -14,9 +14,9 @@ export class APIError extends Error implements IResponseError {
 
 		this.name = "APIError"
 	}
-	checkStatus(errorStatus: number): boolean {
-		return errorStatus === this.status
-	}
+	// checkStatus(errorStatus: number): boolean {
+	// 	return errorStatus === this.status
+	// }
 }
 
 export function isAPIError(error: unknown): error is APIError {
@@ -40,27 +40,45 @@ const APIErrors = {
 	NOT_FOUND: new APIError(404, "NOT_FOUND", "Ресурс не найден :("),
 	SERVER: new APIError(500, "SERVER_ERROR", "Ошибка сервера"),
 }
+
 // можно и просто map, но мне показалось, что в случае правок, будет проще написать кейс,
 // если ошибка уже есть, просто код другой, чем повторять в мап объекты
-export const mapAPIErrors = (status: number | null): APIError => {
+export const mapAPIErrors = (
+	status: number | null | undefined,
+	customMessage?: string,
+): APIError => {
+	let error: APIError
+
 	switch (status) {
 		case null:
-			return APIErrors.NETWORK
+			error = APIErrors.NETWORK
+			break
 		case 400:
-			return APIErrors.BAD_REQUEST
+			error = APIErrors.BAD_REQUEST
+			break
 		case 403:
-			return APIErrors.FORBIDEN
+			error = APIErrors.FORBIDEN
+			break
 		case 401:
-			return APIErrors.UNAUTHORIZED
+			error = APIErrors.UNAUTHORIZED
+			break
 		case 404:
-			return APIErrors.NOT_FOUND
+			error = APIErrors.NOT_FOUND
+			break
 		case 500:
-			return APIErrors.SERVER
+			error = APIErrors.SERVER
+			break
 		default:
-			return new APIError(
+			error = new APIError(
 				status ? status : 1,
 				"UNKNOW",
 				"Неизвестная ошибка",
 			)
 	}
+
+	if (customMessage) {
+		error.customMessage = customMessage
+	}
+
+	return error
 }
