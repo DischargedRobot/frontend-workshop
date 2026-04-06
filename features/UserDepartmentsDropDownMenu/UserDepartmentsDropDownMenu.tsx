@@ -50,7 +50,7 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
 						value: dep,
 					}))}
 					className={`${className}`}
-					onSelect={(dep) => console.log("Выбран", dep)}
+					onSelect={(dep) => {}}
 					{...field}
 				/>
 			)}

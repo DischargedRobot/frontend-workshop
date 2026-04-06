@@ -19,9 +19,17 @@ const APIJsonRequest = async <T>(
 			throw mapAPIErrors(response.status)
 		}
 
-		if (response.headers.get("content-length") === "0") {
+		const contentType = response.headers.get("content-type")
+		const contenLength = response.headers.get("content-length")
+
+		if (
+			contenLength === "0" ||
+			// contenLength === null ||
+			!contentType?.includes("application/json")
+		) {
 			return {} as T
 		}
+
 		const data: T = await response.json()
 
 		return data

@@ -4,7 +4,7 @@ type IUseDepartment = () => {
 	getDepartmentsByPath: (path: string) => void
 	getFeatureFlagsByDepartments: (departments: IDepartment[]) => void
 }
-
+/** @description Depricated */
 export const useDepartments: IUseDepartment = () => {
 	const getDepartmentsByPath = async (path: string) => {
 		const response = await fetch(`${path}`, {

@@ -2,7 +2,7 @@
 
 import "./Toast.scss"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import {
 	CheckOutlined,
 	ExclamationOutlined,
@@ -27,64 +27,63 @@ interface IToast {
 	type: TToast
 	text: string
 	title?: string
-	duration: number
+	duration?: number
 }
 
 const Toast = () => {
-	const type = useToastStore((state) => state.type)
-	const text = useToastStore((state) => state.text)
-	const title = useToastStore((state) => state.title)
 	const duration = useToastStore((state) => state.duration)
-	const key = useToastStore((state) => state.key) // TODO: мб это просто убрать и зависитьмость от isVisible
+	const title = useToastStore((state) => state.title)
+	const text = useToastStore((state) => state.text)
+	const type = useToastStore((state) => state.type)
+	const key = useToastStore((state) => state.key)
 	const isVisible = useToastStore((state) => state.isVisible)
 	const setIsVisible = useToastStore((state) => state.setIsVisible)
 
-	const [isFade, setIsFade] = useState(false)
-
+	// Исчезает?
+	const [isFade, setIsFade] = useState<boolean>(false)
 	const timer = useRef<number>(null)
-	const startTimer = () => {
-		// на случай, если мышка уже была в тосте и чтобы при выходе не дублировалось
+
+	const startTimer = useCallback(() => {
 		if (timer.current) {
 			clearTimeout(timer.current)
 		}
-
 		timer.current = window.setTimeout(() => {
+			// console.log("Время вышло")
 			setIsFade(true)
 		}, duration)
-	}
+	}, [duration])
 
-	// запускатор
-	// TODO разедилть на 2 useEffect
+	const toast = useRef<HTMLDivElement>(null)
+
 	useEffect(() => {
-		startTimer()
-
 		const handleMouseOut = () => {
 			startTimer()
 		}
 
-		const handleTransitionEnd = () => {
-			if (isFade) {
-				setIsVisible(false)
-			}
-		}
-
 		const handleMouseOver = () => {
-			setIsFade(false) // чтобы после возвращение цвета он не исчез
+			setIsFade(false)
 			if (timer.current) {
 				clearTimeout(timer.current)
 			}
 		}
 
-		const toast = document.getElementById("toast")
-		toast?.addEventListener("mouseover", handleMouseOver)
-		toast?.addEventListener("mouseout", handleMouseOut)
+		const handleTransitionEnd = () => {
+			setIsFade(false)
+			setIsVisible(false)
+		}
 
-		toast?.addEventListener("transitionend", handleTransitionEnd)
+		const toastElement = toast.current
+		toastElement?.addEventListener("mouseover", handleMouseOver)
+		toastElement?.addEventListener("mouseout", handleMouseOut)
+		toastElement?.addEventListener("transitionend", handleTransitionEnd)
 
 		return () => {
-			toast?.removeEventListener("mouseout", handleMouseOut)
-			toast?.removeEventListener("mouseover", handleMouseOver)
-			toast?.removeEventListener("transitionend", handleTransitionEnd)
+			toastElement?.removeEventListener("mouseout", handleMouseOut)
+			toastElement?.removeEventListener("mouseover", handleMouseOver)
+			toastElement?.removeEventListener(
+				"transitionend",
+				handleTransitionEnd,
+			)
 
 			if (timer.current) {
 				clearTimeout(timer.current)
@@ -92,13 +91,20 @@ const Toast = () => {
 		}
 	}, [key])
 
+	useEffect(() => {
+		if (isVisible) {
+			startTimer()
+		}
+	}, [key, startTimer, isVisible])
+
 	if (!isVisible) {
 		return null
 	}
 
+	console.log("toast", isVisible, isFade)
 	return (
 		<div
-			id={"toast"}
+			ref={toast}
 			className={`toast ${"toast_" + type} ${isFade ? "toast_fade-out" : "toast_fade-in"}`}
 		>
 			{icons.get(type)}

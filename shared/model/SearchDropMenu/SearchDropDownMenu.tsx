@@ -11,7 +11,8 @@ import {
 	KeyboardEvent,
 } from "react"
 
-export interface DropdownOption<T> {
+export interface DropdownOption<T, E extends keyof T = keyof T> {
+	key?: T[E]
 	value: T
 	label: string
 }
@@ -160,7 +161,11 @@ export const SearchDropDownMenu = <T,>({
 						<ul className="search-dropdown__list">
 							{filteredOptions.map((option) => (
 								<li
-									key={String(option.value)}
+									key={
+										option.key
+											? String(option.key)
+											: String(option.value)
+									}
 									onClick={() => handleSelect(option)}
 									onMouseDown={(e) => e.preventDefault()}
 									className={`search-dropdown__option ${option.value === selected ? "search-dropdown__option_selected" : ""}`}

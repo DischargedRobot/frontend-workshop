@@ -1,92 +1,99 @@
 "use client"
-import { PlusCircleOutlined } from "@ant-design/icons"
+import { AddButton } from "@/shared/ui"
 import "./AddDepartment.scss"
 import { useState } from "react"
-import { Controller, useForm } from "react-hook-form"
-import { Button, Form, Input } from "antd"
-import { IDepartment, useDepartmentsStore } from "@/entities/Departments"
+import { Button, Form, Input, Switch } from "antd"
+import { useDepartmentsStore } from "@/entities/Departments"
 import { departmentApi } from "@/entities/Departments"
 import { useOrganisationStore } from "@/entities/Organisation"
+import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 
 interface AddDepartmentForm {
 	name: string
-	parent: IDepartment
+	isService: boolean
+	parentId: number
 }
 
-const AddDepartment = () => {
-	const addDepart = useDepartmentsStore((state) => state.addDepartment)
+type DepartmentSelectorComponent = React.ComponentType<{
+	onChange: (id: number) => void
+}>
 
+type Props = {
+	DepartmentSelector: DepartmentSelectorComponent
+}
+
+const AddDepartment = ({ DepartmentSelector }: Props) => {
+	const [form] = Form.useForm<AddDepartmentForm>()
+	const [isCollapsed, setIsCollapsed] = useState(true)
+
+	const addDepartToParent = useDepartmentsStore(
+		(state) => state.addDepartmentToParent,
+	)
 	const organisationId = useOrganisationStore(
 		(state) => state.organisation.id,
 	)
 	const selectedDepartmentIds = useDepartmentsStore(
 		(state) => state.selectedDepartmentIds,
 	)
-	const addDepartment = async (date: AddDepartmentForm) => {
-		if (selectedDepartmentIds.at(-1) != undefined) {
-			departmentApi.addDepartment(
-				date.name,
+	const handleError = useAPIErrorHandler()
+	const onFinish = async (values: AddDepartmentForm) => {
+		const parentId = values.parentId ?? selectedDepartmentIds.at(-1)
+		if (parentId == undefined) return
+
+		try {
+			const newDep = await departmentApi.addDepartment(
+				values.name,
 				organisationId,
-				selectedDepartmentIds.at(-1)!,
+				parentId,
+				values.isService,
 			)
-			addDepart({
-				id: 10,
-				name: date.name,
-				children: [],
-				featureFlags: [],
-				link: "",
-				isService: false,
-				version: 1,
-			})
+			addDepartToParent(parentId, newDep)
+			form.resetFields()
+			setIsCollapsed(true)
+		} catch (error) {
+			handleError(error as Error)
 		}
 	}
 
-	const {
-		handleSubmit,
-		formState: { errors },
-		control,
-	} = useForm<AddDepartmentForm>()
-	const [isCollapsed, setIsCollapsed] = useState(true)
-
 	return (
 		<div className="add-department">
-			<button
-				className="add-department__button"
-				onClick={() => {
-					setIsCollapsed((prev) => !prev)
-				}}
-			>
-				<PlusCircleOutlined />
-			</button>
+			<AddButton onClick={() => setIsCollapsed((prev) => !prev)} />
 			<Form
+				form={form}
 				className={`add-department__panel ${isCollapsed ? "add-department__panel_collapsed" : ""}`}
-				onFinish={handleSubmit(addDepartment)}
+				onFinish={onFinish}
+				layout="vertical"
 			>
 				<Form.Item
 					className="add-department__field"
-					validateStatus={errors.name ? "error" : ""}
-					help={errors.name ? errors.name.message : ""}
+					name="name"
+					rules={[
+						{ required: true, message: "Введите название отдела" },
+					]}
 				>
-					<Controller
-						control={control}
-						name="name"
-						rules={{
-							required: "Введите название отдела",
-						}}
-						render={({ field }) => (
-							<Input placeholder="Название отдела" {...field} />
-						)}
+					<Input autoComplete="off" placeholder="Название отдела" />
+				</Form.Item>
+				<Form.Item
+					name="parentId"
+					label="Родительский отдел"
+					rules={[
+						{
+							required: true,
+							message: "Выберите родительский отдел",
+						},
+					]}
+				>
+					<DepartmentSelector
+						onChange={(id) => form.setFieldValue("parentId", id)}
 					/>
-					<Controller
-						control={control}
-						name="parent"
-						rules={{
-							required: "Выберите родительский отдел",
-						}}
-						render={({ field }) => (
-							<Input placeholder="Название отдела" {...field} />
-						)}
-					/>
+				</Form.Item>
+				<Form.Item
+					name="isService"
+					label="isService"
+					valuePropName="checked"
+					initialValue={false}
+				>
+					<Switch />
 				</Form.Item>
 				<Button htmlType="submit">Создать</Button>
 			</Form>

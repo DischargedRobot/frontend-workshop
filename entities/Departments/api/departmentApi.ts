@@ -171,18 +171,39 @@ const reduceDepRespToChildrenArray = (
 	return children
 }
 
-const convertIDepartmentResponseToIDepartment = (
+function convertIDepartmentResponseToIDepartment(
+	departmentResponse: IDepartmentResponse,
+): IDepartment
+function convertIDepartmentResponseToIDepartment(
 	departmentsResponse: IDepartmentResponse[],
-): IDepartment[] => {
-	return departmentsResponse.map((depResp) => ({
-		id: depResp.id,
-		name: depResp.name,
+): IDepartment[]
+
+function convertIDepartmentResponseToIDepartment(
+	departmentsResponse: IDepartmentResponse | IDepartmentResponse[],
+): IDepartment | IDepartment[] {
+	// Если передан массив
+	if (Array.isArray(departmentsResponse)) {
+		return departmentsResponse.map((depResp) => ({
+			id: depResp.id,
+			name: depResp.name,
+			children: [],
+			featureFlags: [],
+			path: "",
+			isService: depResp.isService,
+			version: depResp.version,
+		}))
+	}
+
+	// Если передан один объект
+	return {
+		id: departmentsResponse.id,
+		name: departmentsResponse.name,
 		children: [],
 		featureFlags: [],
 		path: "",
-		isService: depResp.isService,
-		version: depResp.version,
-	}))
+		isService: departmentsResponse.isService,
+		version: departmentsResponse.version,
+	}
 }
 
 // const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmentResponse[]): IDepartment[] => {
@@ -281,15 +302,20 @@ const departmentApi = {
 		departmentName: string,
 		organisationId: number,
 		parentId: number,
-	) => {
-		APIJsonRequest(`${URL_ORGANISATION}/${organisationId}/nodes`, {
-			method: "POST",
-			body: JSON.stringify({
-				name: departmentName,
-				isService: false,
-				parentId: parentId,
-			}),
-		})
+		isService: boolean = false,
+	): Promise<IDepartment> => {
+		const respDep = await APIJsonRequest<IDepartmentResponse>(
+			`${URL_ORGANISATION}/${organisationId}/nodes`,
+			{
+				method: "POST",
+				body: JSON.stringify({
+					name: departmentName,
+					isService,
+					parentId,
+				}),
+			},
+		)
+		return convertIDepartmentResponseToIDepartment(respDep)
 	},
 
 	removeDepartmentById: async (

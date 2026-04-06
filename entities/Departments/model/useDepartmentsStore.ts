@@ -35,8 +35,12 @@ interface IUseDepartments {
 	changeDepartmentName: (department: IDepartment, newName: string) => void
 	changeDepartment: (department: IDepartment) => void
 	changeDepartmentChildren: (
-		dep: IDepartment,
+		department: IDepartment | number,
 		children: IDepartment[],
+	) => void
+	addDepartmentToParent: (
+		parent: IDepartment | number,
+		department: IDepartment,
 	) => void
 	getDepartmentsIncludingAllChildren: () => IDepartment[]
 	changeParentDepartment: (dep: IDepartment, newParentDepId: number) => void
@@ -101,16 +105,14 @@ const updateDep = (
 		if (department.id === newDepartment.id) {
 			return { ...newDepartment }
 		}
-		if (department.children.length !== 0) {
-			const updatedDepartments = updateDep(
-				department.children,
-				newDepartment,
-			)
-			if (updatedDepartments !== department.children) {
-				return { ...department, children: updatedDepartments }
-			}
+
+		const updatedDepartments = updateDep(department.children, newDepartment)
+		// если дети не изменились, то возвращаем тот же объект
+		if (updatedDepartments === department.children) {
+			return department
 		}
-		return department
+		// иначе новый, обновив у него детей
+		return { ...department, children: updatedDepartments }
 	})
 }
 
@@ -186,15 +188,36 @@ export const useDepartmentsStore = create<IUseDepartments>((set, get) => ({
 	},
 
 	changeDepartmentChildren: (
-		department: IDepartment,
+		depart: IDepartment | number,
 		children: IDepartment[],
 	) => {
-		set((state) => ({
-			departments: updateDep(state.departments, {
-				...department,
-				children: children,
-			}),
-		}))
+		const depId = typeof depart === "number" ? depart : depart.id
+		set((state) => {
+			console.log(depart, "depart", state.departments)
+			const update = (departments: IDepartment[]): IDepartment[] =>
+				departments.map((dep) =>
+					dep.id === depId
+						? { ...dep, children }
+						: { ...dep, children: update(dep.children) },
+				)
+			return { departments: update(state.departments) }
+		})
+	},
+
+	addDepartmentToParent: (
+		parent: IDepartment | number,
+		department: IDepartment,
+	) => {
+		const parentId = typeof parent === "number" ? parent : parent.id
+		set((state) => {
+			const update = (departments: IDepartment[]): IDepartment[] =>
+				departments.map((dep) =>
+					dep.id === parentId
+						? { ...dep, children: [...dep.children, department] }
+						: { ...dep, children: update(dep.children) },
+				)
+			return { departments: update(state.departments) }
+		})
 	},
 
 	getDepartmentsIncludingAllChildren: () =>

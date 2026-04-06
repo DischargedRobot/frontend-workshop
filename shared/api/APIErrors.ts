@@ -1,17 +1,17 @@
 interface IResponseError {
 	status: number | null
-	errorType: string
 	customMessage?: string
 }
 
 export class APIError extends Error implements IResponseError {
+	static readonly errorType = "APIError" // лень писать постоянно при создании
 	constructor(
 		public status: number | null,
-		public errorType: string,
 		public message: string,
 		public customMessage?: string,
 	) {
-		super(message || `Error ${errorType}`)
+		super((customMessage ?? message) || `Error ${APIError.errorType}`)
+
 		this.name = "APIError"
 	}
 	checkStatus(errorStatus: number): boolean {
