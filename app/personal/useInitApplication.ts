@@ -2,6 +2,7 @@ import { organisationApi } from "@/entities/Organisation"
 import { IOrganisation } from "@/entities/Organisation/model/useOrganisationStore"
 import { IProfile } from "@/entities/Profile"
 import { loginApi } from "@/shared/api"
+import { useApplicationStore } from "@/shared/model/Application"
 import { useRouter } from "next/navigation"
 import useSWR from "swr"
 
@@ -11,20 +12,24 @@ const fetcher = async () => {
 	return { profile, organisation }
 }
 
-export function useInitProfile(): {
+export function useInitApplication(): {
 	profile?: IProfile
 	organisation?: IOrganisation
 	isLoading: boolean
 } {
 	const router = useRouter()
+	const setIsLoading = useApplicationStore((state) => state.setIsLoading)
 
-	const { data, error, isLoading } = useSWR("init", fetcher, {
+	const { data, isLoading } = useSWR("init", fetcher, {
 		revalidateOnFocus: false,
 		revalidateOnReconnect: false,
 		revalidateIfStale: false,
 		keepPreviousData: true,
 		onError: () => {
 			router.push("/login")
+		},
+		onSuccess: () => {
+			setIsLoading(false)
 		},
 	})
 	return {

@@ -1,53 +1,19 @@
 "use client"
 import "./StructureOrganisation.scss"
-import { TreeDataNode } from "antd"
 import { Content } from "antd/es/layout/layout"
-import FullDepartmentTree from "@/widgets/FullDepartmentTree"
 import { FullUserList } from "@/widgets/FullUserList"
-
-const tree: TreeDataNode[] = [
-	{
-		title: "parent 1",
-		key: 1,
-		children: [
-			{
-				title: "parent 1-0",
-				key: 2,
-				children: [
-					{
-						title: "leaf",
-						key: 3,
-					},
-					{
-						title: "leaf",
-						key: 4,
-					},
-				],
-			},
-			{
-				title: "parent 1-1",
-				key: 5,
-				children: [
-					{
-						title: <span style={{ color: "#1677ff" }}>sss</span>,
-						key: 6,
-					},
-				],
-			},
-		],
-	},
-]
+import { FullDepartmentTree } from "@/widgets/FullDepartmentTree"
+import { useApplicationStore } from "@/shared/model/Application"
 
 const StructureOrganisation = () => {
-	// const departments = useStructure(state => (state.departments))
+	const isLoading = useApplicationStore((state) => state.isLoading)
 
-	// const [key, setKey ] = useState(1)
-	// setInterval(() => {
-	//   setKey(prev => prev + 1)
-	// }, 4000)
+	if (isLoading) {
+		return <Content className="structure-organisation">Loading...</Content>
+	}
 
 	return (
-		<Content className="structure-organisation ">
+		<Content className="structure-organisation">
 			<FullDepartmentTree />
 			<FullUserList />
 		</Content>

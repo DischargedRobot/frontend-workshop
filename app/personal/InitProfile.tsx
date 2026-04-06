@@ -2,7 +2,7 @@
 import { useOrganisationStore } from "@/entities/Organisation/model/useOrganisationStore"
 import { useProfileStore } from "@/entities/Profile"
 import { useEffect } from "react"
-import { useInitProfile } from "./useInitProfile"
+import { useInitApplication } from "./useInitApplication"
 import { useRouter } from "next/navigation"
 
 // interface ProfileCardProps {
@@ -10,10 +10,10 @@ import { useRouter } from "next/navigation"
 // 	organisation: IOrganisation
 // }
 
-export const InitProfile = () => {
+export const InitApplication = () => {
 	const router = useRouter()
 
-	const { profile, organisation, isLoading } = useInitProfile()
+	const { profile, organisation, isLoading } = useInitApplication()
 	const setProfile = useProfileStore((state) => state.setProfile)
 	const setOrganisation = useOrganisationStore(
 		(state) => state.setOrganisation,

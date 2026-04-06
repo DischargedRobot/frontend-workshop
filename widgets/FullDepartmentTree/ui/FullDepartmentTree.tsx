@@ -2,25 +2,16 @@
 
 import "./FullDepartmentTree.scss"
 
-import {
-	DepartmentTree,
-	IDepartment,
-	useDepartmentsStore,
-} from "@/entities/Departments"
-import { useOrganisationStore } from "@/entities/Organisation"
+import { DepartmentTree, IDepartment } from "@/entities/Departments"
 import { AddDepartment } from "@/features/AddDepartment"
-import useFullDepartmentTree from "./model/useFullDepartmentTree"
+import useFullDepartmentTree from "../model/useFullDepartmentTree"
 import { DeleteSelectedDepartments } from "@/features/DeleteSelectedDepartments"
 import { SearchDropDownMenu } from "@/shared/model/SearchDropMenu"
-import { useShallow } from "zustand/shallow"
+import { useFullDepartmentTreeWidget } from "../model/useFullDepartmentTreeWidget"
 
 const FullDepartmentTree = () => {
 	useFullDepartmentTree()
-
-	const organisation = useOrganisationStore((state) => state.organisation)
-	const departments = useDepartmentsStore(
-		useShallow((state) => state.getDepartmentsIncludingAllChildren()),
-	)
+	const { organisation, departments } = useFullDepartmentTreeWidget()
 
 	return (
 		<div className="department-tree">

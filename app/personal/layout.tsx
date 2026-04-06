@@ -1,7 +1,7 @@
 import NavigationMenu from "@/features/NavigationMenu/ui/NavigationMenu"
 import { Metadata } from "next"
 import React from "react"
-import { InitProfile } from "./InitProfile"
+import { InitApplication } from "./InitProfile"
 
 export const metadata: Metadata = {
 	title: "Ваши фича флаги",
@@ -15,7 +15,7 @@ interface Props {
 const PersonalLayout = async ({ children }: Props) => {
 	return (
 		<>
-			<InitProfile />
+			<InitApplication />
 			<NavigationMenu />
 			{children}
 		</>
