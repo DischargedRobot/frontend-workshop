@@ -1,6 +1,7 @@
 import { IProfile } from "@/entities/Profile"
 import { IRole, TROLE } from "../model/Role"
 import APIJsonRequest from "./APIJsonRequest"
+import { TROLE_VALUE_TO_KEY } from "../model/Role/types"
 
 interface RegistrationRequest {
 	login: string
@@ -24,7 +25,7 @@ interface GetMeResponse {
 	id: number
 	login: string
 	password: string
-	roles: RoleResponse[]
+	roles: string[]
 	uuidDepartament: string
 	settings?: object
 }
@@ -57,7 +58,7 @@ const loginApi = {
 		)
 
 		const userRoles = response.roles.map<IRole>((role) => ({
-			id: role.id,
+			name: TROLE_VALUE_TO_KEY[role.name],
 			type: role.name,
 			isEnabled: true,
 		}))
@@ -91,7 +92,11 @@ const loginApi = {
 			id: response.id,
 			login: response.login,
 			password: response.password,
-			roles: ConverterRoleRespToIRol(response.roles),
+			roles: response.roles.map((role) => ({
+				name: TROLE_VALUE_TO_KEY[role as TROLE],
+				type: role as TROLE,
+				isEnabled: true,
+			})),
 			uuidDepartment: response.uuidDepartament,
 			settings: response.settings,
 		}
@@ -100,7 +105,7 @@ const loginApi = {
 
 export const ConverterRoleRespToIRol = (roles: RoleResponse[]): IRole[] => {
 	return roles.map<IRole>((role) => ({
-		id: role.id,
+		name: TROLE_VALUE_TO_KEY[role.name],
 		type: role.name,
 		isEnabled: true,
 	}))

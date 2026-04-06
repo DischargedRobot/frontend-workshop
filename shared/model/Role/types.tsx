@@ -16,9 +16,15 @@ export const TROLE = {
 } as const
 
 export type TROLE = (typeof TROLE)[keyof typeof TROLE]
+export type TROLEKey = keyof typeof TROLE
+
+// Обратный маппинг: "DELETE_DEPARTMENT_ROLE" -> "DD"
+export const TROLE_VALUE_TO_KEY = Object.fromEntries(
+	Object.entries(TROLE).map(([key, value]) => [value, key]),
+) as Record<TROLE, TROLEKey>
 
 export interface IRole {
-	id: number
+	name: TROLEKey
 	type: TROLE
 	isEnabled: boolean
 }

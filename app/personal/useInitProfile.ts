@@ -23,13 +23,10 @@ export function useInitProfile(): {
 		revalidateOnReconnect: false,
 		revalidateIfStale: false,
 		keepPreviousData: true,
-		onError: (error) => {
-			console.log(error, "error")
+		onError: () => {
 			router.push("/login")
 		},
 	})
-	console.log(error, "error", isLoading)
-	console.log(data, "data")
 	return {
 		profile: data?.profile,
 		organisation: data?.organisation,

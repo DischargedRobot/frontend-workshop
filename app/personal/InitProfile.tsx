@@ -24,8 +24,8 @@ export const InitProfile = () => {
 		if (isLoading) {
 			return
 		}
-		console.log(profile, organisation)
 		if (profile && organisation) {
+			// console.log(profile, "profile")
 			setProfile(profile)
 			setOrganisation(organisation)
 		} else {
