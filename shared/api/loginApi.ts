@@ -45,7 +45,7 @@ const loginApi = {
 				method: "POST",
 				body: JSON.stringify(data),
 			})
-		} catch (error) {}
+		} catch {}
 	},
 
 	logIn: async (data: LogInRequest) => {

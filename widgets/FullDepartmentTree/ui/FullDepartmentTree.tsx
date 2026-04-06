@@ -4,14 +4,12 @@ import "./FullDepartmentTree.scss"
 
 import { DepartmentTree, IDepartment } from "@/entities/Departments"
 import { AddDepartment } from "@/features/AddDepartment"
-import useFullDepartmentTree from "../model/useFullDepartmentTree"
+import { useFullDepartmentTree } from "../model"
 import { DeleteSelectedDepartments } from "@/features/DeleteSelectedDepartments"
 import { SearchDropDownMenu } from "@/shared/model/SearchDropMenu"
-import { useFullDepartmentTreeWidget } from "../model/useFullDepartmentTreeWidget"
 
 const FullDepartmentTree = () => {
-	useFullDepartmentTree()
-	const { organisation, departments } = useFullDepartmentTreeWidget()
+	const { organisation, departments } = useFullDepartmentTree()
 
 	return (
 		<div className="department-tree">

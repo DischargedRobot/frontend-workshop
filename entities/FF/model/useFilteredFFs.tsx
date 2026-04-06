@@ -1,12 +1,8 @@
 import { useMemo } from "react"
 import useFFStore from "./useFFStrore"
 import useFFFiltersStore from "./useFFFiltersStore"
-import { IFeatureFlag } from "../ui/FFTable"
 import { useShallow } from "zustand/shallow"
-import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore"
-import useSWR from "swr"
-import { FFApi } from "../api"
-import { set } from "react-hook-form"
+import { IFeatureFlag } from "../lib"
 
 // TODO: в lib
 type TFilterKey = "departmentIds" | "name"

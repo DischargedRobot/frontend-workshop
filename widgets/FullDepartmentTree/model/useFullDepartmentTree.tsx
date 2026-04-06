@@ -1,9 +1,15 @@
-import { departmentApi } from "@/entities/Departments"
-import useDepartmentsStore from "@/entities/Departments/model/useDepartmentsStore"
-import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore"
-import { useEffect } from "react"
-import useSWR from "swr"
+import { useDepartmentsStore } from "@/entities/Departments"
+import { useOrganisationStore } from "@/entities/Organisation"
+import { useShallow } from "zustand/shallow"
 
-const useFullDepartmentTree = () => {}
+export const useFullDepartmentTree = () => {
+	const organisation = useOrganisationStore((state) => state.organisation)
+	const departments = useDepartmentsStore(
+		useShallow((state) => state.getDepartmentsIncludingAllChildren()),
+	)
 
-export default useFullDepartmentTree
+	return {
+		organisation,
+		departments,
+	}
+}

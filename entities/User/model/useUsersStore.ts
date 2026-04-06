@@ -14,8 +14,8 @@ interface IUseUsers {
 
 const createIntialRoles = (): IRole[] => {
 	const roles: IRole[] = []
-	for (const [key, value] of Object.entries(TROLE)) {
-		roles.push({ name: key, type: value, isEnabled: false })
+	for (const value of Object.values(TROLE)) {
+		roles.push({ name: "DC", type: value, isEnabled: false })
 	}
 	return roles
 }

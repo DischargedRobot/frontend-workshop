@@ -13,13 +13,14 @@ export async function functionInitApplication(): Promise<{
 	// Получаем конкретную куку
 	const userId = cookieStore.get("SESSION")
 
-	console.log("fsdfds")
 	const { uuidDepartment, ...profile } = await loginApi.getMe(
 		`SESSION=${userId?.value}`,
 	)
+	console.log("uuu")
 	const organisation = await organisationApi.getOrganisation(
 		uuidDepartment,
 		`SESSION=${userId?.value}`,
 	)
+	console.log("organ")
 	return { profile, organisation }
 }

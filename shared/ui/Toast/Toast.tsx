@@ -89,13 +89,13 @@ const Toast = () => {
 				clearTimeout(timer.current)
 			}
 		}
-	}, [key])
+	}, [key, setIsVisible, setIsFade, startTimer])
 
 	useEffect(() => {
 		if (isVisible) {
 			startTimer()
 		}
-	}, [key, startTimer, isVisible])
+	}, [isVisible, startTimer])
 
 	if (!isVisible) {
 		return null
@@ -135,7 +135,7 @@ interface IToastStore extends IToast {
 	setIsVisible: (isVisible: boolean) => void
 }
 
-export const useToastStore = create<IToastStore>((set, get) => ({
+export const useToastStore = create<IToastStore>((set) => ({
 	type: "warning",
 	text: "Тут текст тоста",
 	title: defaultTitle.get("warning"),

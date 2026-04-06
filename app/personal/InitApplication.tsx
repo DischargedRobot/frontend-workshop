@@ -4,6 +4,7 @@ import { useProfileStore } from "@/entities/Profile"
 import { useEffect } from "react"
 import { IProfile } from "@/entities/Profile"
 import { IOrganisation } from "@/entities/Organisation/model/useOrganisationStore"
+import { useApplicationStore } from "@/shared/model/Application"
 
 interface InitApplicationProps {
 	profile: IProfile
@@ -18,11 +19,13 @@ export const InitApplication = ({
 	const setOrganisation = useOrganisationStore(
 		(state) => state.setOrganisation,
 	)
+	const setIsLoading = useApplicationStore((state) => state.setIsLoading)
 
 	useEffect(() => {
 		setProfile(profile)
 		setOrganisation(organisation)
-	}, [profile, organisation, setProfile, setOrganisation])
+		setIsLoading(false)
+	}, [profile, organisation, setProfile, setOrganisation, setIsLoading])
 
 	return null
 }

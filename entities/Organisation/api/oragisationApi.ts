@@ -1,6 +1,6 @@
 import { APIJsonRequest } from "@/shared/api"
 import { IOrganisation } from "../model/useOrganisationStore"
-import { IDepartment, IDepartmentResponse } from "@/entities/Departments"
+import { IDepartmentResponse } from "@/entities/Departments"
 
 const URL = process.env.NEXT_PUBLIC_API_URL_V1
 // /api/v1/find-node
@@ -16,7 +16,7 @@ export const organisationApi = {
 				headers: cookieString ? { Cookie: cookieString } : {},
 			},
 		)
-		const { organizationId, uuid, ...child } = dep
+		const { organizationId, ...child } = dep
 		return {
 			id: organizationId,
 			name: child.name,

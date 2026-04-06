@@ -58,10 +58,12 @@ const useDepartmentTree = () => {
 	console.log(organisation)
 
 	const { data, error } = useSWR<IDepartment[], APIError>(
-		[
-			["organisationId, departmentId"],
-			[organisation.id, organisation.child.id],
-		],
+		organisation.child // не видит, мб из-з гидратации, поэтому тут првоерка
+			? [
+					["organisationId, departmentId"],
+					[organisation.id, organisation.child.id],
+				]
+			: null,
 		() =>
 			departmentApi.getDescedantOfDepartments(
 				organisation.id,

@@ -1,9 +1,20 @@
-// app/dashboard/loading.tsx
-export default function Loading() {
+import React from "react"
+import { Spin } from "antd"
+
+const LoadingPage: React.FC = () => {
 	return (
-		<div className="flex items-center justify-center min-h-screen">
-			sdfsdv sdfa fds
-			<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500" />
+		<div
+			style={{
+				display: "flex",
+				justifyContent: "center",
+				alignItems: "center",
+				minHeight: "100vh",
+			}}
+		>
+			<Spin size="large" tip="Loading..." />
+			APPLICATION
 		</div>
 	)
 }
+
+export default LoadingPage

@@ -1,6 +1,5 @@
 import { IProfile } from "@/entities/Profile/lib"
 import { IRole, TROLE } from "@/shared/model/Role"
-import { randomInt } from "crypto"
 import { create } from "zustand"
 
 interface IProfileStore {
@@ -9,8 +8,8 @@ interface IProfileStore {
 }
 const createIntialRoles = (): IRole[] => {
 	const roles: IRole[] = []
-	for (const [key, value] of Object.entries(TROLE)) {
-		roles.push({ id: randomInt(1000), type: value, isEnabled: true })
+	for (const value of Object.values(TROLE)) {
+		roles.push({ name: "DC", type: value, isEnabled: true })
 	}
 	return roles
 }

@@ -1,1 +1,1 @@
-export { useFullDepartmentTreeWidget } from "./useFullDepartmentTreeWidget"
+export { useFullDepartmentTree } from "./useFullDepartmentTree"
