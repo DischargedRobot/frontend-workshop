@@ -1,0 +1,29 @@
+.user-registration-form {
+	display: flex;
+	flex-direction: column;
+
+	gap: 10px;
+	margin: 0 auto;
+	padding: 24px;
+
+	max-width: 500px;
+	width: 100%;
+
+	&:-webkit-autofill,
+	&:-webkit-autofill:hover,
+	&:-webkit-autofill:focus {
+		-webkit-box-shadow: 0 0 0px 1000px var(--foreground);
+		-webkit-text-fill-color: var(--text-color);
+		transition: background-color ease-in-out 5000s; // а то с углов не уйдёт
+	}
+	.ant-form-item {
+		margin-bottom: 16px;
+	}
+
+	.ant-btn {
+		margin-top: 8px;
+	}
+
+	&__item {
+	}
+}

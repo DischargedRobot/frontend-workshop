@@ -1,55 +1,96 @@
 "use client"
 
-import { Button } from "antd"
+import { Button, Form, Input, Alert } from "antd"
 import "./RegistrationForm.scss"
 
-import { TextInput } from "@/shared/ui"
 import { useRegistrationForm } from "../model"
+import { TextInput } from "@/shared/ui"
+
+interface RegistrationFormValues {
+	OrganisationName: string
+	AdminName: string
+	AdminPassword: string
+}
 
 export const RegistrationForm = () => {
-	const { register, handleSubmit, errors, serverErrors, onSubmit } =
-		useRegistrationForm()
+	const [form] = Form.useForm<RegistrationFormValues>()
+	const { onSubmit, loading, error } = useRegistrationForm()
 
 	return (
-		<form className="registration-table" onSubmit={handleSubmit(onSubmit)}>
-			<div className="registration-table__item">
-				<TextInput
-					name="OrganisationName"
-					placeholder="Название организация"
-					register={register}
-					error={serverErrors?.OrganisationName}
-				/>
-			</div>
+		<Form
+			className="registration-table"
+			form={form}
+			layout="vertical"
+			onFinish={onSubmit}
+		>
+			{error && (
+				<Form.Item>
+					<Alert
+						title="Ошибка регистрации"
+						description={error.message}
+						type="error"
+						showIcon
+						closable
+					/>
+				</Form.Item>
+			)}
+
+			<Form.Item
+				label="Название организации"
+				name="OrganisationName"
+				rules={[
+					{
+						required: true,
+						message: "Введите название организации",
+					},
+				]}
+			>
+				<TextInput placeholder="Название организация" />
+			</Form.Item>
+
 			<div className="registration-table__items">
 				<h3 className="title title_very-litle">
 					Профиль администрации
 				</h3>
-				<TextInput
-					placeholder="Логин"
+
+				<Form.Item
+					label="Логин"
 					name="AdminName"
-					register={register}
-					error={serverErrors?.AdminName}
-				/>
-				<TextInput
-					placeholder="Пароль"
+					rules={[
+						{
+							required: true,
+							message: "Введите логин",
+						},
+					]}
+				>
+					<TextInput placeholder="Логин" />
+				</Form.Item>
+
+				<Form.Item
+					label="Пароль"
 					name="AdminPassword"
-					type="password"
-					rules={{
-						minLength: {
-							value: 6,
+					rules={[
+						{
+							required: true,
+							message: "Это поле обязательно для заполнения",
+						},
+						{
+							min: 6,
 							message: "Размер пароля должен быть больше 6",
 						},
-						maxLength: {
-							value: 25,
+						{
+							max: 25,
 							message: "Размер пароля должен быть меньше 25",
 						},
-						required: "Это поле обязательно для заполнения",
-					}}
-					register={register}
-					error={errors.AdminPassword?.message}
-				/>
+					]}
+				>
+					<TextInput type="password" placeholder="Пароль" />
+				</Form.Item>
 			</div>
-			<Button htmlType="submit">Зарегистрироваться</Button>
-		</form>
+
+			<Button type="primary" htmlType="submit" loading={loading} block>
+				Зарегистрироваться
+			</Button>
+		</Form>
 	)
 }

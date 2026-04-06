@@ -1,7 +1,7 @@
-import { Content } from "antd/es/layout/layout"
 import "./LoginPage.scss"
 
-import { LoginForm } from "@/entities/LogInForm"
+import { Content } from "antd/es/layout/layout"
+import { LoginForm } from "@/features/LogInForm"
 
 const Login = () => {
 	return (

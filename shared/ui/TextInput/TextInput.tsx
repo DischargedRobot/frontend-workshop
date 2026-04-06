@@ -1,45 +1,41 @@
+// TextInput.tsx
 import "./TextInput.scss"
+import { InputHTMLAttributes, useState, ChangeEvent } from "react"
 
-import {
-	UseFormRegister,
-	FieldValues,
-	RegisterOptions,
-	Path,
-} from "react-hook-form"
-
-type Props<T extends FieldValues> = {
-	type?: string
-	placeholder?: string
+type Props = InputHTMLAttributes<HTMLInputElement> & {
 	label?: string
-	name: Path<T>
-	register: UseFormRegister<T>
-	rules?: RegisterOptions<T>
 	error?: string
 	className?: string
+	onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const TextInput = <T extends FieldValues>(props: Props<T>) => {
+const TextInput = (props: Props) => {
 	const {
-		placeholder,
-		name,
-		rules,
-		register,
-		error,
-		type = "text",
 		label,
+		error,
 		className = "",
+		onChange,
+		value: externalValue,
+		...inputProps
 	} = props
+
+	const [internalValue, setInternalValue] = useState(externalValue ?? "")
+
+	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setInternalValue(e.target.value)
+		onChange?.(e)
+	}
 
 	return (
 		<label className="text-filed text text_litle">
 			{label && <span>{label}</span>}
 			<input
-				type={type}
 				className={`text-filed__input ${className}`}
-				placeholder={placeholder ?? ""}
-				{...register(name, rules)}
+				{...inputProps}
+				value={internalValue}
+				onChange={handleChange}
 			/>
-			{error}
+			{error && <span className="error">{error}</span>}
 		</label>
 	)
 }

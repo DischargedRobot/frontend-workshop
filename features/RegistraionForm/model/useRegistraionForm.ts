@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { loginApi } from "@/shared/api"
 import { organisationApi, useOrganisationStore } from "@/entities/Organisation"
@@ -11,20 +10,14 @@ export type FormValues = {
 }
 
 interface RegistrationError {
-	OrganisationName?: string
-	AdminName?: string
-	AdminPassword?: string
+	message: string
+	field?: string
 }
 
 export const useRegistrationForm = () => {
 	const router = useRouter()
-	const [serverErrors, setServerErrors] = useState<RegistrationError>()
-
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<FormValues>()
+	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState<RegistrationError | null>(null)
 
 	const setOrganisation = useOrganisationStore(
 		(state) => state.setOrganisation,
@@ -32,6 +25,9 @@ export const useRegistrationForm = () => {
 
 	const onSubmit = async (data: FormValues) => {
 		try {
+			setLoading(true)
+			setError(null)
+
 			await loginApi.registerOrganization({
 				organization_name: data.OrganisationName,
 				login: data.AdminName,
@@ -50,14 +46,18 @@ export const useRegistrationForm = () => {
 			setOrganisation(organisation)
 			console.log(organisation, "orga")
 			router.push("/personal/ffmenu")
-		} catch {}
+		} catch (err) {
+			setError({
+				message: "Ошибка при регистрации организации",
+			})
+		} finally {
+			setLoading(false)
+		}
 	}
 
 	return {
-		register,
-		handleSubmit,
-		errors,
-		serverErrors,
 		onSubmit,
+		loading,
+		error,
 	}
 }

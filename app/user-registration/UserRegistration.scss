@@ -1,0 +1,10 @@
+@use "@/common/styles/placeholder.scss";
+
+.user-registration {
+	@extend %center_content;
+}
+
+.user-registration__content {
+	@extend %flex-column;
+	align-items: center;
+}

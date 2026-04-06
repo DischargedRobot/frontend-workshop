@@ -11,7 +11,7 @@ const LoadingPage: React.FC = () => {
 				minHeight: "100vh",
 			}}
 		>
-			<Spin size="large" tip="Loading..." />
+			<Spin size="large" description="Loading..." />
 			APPLICATION
 		</div>
 	)
