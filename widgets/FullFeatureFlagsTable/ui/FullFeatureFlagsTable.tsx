@@ -11,7 +11,7 @@ import { useFullFeatureFlagsTable } from "../model"
 const FullFeatureFlagsTable = () => {
 	const {
 		lastDepInBredcrumb,
-		organisationId,
+		organisation,
 		setFeatureFlagName,
 		reloadFeatureFlags,
 	} = useFullFeatureFlagsTable()
@@ -25,10 +25,7 @@ const FullFeatureFlagsTable = () => {
 				<FFSearch
 					onSearch={(e) => setFeatureFlagName(e.target.value)}
 				/>
-				<AddFeatureFlag
-					organisationId={organisationId}
-					nodeId={lastDepInBredcrumb}
-				/>
+				<AddFeatureFlag organisation={organisation} />
 				<ReloadFeaturesFlags onClick={reloadFeatureFlags} />
 			</Flex>
 			<FFTable featureFlags={featureFlags} />
