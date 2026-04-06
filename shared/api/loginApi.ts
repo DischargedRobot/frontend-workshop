@@ -1,3 +1,4 @@
+import { IProfile } from "@/entities/Profile"
 import { IRole, TROLE } from "../model/Role"
 import APIJsonRequest from "./APIJsonRequest"
 
@@ -13,9 +14,19 @@ interface LogInRequest {
 }
 
 interface LogInResponse {
+	id: number
 	login: string
 	roles: RoleResponse[]
 	uuidDepartament: string
+}
+
+interface GetMeResponse {
+	id: number
+	login: string
+	password: string
+	roles: RoleResponse[]
+	uuidDepartament: string
+	settings?: object
 }
 
 interface RoleResponse {
@@ -23,23 +34,22 @@ interface RoleResponse {
 	name: TROLE
 }
 
+const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL_V1
+
 // В shared т.к. часто используется другими
 const loginApi = {
 	registerOrganization: async (data: RegistrationRequest): Promise<void> => {
 		try {
-			await APIJsonRequest<void>(
-				`${process.env.NEXT_PUBLIC_AUTH_URL_V1}/register-organization`,
-				{
-					method: "POST",
-					body: JSON.stringify(data),
-				},
-			)
+			await APIJsonRequest<void>(`${AUTH_URL}/register-organization`, {
+				method: "POST",
+				body: JSON.stringify(data),
+			})
 		} catch (error) {}
 	},
 
 	logIn: async (data: LogInRequest) => {
 		const response = await APIJsonRequest<LogInResponse>(
-			`${process.env.NEXT_PUBLIC_AUTH_URL_V1}/login`,
+			`${AUTH_URL}/login`,
 			{
 				method: "POST",
 				body: JSON.stringify(data),
@@ -61,21 +71,39 @@ const loginApi = {
 	},
 
 	logOut: async (): Promise<void> => {
-		await APIJsonRequest<void>(
-			`${process.env.NEXT_PUBLIC_AUTH_URL_V1}/logout`,
-			{ method: "POST" },
-		)
+		await APIJsonRequest<void>(`${AUTH_URL}/logout`, { method: "POST" })
 	},
 
 	refreshAuth: async (sessionId: string): Promise<void> => {
-		await APIJsonRequest<void>(
-			`${process.env.NEXT_PUBLIC_AUTH_URL_V1}/refresh`,
-			{
-				method: "POST",
-				body: JSON.stringify({ sessionId }),
-			},
-		)
+		await APIJsonRequest<void>(`${AUTH_URL}/refresh`, {
+			method: "POST",
+			body: JSON.stringify({ sessionId }),
+		})
 	},
+
+	getMe: async (): Promise<IProfile & { uuidDepartment: string }> => {
+		const response = await APIJsonRequest<GetMeResponse>(
+			`${process.env.NEXT_PUBLIC_AUTH_SERVICE_URL_V1}/clients/me`,
+			{ method: "GET" },
+		)
+
+		return {
+			id: response.id,
+			login: response.login,
+			password: response.password,
+			roles: ConverterRoleRespToIRol(response.roles),
+			uuidDepartment: response.uuidDepartament,
+			settings: response.settings,
+		}
+	},
+}
+
+export const ConverterRoleRespToIRol = (roles: RoleResponse[]): IRole[] => {
+	return roles.map<IRole>((role) => ({
+		id: role.id,
+		type: role.name,
+		isEnabled: true,
+	}))
 }
 
 export default loginApi

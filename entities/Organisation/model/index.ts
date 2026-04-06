@@ -1,1 +1,1 @@
-export { default as useOrganisationStore } from "./useOrganisationStore"
+export { useOrganisationStore } from "./useOrganisationStore"

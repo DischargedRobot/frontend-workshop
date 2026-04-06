@@ -2,7 +2,7 @@ import { connection, NextRequest, NextResponse } from "next/server"
 
 const protectRoutes = ["/personal"]
 
-const AUTH_URL = process.env.API_AUT_URL_V1
+const AUTH_URL = `${process.env.API_AUT_SERVICE_URL_V1}/auth`
 
 // ставим полученный куки из респонса в некст респонс
 const setCookieFromApiResponse = (

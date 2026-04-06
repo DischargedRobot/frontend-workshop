@@ -1,4 +1,3 @@
-import useOrganisationStore from "@/entities/Organisation/model/useOrganisationStore"
 import useFFFiltersStore from "./useFFFiltersStore"
 import useSWR from "swr"
 import { useFFStore } from "."
@@ -8,6 +7,7 @@ import { APIError } from "@/shared/api/APIErrors"
 import { useEffect, useMemo } from "react"
 import { useShallow } from "zustand/shallow"
 import { IFeatureFlag } from "../lib"
+import { useOrganisationStore } from "@/entities/Organisation"
 
 const EMPTY_ARRAY: IFeatureFlag[] = []
 

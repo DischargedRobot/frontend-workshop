@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
 			// '@styles': path.resolve(__dirname, 'app/common/styles'),
 		},
 	},
+	reactCompiler: true,
 }
 
 export default nextConfig

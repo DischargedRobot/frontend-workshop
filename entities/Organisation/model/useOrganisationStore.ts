@@ -14,7 +14,7 @@ interface IOrganisationStore {
 	changeChild: (newChildren: IDepartment[]) => void
 }
 
-const useOrganisationStore = create<IOrganisationStore>((set) => ({
+export const useOrganisationStore = create<IOrganisationStore>((set) => ({
 	organisation: {
 		id: 2,
 		name: "Рога и копыта",
@@ -41,5 +41,3 @@ const useOrganisationStore = create<IOrganisationStore>((set) => ({
 			},
 		})),
 }))
-
-export default useOrganisationStore
