@@ -1,11 +1,7 @@
-import { IUser } from "@/entities/User/UserCard/ui/types"
-import loginApi from "@/shared/api/loginApi"
+import { IProfile } from "@/entities/Profile/lib"
 import { IRole, TROLE } from "@/shared/model/Role"
-import { profile } from "console"
-import { set } from "react-hook-form"
+import { randomInt } from "crypto"
 import { create } from "zustand"
-
-export interface IProfile extends IUser {}
 
 interface IProfileStore {
 	profile: IProfile
@@ -14,12 +10,12 @@ interface IProfileStore {
 const createIntialRoles = (): IRole[] => {
 	const roles: IRole[] = []
 	for (const [key, value] of Object.entries(TROLE)) {
-		roles.push({ name: key, type: value, isEnabled: true })
+		roles.push({ id: randomInt(1000), type: value, isEnabled: true })
 	}
 	return roles
 }
 
-const useProfileStore = create<IProfileStore>((set, get) => ({
+const useProfileStore = create<IProfileStore>((set) => ({
 	profile: {
 		login: "Robo",
 		password: "password",

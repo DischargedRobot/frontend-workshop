@@ -1,8 +1,7 @@
 import { IDepartment } from "../lib/DepartmentType"
 import APIJsonRequest from "@/shared/api/APIJsonRequest"
-import { APIError, isAPIError, mapAPIErrors } from "@/shared/api/APIErrors"
+import { isAPIError, mapAPIErrors } from "@/shared/api/APIErrors"
 import { IOrganisation } from "@/entities/Organisation/model/useOrganisationStore"
-import { SassNumber } from "sass"
 
 const URL_ORGANISATION = process.env.NEXT_PUBLIC_API_ORGANISATIONS_URL_V1
 export interface IDepartmentResponse {
@@ -69,22 +68,22 @@ const convertIDepartmentResponseToIDepartmentWithOrganisation = (
 	return nodes
 }
 
-const reduceChilrenDepRespToParentDepartment = (
-	departmentsResponse: IDepartmentResponse[],
-	department: IDepartment,
-): void => {
-	departmentsResponse.forEach((depResp) => {
-		department.children.push({
-			id: depResp.id,
-			name: depResp.name,
-			children: [],
-			featureFlags: [],
-			path: "",
-			isService: depResp.isService,
-			version: depResp.version,
-		})
-	})
-}
+// const reduceChilrenDepRespToParentDepartment = (
+// 	departmentsResponse: IDepartmentResponse[],
+// 	department: IDepartment,
+// ): void => {
+// 	departmentsResponse.forEach((depResp) => {
+// 		department.children.push({
+// 			id: depResp.id,
+// 			name: depResp.name,
+// 			children: [],
+// 			featureFlags: [],
+// 			path: "",
+// 			isService: depResp.isService,
+// 			version: depResp.version,
+// 		})
+// 	})
+// }
 
 // Собираем ответ в родительский отдел
 const reduceDepRespToParentDep = (

@@ -1,3 +1,5 @@
+export type { IUser } from "./lib"
+
 export { UserCard, UserList } from "./ui"
 export {
 	useUserCard,

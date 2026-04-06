@@ -1,6 +1,7 @@
 import { IDepartment } from "@/entities/Departments"
-import { IUser } from "@/entities/User/UserCard/ui/types"
+import { IUser } from "@/entities/User"
 import { IRole, TROLE } from "@/shared/model/Role"
+import { randomInt } from "crypto"
 import { create } from "zustand"
 
 const API_URL = "api/"
@@ -21,12 +22,12 @@ interface IUseStructure {
 const createIntialRoles = (): IRole[] => {
 	const roles: IRole[] = []
 	for (const [key, value] of Object.entries(TROLE)) {
-		roles.push({ name: key, type: value, isEnabled: false })
+		roles.push({ id: randomInt(100000), type: value, isEnabled: false })
 	}
 	return roles
 }
 
-const useStructure = create<IUseStructure>((set, get) => ({
+const useStructure = create<IUseStructure>((set) => ({
 	users: [
 		{
 			login: "L",

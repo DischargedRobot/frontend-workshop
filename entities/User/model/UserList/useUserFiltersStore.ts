@@ -10,7 +10,7 @@ interface IFilterStore {
 	setFilters: (filters: Partial<IFilteringFunctionArguments>) => void
 }
 
-const useUserFiltersStore = create<IFilterStore>((set, get) => ({
+const useUserFiltersStore = create<IFilterStore>((set) => ({
 	departmentIds: [],
 	login: "",
 

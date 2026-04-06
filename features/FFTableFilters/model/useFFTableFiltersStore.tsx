@@ -1,8 +1,11 @@
-import { IFeatureFlag } from "@/entities/FF/ui/FFTable"
+import { IFeatureFlag } from "@/entities/FF"
 import { create } from "zustand"
 
 export type TFeatureFlagTable = {
-	[K in keyof Omit<Required<IFeatureFlag>, "id" | "departmentId" | "name">]: {
+	[K in keyof Omit<
+		Required<IFeatureFlag>,
+		"id" | "departmentId" | "name" | "version"
+	>]: {
 		name: string
 		isVisible: boolean
 	}
