@@ -10,6 +10,7 @@ import { memo } from "react"
 import RoleStatus from "@/shared/model/RolesStatus/RolesStatus"
 import UserDepartmentsDropDownMenu from "@/features/UserDepartmentsDropDownMenu"
 import { useUserCard } from "../../model/UserCard"
+import { Can } from "@/shared/model/Ability"
 
 interface Props {
 	user: IUser
@@ -42,12 +43,14 @@ const UserCard = ({ user, setUser }: Props) => {
 			/>
 			<span className="user-card__avatar">
 				<Avatar />
-				<button
-					className="user-card__delete-button"
-					onClick={() => deleteUserById(user.id)}
-				>
-					<DeleteIcon />
-				</button>
+				<Can I="delete" an="User">
+					<button
+						className="user-card__delete-button"
+						onClick={() => deleteUserById(user.id)}
+					>
+						<DeleteIcon />
+					</button>
+				</Can>
 			</span>
 			<form
 				className="user-card__personal-data"

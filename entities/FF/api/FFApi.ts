@@ -168,13 +168,17 @@ const FFApi = {
 	createFF: async (
 		organisationId: number,
 		nodeId: number,
-		data: Pick<IFeatureFlag, "name" | "value">,
+		ff: Pick<IFeatureFlag, "name" | "value">,
 	): Promise<IFeatureFlag> => {
 		return APIJsonRequest<IFeatureFlag>(
 			`${URL_ORGANISATION}/${organisationId}/nodes/${nodeId}/feature-flags`,
 			{
 				method: "POST",
-				body: JSON.stringify(data),
+				body: JSON.stringify({
+					name: ff.name,
+					isService: ff.value,
+					parentId: nodeId,
+				}),
 			},
 		)
 	},

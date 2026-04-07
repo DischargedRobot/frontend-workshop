@@ -81,15 +81,21 @@ export const AddFeatureFlag = ({ organisation }: Props) => {
 					</Form.Item>
 
 					<Form.Item>
-						<Button type="primary" htmlType="submit">
-							Добавить
-						</Button>
-						<Button
-							onClick={() => form.resetFields()}
-							style={{ marginLeft: "8px" }}
-						>
-							Сброс
-						</Button>
+						<div className="add-feature-flag__buttons">
+							<Button
+								className="add-feature-flag__button"
+								htmlType="submit"
+							>
+								Добавить
+							</Button>
+							<Button
+								className="add-feature-flag__button"
+								onClick={() => form.resetFields()}
+								style={{ marginLeft: "8px" }}
+							>
+								Сброс
+							</Button>
+						</div>
 					</Form.Item>
 				</Form>
 			)}
