@@ -7,6 +7,7 @@ import UserList from "@/entities/User/ui/UserList/UserList"
 import { AddUser } from "@/features/AddUser"
 import { RegistrationQrCode } from "@/features/RegistrationQrCode/ui/RegistrationQrCode"
 import UserSearch from "@/features/UserSearch/ui/UserSearch"
+import { Can } from "@/shared/model/Ability"
 
 export const FullUserList = () => {
 	const setLogin = useUserFiltersStore((state) => state.setLogin)
@@ -15,15 +16,21 @@ export const FullUserList = () => {
 		<div className="full-user-list">
 			<div className="full-user-list__title">
 				{/* <h2>Пользователи</h2> */}
-				<UserSearch
-					onSearch={(e) => {
-						setLogin(e.target.value)
-					}}
-				/>
-				<AddUser />
+				<Can I="read" a="User">
+					<UserSearch
+						onSearch={(e) => {
+							setLogin(e.target.value)
+						}}
+					/>
+				</Can>
+				<Can I="create" a="User">
+					<AddUser />
+				</Can>
 			</div>
 
-			<UserList />
+			<Can I="read" a="User">
+				<UserList />
+			</Can>
 		</div>
 	)
 }

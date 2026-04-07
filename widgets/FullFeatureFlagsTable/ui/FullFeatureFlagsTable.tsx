@@ -7,28 +7,29 @@ import ReloadFeaturesFlags from "@/features/ReloadFeatureFlags/ReloadFeaturesFla
 import { FFTableFilters } from "@/features/FFTableFilters"
 import { Flex } from "antd"
 import { useFullFeatureFlagsTable } from "../model"
+import { Can } from "@/shared/model/Ability"
 
 const FullFeatureFlagsTable = () => {
-	const {
-		lastDepInBredcrumb,
-		organisation,
-		setFeatureFlagName,
-		reloadFeatureFlags,
-	} = useFullFeatureFlagsTable()
+	const { organisation, setFeatureFlagName, reloadFeatureFlags } =
+		useFullFeatureFlagsTable()
 
 	const featureFlags = useFilteredFFs()
 
 	return (
 		<div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-			<Flex align="center" gap={30}>
-				<FFTableFilters />
-				<FFSearch
-					onSearch={(e) => setFeatureFlagName(e.target.value)}
-				/>
-				<AddFeatureFlag organisation={organisation} />
-				<ReloadFeaturesFlags onClick={reloadFeatureFlags} />
-			</Flex>
-			<FFTable featureFlags={featureFlags} />
+			<Can I="read" a="FF">
+				<Flex align="center" gap={30}>
+					<FFTableFilters />
+					<FFSearch
+						onSearch={(e) => setFeatureFlagName(e.target.value)}
+					/>
+					<Can I="create" a="FF">
+						<AddFeatureFlag organisation={organisation} />
+					</Can>
+					<ReloadFeaturesFlags onClick={reloadFeatureFlags} />
+				</Flex>
+				<FFTable featureFlags={featureFlags} />
+			</Can>
 		</div>
 	)
 }

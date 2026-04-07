@@ -30,7 +30,7 @@ export const useRegistrationForm = (token: string) => {
 				token,
 			)
 
-			router.push("/ffmenu")
+			router.push("/personal/ffmenu")
 		} catch (err) {
 			const error = err as APIError
 			switch (error.status) {

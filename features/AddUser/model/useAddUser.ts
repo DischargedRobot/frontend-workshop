@@ -27,12 +27,13 @@ export const useAddUser = () => {
 	const [depError, setDepError] = useState<string | null>(null)
 
 	const handleAPIError = useAPIErrorHandler()
+
 	const handleGetToken = async () => {
 		try {
 			if (selectedDepartment) {
 				if (selectedDepartment.uuid) {
 					const token = await loginApi.generateInvite(
-						roles,
+						roles.filter((role) => role.isEnabled),
 						selectedDepartment.uuid,
 					)
 					const newUrl = new URL(

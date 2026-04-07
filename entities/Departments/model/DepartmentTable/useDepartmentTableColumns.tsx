@@ -30,6 +30,7 @@ export const useDepartmentTableColumns = () => {
 		(state) => state.setDepartment,
 	)
 
+	// Получение фич флагов для выбранного отдела
 	const getFFAndAddToStore = async (departmentId: number) => {
 		try {
 			const FFs = await mutate(

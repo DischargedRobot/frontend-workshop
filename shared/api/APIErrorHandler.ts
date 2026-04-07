@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 export const useAPIErrorHandler = () => {
 	const router = useRouter()
 
-	// чтобы при рендере компонента не вызывалась повторно
+	// чтобы при рендере компонента не перезаписывалась повторно
 	const handleError = useCallback(
 		(error: APIError | Error) => {
 			const apiError: APIError = isAPIError(error)

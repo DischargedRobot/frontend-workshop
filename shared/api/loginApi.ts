@@ -125,7 +125,7 @@ const loginApi = {
 	},
 
 	generateInvite: async (
-		userRoles: IRole[],
+		userRoles: IRole[] = [],
 		uuidDepartment: string,
 	): Promise<string> => {
 		const roles = userRoles.map((role) => role.type)

@@ -20,7 +20,19 @@ export class APIError extends Error implements IResponseError {
 }
 
 export function isAPIError(error: unknown): error is APIError {
-	return error instanceof APIError
+	return (
+		error instanceof APIError ||
+		(typeof error === "object" &&
+			error !== null &&
+			//
+			"status" in error &&
+			typeof error.status === "number" &&
+			error.status >= 300 &&
+			error.status < 600 &&
+			//
+			"message" in error &&
+			typeof error.message === "string")
+	)
 }
 
 // все ошибки с бека

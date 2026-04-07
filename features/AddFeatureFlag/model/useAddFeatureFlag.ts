@@ -1,13 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { Form } from "antd"
 import { FFApi, IFeatureFlag } from "@/entities/FF"
-import { APIError } from "@/shared/api"
+import { APIError, isAPIError } from "@/shared/api"
+import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
+import { showToast } from "@/shared/ui"
 import { useBreadcrumbStore } from "@/entities/DepartmentBreadcamb"
 import { useShallow } from "zustand/shallow"
 import { IOrganisation } from "@/entities/Organisation/model/useOrganisationStore"
-import { IDepartment } from "@/entities/Departments"
 
 type FormValues = Pick<IFeatureFlag, "name" | "value" | "departmentId">
 
@@ -16,72 +17,46 @@ export const useAddFeatureFlag = (organisation: IOrganisation) => {
 		useShallow((state) => state.getLastDepartment()),
 	)
 
-	const [departmentId, setDepartmentId] = useState<number>(
-		currentDep?.id ?? organisation.child.id,
-	)
-
 	const [isVisible, setIsVisible] = useState(false)
-	// для сброса состояния
-	const [resetKey, setResetKey] = useState(0)
+	const [form] = Form.useForm()
 
-	const {
-		handleSubmit,
-		formState: { errors },
-		register,
-		control,
-		reset,
-	} = useForm<FormValues>({
-		defaultValues: {
-			name: "",
-			value: false,
-			departmentId: currentDep?.id ?? organisation.child.id,
-		},
-	})
-
-	const resetForm = () => {
-		setDepartmentId(currentDep?.id ?? organisation.child.id)
-		setResetKey((k) => k + 1)
-		reset()
-	}
-
-	const onSubmit = handleSubmit(async (data: FormValues) => {
-		try {
-			await FFApi.createFF(organisation.id, departmentId, data)
-			setIsVisible(false)
-		} catch (error) {
-			if (error instanceof APIError && error.status == 409) {
-			}
-		}
-	})
-
-	const defaultDep: IDepartment | undefined = currentDep ?? undefined
+	const defaultDepartmentId = currentDep?.id ?? organisation.child.id
 
 	const departmentOptions = [
 		...(currentDep?.children.map((dep) => ({
 			label: dep.name,
-			value: dep,
+			value: dep.id,
 		})) ?? []),
-		...(currentDep ? [{ label: currentDep.name, value: currentDep }] : []),
+		...(currentDep
+			? [{ label: currentDep.name, value: currentDep.id }]
+			: []),
 	]
 
-	const handleSelectDepartment = (dep: IDepartment | null) => {
-		if (dep) {
-			setDepartmentId(dep.id)
-			return dep
+	// обработка ошибки
+	const handleAPIError = useAPIErrorHandler()
+	const handleFormSubmit = async (values: FormValues) => {
+		try {
+			await FFApi.createFF(organisation.id, values.departmentId, values)
+			setIsVisible(false)
+			form.resetFields()
+		} catch (error) {
+			if (isAPIError(error) && error.status === 409) {
+				showToast({
+					type: "warning",
+					text: "Фич флаг с таким именем уже существует",
+				})
+			} else {
+				handleAPIError(error as APIError)
+			}
 		}
 	}
 
 	return {
-		onSubmit,
-		control,
-		errors,
-		register,
+		form,
 		isVisible,
 		setIsVisible,
-		resetForm,
-		resetKey,
-		defaultDep,
 		departmentOptions,
-		handleSelectDepartment,
+		defaultDepartmentId,
+		handleFormSubmit,
 	}
 }

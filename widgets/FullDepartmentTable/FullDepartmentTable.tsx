@@ -8,6 +8,7 @@ import TableName from "@/shared/ui/TableName/TableName"
 import { useFFMenu } from "../../app/personal/ffmenu/useFFMenu"
 import { useShallow } from "zustand/shallow"
 import useBreadcrumbStore from "@/entities/DepartmentBreadcamb/model/useBreadcrumbStore"
+import { Can } from "@/shared/model/Ability"
 
 const FullDepartmentTable = () => {
 	//   const toDepartment  = useDepartment((state) => state.toDepartment)
@@ -22,13 +23,15 @@ const FullDepartmentTable = () => {
 	const lastDep = useBreadcrumbStore((state) => state.path.at(-1))
 	return (
 		<div className="full-department-table">
-			<DepartmentBreadcamb />
-			<TableName
-				title={lastDep?.name ?? "Отделы"}
-				isHidden={isHidden}
-				setIsHidden={setIsHidden}
-			/>
-			<TableDepartment />
+			<Can I="read" a="Department">
+				<DepartmentBreadcamb />
+				<TableName
+					title={lastDep?.name ?? "Отделы"}
+					isHidden={isHidden}
+					setIsHidden={setIsHidden}
+				/>
+				<TableDepartment />
+			</Can>
 		</div>
 	)
 }
