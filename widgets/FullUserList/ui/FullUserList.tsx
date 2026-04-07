@@ -4,6 +4,7 @@ import "./FullUserList.scss"
 
 import { useUserFiltersStore } from "@/entities/User"
 import UserList from "@/entities/User/ui/UserList/UserList"
+import { AddUser } from "@/features/AddUser"
 import { RegistrationQrCode } from "@/features/RegistrationQrCode/ui/RegistrationQrCode"
 import UserSearch from "@/features/UserSearch/ui/UserSearch"
 
@@ -19,7 +20,7 @@ export const FullUserList = () => {
 						setLogin(e.target.value)
 					}}
 				/>
-				<RegistrationQrCode url="yandex.ru" />
+				<AddUser />
 			</div>
 
 			<UserList />

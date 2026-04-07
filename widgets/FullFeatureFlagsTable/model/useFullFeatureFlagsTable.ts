@@ -29,7 +29,7 @@ export const useFullFeatureFlagsTable = () => {
 
 	return {
 		organisation,
-		lastDepInBredcrumb: lastDep.id,
+		lastDepInBredcrumb: lastDep?.id ?? organisation.child.id,
 		setFeatureFlagName,
 		reloadFeatureFlags,
 	}

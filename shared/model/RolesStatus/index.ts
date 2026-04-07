@@ -1,1 +1,1 @@
-export { default } from "./RolesStatus"
+export { default as RolesStatus } from "./RolesStatus"

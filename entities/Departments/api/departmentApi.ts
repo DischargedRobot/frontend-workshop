@@ -31,13 +31,9 @@ const convertIDepartmentResponseToIDepartmentWithOrganisation = (
 	// Обрабатываем вход в map
 	departmentsResponse.forEach((depResp) => {
 		nodeMap.set(depResp.id, {
-			id: depResp.id,
-			name: depResp.name,
+			...depResp,
 			children: [],
 			featureFlags: [],
-			path: "",
-			isService: depResp.isService,
-			version: depResp.version,
 		})
 	})
 

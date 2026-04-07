@@ -16,4 +16,5 @@ export interface IDepartment {
 	path: string
 	version: number
 	isService: boolean
+	uuid?: string
 }

@@ -31,10 +31,9 @@ export const AddFeatureFlag = ({ organisation }: Props) => {
 
 	return (
 		<div className="add-feature-flag">
-			<AddButton
-				text="Добавить"
-				onClick={() => setIsVisible((v) => !v)}
-			/>
+			<AddButton onClick={() => setIsVisible((v) => !v)}>
+				Добавить
+			</AddButton>
 			{isVisible && (
 				<form
 					className="add-feature-flag__feature-flag-form feature-flag-form"

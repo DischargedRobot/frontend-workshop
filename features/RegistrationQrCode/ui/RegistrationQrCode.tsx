@@ -2,9 +2,7 @@ import { useState } from "react"
 import { AddButton } from "@/shared/ui"
 import "./RegistrationQrCode.scss"
 
-import Text from "antd/es/typography/Text"
 import { QRCodeSVG } from "qrcode.react"
-import { message } from "antd"
 
 export const RegistrationQrCode = ({ url }: { url: string }) => {
 	const [isVisible, setIsVisible] = useState(false)

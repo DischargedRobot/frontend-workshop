@@ -1,10 +1,9 @@
 "use client"
 import "./UserRegistrationForm.scss"
 
-import { Button, Form, Alert } from "antd"
+import { Button, Form } from "antd"
 import { useRegistrationForm } from "../model"
 import { TextInput } from "@/shared/ui"
-import { error } from "console"
 import { memo } from "react"
 
 interface RegistrationForm {

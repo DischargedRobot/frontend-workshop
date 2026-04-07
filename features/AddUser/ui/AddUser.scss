@@ -1,0 +1,55 @@
+@use "@/common/styles/placeholder.scss";
+
+.add-user {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 50vw;
+	min-width: 500px;
+	width: 100%;
+	gap: 16px;
+
+	.qr-code {
+		cursor: pointer;
+	}
+
+	&__qr-code-container {
+		@extend %flex;
+		align-items: center;
+		gap: 20px;
+	}
+
+	&__token-container {
+		@extend %flex-column;
+
+		width: 100%;
+		gap: 10px;
+	}
+
+	&__token {
+		cursor: pointer;
+		display: grid;
+		grid-template-columns: auto 20px;
+		justify-content: space-between;
+
+		width: 100% !important;
+		padding: 4px 10px;
+		border-radius: 16px;
+		background-color: var(--shadow);
+
+		color: var(--text-color);
+	}
+}
+
+.add-user__search {
+	width: 100%;
+}
+
+.url {
+	max-width: 300px;
+	width: 100%;
+	overflow: hidden;
+
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

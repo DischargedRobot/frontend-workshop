@@ -1,9 +1,9 @@
 "use client"
 
-import { Button, Form, Input, Alert } from "antd"
-import "./RegistrationForm.scss"
+import { Button, Form, Alert } from "antd"
+import "./OrganisationRegistrationForm.scss"
 
-import { useRegistrationForm } from "../model"
+import { useOrganisationRegistrationForm } from "../model"
 import { TextInput } from "@/shared/ui"
 
 interface RegistrationFormValues {
@@ -12,9 +12,9 @@ interface RegistrationFormValues {
 	AdminPassword: string
 }
 
-export const RegistrationForm = () => {
+export const OrganisationRegistrationForm = () => {
 	const [form] = Form.useForm<RegistrationFormValues>()
-	const { onSubmit, loading, error } = useRegistrationForm()
+	const { onSubmit, loading, error } = useOrganisationRegistrationForm()
 
 	return (
 		<Form

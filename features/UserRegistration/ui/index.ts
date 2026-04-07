@@ -1,1 +1,1 @@
-export { UserRegistrationForm } from "./UserRegistrationForm"
+export { default as UserRegistrationForm } from "./UserRegistrationForm"

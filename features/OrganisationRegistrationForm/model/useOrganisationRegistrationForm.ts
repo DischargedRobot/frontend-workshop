@@ -14,7 +14,7 @@ interface RegistrationError {
 	field?: string
 }
 
-export const useRegistrationForm = () => {
+export const useOrganisationRegistrationForm = () => {
 	const router = useRouter()
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState<RegistrationError | null>(null)

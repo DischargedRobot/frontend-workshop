@@ -1,0 +1,35 @@
+.add-user-roles {
+	display: flex;
+	gap: 24px;
+	width: 100%;
+
+	&__block {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+
+		max-width: 200px;
+		width: 100%;
+	}
+
+	hr {
+		height: 2px;
+		background-color: var(--stroke-opacity);
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+
+		gap: 8px;
+		margin: 0;
+		padding: 0;
+	}
+
+	&__item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 4px 0;
+	}
+}

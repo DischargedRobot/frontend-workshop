@@ -4,12 +4,12 @@ import { MouseEvent } from "react"
 import { PlusCircleOutlined } from "@ant-design/icons"
 
 type Props = {
-	text?: string
+	children?: React.ReactNode
 	type?: "button" | "submit" | "reset"
 	onClick?: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
-const AddButton = ({ text = "", type = "button", onClick }: Props) => {
+const AddButton = ({ type = "button", onClick, children }: Props) => {
 	return (
 		<button
 			className="add-button text text_litle text_tiny"
@@ -17,7 +17,7 @@ const AddButton = ({ text = "", type = "button", onClick }: Props) => {
 			onClick={onClick}
 		>
 			<PlusCircleOutlined />
-			{text}
+			{children}
 		</button>
 	)
 }

@@ -1,18 +1,18 @@
 import "./RolesStatus.scss"
 
 import { Switch } from "antd"
-import { IRole, NAMES_OF_ROLE_ACTIONS } from "../Role/types"
 import { memo, useState } from "react"
 import { PlusOutlined } from "@ant-design/icons"
+import { IRole, NAMES_OF_ROLE_ACTIONS } from "../Role/types"
 
 interface Props {
 	roles: IRole[]
 	setRoles: (roles: IRole[]) => void
 }
 
-const titles = ["Отделы", "Пользователи", "Фич флаги"]
+const titles = ["Сотрудники", "Фич флаги", "Отделы"]
 
-const RoleStatus = ({ roles, setRoles }: Props) => {
+const RolesStatus = ({ roles, setRoles }: Props) => {
 	const [isVisible, setIsVisible] = useState(false)
 
 	const blockSize = roles.length / 3
@@ -62,4 +62,4 @@ const RoleStatus = ({ roles, setRoles }: Props) => {
 	)
 }
 
-export default memo(RoleStatus)
+export default memo(RolesStatus)

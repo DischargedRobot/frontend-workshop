@@ -122,6 +122,25 @@ const loginApi = {
 			},
 		)
 	},
+
+	generateInvite: async (
+		userRoles: IRole[],
+		uuidDepartment: string,
+	): Promise<string> => {
+		const roles = userRoles.map((role) => role.type)
+
+		const response = await APIJsonRequest<{ inviteUrl: string }>(
+			`${AUTH_URL}/generate-invite`,
+			{
+				method: "POST",
+				body: JSON.stringify({
+					roles,
+					uuidDepartament: uuidDepartment,
+				}),
+			},
+		)
+		return response.inviteUrl
+	},
 }
 
 export const ConverterRoleRespToIRol = (roles: RoleResponse[]): IRole[] => {
