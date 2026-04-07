@@ -28,7 +28,7 @@ export async function functionInitApplication(): Promise<{
 		if (error.status === 401) {
 			redirect("/login")
 		} else {
-			redirect("/error")
+			throw err
 		}
 	}
 }

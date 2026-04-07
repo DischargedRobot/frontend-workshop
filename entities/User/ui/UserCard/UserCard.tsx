@@ -124,7 +124,9 @@ const UserCard = ({ user, setUser }: Props) => {
 			<div className="user-card__role-list text text_tiny">
 				<div className="role-list__title">
 					<h2>Роли</h2>
-					<RoleStatus setRoles={setRoles} roles={roles} />
+					<Can I="update" a="FF">
+						<RoleStatus setRoles={setRoles} roles={roles} />
+					</Can>
 				</div>
 				<RoleList
 					roles={filterRoleList}

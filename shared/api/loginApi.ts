@@ -41,10 +41,14 @@ const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL_V1
 const loginApi = {
 	registerOrganization: async (data: RegistrationRequest): Promise<void> => {
 		try {
-			await APIJsonRequest<void>(`${AUTH_URL}/register-organization`, {
-				method: "POST",
-				body: JSON.stringify(data),
-			})
+			const response = await APIJsonRequest<void>(
+				`${AUTH_URL}/register-organization`,
+				{
+					method: "POST",
+					body: JSON.stringify(data),
+				},
+			)
+			console.log(response)
 		} catch {}
 	},
 
@@ -94,6 +98,7 @@ const loginApi = {
 			},
 		)
 
+		console.log(response)
 		return {
 			id: response.id,
 			login: response.login,

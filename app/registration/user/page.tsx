@@ -1,12 +1,15 @@
-"use client"
 import { UserRegistrationForm } from "@/features/UserRegistration"
 import "./UserRegistration.scss"
 import { Content } from "antd/es/layout/layout"
-import { redirect, useSearchParams } from "next/navigation"
+import { redirect } from "next/navigation"
 
-const UserRegistrationPage = () => {
-	const searchParams = useSearchParams()
-	const token = searchParams.get("token")
+const UserRegistrationPage = async ({
+	searchParams,
+}: {
+	searchParams: Promise<{ token?: string }>
+}) => {
+	const { token } = await searchParams
+
 	if (!token) {
 		redirect("/login")
 	}

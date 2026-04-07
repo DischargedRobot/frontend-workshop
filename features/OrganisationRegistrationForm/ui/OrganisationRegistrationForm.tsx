@@ -75,7 +75,7 @@ export const OrganisationRegistrationForm = () => {
 							message: "Это поле обязательно для заполнения",
 						},
 						{
-							min: 6,
+							min: 8,
 							message: "Размер пароля должен быть больше 6",
 						},
 						{

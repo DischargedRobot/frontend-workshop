@@ -1,0 +1,19 @@
+services:
+    frontend:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            cache_from:
+                - type=local
+            args:
+                NEXT_PUBLIC_AUTH_SERVICE_URL_V1: ${NEXT_PUBLIC_AUTH_SERVICE_URL_V1}
+                NEXT_PUBLIC_AUTH_URL_V1: ${NEXT_PUBLIC_AUTH_URL_V1}
+                NEXT_PUBLIC_CLIENT_URL_V1: ${NEXT_PUBLIC_CLIENT_URL_V1}
+                NEXT_PUBLIC_API_URL_V1: ${NEXT_PUBLIC_API_URL_V1}
+                NEXT_PUBLIC_API_ORGANISATIONS_URL_V1: ${NEXT_PUBLIC_API_ORGANISATIONS_URL_V1}
+        environment:
+            API_AUT_SERVICE_URL_V1: ${API_AUT_SERVICE_URL_V1}
+            CHECK_AUTH_URL: ${API_AUT_SERVICE_URL_V1}/auth
+        ports:
+            - "3000:3000"
+        container_name: frontend-ff
