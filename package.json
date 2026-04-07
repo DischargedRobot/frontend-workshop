@@ -10,6 +10,8 @@
 	},
 	"dependencies": {
 		"@ant-design/icons": "^6.1.0",
+		"@casl/ability": "^6.8.0",
+		"@casl/react": "^5.0.1",
 		"antd": "^6.3.1",
 		"next": "16.1.6",
 		"next-auth": "^4.24.13",

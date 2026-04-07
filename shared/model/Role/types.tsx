@@ -51,3 +51,27 @@ export const NAMES_OF_ROLE_ACTIONS: Record<TROLE, NameOfRoleAction> = {
 	[TROLE.DU]: "Изменение",
 	[TROLE.DD]: "Удаление",
 }
+
+// Маппинг ролей на действия и субъекты для CASL Ability
+export const ROLE_ABILITY_MAP: Record<
+	TROLE,
+	{
+		action: "create" | "read" | "update" | "delete"
+		subject: "FF" | "Department" | "User"
+	}
+> = {
+	[TROLE.FFC]: { action: "create", subject: "FF" },
+	[TROLE.FFR]: { action: "read", subject: "FF" },
+	[TROLE.FFU]: { action: "update", subject: "FF" },
+	[TROLE.FFD]: { action: "delete", subject: "FF" },
+
+	[TROLE.DC]: { action: "create", subject: "Department" },
+	[TROLE.DR]: { action: "read", subject: "Department" },
+	[TROLE.DU]: { action: "update", subject: "Department" },
+	[TROLE.DD]: { action: "delete", subject: "Department" },
+
+	[TROLE.EC]: { action: "create", subject: "User" },
+	[TROLE.ER]: { action: "read", subject: "User" },
+	[TROLE.EU]: { action: "update", subject: "User" },
+	[TROLE.ED]: { action: "delete", subject: "User" },
+}
