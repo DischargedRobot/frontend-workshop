@@ -36,11 +36,13 @@ export const useRegistrationForm = (token: string) => {
 			switch (error.status) {
 				case 409:
 					seLogintError(error.customMessage ?? error.message)
+					return
 				case 404:
 					showToast({
 						type: "error",
 						text: "Ваша ссылка уже истекла",
 					})
+					return
 			}
 
 			handleAPIError(error)

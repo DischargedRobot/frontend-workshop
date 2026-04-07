@@ -90,6 +90,7 @@ const loginApi = {
 			{
 				headers: cookiesString ? { Cookie: cookiesString } : {},
 				method: "GET",
+				cache: "no-store", // т.к. вызываем на сервере иногда
 			},
 		)
 

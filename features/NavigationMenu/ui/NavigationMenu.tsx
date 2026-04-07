@@ -6,9 +6,11 @@ import { Menu } from "antd"
 import Sider from "antd/es/layout/Sider"
 import { useState } from "react"
 import { RightOutlined } from "@ant-design/icons"
-import { navigationItems } from "../model"
+import { useNavigationItems } from "../model"
 const NavigationMenu = () => {
 	const [collapsed, setCollapsed] = useState(false)
+
+	const navItems = useNavigationItems()
 
 	return (
 		<Sider
@@ -36,7 +38,7 @@ const NavigationMenu = () => {
 					/>
 				</button>
 				<Menu
-					items={navigationItems}
+					items={navItems}
 					className=""
 					mode="inline"
 					inlineCollapsed={collapsed}

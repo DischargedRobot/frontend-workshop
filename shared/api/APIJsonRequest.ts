@@ -2,7 +2,7 @@ import { APIError, mapAPIErrors } from "./APIErrors"
 
 const APIJsonRequest = async <T>(
 	endpoint: string,
-	options: RequestInit = {},
+	options?: RequestInit,
 ): Promise<T> => {
 	try {
 		const response = await fetch(endpoint, {
@@ -11,7 +11,7 @@ const APIJsonRequest = async <T>(
 			headers: {
 				"Content-Type": "application/json",
 				Accept: "application/json",
-				...options.headers,
+				...options?.headers,
 			},
 			credentials: "include",
 		})

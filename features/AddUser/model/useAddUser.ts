@@ -36,7 +36,7 @@ export const useAddUser = () => {
 						selectedDepartment.uuid,
 					)
 					const newUrl = new URL(
-						window.location.origin + "/user-register",
+						window.location.origin + "/registration/user",
 					)
 					newUrl.searchParams.set("token", token)
 					setUrl(newUrl.toString())

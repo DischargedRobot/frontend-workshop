@@ -1,1 +1,1 @@
-export { navigationItems } from "./navigationItems"
+export { useNavigationItems } from "./useNavigationItems"

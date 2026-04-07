@@ -1,8 +1,9 @@
 import { organisationApi } from "@/entities/Organisation"
 import { IOrganisation } from "@/entities/Organisation/model/useOrganisationStore"
 import { IProfile } from "@/entities/Profile"
-import { loginApi } from "@/shared/api"
+import { APIError, loginApi } from "@/shared/api"
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 
 export async function functionInitApplication(): Promise<{
 	profile: IProfile
@@ -11,16 +12,23 @@ export async function functionInitApplication(): Promise<{
 	const cookieStore = await cookies()
 
 	// Получаем конкретную куку
-	const userId = cookieStore.get("SESSION")
+	const cookieHeader = cookieStore.toString()
 
-	const { uuidDepartment, ...profile } = await loginApi.getMe(
-		`SESSION=${userId?.value}`,
-	)
-	console.log("uuu")
-	const organisation = await organisationApi.getOrganisation(
-		uuidDepartment,
-		`SESSION=${userId?.value}`,
-	)
-	console.log("organ")
-	return { profile, organisation }
+	try {
+		const { uuidDepartment, ...profile } =
+			await loginApi.getMe(cookieHeader)
+
+		const organisation = await organisationApi.getOrganisation(
+			uuidDepartment,
+			cookieHeader,
+		)
+		return { profile, organisation }
+	} catch (err) {
+		const error = err as APIError
+		if (error.status === 401) {
+			redirect("/login")
+		} else {
+			redirect("/error")
+		}
+	}
 }

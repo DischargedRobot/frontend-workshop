@@ -3,6 +3,7 @@ import { Metadata } from "next"
 import React, { Suspense } from "react"
 import { InitApplication } from "./InitApplication"
 import { functionInitApplication } from "./functionInitApplication"
+import { AbilityProvider } from "@/shared/model/Ability"
 
 export const metadata: Metadata = {
 	title: "Ваши фича флаги",
@@ -14,12 +15,15 @@ interface Props {
 
 const PersonalLayout = async ({ children }: Props) => {
 	const { profile, organisation } = await functionInitApplication()
+	// const pathname = request.nextUrl.pathname
 
 	return (
 		<Suspense>
 			<InitApplication profile={profile} organisation={organisation} />
-			<NavigationMenu />
-			{children}
+			<AbilityProvider profile={profile}>
+				<NavigationMenu />
+				{children}
+			</AbilityProvider>
 		</Suspense>
 	)
 }
