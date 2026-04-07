@@ -1,0 +1,1 @@
+export { useSelectDepartment } from "./useSelectDepartment"

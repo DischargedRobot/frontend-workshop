@@ -4,10 +4,10 @@ import { useDepartmentsStore } from "@/entities/Departments/model/useDepartments
 import "./UserDepartmentsDropDownMenu.scss"
 
 import { IUser } from "@/entities/User/lib/types"
-import { memo, useState } from "react"
+import { memo } from "react"
 import { Control, Controller } from "react-hook-form"
 import { useShallow } from "zustand/shallow"
-import { SearchDropDownMenu } from "@/shared/model/SearchDropMenu"
+import { SelectDepartmentSearchDropMenu } from "@/features/SelectDepartmentSearchDropMenu"
 import { IDepartment } from "@/entities/Departments"
 
 interface Props {
@@ -16,9 +16,8 @@ interface Props {
 	className?: string
 }
 
-// TODO: отрефакторить под fsd
 const UserDepartmentsDropDownMenu = (props: Props) => {
-	const { currentDepartment, control, className } = props
+	const { control, className } = props
 
 	const departments = useDepartmentsStore(
 		useShallow((state) => state.getDepartmentsIncludingAllChildren()),
@@ -44,14 +43,11 @@ const UserDepartmentsDropDownMenu = (props: Props) => {
 				},
 			}}
 			render={({ field }) => (
-				<SearchDropDownMenu<IDepartment>
-					options={departments.map((dep) => ({
-						label: dep.name,
-						value: dep,
-					}))}
-					className={`${className}`}
-					onSelect={(dep) => {}}
-					{...field}
+				<SelectDepartmentSearchDropMenu
+					onSelect={(dep: IDepartment | null) => {
+						field.onChange(dep?.id ?? null)
+					}}
+					className={className}
 				/>
 			)}
 		/>

@@ -1,6 +1,6 @@
 import NavigationMenu from "@/features/NavigationMenu/ui/NavigationMenu"
 import { Metadata } from "next"
-import React, { Suspense } from "react"
+import React from "react"
 import { InitApplication } from "./InitApplication"
 import { functionInitApplication } from "./functionInitApplication"
 import { AbilityProvider } from "@/shared/model/Ability"
@@ -15,16 +15,15 @@ interface Props {
 
 const PersonalLayout = async ({ children }: Props) => {
 	const { profile, organisation } = await functionInitApplication()
-	// const pathname = request.nextUrl.pathname
 
 	return (
-		<Suspense>
+		<>
 			<InitApplication profile={profile} organisation={organisation} />
 			<AbilityProvider profile={profile}>
 				<NavigationMenu />
 				{children}
 			</AbilityProvider>
-		</Suspense>
+		</>
 	)
 }
 

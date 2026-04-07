@@ -2,9 +2,11 @@
 
 import "./AddFeatureFlag.scss"
 
-import { Button, Form, Input, Select, Switch } from "antd"
+import { Button, Form, Switch } from "antd"
 import { IOrganisation } from "@/entities/Organisation/model/useOrganisationStore"
 import { useAddFeatureFlag } from "../model/useAddFeatureFlag"
+import { AddButton, TextInput } from "@/shared/ui"
+import { SelectDepartmentSearchDropMenu } from "@/features/SelectDepartmentSearchDropMenu"
 
 type Props = {
 	organisation: IOrganisation
@@ -15,16 +17,14 @@ export const AddFeatureFlag = ({ organisation }: Props) => {
 		form,
 		isVisible,
 		setIsVisible,
-		departmentOptions,
+		departments,
 		defaultDepartmentId,
 		handleFormSubmit,
 	} = useAddFeatureFlag(organisation)
 
 	return (
 		<div className="add-feature-flag">
-			<Button type="primary" onClick={() => setIsVisible((v) => !v)}>
-				Добавить
-			</Button>
+			<AddButton onClick={() => setIsVisible((v) => !v)} />
 			{isVisible && (
 				<Form
 					form={form}
@@ -36,35 +36,32 @@ export const AddFeatureFlag = ({ organisation }: Props) => {
 						departmentId: defaultDepartmentId,
 					}}
 				>
-					<Form.Item
-						name="name"
-						label="Имя фич флага"
-						rules={[
-							{
-								required: true,
-								message: "Пожалуйста, введите имя фич флага",
-							},
-							{
-								min: 1,
-								message:
-									"Длина имени фич флага должно быть больше 1",
-							},
-						]}
-					>
-						<Input placeholder="Имя фич флага" />
-					</Form.Item>
+					<div className="feature-flag-form__data">
+						<Form.Item
+							name="name"
+							rules={[
+								{
+									required: true,
+									message:
+										"Пожалуйста, введите имя фич флага",
+								},
+								{
+									min: 1,
+									message:
+										"Длина имени фич флага должно быть больше 1",
+								},
+							]}
+						>
+							<TextInput placeholder="Имя фич флага" />
+						</Form.Item>
 
-					<Form.Item
-						name="value"
-						label="Значение"
-						valuePropName="checked"
-					>
-						<Switch />
-					</Form.Item>
+						<Form.Item name="value" valuePropName="checked">
+							<Switch />
+						</Form.Item>
+					</div>
 
 					<Form.Item
 						name="departmentId"
-						label="Отдел"
 						rules={[
 							{
 								required: true,
@@ -72,9 +69,14 @@ export const AddFeatureFlag = ({ organisation }: Props) => {
 							},
 						]}
 					>
-						<Select
-							placeholder="Выберите отдел"
-							options={departmentOptions}
+						<SelectDepartmentSearchDropMenu
+							onSelect={(dep) => {
+								form.setFieldValue(
+									"departmentId",
+									dep?.id ?? null,
+								)
+							}}
+							departments={departments}
 						/>
 					</Form.Item>
 

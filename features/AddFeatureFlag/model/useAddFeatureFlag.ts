@@ -22,14 +22,9 @@ export const useAddFeatureFlag = (organisation: IOrganisation) => {
 
 	const defaultDepartmentId = currentDep?.id ?? organisation.child.id
 
-	const departmentOptions = [
-		...(currentDep?.children.map((dep) => ({
-			label: dep.name,
-			value: dep.id,
-		})) ?? []),
-		...(currentDep
-			? [{ label: currentDep.name, value: currentDep.id }]
-			: []),
+	const departments = [
+		...(currentDep?.children ?? []),
+		...(currentDep ? [currentDep] : []),
 	]
 
 	// обработка ошибки
@@ -55,7 +50,7 @@ export const useAddFeatureFlag = (organisation: IOrganisation) => {
 		form,
 		isVisible,
 		setIsVisible,
-		departmentOptions,
+		departments,
 		defaultDepartmentId,
 		handleFormSubmit,
 	}
