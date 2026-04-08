@@ -36,7 +36,7 @@ interface RoleResponse {
 }
 
 const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL_V1
-
+console.log(AUTH_URL)
 // В shared т.к. часто используется другими
 const loginApi = {
 	registerOrganization: async (data: RegistrationRequest): Promise<void> => {
@@ -89,11 +89,11 @@ const loginApi = {
 	getMe: async (
 		cookiesString?: string,
 	): Promise<IProfile & { uuidDepartment: string }> => {
+		console.log(process.env.API_AUT_SERVICE_URL_V1)
 		const response = await APIJsonRequest<GetMeResponse>(
-			`${process.env.NEXT_PUBLIC_AUTH_SERVICE_URL_V1}/clients/me`,
+			`${process.env.API_AUT_SERVICE_URL_V1}/clients/me`,
 			{
 				headers: cookiesString ? { Cookie: cookiesString } : {},
-				method: "GET",
 				cache: "no-store", // т.к. вызываем на сервере иногда
 			},
 		)

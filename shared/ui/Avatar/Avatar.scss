@@ -1,0 +1,20 @@
+.avatar {
+	position: relative;
+	display: inline-block;
+
+	&__image {
+		border-radius: 50px;
+	}
+
+	&__button-left {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+	}
+
+	&__button-right {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+	}
+}
