@@ -1,9 +1,4 @@
 .toast {
-	position: fixed;
-	bottom: 0;
-	right: 50%;
-	transform: translate(50%, 0);
-
 	display: grid;
 	grid-template-rows: 30px auto;
 	grid-template-columns: 64px 128px;
@@ -16,16 +11,38 @@
 
 	width: calc(150px + 10vw);
 
-	border-radius: 20px 20px 0 0;
-
-	transition: opacity 0.6s ease-in;
+	border-radius: 20px;
 
 	&_fade-in {
 		opacity: 1;
+		animation: popIn 0.4s cubic-bezier(0.34, 1.56, 1, 1);
+
+		&.toast_active {
+			animation: none !important;
+			transition: none !important;
+		}
 	}
 
 	&_fade-out {
 		opacity: 0;
+		transition:
+			opacity 0.3s ease-in,
+			transform 0.2s ease-out 0.3s;
+		transform: translateY(200px);
+
+		&.toast_active {
+			animation: none !important;
+			transition: none !important;
+			opacity: 1;
+			transform: none;
+		}
+	}
+
+	&_active {
+		animation: none !important;
+		transition: none !important;
+		opacity: 1;
+		transform: none;
 	}
 
 	&_warning {
@@ -51,5 +68,17 @@
 
 	&__text {
 		grid-area: text;
+	}
+}
+
+@keyframes popIn {
+	0% {
+		opacity: 0;
+		transform: translateY(20px) scale(0.8);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
 	}
 }

@@ -1,0 +1,39 @@
+.toasts-container {
+	position: fixed;
+	bottom: 20px;
+	right: 50%;
+	transform: translateX(50%);
+
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+
+	gap: 20px;
+
+	width: fit-content;
+	height: fit-content;
+
+	pointer-events: none;
+
+	& > * {
+		pointer-events: auto;
+	}
+}
+
+.toasts-overlay {
+	position: fixed;
+	pointer-events: auto;
+	z-index: 9999;
+	will-change: transform;
+
+	&.toast_fixed {
+		bottom: auto;
+		right: auto;
+		transform: none;
+	}
+}
+
+.toast-placeholder {
+	visibility: hidden;
+	pointer-events: auto;
+}

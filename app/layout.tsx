@@ -3,7 +3,7 @@ import "./main.scss"
 // import style from './main.scss'
 // import
 import type { Metadata } from "next"
-import Toast from "@/shared/ui/Toast/Toast"
+import Toasts from "@/shared/ui/Toast/Toasts"
 
 // import { SessionProvider } from "next-auth/react";
 const FONTS = {
@@ -127,7 +127,7 @@ export default function RootLayout({
 				<ConfigProvider theme={theme}>
 					<Layout hasSider className="body-layout">
 						{children}
-						<Toast />
+						<Toasts />
 					</Layout>
 				</ConfigProvider>
 			</body>

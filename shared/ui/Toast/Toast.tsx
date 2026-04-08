@@ -30,16 +30,20 @@ interface IToast {
 	duration?: number
 }
 
-const Toast = () => {
-	const duration = useToastStore((state) => state.duration)
-	const title = useToastStore((state) => state.title)
-	const text = useToastStore((state) => state.text)
-	const type = useToastStore((state) => state.type)
-	const key = useToastStore((state) => state.key)
-	const isVisible = useToastStore((state) => state.isVisible)
-	const setIsVisible = useToastStore((state) => state.setIsVisible)
+interface ToastProps extends IToastItem {
+	onRemove: (id: number) => void
+	isActive?: boolean
+}
 
-	// Исчезает?
+const Toast = ({
+	type,
+	text,
+	title,
+	duration,
+	id,
+	onRemove,
+	isActive = false,
+}: ToastProps) => {
 	const [isFade, setIsFade] = useState<boolean>(false)
 	const timer = useRef<number>(null)
 
@@ -48,7 +52,6 @@ const Toast = () => {
 			clearTimeout(timer.current)
 		}
 		timer.current = window.setTimeout(() => {
-			// console.log("Время вышло")
 			setIsFade(true)
 		}, duration)
 	}, [duration])
@@ -56,30 +59,45 @@ const Toast = () => {
 	const toast = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		const handleMouseOut = () => {
-			startTimer()
-		}
-
-		const handleMouseOver = () => {
-			setIsFade(false)
+		const handleMouseEnter = (e: MouseEvent) => {
+			e.stopPropagation()
 			if (timer.current) {
 				clearTimeout(timer.current)
 			}
+			// Сохраняем позицию только если тост ещё не активный
+			if (!isActive && toast.current) {
+				const rect = toast.current.getBoundingClientRect()
+				useToastStore.getState().setActiveToast({
+					id,
+					position: {
+						top: rect.top + window.scrollY,
+						left: rect.left + window.scrollX,
+					},
+				})
+			}
+		}
+
+		const handleMouseLeave = (e: MouseEvent) => {
+			e.stopPropagation()
+			useToastStore.getState().setActiveToast(null)
+			startTimer()
 		}
 
 		const handleTransitionEnd = () => {
-			setIsFade(false)
-			setIsVisible(false)
+			// Не удаляем если тост активный
+			if (!isActive) {
+				onRemove(id)
+			}
 		}
 
 		const toastElement = toast.current
-		toastElement?.addEventListener("mouseover", handleMouseOver)
-		toastElement?.addEventListener("mouseout", handleMouseOut)
+		toastElement?.addEventListener("mouseenter", handleMouseEnter)
+		toastElement?.addEventListener("mouseleave", handleMouseLeave)
 		toastElement?.addEventListener("transitionend", handleTransitionEnd)
 
 		return () => {
-			toastElement?.removeEventListener("mouseout", handleMouseOut)
-			toastElement?.removeEventListener("mouseover", handleMouseOver)
+			toastElement?.removeEventListener("mouseenter", handleMouseEnter)
+			toastElement?.removeEventListener("mouseleave", handleMouseLeave)
 			toastElement?.removeEventListener(
 				"transitionend",
 				handleTransitionEnd,
@@ -89,23 +107,23 @@ const Toast = () => {
 				clearTimeout(timer.current)
 			}
 		}
-	}, [key, setIsVisible, setIsFade, startTimer])
+	}, [id, onRemove, startTimer, isActive])
 
 	useEffect(() => {
-		if (isVisible) {
+		if (!isActive) {
 			startTimer()
+		} else {
+			// Если тост активный, отменяем таймер
+			if (timer.current) {
+				clearTimeout(timer.current)
+			}
 		}
-	}, [isVisible, startTimer])
+	}, [isActive, startTimer])
 
-	if (!isVisible) {
-		return null
-	}
-
-	console.log("toast", isVisible, isFade)
 	return (
 		<div
 			ref={toast}
-			className={`toast ${"toast_" + type} ${isFade ? "toast_fade-out" : "toast_fade-in"}`}
+			className={`toast ${"toast_" + type} ${isFade ? "toast_fade-out" : "toast_fade-in"} ${isActive ? "toast_active" : ""}`}
 		>
 			{icons.get(type)}
 			<h5 className="toast__title">{title}</h5>
@@ -117,38 +135,62 @@ const Toast = () => {
 export default Toast
 
 export const showToast = (props: IToast) => {
-	const {
-		type,
-		text = "",
-		title = defaultTitle.get(type),
-		duration = 3000,
-	} = props
-
-	useToastStore.getState().setToast({ type, text, title, duration })
+	useToastStore.getState().addToast(props)
 }
 
-interface IToastStore extends IToast {
-	key: number
-	isVisible: boolean
-
-	setToast: (toast: IToast) => void
-	setIsVisible: (isVisible: boolean) => void
+interface IToastItem extends IToast {
+	id: number
 }
 
-export const useToastStore = create<IToastStore>((set) => ({
-	type: "warning",
-	text: "Тут текст тоста",
-	title: defaultTitle.get("warning"),
-	duration: 3000,
-	key: 0,
-	isVisible: false,
+interface IToastStore {
+	toasts: IToastItem[]
+	activeToast: {
+		id: number
+		position: { top: number; left: number }
+		activatedAt: number
+	} | null
+	addToast: (toast: IToast) => void
+	removeToast: (id: number) => void
+	setActiveToast: (
+		toast: { id: number; position: { top: number; left: number } } | null,
+	) => void
+}
 
-	setToast: (newToast) =>
-		set((state) => ({
-			...newToast,
-			title: newToast?.title ?? defaultTitle.get(newToast.type),
-			key: ++state.key,
-			isVisible: true,
-		})),
-	setIsVisible: (newIsVisible) => set({ isVisible: newIsVisible }),
-}))
+export const useToastStore = create<IToastStore>((set) => {
+	let toastId = 0
+	return {
+		toasts: [],
+		activeToast: null,
+		addToast: (newToast) =>
+			set((state) => ({
+				toasts: [
+					...state.toasts,
+					{
+						...newToast,
+						title:
+							newToast.title ?? defaultTitle.get(newToast.type),
+						duration: newToast.duration ?? 3000,
+						id: ++toastId,
+					},
+				],
+			})),
+		removeToast: (id) =>
+			set((state) => ({
+				toasts: state.toasts.filter((toast) => toast.id !== id),
+			})),
+		setActiveToast: (activeToast) =>
+			set({
+				activeToast: activeToast
+					? { ...activeToast, activatedAt: Date.now() }
+					: null,
+			}),
+	}
+})
+
+// Ref для хранения ID активного тоста
+export const activeToastIdRef = { current: null as number | null }
+
+// Ref для хранения позиции активного тоста
+export const activeToastPositionRef = {
+	current: null as { top: number; left: number } | null,
+}

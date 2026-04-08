@@ -6,8 +6,10 @@ import { LoginForm } from "@/features/LogInForm"
 const Login = () => {
 	return (
 		<Content className="login">
-			<h2>Авторизация</h2>
-			<LoginForm />
+			<div className="login__content">
+				<h2>Авторизация</h2>
+				<LoginForm />
+			</div>
 		</Content>
 	)
 }

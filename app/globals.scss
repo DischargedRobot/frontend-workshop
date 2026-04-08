@@ -1,3 +1,5 @@
+@use "@/common/styles/placeholder.scss";
+
 :root {
 	--segoe-ui: "Segoe UI", sans-serif;
 	--inter: "Inter", sans-serif;
@@ -30,6 +32,10 @@
 	--toast-error: #d03b3b;
 	--toast-success: #47d73d;
 	--toast-warning: #d6df1e;
+}
+
+html {
+	overflow-y: scroll;
 }
 
 .body-layout {

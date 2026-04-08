@@ -2,6 +2,8 @@
 
 .login {
 	@extend %center_content;
-
-	gap: 10px;
+}
+.login__content {
+	@extend %flex-column;
+	align-items: center;
 }
