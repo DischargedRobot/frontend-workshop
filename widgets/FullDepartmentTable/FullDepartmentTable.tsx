@@ -19,7 +19,7 @@ const FullDepartmentTable = () => {
 		})),
 	)
 
-	// const organisationName = useOrganisationStore(state => state.organisation.name)
+	// const organizationName = useOrganizationStore(state => state.organization.name)
 	const lastDep = useBreadcrumbStore((state) => state.path.at(-1))
 	return (
 		<div className="full-department-table">

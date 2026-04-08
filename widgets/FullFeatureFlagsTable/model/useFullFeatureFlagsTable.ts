@@ -1,16 +1,16 @@
 import { FFApi, useFFStore, useFFFiltersStore } from "@/entities/FF"
 import { useDepartmentsStore } from "@/entities/Departments"
-import { useOrganisationStore } from "@/entities/Organisation"
+import { useOrganizationStore } from "@/entities/Organization"
 import { useShallow } from "zustand/shallow"
 import { useBreadcrumbStore } from "@/entities/DepartmentBreadcamb"
 
 export const useFullFeatureFlagsTable = () => {
-	const organisation = useOrganisationStore((state) => state.organisation)
+	const organization = useOrganizationStore((state) => state.organization)
 
 	// Последний депаратмент в хлебных крошках
 	// Всегда есть (самый первый - узел органзиации)
 	const lastDep = useBreadcrumbStore(
-		useShallow((state) => state.getLastDepartment() ?? organisation.child),
+		useShallow((state) => state.getLastDepartment() ?? organization.child),
 	)
 
 	const setFeatureFlag = useFFStore((state) => state.setFeatureFlags)
@@ -20,7 +20,7 @@ export const useFullFeatureFlagsTable = () => {
 	const reloadFeatureFlags = async () => {
 		const response = await FFApi.getFFsByDepartments(
 			lastDep.children.map((dep) => dep.id),
-			organisation.id,
+			organization.id,
 			100,
 			0,
 		)
@@ -28,8 +28,8 @@ export const useFullFeatureFlagsTable = () => {
 	}
 
 	return {
-		organisation,
-		lastDepInBredcrumb: lastDep?.id ?? organisation.child.id,
+		organization,
+		lastDepInBredcrumb: lastDep?.id ?? organization.child.id,
 		setFeatureFlagName,
 		reloadFeatureFlags,
 	}

@@ -12,7 +12,7 @@ const DepartmentTree = () => {
 		departments,
 		treeData,
 		filterDepartmentIds,
-		organisationId,
+		organizationId,
 		error,
 		loadData,
 		handleCheck,
@@ -47,7 +47,7 @@ const DepartmentTree = () => {
 					titleRender={(node) => (
 						<TitleRender
 							node={node as unknown as IDepartmentNode}
-							organisationId={organisationId}
+							organizationId={organizationId}
 							key={node.key}
 						/>
 					)}

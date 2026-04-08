@@ -5,7 +5,16 @@ import { APIError, isAPIError, mapAPIErrors } from "./APIErrors"
 import { showToast } from "../ui"
 import { useRouter } from "next/navigation"
 
-export const useAPIErrorHandler = () => {
+interface CustomErrorHandler {
+	error: APIError
+	callback: (error: APIError) => void
+}
+
+interface Props {
+	customHandlers?: CustomErrorHandler[]
+}
+
+export const useAPIErrorHandler = ({ customHandlers = [] }: Props = {}) => {
 	const router = useRouter()
 
 	// чтобы при рендере компонента не перезаписывалась повторно
@@ -15,6 +24,17 @@ export const useAPIErrorHandler = () => {
 				? error
 				: mapAPIErrors(null)
 
+			// Сначала проверяем кастомные обработчики
+			const customHandler = customHandlers.find(
+				(handler) => handler.error.status === apiError.status,
+			)
+
+			if (customHandler) {
+				customHandler.callback(apiError)
+				return
+			}
+
+			// Если кастомного обработчика нет, используем что есть
 			switch (apiError.status) {
 				case 401:
 					router.push("/auth")
@@ -36,7 +56,7 @@ export const useAPIErrorHandler = () => {
 					})
 			}
 		},
-		[router],
+		[router, customHandlers],
 	)
 
 	return handleError

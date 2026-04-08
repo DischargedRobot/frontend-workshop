@@ -10,7 +10,7 @@ import { SearchDropDownMenu } from "@/shared/model/SearchDropMenu"
 import { Can } from "@/shared/model/Ability"
 
 const FullDepartmentTree = () => {
-	const { organisation, departments } = useFullDepartmentTree()
+	const { organization, departments } = useFullDepartmentTree()
 
 	return (
 		<div className="department-tree">
@@ -23,7 +23,7 @@ const FullDepartmentTree = () => {
 					}}
 				>
 					<div className="department-tree__title title text_big">
-						<h2>{organisation.name}</h2>
+						<h2>{organization.name}</h2>
 						<div className="department-tree__buttons">
 							<Can I="create" a="Department">
 								<AddDepartment

@@ -14,11 +14,11 @@ interface Props {
 }
 
 const PersonalLayout = async ({ children }: Props) => {
-	const { profile, organisation } = await functionInitApplication()
+	const { profile, organization } = await functionInitApplication()
 
 	return (
 		<>
-			<InitApplication profile={profile} organisation={organisation} />
+			<InitApplication profile={profile} organization={organization} />
 			<AbilityProvider profile={profile}>
 				<NavigationMenu />
 				{children}

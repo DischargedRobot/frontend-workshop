@@ -10,7 +10,7 @@ import { useFullFeatureFlagsTable } from "../model"
 import { Can } from "@/shared/model/Ability"
 
 const FullFeatureFlagsTable = () => {
-	const { organisation, setFeatureFlagName, reloadFeatureFlags } =
+	const { organization, setFeatureFlagName, reloadFeatureFlags } =
 		useFullFeatureFlagsTable()
 
 	const featureFlags = useFilteredFFs()
@@ -24,7 +24,7 @@ const FullFeatureFlagsTable = () => {
 						onSearch={(e) => setFeatureFlagName(e.target.value)}
 					/>
 					<Can I="create" a="FF">
-						<AddFeatureFlag organisation={organisation} />
+						<AddFeatureFlag organization={organization} />
 					</Can>
 					<ReloadFeaturesFlags onClick={reloadFeatureFlags} />
 				</Flex>

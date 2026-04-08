@@ -5,7 +5,7 @@ import {
 	useSelectedDepartmentsStore,
 } from "@/entities/Departments"
 import { departmentApi } from "@/entities/Departments"
-import { useOrganisationStore } from "@/entities/Organisation"
+import { useOrganizationStore } from "@/entities/Organization"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 
 interface AddDepartmentForm {
@@ -21,8 +21,8 @@ export const useAddDepartment = () => {
 	const addDepartToParent = useDepartmentsStore(
 		(state) => state.addDepartmentToParent,
 	)
-	const organisationId = useOrganisationStore(
-		(state) => state.organisation.id,
+	const organizationId = useOrganizationStore(
+		(state) => state.organization.id,
 	)
 	const selectedDepartments = useSelectedDepartmentsStore(
 		(state) => state.departments,
@@ -36,7 +36,7 @@ export const useAddDepartment = () => {
 		try {
 			const newDep = await departmentApi.addDepartment(
 				values.name,
-				organisationId,
+				organizationId,
 				parentId,
 				values.isService,
 			)

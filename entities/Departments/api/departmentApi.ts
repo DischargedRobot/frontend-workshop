@@ -1,9 +1,9 @@
 import { IDepartment } from "../lib/DepartmentType"
 import APIJsonRequest from "@/shared/api/APIJsonRequest"
 import { isAPIError, mapAPIErrors } from "@/shared/api/APIErrors"
-import { IOrganisation } from "@/entities/Organisation/model/useOrganisationStore"
+import { IOrganization } from "@/entities/Organization"
 
-const URL_ORGANISATION = process.env.NEXT_PUBLIC_API_ORGANISATIONS_URL_V1
+const URL_ORGANIZATION = process.env.NEXT_PUBLIC_API_ORGANIZATIONS_URL_V1
 export interface IDepartmentResponse {
 	id: number
 	organizationId: number
@@ -14,16 +14,16 @@ export interface IDepartmentResponse {
 	version: number
 }
 
-interface IDepartmentsByOrganisationId {
+interface IDepartmentsByOrganizationId {
 	items: IDepartmentResponse[]
 	limit: number
 	offset: number
 	total: number
 }
 
-const convertIDepartmentResponseToIDepartmentWithOrganisation = (
+const convertIDepartmentResponseToIDepartmentWithOrganization = (
 	departmentsResponse: IDepartmentResponse[],
-	organisation: IOrganisation,
+	organization: IOrganization,
 ): IDepartment[] => {
 	// Мапим, чтобы потом было проще обратиться к узлу во время операций, а не писать find
 	const nodeMap = new Map<number, IDepartment>()
@@ -39,7 +39,7 @@ const convertIDepartmentResponseToIDepartmentWithOrganisation = (
 
 	// Тут мы закидывает департаменты в детей других узлов
 	const nodes: IDepartment[] = []
-	// console.log(organisation, 'org')
+	// console.log(organization, 'org')
 	departmentsResponse.forEach((item) => {
 		const path = item.path.split(".")
 		//TODO поменять условия местави, т.к. так будет быстрее
@@ -47,10 +47,10 @@ const convertIDepartmentResponseToIDepartmentWithOrganisation = (
 		if (path.length <= 2) {
 			if (path.length == 2) {
 				const node = nodeMap.get(parseInt(path[1]))!
-				organisation.child.children.push(node)
+				organization.child.children.push(node)
 				nodes.push(node)
 			} else {
-				organisation.child = nodeMap.get(parseInt(path[0]))!
+				organization.child = nodeMap.get(parseInt(path[0]))!
 			}
 		}
 		// условиие обхода корневого, т.к. у него длина 1
@@ -213,7 +213,7 @@ function convertIDepartmentResponseToIDepartment(
 
 //     // Тут мы закидывает департаменты в детей других узлов
 //     const nodes: IDepartment[] = []
-//     // console.log(organisation, 'org')
+//     // console.log(organization, 'org')
 //     departmentsResponse.forEach(item => {
 //         const path = item.path.split('.')
 //         if (path.length == 1)
@@ -232,28 +232,28 @@ function convertIDepartmentResponseToIDepartment(
 // }
 
 const departmentApi = {
-	getDepartmentsByOrganisation: async (
-		organisation: IOrganisation,
+	getDepartmentsByOrganization: async (
+		organization: IOrganization,
 	): Promise<IDepartment[]> => {
-		const responseData = await APIJsonRequest<IDepartmentsByOrganisationId>(
-			`${URL_ORGANISATION}/${organisation.id}/nodes?limit=42&offset=0`,
+		const responseData = await APIJsonRequest<IDepartmentsByOrganizationId>(
+			`${URL_ORGANIZATION}/${organization.id}/nodes?limit=42&offset=0`,
 			{ method: "GET" },
 		)
 
-		return convertIDepartmentResponseToIDepartmentWithOrganisation(
+		return convertIDepartmentResponseToIDepartmentWithOrganization(
 			responseData.items,
-			organisation,
+			organization,
 		)
 	},
 
 	// *** Для детей ***
 	/** @desciption Возвращает детей отдела **/
 	getChildrenOfDepartments: async (
-		organisationId: number,
+		organizationId: number,
 		departmentId: number,
 	): Promise<IDepartment[]> => {
-		const responseData = await APIJsonRequest<IDepartmentsByOrganisationId>(
-			`${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}/children`,
+		const responseData = await APIJsonRequest<IDepartmentsByOrganizationId>(
+			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/children`,
 			{ method: "GET" },
 		)
 		// convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
@@ -266,12 +266,12 @@ const departmentApi = {
 
 	/** @desciption Возвращает первых детей, запрашивает потомков и потомков потомков **/
 	getDescedantOfDepartments: async (
-		organisationId: number,
+		organizationId: number,
 		departmentId: number,
 		depthLevel: number | "" = "",
 	): Promise<IDepartment[]> => {
-		const responseData = await APIJsonRequest<IDepartmentsByOrganisationId>(
-			`${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}/descendants?depth=${depthLevel}`,
+		const responseData = await APIJsonRequest<IDepartmentsByOrganizationId>(
+			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/descendants?depth=${depthLevel}`,
 			{ method: "GET" },
 		)
 		// convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
@@ -296,12 +296,12 @@ const departmentApi = {
 
 	addDepartment: async (
 		departmentName: string,
-		organisationId: number,
+		organizationId: number,
 		parentId: number,
 		isService: boolean = false,
 	): Promise<IDepartment> => {
 		const respDep = await APIJsonRequest<IDepartmentResponse>(
-			`${URL_ORGANISATION}/${organisationId}/nodes`,
+			`${URL_ORGANIZATION}/${organizationId}/nodes`,
 			{
 				method: "POST",
 				body: JSON.stringify({
@@ -315,12 +315,12 @@ const departmentApi = {
 	},
 
 	removeDepartmentById: async (
-		organisationId: number,
+		organizationId: number,
 		departmentId: number,
 	) => {
 		try {
 			await APIJsonRequest(
-				`${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}`,
+				`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}`,
 				{ method: "DELETE" },
 			)
 			console.log("всё хорошо")
@@ -339,22 +339,22 @@ const departmentApi = {
 	},
 
 	removeDepartmentsByIds: async (
-		organisationId: number,
+		organizationId: number,
 		departmentIds: number[],
 	) => {
 		await Promise.all(
 			departmentIds.map((departmentId) => {
-				departmentApi.removeDepartmentById(organisationId, departmentId)
+				departmentApi.removeDepartmentById(organizationId, departmentId)
 			}),
 		)
 	},
 
 	changeDepartmentName: async (
 		newDepartment: IDepartment,
-		organisationId: number,
+		organizationId: number,
 	): Promise<void> => {
 		await APIJsonRequest(
-			`${URL_ORGANISATION}/${organisationId}/nodes/${newDepartment.id}`,
+			`${URL_ORGANIZATION}/${organizationId}/nodes/${newDepartment.id}`,
 			{
 				method: "PATCH",
 				body: JSON.stringify({

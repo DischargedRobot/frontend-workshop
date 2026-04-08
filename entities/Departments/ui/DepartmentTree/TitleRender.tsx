@@ -9,11 +9,11 @@ export interface IDepartmentNode
 
 interface Props {
 	node: IDepartmentNode
-	organisationId: number
+	organizationId: number
 }
 
 const TitleRender = (props: Props): React.ReactNode => {
-	const { node, organisationId } = props
+	const { node, organizationId } = props
 
 	const [isEditable, setIsEditable] = useState(false)
 	const [title, setTitle] = useState(node?.name)
@@ -29,6 +29,7 @@ const TitleRender = (props: Props): React.ReactNode => {
 
 	return (
 		<>
+			{/* TODO: Просто дизейблед надо */}
 			{isEditable ? (
 				<input
 					style={{ paddingLeft: "8px" }}
@@ -40,7 +41,7 @@ const TitleRender = (props: Props): React.ReactNode => {
 						changeName(node, e.target.value)
 						departmentApi.changeDepartmentName(
 							{ ...node, name: e.target.value },
-							organisationId,
+							organizationId,
 						)
 						setIsEditable(false)
 					}}

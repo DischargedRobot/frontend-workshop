@@ -1,16 +1,16 @@
 "use client"
-import "./StructureOrganisation.scss"
+import "./StructureOrganization.scss"
 import { Content } from "antd/es/layout/layout"
 import { FullUserList } from "@/widgets/FullUserList"
 import { FullDepartmentTree } from "@/widgets/FullDepartmentTree"
 
-const StructureOrganisation = () => {
+const StructureOrganization = () => {
 	return (
-		<Content className="structure-organisation">
+		<Content className="structure-organization">
 			<FullDepartmentTree />
 			<FullUserList />
 		</Content>
 	)
 }
 
-export default StructureOrganisation
+export default StructureOrganization

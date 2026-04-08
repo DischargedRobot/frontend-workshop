@@ -1,4 +1,4 @@
-import { useOrganisationStore } from "@/entities/Organisation"
+import { useOrganizationStore } from "@/entities/Organization"
 import useSWR, { useSWRConfig } from "swr"
 import { useDepartmentsStore } from "../useDepartmentsStore"
 import { departmentApi } from "../../api"
@@ -8,6 +8,8 @@ import { IDepartment } from "../../lib"
 import { useUserFiltersStore } from "@/entities/User"
 import type { IDepartmentNode } from "../../ui/DepartmentTree/TitleRender"
 import { useSelectedDepartmentsStore } from "../useSelectedDepartmentsStore"
+import { defineAbility } from "@/shared/model/Ability"
+import { profile } from "console"
 
 const getDepartmentAndAllChildren = (
 	departments: IDepartment[],
@@ -36,11 +38,11 @@ const useDepartmentTree = () => {
 		(state) => state.departmentIds,
 	)
 
-	const organisation = useOrganisationStore((state) => state.organisation)
-	const organisationId = useOrganisationStore(
-		(state) => state.organisation.id,
+	const organization = useOrganizationStore((state) => state.organization)
+	const organizationId = useOrganizationStore(
+		(state) => state.organization.id,
 	)
-	const changeChild = useOrganisationStore((state) => state.changeChild)
+	const changeChild = useOrganizationStore((state) => state.changeChild)
 
 	const setDepartments = useDepartmentsStore((state) => state.setDepartments)
 	const departments = useDepartmentsStore(
@@ -55,19 +57,19 @@ const useDepartmentTree = () => {
 
 	const { mutate } = useSWRConfig()
 
-	console.log(organisation)
+	console.log(organization)
 
 	const { data, error } = useSWR<IDepartment[], APIError>(
-		organisation.child // не видит, мб из-з гидратации, поэтому тут првоерка
+		organization.child // не видит, мб из-з гидратации, поэтому тут првоерка
 			? [
-					["organisationId, departmentId"],
-					[organisation.id, organisation.child.id],
+					["organizationId, departmentId"],
+					[organization.id, organization.child.id],
 				]
 			: null,
 		() =>
 			departmentApi.getDescedantOfDepartments(
-				organisation.id,
-				organisation.child.id,
+				organization.id,
+				organization.child.id,
 				2,
 			),
 	)
@@ -80,12 +82,12 @@ const useDepartmentTree = () => {
 
 	useEffect(() => {
 		if (
-			organisation.child !== undefined &&
-			!(organisation.child instanceof APIError)
+			organization.child !== undefined &&
+			!(organization.child instanceof APIError)
 		) {
-			setDepartments([organisation.child])
+			setDepartments([organization.child])
 		}
-	}, [organisation, setDepartments, error])
+	}, [organization, setDepartments, error])
 
 	const loadData = useCallback(
 		async (node: IDepartmentNode) => {
@@ -93,12 +95,12 @@ const useDepartmentTree = () => {
 			try {
 				const children = await mutate(
 					[
-						["organisationId", "departmentId"],
-						[organisationId, node.id],
+						["organizationId", "departmentId"],
+						[organizationId, node.id],
 					],
 					() =>
 						departmentApi.getDescedantOfDepartments(
-							organisation.id,
+							organization.id,
 							node.id,
 							2,
 						),
@@ -112,7 +114,7 @@ const useDepartmentTree = () => {
 				}
 			}
 		},
-		[mutate, organisationId, organisation.id, changeDepartmentChildren],
+		[mutate, organizationId, organization.id, changeDepartmentChildren],
 	)
 
 	const { setDepartments: setSelectedDepartments } =
@@ -152,19 +154,21 @@ const useDepartmentTree = () => {
 		[departments],
 	)
 
+	// const ability = defineAbility(profile)
+
 	return useMemo(
 		() => ({
 			departments,
 			treeData,
 			filterDepartmentIds,
-			organisationId,
+			organizationId,
 			error,
 			loadData,
 			handleCheck,
 			handleDrop,
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[departments, treeData, filterDepartmentIds, organisationId, error],
+		[departments, treeData, filterDepartmentIds, organizationId, error],
 	)
 }
 

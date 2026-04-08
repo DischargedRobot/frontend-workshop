@@ -1,28 +1,28 @@
-import { organisationApi } from "@/entities/Organisation"
-import { IOrganisation } from "@/entities/Organisation/model/useOrganisationStore"
+"use server"
+import { getOrganization } from "@/entities/Organization/api"
+import { IOrganization } from "@/entities/Organization/model/useOrganizationStore"
 import { IProfile } from "@/entities/Profile"
-import { APIError, loginApi } from "@/shared/api"
+import { APIError } from "@/shared/api"
+import { getMeServer } from "@/shared/api"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
 export async function functionInitApplication(): Promise<{
 	profile: IProfile
-	organisation: IOrganisation
+	organization: IOrganization
 }> {
 	const cookieStore = await cookies()
-
+	console.log("functionInitApplication")
 	// Получаем конкретную куку
 	const cookieHeader = cookieStore.toString()
 
 	try {
-		const { uuidDepartment, ...profile } =
-			await loginApi.getMe(cookieHeader)
+		const { uuidDepartment, ...profile } = await getMeServer(cookieHeader)
+		console.log("functionInitApplication profile", profile)
+		const organization = await getOrganization(uuidDepartment, cookieHeader)
+		console.log("functionInitApplication organization", organization)
 
-		const organisation = await organisationApi.getOrganisation(
-			uuidDepartment,
-			cookieHeader,
-		)
-		return { profile, organisation }
+		return { profile, organization }
 	} catch (err) {
 		const error = err as APIError
 		if (error.status === 401) {

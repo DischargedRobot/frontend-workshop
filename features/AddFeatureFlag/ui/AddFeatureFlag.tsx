@@ -3,16 +3,16 @@
 import "./AddFeatureFlag.scss"
 
 import { Button, Form, Switch } from "antd"
-import { IOrganisation } from "@/entities/Organisation/model/useOrganisationStore"
+import { IOrganization } from "@/entities/Organization/model/useOrganizationStore"
 import { useAddFeatureFlag } from "../model/useAddFeatureFlag"
 import { AddButton, TextInput } from "@/shared/ui"
 import { SelectDepartmentSearchDropMenu } from "@/features/SelectDepartmentSearchDropMenu"
 
 type Props = {
-	organisation: IOrganisation
+	organization: IOrganization
 }
 
-export const AddFeatureFlag = ({ organisation }: Props) => {
+export const AddFeatureFlag = ({ organization }: Props) => {
 	const {
 		form,
 		isVisible,
@@ -20,7 +20,7 @@ export const AddFeatureFlag = ({ organisation }: Props) => {
 		departments,
 		defaultDepartmentId,
 		handleFormSubmit,
-	} = useAddFeatureFlag(organisation)
+	} = useAddFeatureFlag(organization)
 
 	return (
 		<div className="add-feature-flag">

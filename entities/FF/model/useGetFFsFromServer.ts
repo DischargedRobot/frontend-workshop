@@ -7,7 +7,7 @@ import { APIError } from "@/shared/api/APIErrors"
 import { useEffect, useMemo } from "react"
 import { useShallow } from "zustand/shallow"
 import { IFeatureFlag } from "../lib"
-import { useOrganisationStore } from "@/entities/Organisation"
+import { useOrganizationStore } from "@/entities/Organization"
 
 const EMPTY_ARRAY: IFeatureFlag[] = []
 
@@ -16,21 +16,21 @@ const useGetFFsFromServer = () => {
 	const filterDepartmentIds = useFFFiltersStore(
 		useShallow((state) => state.departmentIds),
 	)
-	const organisationId = useOrganisationStore(
-		(state) => state.organisation.id,
+	const organizationId = useOrganizationStore(
+		(state) => state.organization.id,
 	)
 
 	//TODO: может так и не надо, малоли, стоит ли так переделывать везде?
 	const key = useMemo(() => {
 		const sortedIds = [...filterDepartmentIds].sort().join(",")
 		return [
-			"organisationId",
+			"organizationId",
 			"departmentIds",
 			"featureflags",
-			organisationId,
+			organizationId,
 			sortedIds,
 		]
-	}, [filterDepartmentIds, organisationId])
+	}, [filterDepartmentIds, organizationId])
 	// TODO: сделать set?
 	const addFF = useFFStore((state) => state.addFeatureFlags)
 
@@ -43,7 +43,7 @@ const useGetFFsFromServer = () => {
 		() =>
 			FFApi.getFFsByDepartments(
 				filterDepartmentIds,
-				organisationId,
+				organizationId,
 				50,
 				0,
 			),

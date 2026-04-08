@@ -3,13 +3,13 @@ import {
 	useDepartmentsStore,
 	useSelectedDepartmentsStore,
 } from "@/entities/Departments"
-import { useOrganisationStore } from "@/entities/Organisation"
+import { useOrganizationStore } from "@/entities/Organization"
 import { useUsersStore } from "@/entities/User"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 
 export const useDeleteSelectedDepartments = () => {
-	const organisationId = useOrganisationStore(
-		(state) => state.organisation.id,
+	const organizationId = useOrganizationStore(
+		(state) => state.organization.id,
 	)
 	const selectedDepartments = useSelectedDepartmentsStore(
 		(state) => state.departments,
@@ -29,7 +29,7 @@ export const useDeleteSelectedDepartments = () => {
 		try {
 			const selectedIds = selectedDepartments.map((dep) => dep.id)
 			// на сервере
-			departmentApi.removeDepartmentsByIds(organisationId, selectedIds)
+			departmentApi.removeDepartmentsByIds(organizationId, selectedIds)
 
 			// у себя - удаляем из обоих сторов
 			removeDepartmentsFromStore(selectedDepartments)

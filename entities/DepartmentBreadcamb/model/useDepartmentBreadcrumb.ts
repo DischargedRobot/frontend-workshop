@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import useBreadcrumbStore from "./useBreadcrumbStore"
 import { useFFFiltersStore } from "@/entities/FF"
-import { useOrganisationStore } from "@/entities/Organisation"
+import { useOrganizationStore } from "@/entities/Organization"
 import { IDepartment } from "@/entities/Departments"
 
 export const useDepartmentBreadcrumb = () => {
@@ -9,8 +9,8 @@ export const useDepartmentBreadcrumb = () => {
 	const setPath = useBreadcrumbStore((state) => state.setPath)
 
 	// изначально ставим корневой узел организации
-	const rootDepartment = useOrganisationStore(
-		(state) => state.organisation.child,
+	const rootDepartment = useOrganizationStore(
+		(state) => state.organization.child,
 	)
 
 	const setDepartmentFilters = useFFFiltersStore(

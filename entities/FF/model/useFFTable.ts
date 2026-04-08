@@ -1,5 +1,5 @@
 import { FFApi } from "../api"
-import { useOrganisationStore } from "@/entities/Organisation"
+import { useOrganizationStore } from "@/entities/Organization"
 import { IFeatureFlag } from "../lib/types"
 import useFFStore from "./useFFStrore"
 import { useFFTableColumns } from "./useFFTableColumns"
@@ -7,8 +7,8 @@ import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 import { APIError } from "@/shared/api"
 
 export const useFFTable = () => {
-	const organisationId = useOrganisationStore(
-		(state) => state.organisation.id,
+	const organizationId = useOrganizationStore(
+		(state) => state.organization.id,
 	)
 	const removeFFFromLocal = useFFStore((state) => state.removeFeatureFlags)
 
@@ -16,7 +16,7 @@ export const useFFTable = () => {
 
 	const removeFF = async (FF: IFeatureFlag) => {
 		try {
-			await FFApi.removeFF(organisationId, FF.departmentId, FF.id)
+			await FFApi.removeFF(organizationId, FF.departmentId, FF.id)
 		} catch (error) {
 			handleAPIError(error as APIError)
 		}
@@ -26,7 +26,7 @@ export const useFFTable = () => {
 	const toggleFF = async (FF: IFeatureFlag, value: boolean) => {
 		try {
 			await FFApi.switchFeatureFlags(
-				organisationId,
+				organizationId,
 				FF.departmentId,
 				FF.id,
 				value,

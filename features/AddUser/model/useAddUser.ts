@@ -5,9 +5,12 @@ import { DropdownOption } from "@/shared/model/SearchDropMenu/SearchDropDownMenu
 import { APIError, loginApi } from "@/shared/api"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 import { showToast } from "@/shared/ui"
+import { useShallow } from "zustand/shallow"
 
 export const useAddUser = () => {
-	const departments = useDepartmentsStore((state) => state.departments)
+	const departments = useDepartmentsStore(
+		useShallow((state) => state.getDepartmentsIncludingAllChildren()),
+	)
 	const [selectedDepartment, setSelectedDepartment] =
 		useState<IDepartment | null>(null)
 

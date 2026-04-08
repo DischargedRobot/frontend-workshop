@@ -1,4 +1,4 @@
-import { OrganisationRegistrationForm } from "@/features/OrganisationRegistrationForm"
+import { OrganizationRegistrationForm } from "@/features/OrganizationRegistrationForm"
 import "./RegistrationPage.scss"
 
 import { Content } from "antd/es/layout/layout"
@@ -8,7 +8,7 @@ const Registration = () => {
 		<Content className="content registration">
 			<div className="registration__content">
 				<h2 className="title">Регистрация</h2>
-				<OrganisationRegistrationForm />
+				<OrganizationRegistrationForm />
 			</div>
 		</Content>
 	)

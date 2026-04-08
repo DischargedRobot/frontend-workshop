@@ -3,7 +3,7 @@ import APIJsonRequest from "@/shared/api/APIJsonRequest"
 import { IFeatureFlag } from "../lib/types"
 import { error } from "console"
 
-const URL_ORGANISATION = process.env.NEXT_PUBLIC_API_ORGANISATIONS_URL_V1
+const URL_ORGANIZATION = process.env.NEXT_PUBLIC_API_ORGANIZATIONS_URL_V1
 
 interface IFFByDepartmentLinkedResponse {
 	nodeId: number
@@ -44,13 +44,13 @@ interface IFeatureFlagResponse {
 const FFApi = {
 	getFeatureFlagsByDepartment: async (
 		departmentId: number,
-		organisationId: number,
+		organizationId: number,
 		count: number,
 		offset: number,
 	): Promise<IFFsResponse> => {
 		const responseData =
 			await APIJsonRequest<IFFByDepartmentLinkedResponse>(
-				`${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}/feature-flags?limit=${count}&offset=${offset}`,
+				`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/feature-flags?limit=${count}&offset=${offset}`,
 			)
 		const { items, ...other } = responseData
 		return {
@@ -71,7 +71,7 @@ const FFApi = {
 	// Получаем фича флаги по отделам
 	getFFsByDepartments: async (
 		departmentIds: number[],
-		organisationId: number,
+		organizationId: number,
 		count: number,
 		offset: number,
 	): Promise<{ FFs: IFeatureFlag[]; isEnd: boolean }> => {
@@ -85,7 +85,7 @@ const FFApi = {
 			try {
 				const response = await FFApi.getFeatureFlagsByDepartment(
 					departmentIds[numberDepartment],
-					organisationId,
+					organizationId,
 					count,
 					offset,
 				)
@@ -109,11 +109,11 @@ const FFApi = {
 	// Получае фича флаги по департаменту и его детям
 	getFFsByDepAndItsChildren: async (
 		departmentId: number,
-		organisationId: number,
+		organizationId: number,
 	): Promise<IFeatureFlag[]> => {
 		const responseData =
 			await APIJsonRequest<IFFByDepartmentLinkedResponse>(
-				`${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}/feature-flags/linked?limit=100&offset=0&relation=descendant`,
+				`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/feature-flags/linked?limit=100&offset=0&relation=descendant`,
 			)
 		return responseData.items.map(
 			({
@@ -129,11 +129,11 @@ const FFApi = {
 
 	getFFsByDepsAndTheyChildren: async (
 		departmentIds: number[],
-		organisationId: number,
+		organizationId: number,
 	): Promise<IFeatureFlag[]> => {
 		const response = await Promise.all(
 			departmentIds.map((departmentId) =>
-				FFApi.getFFsByDepAndItsChildren(departmentId, organisationId),
+				FFApi.getFFsByDepAndItsChildren(departmentId, organizationId),
 			),
 		)
 
@@ -143,41 +143,40 @@ const FFApi = {
 	},
 
 	switchFeatureFlags: async (
-		organisationId: number,
+		organizationId: number,
 		departmentId: number,
 		featureFlagId: number,
 		isEnabled: boolean,
 	): Promise<void> => {
 		const resp = APIJsonRequest<IFeatureFlag[]>(
-			`${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}/feature-flags/${featureFlagId}`,
+			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/feature-flags/${featureFlagId}`,
 			{ body: JSON.stringify({ value: isEnabled, version: 1 }) },
 		)
 	},
 
 	removeFF: async (
-		organisationId: number,
+		organizationId: number,
 		departmentId: number,
 		featureFlagId: number,
 	) => {
 		const resp = APIJsonRequest(
-			`${URL_ORGANISATION}/${organisationId}/nodes/${departmentId}/feature-flags/${featureFlagId}`,
+			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/feature-flags/${featureFlagId}`,
 			{ method: "DELETE" },
 		)
 	},
 
 	createFF: async (
-		organisationId: number,
+		organizationId: number,
 		nodeId: number,
 		ff: Pick<IFeatureFlag, "name" | "value">,
 	): Promise<IFeatureFlag> => {
 		return APIJsonRequest<IFeatureFlag>(
-			`${URL_ORGANISATION}/${organisationId}/nodes/${nodeId}/feature-flags`,
+			`${URL_ORGANIZATION}/${organizationId}/nodes/${nodeId}/feature-flags`,
 			{
 				method: "POST",
 				body: JSON.stringify({
 					name: ff.name,
-					isService: ff.value,
-					parentId: nodeId,
+					vaue: ff.value,
 				}),
 			},
 		)

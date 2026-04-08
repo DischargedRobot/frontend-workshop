@@ -1,15 +1,15 @@
 import { useDepartmentsStore } from "@/entities/Departments"
-import { useOrganisationStore } from "@/entities/Organisation"
+import { useOrganizationStore } from "@/entities/Organization"
 import { useShallow } from "zustand/shallow"
 
 export const useFullDepartmentTreeWidget = () => {
-	const organisation = useOrganisationStore((state) => state.organisation)
+	const organization = useOrganizationStore((state) => state.organization)
 	const departments = useDepartmentsStore(
 		useShallow((state) => state.getDepartmentsIncludingAllChildren()),
 	)
 
 	return {
-		organisation,
+		organization,
 		departments,
 	}
 }

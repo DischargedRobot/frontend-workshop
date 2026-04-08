@@ -1,17 +1,16 @@
 import { APIJsonRequest } from "@/shared/api"
-import { IOrganisation } from "../model/useOrganisationStore"
+import { IOrganization } from "../model/useOrganizationStore"
 import { IDepartmentResponse } from "@/entities/Departments"
 
-const URL = process.env.NEXT_PUBLIC_API_URL_V1
-// /api/v1/find-node
-
-export const organisationApi = {
-	getOrganisation: async (
+export const organizationApi = {
+	getOrganization: async (
+		url: string,
 		uuidDepartment: string,
 		cookieString?: string,
-	): Promise<IOrganisation> => {
+	): Promise<IOrganization> => {
+		console.log("getOrganization", url)
 		const dep = await APIJsonRequest<IDepartmentResponse>(
-			`${URL}/find-node?organizationNodeUuid=${uuidDepartment}`,
+			`${url}/find-node?organizationNodeUuid=${uuidDepartment}`,
 			{
 				headers: cookieString ? { Cookie: cookieString } : {},
 			},

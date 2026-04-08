@@ -43,6 +43,8 @@ export const defineAbility = (profile: IProfile): ProfileAbility => {
 	return build()
 }
 
+// export const ability = (() => defineAbility(profile))
+
 interface Props {
 	children?: React.ReactNode
 	profile: IProfile

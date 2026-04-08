@@ -1,20 +1,20 @@
 "use client"
 
 import { Button, Form, Alert } from "antd"
-import "./OrganisationRegistrationForm.scss"
+import "./OrganizationRegistrationForm.scss"
 
-import { useOrganisationRegistrationForm } from "../model"
+import { useOrganizationRegistrationForm } from "../model"
 import { TextInput } from "@/shared/ui"
 
 interface RegistrationFormValues {
-	OrganisationName: string
+	OrganizationName: string
 	AdminName: string
 	AdminPassword: string
 }
 
-export const OrganisationRegistrationForm = () => {
+export const OrganizationRegistrationForm = () => {
 	const [form] = Form.useForm<RegistrationFormValues>()
-	const { onSubmit, loading, error } = useOrganisationRegistrationForm()
+	const { onSubmit, loading, error } = useOrganizationRegistrationForm()
 
 	return (
 		<Form
@@ -37,7 +37,7 @@ export const OrganisationRegistrationForm = () => {
 
 			<Form.Item
 				label="Название организации"
-				name="OrganisationName"
+				name="OrganizationName"
 				rules={[
 					{
 						required: true,

@@ -3,7 +3,7 @@ import { mutate } from "swr"
 
 import { FFApi, useFFFiltersStore, useFFStore } from "@/entities/FF"
 import { useBreadcrumbStore } from "@/entities/DepartmentBreadcamb"
-import { useOrganisationStore } from "@/entities/Organisation"
+import { useOrganizationStore } from "@/entities/Organization"
 import { APIError } from "@/shared/api/APIErrors"
 import { showToast } from "@/shared/ui"
 
@@ -12,8 +12,8 @@ import { IDepartment } from "../../lib"
 import { useDepartmentsStore } from "../useDepartmentsStore"
 
 export const useDepartmentTableColumns = () => {
-	const organisationId = useOrganisationStore(
-		(state) => state.organisation.id,
+	const organizationId = useOrganizationStore(
+		(state) => state.organization.id,
 	)
 	const path = useBreadcrumbStore((state) => state.path)
 	const addDepartment = useBreadcrumbStore((state) => state.addDepartment)
@@ -35,13 +35,13 @@ export const useDepartmentTableColumns = () => {
 		try {
 			const FFs = await mutate(
 				[
-					["organisationId", "departmentId", "featureflags"],
-					[organisationId, departmentId],
+					["organizationId", "departmentId", "featureflags"],
+					[organizationId, departmentId],
 				],
 				() =>
 					FFApi.getFFsByDepAndItsChildren(
 						departmentId,
-						organisationId,
+						organizationId,
 					),
 			)
 			if (FFs !== undefined) {
@@ -66,12 +66,12 @@ export const useDepartmentTableColumns = () => {
 			try {
 				const children = await mutate(
 					[
-						["organisationId", "departmentId"],
-						[organisationId, department.id],
+						["organizationId", "departmentId"],
+						[organizationId, department.id],
 					],
 					() =>
 						departmentApi.getChildrenOfDepartments(
-							organisationId,
+							organizationId,
 							department.id,
 						),
 				)
@@ -100,7 +100,7 @@ export const useDepartmentTableColumns = () => {
 
 	const removeDepartment = async (dep: IDepartment) => {
 		try {
-			await departmentApi.removeDepartmentById(organisationId, dep.id)
+			await departmentApi.removeDepartmentById(organizationId, dep.id)
 			removeDepFromLocal([dep])
 		} catch (error) {
 			console.log(error, "error")
