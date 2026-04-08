@@ -130,8 +130,6 @@ services:
         depends_on:
             - auth-service
             - ff-service
-        networks:
-            - ff-network
 
 volumes:
     ff_service_pgdata:
