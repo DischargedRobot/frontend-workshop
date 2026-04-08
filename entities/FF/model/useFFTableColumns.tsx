@@ -3,8 +3,9 @@ import { DeleteIcon, InfoIcon } from "@/shared/assets/Icon"
 import { Switch } from "antd"
 import { IFeatureFlag } from "../lib/types"
 import { TFFTableColumns } from "../ui/FFTable"
-import { defineAbility } from "@/shared/model/Ability"
+import { AbilityContext } from "@/shared/model/Ability"
 import { useProfileStore } from "@/entities/Profile"
+import { useAbility } from "@casl/react"
 
 interface Params {
 	removeFF: (FF: IFeatureFlag) => Promise<void>
@@ -59,8 +60,7 @@ export const useFFTableColumns = ({
 		},
 	]
 
-	const profile = useProfileStore((state) => state.profile)
-	const ability = defineAbility(profile)
+	const ability = useAbility(AbilityContext)
 
 	if (ability.can("delete", "FF")) {
 		columns.push({

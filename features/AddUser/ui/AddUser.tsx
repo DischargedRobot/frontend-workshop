@@ -26,7 +26,7 @@ const AddUser = () => {
 
 	return (
 		<>
-			<AddButton onClick={openModal}>Добавить пользователя</AddButton>
+			<AddButton onClick={openModal} />
 			<Modal
 				open={isOpen}
 				footer={null}

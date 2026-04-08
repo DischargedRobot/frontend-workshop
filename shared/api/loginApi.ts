@@ -135,7 +135,7 @@ const loginApi = {
 	): Promise<string> => {
 		const roles = userRoles.map((role) => role.type)
 
-		const response = await APIJsonRequest<{ inviteUrl: string }>(
+		const response = await APIJsonRequest<{ inviteToken: string }>(
 			`${AUTH_URL}/generate-invite`,
 			{
 				method: "POST",
@@ -145,7 +145,7 @@ const loginApi = {
 				}),
 			},
 		)
-		return response.inviteUrl
+		return response.inviteToken
 	},
 }
 

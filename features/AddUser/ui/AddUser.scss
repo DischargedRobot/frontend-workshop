@@ -9,10 +9,6 @@
 	width: 100%;
 	gap: 16px;
 
-	.qr-code {
-		cursor: pointer;
-	}
-
 	&__qr-code-container {
 		@extend %flex;
 		align-items: center;
@@ -22,6 +18,7 @@
 
 	&__token-container {
 		@extend %flex-column;
+		flex: 2;
 
 		width: 100%;
 		gap: 10px;
@@ -39,6 +36,21 @@
 		background-color: var(--shadow);
 
 		color: var(--text-color);
+	}
+}
+
+.qr-code {
+	display: block;
+
+	flex: 1;
+
+	border: none;
+	// cursor: pointer;
+
+	canvas {
+		object-fit: contain;
+		width: 100% !important;
+		height: 100% !important;
 	}
 }
 

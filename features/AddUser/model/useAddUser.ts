@@ -9,7 +9,9 @@ import { useShallow } from "zustand/shallow"
 
 export const useAddUser = () => {
 	const departments = useDepartmentsStore(
-		useShallow((state) => state.getDepartmentsIncludingAllChildren()),
+		useShallow((state) =>
+			state.getDepartmentsIncludingAllChildren().slice(1),
+		),
 	)
 	const [selectedDepartment, setSelectedDepartment] =
 		useState<IDepartment | null>(null)
@@ -22,7 +24,7 @@ export const useAddUser = () => {
 		})),
 	)
 
-	const [url, setUrl] = useState("Бебебе")
+	const [url, setUrl] = useState("Тут будет ваша ссылка")
 	const handleRolesChange = (allRoles: IRole[]) => {
 		setRoles(allRoles)
 	}

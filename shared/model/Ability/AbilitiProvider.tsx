@@ -3,14 +3,15 @@ import { createContext } from "react"
 import { AbilityBuilder, createMongoAbility, MongoAbility } from "@casl/ability"
 import { IProfile } from "@/shared/lib/types"
 import { ROLE_ABILITY_MAP } from "@/shared/model/Role/types"
-import { createContextualCan } from "@casl/react"
+import { createContextualCan, useAbility } from "@casl/react"
+import { useProfileStore } from "@/entities/Profile"
 
 export type Actions = "create" | "read" | "update" | "delete" | "manage"
 export type Subjects = "FF" | "Department" | "User" | "all"
 
 export type ProfileAbility = MongoAbility<[Actions, Subjects]>
 
-// Дефолтный ability
+// Дефолтный ability запрещающий всё
 const createDefaultAbility = (): ProfileAbility => {
 	const { cannot, build } = new AbilityBuilder<ProfileAbility>(
 		createMongoAbility,
@@ -43,16 +44,15 @@ export const defineAbility = (profile: IProfile): ProfileAbility => {
 	return build()
 }
 
-// export const ability = (() => defineAbility(profile))
-
 interface Props {
 	children?: React.ReactNode
 	profile: IProfile
 }
 
 export const AbilityProvider = (props: Props) => {
-	const { children, profile } = props
-
+	const { children } = props
+	const profile = useProfileStore((state) => state.profile)
+	console.log("AbilityProvider initialization", profile, "profile")
 	return (
 		<AbilityContext.Provider value={defineAbility(profile)}>
 			{children}

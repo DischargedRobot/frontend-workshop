@@ -10,9 +10,9 @@ interface Props {
 	className?: string
 }
 
-export const DeleteButton = ({ onClick, className }: Props) => {
+export const DeleteButton = ({ onClick, className = "" }: Props) => {
 	return (
-		<button className={`delet-button ${className}`} onClick={onClick}>
+		<button className={`delete-button ${className}`} onClick={onClick}>
 			<DeleteIcon />
 		</button>
 	)

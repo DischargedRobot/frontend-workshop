@@ -15,3 +15,23 @@
 %flex {
 	display: flex;
 }
+
+%scrollbar {
+	* {
+		scrollbar-width: thin;
+		scrollbar-color: var(--active-hover) transparent;
+	}
+
+	*::-webkit-scrollbar {
+		height: 12px;
+		width: 12px;
+	}
+	*::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	*::-webkit-scrollbar-thumb {
+		background-color: var(--active-hover);
+		border-radius: 5px;
+		border: 2px solid transparent;
+	}
+}
