@@ -11,13 +11,11 @@ export const useUserCardForm = (
 		formState: { errors, isDirty },
 		reset,
 		control,
-	} = useForm<Pick<IUser, "login" | "password" | "departmentId">>({
+	} = useForm<Pick<IUser, "login" | "departmentId">>({
 		defaultValues: user,
 	})
 
-	const saveData = (
-		data: Pick<IUser, "login" | "password" | "departmentId">,
-	) => {
+	const saveData = (data: Pick<IUser, "login" | "departmentId">) => {
 		setUser({ ...user, ...data })
 		reset(data)
 	}

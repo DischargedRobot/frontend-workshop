@@ -3,6 +3,8 @@ import { DeleteIcon, InfoIcon } from "@/shared/assets/Icon"
 import { Switch } from "antd"
 import { IFeatureFlag } from "../lib/types"
 import { TFFTableColumns } from "../ui/FFTable"
+import { defineAbility } from "@/shared/model/Ability"
+import { useProfileStore } from "@/entities/Profile"
 
 interface Params {
 	removeFF: (FF: IFeatureFlag) => Promise<void>
@@ -15,7 +17,7 @@ export const useFFTableColumns = ({
 }: Params): TFFTableColumns => {
 	const filters = useFFTableFiltersStore((state) => state.visibleColumns)
 
-	return [
+	const columns: TFFTableColumns = [
 		{
 			title: "Имя",
 			key: "name",
@@ -55,7 +57,13 @@ export const useFFTableColumns = ({
 			render: (value: string) => <InfoIcon info={value} />,
 			hidden: !filters.description.isVisible,
 		},
-		{
+	]
+
+	const profile = useProfileStore((state) => state.profile)
+	const ability = defineAbility(profile)
+
+	if (ability.can("delete", "FF")) {
+		columns.push({
 			align: "center",
 			title: "",
 			key: "delete",
@@ -65,6 +73,7 @@ export const useFFTableColumns = ({
 				</button>
 			),
 			width: "64px",
-		},
-	]
+		})
+	}
+	return columns
 }

@@ -12,7 +12,7 @@ import { IDepartment } from "@/entities/Departments"
 
 interface Props {
 	currentDepartment?: number
-	control: Control<Pick<IUser, "login" | "password" | "departmentId">>
+	control: Control<Pick<IUser, "login" | "departmentId">>
 	className?: string
 }
 

@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { loginApi } from "@/shared/api"
-import { organisationApi, useOrganisationStore } from "@/entities/Organisation"
+import { useOrganisationStore } from "@/entities/Organisation"
+import { organisationApiClient } from "@/entities/Organisation"
 
 export type FormValues = {
 	OrganisationName: string
@@ -39,7 +40,7 @@ export const useOrganisationRegistrationForm = () => {
 				password: data.AdminPassword,
 			})
 
-			const organisation = await organisationApi.getOrganisation(
+			const organisation = await organisationApiClient.getOrganisation(
 				response.uuidDepartment,
 			)
 

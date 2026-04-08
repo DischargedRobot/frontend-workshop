@@ -1,1 +1,2 @@
-export { organisationApi } from "./oragisationApi"
+export { organisationApiClient } from "./organisationApiClient"
+export { organisationApiServer } from "./organisationApiServer"

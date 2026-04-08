@@ -22,43 +22,7 @@ const createIntialRoles = (): IRole[] => {
 const dep = { id: 1, name: "d", children: [], featureFlags: [], link: "" }
 
 const useUsersStore = create<IUseUsers>((set, get) => ({
-	users: [
-		{
-			login: "L",
-			password: "ss",
-			id: 1,
-			roles: createIntialRoles(),
-			departmentId: dep.id,
-		},
-		{
-			login: "rob",
-			password: "ss",
-			id: 2,
-			roles: createIntialRoles(),
-			departmentId: dep.id,
-		},
-		{
-			login: "L",
-			password: "ss",
-			id: 3,
-			roles: createIntialRoles(),
-			departmentId: dep.id,
-		},
-		{
-			login: "L",
-			password: "ss",
-			id: 4,
-			roles: createIntialRoles(),
-			departmentId: dep.id,
-		},
-		{
-			login: "L",
-			password: "ss",
-			id: 5,
-			roles: createIntialRoles(),
-			departmentId: dep.id,
-		},
-	],
+	users: [],
 	setUsers: (users) => set({ users }),
 	setUser: (newUser) =>
 		set((state) => ({
@@ -73,22 +37,7 @@ const useUsersStore = create<IUseUsers>((set, get) => ({
 			}
 		}),
 
-	filteredUsers: [
-		{
-			login: "L",
-			password: "ss",
-			id: 1,
-			roles: createIntialRoles(),
-			departmentId: dep.id,
-		},
-		{
-			login: "rob",
-			password: "ss",
-			id: 2,
-			roles: createIntialRoles(),
-			departmentId: dep.id,
-		},
-	],
+	filteredUsers: [],
 	setFilteredUsers: (filteredUsers) => set({ filteredUsers }),
 }))
 

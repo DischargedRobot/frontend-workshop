@@ -3,7 +3,7 @@
 import "./UserCard.scss"
 
 import Avatar from "@/shared/ui/Avatar"
-import RoleList from "../../../RoleList"
+import RoleList from "@/shared/ui/RoleList"
 import { IUser } from "../../lib/types"
 import { DeleteIcon } from "@/shared/assets/Icon"
 import { memo } from "react"
@@ -72,27 +72,6 @@ const UserCard = ({ user, setUser }: Props) => {
 					/>
 					<span className="user-card__error text text_tiny">
 						{errors.login?.message?.toString()}
-					</span>
-				</label>
-				<label className="user-card__field">
-					<input
-						className="user-card__input text text_litle text_tiny"
-						type="text"
-						placeholder="Пароль"
-						{...register("password", {
-							minLength: {
-								value: 6,
-								message: "Размер пароля должен быть больше 6",
-							},
-							maxLength: {
-								value: 25,
-								message: "Размер пароля должен быть меньше 25",
-							},
-							required: "Это поле обязательно для заполнения",
-						})}
-					/>
-					<span className="user-card__error text text_tiny">
-						{errors.password?.message?.toString()}
 					</span>
 				</label>
 				<div>
