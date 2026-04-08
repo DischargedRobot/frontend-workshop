@@ -11,7 +11,6 @@ import useBreadcrumbStore from "@/entities/DepartmentBreadcamb/model/useBreadcru
 import { Can } from "@/shared/model/Ability"
 
 const FullDepartmentTable = () => {
-	//   const toDepartment  = useDepartment((state) => state.toDepartment)
 	const { isHidden, setIsHidden } = useFFMenu(
 		useShallow((state) => ({
 			isHidden: state.isHidden,

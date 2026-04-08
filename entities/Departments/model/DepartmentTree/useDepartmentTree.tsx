@@ -2,14 +2,12 @@ import { useOrganizationStore } from "@/entities/Organization"
 import useSWR, { useSWRConfig } from "swr"
 import { useDepartmentsStore } from "../useDepartmentsStore"
 import { departmentApi } from "../../api"
-import { useCallback, useEffect, useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { APIError } from "@/shared/api/APIErrors"
 import { IDepartment } from "../../lib"
 import { useUserFiltersStore } from "@/entities/User"
 import type { IDepartmentNode } from "../../ui/DepartmentTree/TitleRender"
 import { useSelectedDepartmentsStore } from "../useSelectedDepartmentsStore"
-import { defineAbility } from "@/shared/model/Ability"
-import { profile } from "console"
 
 const getDepartmentAndAllChildren = (
 	departments: IDepartment[],
@@ -44,10 +42,10 @@ const useDepartmentTree = () => {
 	)
 	const changeChild = useOrganizationStore((state) => state.changeChild)
 
-	const setDepartments = useDepartmentsStore((state) => state.setDepartments)
 	const departments = useDepartmentsStore(
 		(state) => state.departments[0]?.children,
 	)
+	console.log("useDepartmentTree, departments: ", departments)
 	const changeDepartmentChildren = useDepartmentsStore(
 		(state) => state.changeDepartmentChildren,
 	)
@@ -57,13 +55,14 @@ const useDepartmentTree = () => {
 
 	const { mutate } = useSWRConfig()
 
-	console.log(organization)
+	console.log("useDepartmentTree, departments: ", organization)
 
-	const { data, error } = useSWR<IDepartment[], APIError>(
-		organization.child // не видит, мб из-з гидратации, поэтому тут првоерка
-			? [
-					["organizationId, departmentId"],
-					[organization.id, organization.child.id],
+	const { error } = useSWR<IDepartment[], APIError>(
+		organization.child // не видит, мб из-з гидратации,
+			? // поэтому тут првоерка
+				[
+					["department", "organizationId", "departmentId"],
+					["all", organization.id, organization.child.id],
 				]
 			: null,
 		() =>
@@ -72,22 +71,13 @@ const useDepartmentTree = () => {
 				organization.child.id,
 				2,
 			),
+		{
+			onSuccess: (data) => {
+				changeChild(data)
+				changeDepartmentChildren(organization.child, data)
+			},
+		},
 	)
-
-	useEffect(() => {
-		if (data !== undefined) {
-			changeChild(data)
-		}
-	}, [data, changeChild])
-
-	useEffect(() => {
-		if (
-			organization.child !== undefined &&
-			!(organization.child instanceof APIError)
-		) {
-			setDepartments([organization.child])
-		}
-	}, [organization, setDepartments, error])
 
 	const loadData = useCallback(
 		async (node: IDepartmentNode) => {
@@ -117,26 +107,36 @@ const useDepartmentTree = () => {
 		[mutate, organizationId, organization.id, changeDepartmentChildren],
 	)
 
-	const { setDepartments: setSelectedDepartments } =
-		useSelectedDepartmentsStore()
+	const setSelectedDepartments = useSelectedDepartmentsStore(
+		(state) => state.setDepartments,
+	)
 
-	const handleCheck = (checkedKeys: number[]) => {
-		setFilterDepartmentIds(checkedKeys)
-		const selectedDeps = getDepartmentAndAllChildren(
-			departments || [],
-		).filter((dep) => checkedKeys.includes(dep.id))
-		setSelectedDepartments(selectedDeps)
-	}
+	const handleCheck = useCallback(
+		(checkedKeys: number[]) => {
+			setFilterDepartmentIds(checkedKeys)
+			const selectedDeps = getDepartmentAndAllChildren(
+				departments || [],
+			).filter((dep) => checkedKeys.includes(dep.id))
+			setSelectedDepartments(selectedDeps)
+		},
+		[setFilterDepartmentIds, departments, setSelectedDepartments],
+	)
 
-	const handleDrop = (
-		dragNode: IDepartmentNode,
-		dropNodeId: number,
-		dropToGap: boolean,
-	) => {
-		if (!dropToGap) {
-			changeParentDep(dragNode, dropNodeId)
-		}
-	}
+	// Обработчик перетаскивания отдела в дереве
+	const handleDrop = useCallback(
+		(
+			dragNode: IDepartmentNode, // Перетаскиваемый отдел
+			dropNodeId: number, // ID узла, куда падает
+			dropToGap: boolean, // true = между узлами, false = внутри узла
+		) => {
+			// Если внутри узла (не между узлами)
+			if (!dropToGap) {
+				// Сделать перетаскиваемый отдел дочерним для целевого узла
+				changeParentDep(dragNode, dropNodeId)
+			}
+		},
+		[changeParentDep],
+	)
 
 	const treeData = useMemo(
 		() =>
@@ -154,8 +154,6 @@ const useDepartmentTree = () => {
 		[departments],
 	)
 
-	// const ability = defineAbility(profile)
-
 	return useMemo(
 		() => ({
 			departments,
@@ -167,8 +165,16 @@ const useDepartmentTree = () => {
 			handleCheck,
 			handleDrop,
 		}),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[departments, treeData, filterDepartmentIds, organizationId, error],
+		[
+			departments,
+			treeData,
+			filterDepartmentIds,
+			organizationId,
+			error,
+			handleDrop,
+			handleCheck,
+			loadData,
+		],
 	)
 }
 

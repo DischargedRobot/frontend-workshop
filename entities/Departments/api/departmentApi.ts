@@ -64,23 +64,6 @@ const convertIDepartmentResponseToIDepartmentWithOrganization = (
 	return nodes
 }
 
-// const reduceChilrenDepRespToParentDepartment = (
-// 	departmentsResponse: IDepartmentResponse[],
-// 	department: IDepartment,
-// ): void => {
-// 	departmentsResponse.forEach((depResp) => {
-// 		department.children.push({
-// 			id: depResp.id,
-// 			name: depResp.name,
-// 			children: [],
-// 			featureFlags: [],
-// 			path: "",
-// 			isService: depResp.isService,
-// 			version: depResp.version,
-// 		})
-// 	})
-// }
-
 // Собираем ответ в родительский отдел
 const reduceDepRespToParentDep = (
 	departmentsResponse: IDepartmentResponse[],
@@ -91,13 +74,9 @@ const reduceDepRespToParentDep = (
 
 	departmentsResponse.forEach((depResp) => {
 		nodeMap.set(depResp.id, {
-			id: depResp.id,
-			name: depResp.name,
+			...depResp,
 			children: [],
 			featureFlags: [],
-			path: "",
-			isService: depResp.isService,
-			version: depResp.version,
 		})
 	})
 
@@ -124,7 +103,7 @@ const reduceDepRespToParentDep = (
 }
 
 // Собираем ответ в массив !! на входе не должно быть в списке родительского узла
-const reduceDepRespToChildrenArray = (
+const reduceDepRespToArray = (
 	departmentsResponse: IDepartmentResponse[],
 ): IDepartment[] => {
 	// Мапим, чтобы потом было проще обратиться к узлу во время операций, а не писать find
@@ -132,13 +111,9 @@ const reduceDepRespToChildrenArray = (
 
 	departmentsResponse.forEach((depResp) => {
 		nodeMap.set(depResp.id, {
-			id: depResp.id,
-			name: depResp.name,
+			...depResp,
 			children: [],
 			featureFlags: [],
-			path: "",
-			isService: depResp.isService,
-			version: depResp.version,
 		})
 	})
 
@@ -180,56 +155,19 @@ function convertIDepartmentResponseToIDepartment(
 	// Если передан массив
 	if (Array.isArray(departmentsResponse)) {
 		return departmentsResponse.map((depResp) => ({
-			id: depResp.id,
-			name: depResp.name,
+			...depResp,
 			children: [],
 			featureFlags: [],
-			path: "",
-			isService: depResp.isService,
-			version: depResp.version,
 		}))
 	}
 
 	// Если передан один объект
 	return {
-		id: departmentsResponse.id,
-		name: departmentsResponse.name,
+		...departmentsResponse,
 		children: [],
 		featureFlags: [],
-		path: "",
-		isService: departmentsResponse.isService,
-		version: departmentsResponse.version,
 	}
 }
-
-// const convertIDepartmentResponseToIDepartment = (departmentsResponse: IDepartmentResponse[]): IDepartment[] => {
-//     // Мапим, чтобы потом было проще обратиться к узлу во время операций, а не писать find
-//     const nodeMap = new Map<number, IDepartment>()
-
-//     // преобразуем вход в map
-//     departmentsResponse.forEach((depResp) => {
-//         nodeMap.set(depResp.id, {id: depResp.id, name: depResp.name, children: [], featureFlags: [], link: '', isService: depResp.isService, version: depResp.version})
-//     })
-
-//     // Тут мы закидывает департаменты в детей других узлов
-//     const nodes: IDepartment[] = []
-//     // console.log(organization, 'org')
-//     departmentsResponse.forEach(item => {
-//         const path = item.path.split('.')
-//         if (path.length == 1)
-//         {
-//             const node = nodeMap.get(parseInt(path[1]))!
-//             nodes.push(node)
-//         }
-//         // условиие обхода корневого, т.к. у него длина 1
-//         else if (path.length > 2) {
-//             // console.log(nodeMap.get(parseInt(path.at(-2)!)), path, nodeMap)
-//             nodeMap.get(parseInt(path.at(-2)!))?.children.push(nodeMap.get(item.id)!)
-//         }
-//     })
-
-//     return nodes
-// }
 
 const departmentApi = {
 	getDepartmentsByOrganization: async (
@@ -276,23 +214,14 @@ const departmentApi = {
 		)
 		// convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
 		// reduceDepartmentResponceToParentDepartment(responseData.items.filter((dep) => dep.id != department.id), department)
-		return reduceDepRespToChildrenArray(
+		return reduceDepRespToArray(
 			responseData.items.filter((dep) => dep.id != departmentId),
 		)
 	},
 
-	getDepartmentsByPath: async (path: string) => {
-		const response = await fetch(`${path}`, {
-			method: "GET",
-			headers: { "Content-type": "aplication/json" },
-		})
-
-		if (!response.ok) {
-			throw new Error("getDepartmentsByPath")
-		}
-
-		return await response.json()
-	},
+	// getDepartmentsByPath: async (path: string): Promise<IDepartment[]> => {
+	// 	return await APIJsonRequest<IDepartment[]>(`${path}`)
+	// },
 
 	addDepartment: async (
 		departmentName: string,

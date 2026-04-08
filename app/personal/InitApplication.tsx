@@ -1,10 +1,11 @@
 "use client"
 import { useOrganizationStore } from "@/entities/Organization/model/useOrganizationStore"
 import { useProfileStore } from "@/entities/Profile"
-import { useEffect } from "react"
 import { IProfile } from "@/entities/Profile"
 import { IOrganization } from "@/entities/Organization/model/useOrganizationStore"
 import { useApplicationStore } from "@/shared/model/Application"
+import { useDepartmentsStore } from "@/entities/Departments/model/useDepartmentsStore"
+import { useEffect } from "react"
 
 interface InitApplicationProps {
 	profile: IProfile
@@ -20,12 +21,14 @@ export const InitApplication = ({
 		(state) => state.setOrganization,
 	)
 	const setIsLoading = useApplicationStore((state) => state.setIsLoading)
+	const setDepartments = useDepartmentsStore((state) => state.setDepartments)
 
 	useEffect(() => {
 		setProfile(profile)
 		setOrganization(organization)
 		setIsLoading(false)
-	}, [profile, organization, setProfile, setOrganization, setIsLoading])
+		setDepartments([organization.child])
+	}, [])
 
 	return null
 }

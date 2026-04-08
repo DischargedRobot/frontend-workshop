@@ -60,9 +60,9 @@ const DepartmentTree = () => {
 					draggable
 					onDrop={(info) => {
 						handleDrop(
-							info.dragNode as unknown as IDepartmentNode,
-							(info.node as unknown as IDepartmentNode).id,
-							info.dropToGap,
+							info.dragNode as unknown as IDepartmentNode, // Перетаскиваемый отдел
+							(info.node as unknown as IDepartmentNode).id, // ID узла, куда падает
+							info.dropToGap, // бросили между узулами = true иначе внутрь false
 						)
 					}}
 				/>
