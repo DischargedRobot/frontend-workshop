@@ -39,6 +39,13 @@ export const useAPIErrorHandler = ({ customHandlers = [] }: Props = {}) => {
 				case 401:
 					router.push("/login")
 					break
+				case 403:
+					showToast({
+						title: "Доступ запрещён",
+						text: "У вас нет прав для выполнения этого действия",
+						type: "error",
+					})
+					break
 				case 404:
 					// router.push("/notFound")
 					break

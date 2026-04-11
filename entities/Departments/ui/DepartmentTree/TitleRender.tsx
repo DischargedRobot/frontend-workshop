@@ -5,7 +5,7 @@ import { departmentApi } from "../../api"
 import { useDepartmentsStore } from "../../model"
 
 export interface IDepartmentNode
-	extends IDepartment, Omit<DataNode, "children" | "isService"> {}
+	extends IDepartment, Omit<DataNode, "children" | "isService"> { }
 
 interface Props {
 	node: IDepartmentNode
@@ -30,23 +30,32 @@ const TitleRender = (props: Props): React.ReactNode => {
 	return (
 		<>
 			{/* TODO: Просто дизейблед надо */}
-			{isEditable ? (
-				<input
-					style={{ paddingLeft: "8px" }}
-					ref={inputRef}
-					// onClick={(e) => {e.stopPropagation()}}
-					onChange={(e) => setTitle(e.target.value)}
-					value={title}
-					onBlur={(e) => {
+			{/* {isEditable ? ( */}
+			<input
+				readOnly={!isEditable}
+				style={{ paddingLeft: "8px" }}
+				ref={inputRef}
+				// onClick={(e) => {e.stopPropagation()}}
+				onChange={(e) => setTitle(e.target.value)}
+				value={title}
+				onBlur={(e) => {
+					if (e.target.value.trim() === inputRef.current?.value) {
 						changeName(node, e.target.value)
 						departmentApi.changeDepartmentName(
 							{ ...node, name: e.target.value },
 							organizationId,
 						)
+						console.log("sdfsdfdsf")
+
 						setIsEditable(false)
-					}}
-				/>
-			) : (
+					}
+				}}
+				onDoubleClick={() => {
+					setIsEditable(true)
+					console.log("ssss")
+				}}
+			/>
+			{/* ) : (
 				<span
 					style={{ margin: "10px 0" }}
 					// onClick={(e) => {e.stopPropagation()}}
@@ -57,7 +66,7 @@ const TitleRender = (props: Props): React.ReactNode => {
 				>
 					{title}
 				</span>
-			)}
+			)} */}
 		</>
 	)
 }

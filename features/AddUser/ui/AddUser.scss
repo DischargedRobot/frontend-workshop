@@ -21,7 +21,7 @@
 		flex: 2;
 
 		width: 100%;
-		gap: 10px;
+		gap: 20px;
 	}
 
 	&__buttons {
@@ -36,10 +36,15 @@
 		}
 	}
 
-	&__button {
+	&__add-button {
+		flex: 2;
 		&:disabled {
 			color: color-mix(in srgb, var(--text-color), var(--disabled-mix));
-			background-color: var(--disabled);
+			background-color: color-mix(
+				in srgb,
+				var(--active-background),
+				var(--disabled-mix)
+			);
 		}
 
 		// &:hover {
@@ -50,18 +55,32 @@
 		// }
 	}
 
+	&__reset-button {
+		flex: 1;
+		&:disabled {
+			color: color-mix(in srgb, var(--white), var(--disabled-mix));
+			background-color: color-mix(
+				in srgb,
+				var(--error),
+				var(--disabled-mix)
+			);
+		}
+	}
+
 	&__token {
 		display: grid;
 		grid-template-columns: auto 20px;
 		justify-content: space-between;
 
-		width: 100% !important;
+		margin-bottom: 0 !important;
 		padding: 4px 10px;
+		width: 100% !important;
 		border-radius: 16px;
 		background-color: var(--shadow);
 	}
 	& .ant-form-item {
 		width: 100%;
+		margin-bottom: 0;
 	}
 }
 

@@ -35,9 +35,9 @@ export const useAddUser = () => {
 		setRoles(allRoles)
 	}
 
-	const onSubmit = (formData: Form) => {
+	const onSubmit = async (formData: Form) => {
 		if (formData.departmentUuid)
-			handleGetToken(formData.departmentUuid, roles)
+			await handleGetToken(formData.departmentUuid, roles)
 	}
 
 	const handleReset = () => {

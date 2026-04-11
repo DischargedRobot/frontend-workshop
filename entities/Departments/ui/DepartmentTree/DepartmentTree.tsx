@@ -57,6 +57,7 @@ const DepartmentTree = () => {
 						title: "name",
 						children: "children",
 					}}
+					showLine
 					draggable
 					onDrop={(info) => {
 						handleDrop(

@@ -52,7 +52,7 @@ interface Props {
 export const AbilityProvider = (props: Props) => {
 	const { children } = props
 	const profile = useProfileStore((state) => state.profile)
-	console.log("AbilityProvider initialization", profile, "profile")
+	// console.log("AbilityProvider initialization", profile, "profile")
 	return (
 		<AbilityContext.Provider value={defineAbility(profile)}>
 			{children}

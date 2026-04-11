@@ -9,6 +9,7 @@ import AddUserRoles from "./AddUserRoles"
 import { SearchDropDownMenu } from "@/shared/model/SearchDropMenu"
 import { useAddUser } from "../model"
 import { IDepartment } from "@/entities/Departments"
+import { PoweroffOutlined, SyncOutlined } from "@ant-design/icons"
 
 const { Paragraph } = Typography
 
@@ -94,16 +95,16 @@ const AddUser = () => {
 
 							<div className="add-user__buttons">
 								<Button
-									className="add-user__button"
+									className="add-user__add-button"
 									disabled={!isNotFull}
 									type="primary"
 									htmlType="submit"
-									loading={isLoading}
+									loading={isLoading && { icon: <SyncOutlined spin /> }}
 								>
 									{isNotFull ? "Получить ссылку" : "Выберите отдел и роли"}
 								</Button>
 								<Button
-									className="add-user__button"
+									className="add-user__reset-button"
 									disabled={isClean}
 									type="primary"
 									htmlType="reset"

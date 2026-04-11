@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { APIError, loginApi } from "@/shared/api"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 import { showToast } from "@/shared/ui"
@@ -12,6 +12,7 @@ export const useAddUserGetUrl = () => {
 	const handleGetToken = async (departmentUuid: string, roles: IRole[]) => {
 		try {
 			setIsLoading(true)
+
 			const token = await loginApi.generateInvite(
 				roles.filter((role) => role.isEnabled),
 				departmentUuid,
@@ -22,9 +23,17 @@ export const useAddUserGetUrl = () => {
 			newUrl.searchParams.set("token", token)
 			setUrl(newUrl.toString())
 			showToast({ type: "success", text: "Ссылка успешно сгенерирована" })
-			setIsLoading(false)
 		} catch (error) {
+			if (error instanceof APIError && error.status === 401) {
+				showToast({
+					type: "error",
+					title: "У вас недостаточно прав",
+					text: error.message,
+				})
+			}
 			handleAPIError(error as APIError)
+		} finally {
+			setIsLoading(false)
 		}
 	}
 

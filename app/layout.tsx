@@ -90,6 +90,7 @@ const theme: ThemeConfig = {
 			itemSelectedColor: COLOR.textColor,
 			itemBg: COLOR.foreground,
 			itemHoverBg: COLOR.hover,
+
 		},
 
 		Breadcrumb: {
@@ -122,6 +123,28 @@ export default function RootLayout({
 						"--hover": COLOR.hover,
 						"--hover-active-background": COLOR.hoverActive,
 						"--border-for-nav-panel": COLOR.strokeNavPanel,
+
+						"--button-base-background": COLOR.buttonBaseBackground,
+						"--disabled": COLOR.disabled,
+						"--background-text-color": COLOR.backgroundTextColor,
+						// ...style
+						// "--ant-color-text-quaternary": COLOR.textColor,
+						// "--ant-color-text-secondary": COLOR.textColor,
+						// "--ant-color-text-primary": COLOR.textColor,
+						// "--ant-color-text": COLOR.textColor,
+						// "--ant-color-text-placeholder": "#d2d2d2",
+						// "--ant-color-bg-base": COLOR.background,
+						// "--ant-color-bg-layout": COLOR.background,
+						// "--ant-color-border": COLOR.stroke,
+						// "--ant-color-primary": COLOR.activeBackground,
+						// "--ant-color-primary-active": COLOR.activeBackground,
+						// "--ant-color-primary-bg": COLOR.foregroundSecond,
+						// "--ant-color-primary-hover": COLOR.activeHover,
+						// "--ant-color-primary-hover-bg": COLOR.hoverActive,
+						// "--ant-color-text-placeholder": "#d2d2d2",
+						// "--ant-color-text-quaternary": COLOR.textColor,
+						// "--ant-color-text-secondary": COLOR.textColor,
+						// "--ant-color-text-primary": COLOR.textColor,		
 					} as React.CSSProperties
 				}
 			>
@@ -133,6 +156,6 @@ export default function RootLayout({
 					</Layout>
 				</ConfigProvider>
 			</body>
-		</html>
+		</html >
 	)
 }

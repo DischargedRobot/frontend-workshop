@@ -31,11 +31,24 @@
 
 	.ant-tree-switcher {
 		.ant-tree-switcher-icon {
-			color: var(--text-color);
+			color: #fff;
 		}
 	}
 
-	.ant-tree-drag-icon {
+	.ant-tree-draggable-icon {
 		color: var(--text-color) !important;
+		display: none;
+	}
+
+	// Соединительные линии
+	.ant-tree-drop-indicator {
+		color: var(--text-color) !important;
+	}
+
+	// Вертикальные линии
+	.ant-tree-indent-unit {
+		&::before {
+			color: var(--text-color) !important;
+		}
 	}
 }
