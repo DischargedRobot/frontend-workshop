@@ -6,14 +6,16 @@ import { IRole, NAMES_OF_ROLE_ACTIONS } from "@/shared/model/Role/types"
 import "./AddUserRoles.scss"
 
 interface Props {
-	roles: IRole[]
+	roles?: IRole[]
+	value?: IRole[]
 	onChange: (allRoles: IRole[], changedRole: IRole) => void
 }
 
-const AddUserRoles = ({ roles, onChange }: Props) => {
+const AddUserRoles = ({ roles, value, onChange }: Props) => {
+	const displayRoles = value ?? roles ?? []
 	const handleRoleChange = (role: IRole, isEnabled: boolean) => {
 		const updatedRole = { ...role, isEnabled }
-		const updatedRoles = roles.map((r) =>
+		const updatedRoles = displayRoles.map((r) =>
 			r.type === role.type ? updatedRole : r,
 		)
 		onChange(updatedRoles, updatedRole)
@@ -21,7 +23,7 @@ const AddUserRoles = ({ roles, onChange }: Props) => {
 
 	const titles = ["Сотрудники", "Фич флаги", "Отделы"]
 	const countCollumn = titles.length
-	const blockSize = roles.length / countCollumn
+	const blockSize = displayRoles.length / countCollumn
 
 	return (
 		<div className="add-user-roles">
@@ -32,7 +34,7 @@ const AddUserRoles = ({ roles, onChange }: Props) => {
 					</h4>
 					<hr />
 					<ul className="add-user-roles__list">
-						{roles
+						{displayRoles
 							.slice(
 								blockIndex * blockSize,
 								(blockIndex + 1) * blockSize,

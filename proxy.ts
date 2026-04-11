@@ -2,7 +2,7 @@ import { connection, NextRequest, NextResponse } from "next/server"
 
 const protectRoutes = ["/personal"]
 
-const AUTH_URL = `http://localhost:8081/api/v1/auth`
+const AUTH_URL = `${process.env.NEXT_PUBLIC_AUTH_SERVICE_URL_V1}`
 
 // ставим полученный куки из респонса в некст респонс
 const setCookieFromApiResponse = (
@@ -69,6 +69,7 @@ const setCookieFromApiResponse = (
 export default async function proxy(request: NextRequest) {
 	await connection() // чтобы в рантайме брал прееменные окружения
 
+	// console.log("dfsdfsdf proxy")
 	const pathname = request.nextUrl.pathname
 	const origin = request.nextUrl.origin
 
@@ -88,6 +89,7 @@ export default async function proxy(request: NextRequest) {
 	} else {
 		const cookieHeader = request.headers.get("cookie") || ""
 		// рефрешим
+		console.log(AUTH_URL, "proxy")
 		try {
 			const response = await fetch(`${AUTH_URL}/refresh`, {
 				method: "POST",
@@ -96,6 +98,7 @@ export default async function proxy(request: NextRequest) {
 					Cookie: cookieHeader,
 				},
 			})
+			console.log(`${AUTH_URL}/refresh`, "refresh url", cookieHeader)
 
 			// если не смогли срефрешить, то на логин
 			if (!response.ok) {
@@ -110,7 +113,7 @@ export default async function proxy(request: NextRequest) {
 			return next
 		} catch (error) {
 			//TODO: кидать на страницу с ошибкой надо
-			console.log(error)
+			console.log(error, "ERROR")
 		}
 	}
 }

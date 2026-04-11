@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 
 interface CustomErrorHandler {
 	error: APIError
-	callback: (error: APIError) => void
+	handler: (error: APIError) => void
 }
 
 interface Props {
@@ -30,23 +30,23 @@ export const useAPIErrorHandler = ({ customHandlers = [] }: Props = {}) => {
 			)
 
 			if (customHandler) {
-				customHandler.callback(apiError)
+				customHandler.handler(apiError)
 				return
 			}
 
 			// Если кастомного обработчика нет, используем что есть
 			switch (apiError.status) {
 				case 401:
-					router.push("/auth")
+					router.push("/login")
 					break
 				case 404:
-					router.push("/notFound")
+					// router.push("/notFound")
 					break
 				case 409:
-					router.push("/notFound")
+					// router.push("/notFound")
 					break
 				case 500:
-					router.push("/internal")
+					// router.push("/internal")
 					break
 				default:
 					console.log("оШИБКА!!!!!")

@@ -1,22 +1,46 @@
 @use "@/common/styles/placeholder.scss";
 
-.department-tree {
+.resize-column {
+	$size: 16px;
+	position: absolute;
+	top: 0;
+	right: calc(-1 * $size / 2);
+	z-index: 1000;
+
+	background-color: transparent;
+	height: 100%;
+	width: $size;
+
+	touch-action: none;
+	user-select: none;
+	cursor: col-resize;
+
+	// Для отладки - уберите после проверки
+	// background-color: rgba(255, 0, 0, 0.2);
+}
+
+.department-tree-panel {
 	position: relative;
 	background-color: var(--foreground-second);
 
 	padding: 10px;
 	padding-right: 10px;
 
-	max-width: 250px;
-	width: 100%;
+	flex: 0 0 auto;
+	min-width: 200px;
+	max-width: min(360px, 40vw);
 
 	border-right: var(--border-for-nav-panel);
 	box-shadow: 2px 0 5px var(--shadow);
 
-	&.collapsed {
-		max-width: 0;
+	overflow-x: visible;
 
-		& .department-tree__tree {
+	&.collapsed {
+		min-width: 0;
+		max-width: 0;
+		overflow: hidden;
+
+		& .department-tree-panel__tree {
 			overflow: hidden;
 			width: 0px;
 		}

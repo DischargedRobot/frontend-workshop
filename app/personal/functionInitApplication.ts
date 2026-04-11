@@ -24,6 +24,7 @@ export async function functionInitApplication(): Promise<{
 
 		return { profile, organization }
 	} catch (err) {
+		console.log(err, "functionInitApplication")
 		const error = err as APIError
 		if (error.status === 401) {
 			redirect("/login")

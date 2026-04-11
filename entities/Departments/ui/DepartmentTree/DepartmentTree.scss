@@ -4,7 +4,7 @@
 	// чтобы любой контент не выходил за пределы, даже если навели при dragAndDrop
 	overflow: hidden;
 	.ant-tree-node-content-wrapper {
-		// для ..., чтобы не ставить фиксированный width
+		// чтобы не ставить фиксированный width
 		overflow: hidden;
 	}
 	// класс появляющийся при перетаскивании и наложении объекта на другой
@@ -17,11 +17,11 @@
 
 	.ant-tree-treenode {
 		width: 100%;
-		max-width: 230px;
+		max-width: 100%;
 	}
 
 	.ant-tree-title {
-		max-width: 230px !important;
+		max-width: 100% !important;
 		line-height: 1;
 		display: block;
 		overflow: hidden !important;

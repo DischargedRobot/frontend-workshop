@@ -1,5 +1,13 @@
+import { setDefaultResultOrder } from "node:dns"
 import type { NextConfig } from "next"
 import path from "path"
+
+// localhost → сначала IPv4, иначе на части Windows fetch идёт на ::1 и даёт EACCES
+try {
+	setDefaultResultOrder("ipv4first")
+} catch {
+	/* no-op */
+}
 
 const nextConfig: NextConfig = {
 	output: "standalone",

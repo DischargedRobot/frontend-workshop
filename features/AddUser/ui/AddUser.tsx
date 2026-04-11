@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Modal, QRCode, Typography } from "antd"
+import { Button, Form, Modal, QRCode, Typography } from "antd"
 import { memo } from "react"
 import { useAddUserModal } from "../model"
 import { AddButton } from "@/shared/ui"
@@ -35,12 +35,16 @@ const AddUser = () => {
 				closable={false}
 				width={"auto"}
 			>
-				<div className="add-user">
+				<Form className="add-user">
 					<div className="add-user__qr-code-container">
 						<QRCode className="qr-code" value={url} />
 
 						<div className="add-user__token-container">
-							<div className="add-user__search ">
+							<Form.Item
+								className="add-user__search"
+								validateStatus={depError ? "error" : ""}
+								help={depError ? "Отдел не выбран!" : ""}
+							>
 								<SearchDropDownMenu
 									className="add-user__search "
 									options={departmentOptions}
@@ -50,16 +54,7 @@ const AddUser = () => {
 									}}
 									placeholder="Выберите отдел"
 								/>
-								{depError ? (
-									<span
-										style={{ color: "var(--toast-error)" }}
-									>
-										Отдел не выбран!
-									</span>
-								) : (
-									""
-								)}
-							</div>
+							</Form.Item>
 
 							<Paragraph
 								copyable={{
@@ -86,8 +81,13 @@ const AddUser = () => {
 						</div>
 					</div>
 
-					<AddUserRoles roles={roles} onChange={handleRolesChange} />
-				</div>
+					<Form.Item name="roles">
+						<AddUserRoles
+							roles={roles}
+							onChange={handleRolesChange}
+						/>
+					</Form.Item>
+				</Form>
 			</Modal>
 		</>
 	)

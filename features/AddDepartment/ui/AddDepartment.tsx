@@ -3,6 +3,7 @@ import { AddButton } from "@/shared/ui"
 import "./AddDepartment.scss"
 import { Button, Form, Input, Switch } from "antd"
 import { useAddDepartment } from "../model/useAddDepartment"
+import { memo } from "react"
 
 type DepartmentSelectorComponent = React.ComponentType<{
 	onChange: (id: number) => void
@@ -61,4 +62,4 @@ const AddDepartment = ({ DepartmentSelector }: Props) => {
 	)
 }
 
-export default AddDepartment
+export default memo(AddDepartment)

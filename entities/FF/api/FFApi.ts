@@ -148,7 +148,7 @@ const FFApi = {
 		featureFlagId: number,
 		isEnabled: boolean,
 	): Promise<void> => {
-		const resp = APIJsonRequest<IFeatureFlag[]>(
+		const resp = await APIJsonRequest<IFeatureFlag[]>(
 			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/feature-flags/${featureFlagId}`,
 			{ body: JSON.stringify({ value: isEnabled, version: 1 }) },
 		)

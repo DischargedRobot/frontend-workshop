@@ -102,7 +102,8 @@ const reduceDepRespToParentDep = (
 	return parentDepartment.children
 }
 
-// Собираем ответ в массив !! на входе не должно быть в списке родительского узла
+/** @desc Собираем ответ в массив, в массиве остаются только первые потомки, к остальным нужно
+ * обращаться через элементы массива!! на входе не должно быть в списке родительского узла **/
 const reduceDepRespToArray = (
 	departmentsResponse: IDepartmentResponse[],
 ): IDepartment[] => {
@@ -196,7 +197,6 @@ const departmentApi = {
 		)
 		// convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
 		// reduceDepartmentResponceToParentDepartment(responseData.items.filter((dep) => dep.id != department.id), department)
-
 		return convertIDepartmentResponseToIDepartment(
 			responseData.items.filter((dep) => dep.id != departmentId),
 		)
@@ -212,6 +212,7 @@ const departmentApi = {
 			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/descendants?depth=${depthLevel}`,
 			{ method: "GET" },
 		)
+		console.log("getDescedantOfDepartments :", responseData)
 		// convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
 		// reduceDepartmentResponceToParentDepartment(responseData.items.filter((dep) => dep.id != department.id), department)
 		return reduceDepRespToArray(

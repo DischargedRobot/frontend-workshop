@@ -30,6 +30,10 @@ interface IToast {
 	duration?: number
 }
 
+interface IToastItem extends IToast {
+	id: number
+}
+
 interface ToastProps extends IToastItem {
 	onRemove: (id: number) => void
 	isActive?: boolean
@@ -138,10 +142,6 @@ export const showToast = (props: IToast) => {
 	useToastStore.getState().addToast(props)
 }
 
-interface IToastItem extends IToast {
-	id: number
-}
-
 interface IToastStore {
 	toasts: IToastItem[]
 	activeToast: {
@@ -186,11 +186,3 @@ export const useToastStore = create<IToastStore>((set) => {
 			}),
 	}
 })
-
-// Ref для хранения ID активного тоста
-export const activeToastIdRef = { current: null as number | null }
-
-// Ref для хранения позиции активного тоста
-export const activeToastPositionRef = {
-	current: null as { top: number; left: number } | null,
-}
