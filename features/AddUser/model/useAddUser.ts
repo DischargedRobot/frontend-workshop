@@ -1,20 +1,25 @@
 import { useState } from "react"
 import { TROLE, IRole } from "@/shared/model/Role/types"
-import { IDepartment, useDepartmentsStore } from "@/entities/Departments"
-import { DropdownOption } from "@/shared/model/SearchDropMenu/SearchDropDownMenu"
-import { APIError, loginApi } from "@/shared/api"
-import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
-import { showToast } from "@/shared/ui"
+import { useDepartmentsStore } from "@/entities/Departments"
 import { useShallow } from "zustand/shallow"
+import { useForm } from "antd/es/form/Form"
+import { useAddUserGetUrl } from "./useAddUserGetUrl"
+
+interface Form {
+	departmentUuid: string | null
+	roles: IRole[] | null
+}
 
 export const useAddUser = () => {
 	const departments = useDepartmentsStore(
-		useShallow((state) =>
-			state.getDepartmentsIncludingAllChildren().slice(1),
-		),
+		useShallow((state) => {
+			const allDepts = state.getDepartmentsIncludingAllChildren?.()
+			return allDepts ? allDepts.slice(1) : []
+		}),
 	)
-	const [selectedDepartment, setSelectedDepartment] =
-		useState<IDepartment | null>(null)
+
+	const [isClean, setIsClean] = useState(true)
+	const [isNotFull, setIsNotFull] = useState(false)
 
 	const [roles, setRoles] = useState<IRole[]>(
 		Object.entries(TROLE).map(([key, value]) => ({
@@ -24,59 +29,65 @@ export const useAddUser = () => {
 		})),
 	)
 
-	const [url, setUrl] = useState("Тут будет ваша ссылка")
+	const { url, handleGetToken, isLoading, resetUrl } = useAddUserGetUrl()
+
 	const handleRolesChange = (allRoles: IRole[]) => {
 		setRoles(allRoles)
 	}
 
-	const [depError, setDepError] = useState<string | null>(null)
-
-	const handleAPIError = useAPIErrorHandler()
-
-	const handleGetToken = async () => {
-		try {
-			if (selectedDepartment) {
-				if (selectedDepartment.uuid) {
-					const token = await loginApi.generateInvite(
-						roles.filter((role) => role.isEnabled),
-						selectedDepartment.uuid,
-					)
-					const newUrl = new URL(
-						window.location.origin + "/registration/user",
-					)
-					newUrl.searchParams.set("token", token)
-					setUrl(newUrl.toString())
-				} else {
-					showToast({
-						type: "error",
-						text: "У отдела нету индефикатора, как странно...",
-					})
-				}
-			} else {
-				setDepError("Выберите отдел")
-			}
-		} catch (error) {
-			handleAPIError(error as APIError)
-		}
+	const onSubmit = (formData: Form) => {
+		if (formData.departmentUuid)
+			handleGetToken(formData.departmentUuid, roles)
 	}
 
-	const departmentOptions: DropdownOption<IDepartment, "uuid">[] =
-		departments.map((dept) => ({
-			key: dept.uuid ?? dept.id.toString(),
-			value: dept,
-			label: dept.name,
+	const handleReset = () => {
+		const resetRoles = roles.map((role) => ({
+			...role,
+			isEnabled: false,
 		}))
+		setRoles(resetRoles)
+		resetUrl()
+		setIsClean(true)
+		setIsNotFull(false)
+		form.resetFields()
+	}
+
+	const [form] = useForm<Form>()
+
+	const departmentOptions = departments.map((dept) => ({
+		key: dept.uuid ?? dept.id.toString(),
+		value: dept.uuid,
+		label: dept.name,
+	}))
+
+	const isDisabled = departments.length === 0 ? true : false
+
+	// для формы, при изменении полей проверяем, что выбрана роль и отдел,
+	//  если оба есть - можно генерировать ссылку, если нет - показываем тултип и дизейблим кнопку
+	const onValuesChange = (_: unknown, allValues: Form) => {
+		console.log("Form values changed: ", allValues) // Логируем текущие значения формы
+		const hasEnabledRoles =
+			allValues.roles?.some((role) => role.isEnabled) ?? false
+		const isFull = !!allValues.departmentUuid && hasEnabledRoles
+		setIsNotFull(isFull)
+		const isDirty = !!allValues.departmentUuid || hasEnabledRoles
+		setIsClean(!isDirty)
+	}
 
 	return {
-		setSelectedDepartment,
+		onSubmit,
 		roles,
 		setRoles,
 		handleRolesChange,
 		url,
-		setUrl,
-		depError,
-		setDepError,
 		handleGetToken,
+		handleReset,
 		departmentOptions,
+		form,
+		onValuesChange,
+		isClean,
+		isNotFull,
+		isDisabled,
+		isLoading,
 	}
 }

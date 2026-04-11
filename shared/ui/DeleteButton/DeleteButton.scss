@@ -1,5 +1,5 @@
 .delete-button {
-	padding: 6px;
+	padding: 4px;
 	flex-shrink: 0;
 
 	border-radius: 20px;
@@ -13,8 +13,8 @@
 		box-shadow: 0 2px 3px var(--shadow);
 	}
 	& svg {
-		min-width: 16px;
-		min-height: 16px;
+		min-width: var(--size-button-icon);
+		min-height: var(--size-button-icon);
 
 		color: var(--active);
 	}

@@ -75,3 +75,11 @@ export const ROLE_ABILITY_MAP: Record<
 	[TROLE.EU]: { action: "update", subject: "User" },
 	[TROLE.ED]: { action: "delete", subject: "User" },
 }
+
+export const DEFAULT_ROLES: IRole[] = Object.entries(TROLE).map(
+	([key, value]) => ({
+		name: key as TROLEKey,
+		type: value,
+		isEnabled: false,
+	}),
+)

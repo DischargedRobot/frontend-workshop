@@ -19,6 +19,8 @@ const FONTS = {
 
 const COLOR = {
 	textColor: "#e3e3e3",
+	disabled: "6d6a6a79",
+
 	backgroundTextColor: "#cfcfcf",
 	background: "#313131",
 	foreground: "#222222",

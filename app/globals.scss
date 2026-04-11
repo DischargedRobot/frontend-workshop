@@ -29,10 +29,17 @@
 	--drop-down-border-color: #a30c0c59;
 	// --text-size: 100%;
 
+	--disabled: #38333330;
+	--disabled-mix: #5a53539c;
+
 	// Toasts colors
 	--toast-error: #d03b3b;
 	--toast-success: #47d73d;
 	--toast-warning: #d6df1e;
+}
+
+:root {
+	--size-button-icon: 24px;
 }
 
 html {

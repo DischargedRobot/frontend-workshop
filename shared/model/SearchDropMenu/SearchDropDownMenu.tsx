@@ -20,6 +20,7 @@ export interface DropdownOption<T, E extends keyof T = keyof T> {
 interface SearchableDropdownProps<T> {
 	options: DropdownOption<T>[]
 	defaultValue?: T
+	value?: T
 	onSelect: (value: T | null) => void
 	placeholder?: string
 	disabled?: boolean

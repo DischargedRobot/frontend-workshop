@@ -1,24 +1,32 @@
+import Icon from "@ant-design/icons"
+import { CustomIconComponentProps } from "@ant-design/icons/lib/components/Icon"
 import { memo } from "react"
 
-const DeleteIcon = () => {
+
+
+const CustomDeleteIcon: React.FC = () => {
 	return (
 		<svg
 			width="24"
 			height="24"
-			viewBox="0 0 32 32"
+			viewBox="0 0 24 24"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<path
-				d="M7.375 10.2498H9.29167M9.29167 10.2498H24.625M9.29167 10.2498L9.29167 23.6665C9.29167 24.1748 9.4936 24.6623 9.85305 25.0218C10.2125 25.3812 10.7 25.5832 11.2083 25.5832H20.7917C21.3 25.5832 21.7875 25.3812 22.147 25.0218C22.5064 24.6623 22.7083 24.1748 22.7083 23.6665V10.2498M12.1667 10.2498V8.33317C12.1667 7.82484 12.3686 7.33733 12.728 6.97788C13.0875 6.61844 13.575 6.4165 14.0833 6.4165H17.9167C18.425 6.4165 18.9125 6.61844 19.272 6.97788C19.6314 7.33733 19.8333 7.82484 19.8333 8.33317V10.2498M14.0833 15.0415V20.7915M17.9167 15.0415V20.7915"
+				d="M6 8H7.5M7.5 8H18M7.5 8V17.5C7.5 17.91 7.66 18.3 7.92 18.59C8.18 18.88 8.53 19 8.9 19H15.1C15.47 19 15.82 18.88 16.08 18.59C16.34 18.3 16.5 17.91 16.5 17.5V8M9 8V6.25C9 5.86 9.14 5.47 9.4 5.18C9.66 4.89 10 4.75 10.38 4.75H13.62C14 4.75 14.34 4.89 14.6 5.18C14.86 5.47 15 5.86 15 6.25V8M10.5 11.25V15.5M13.5 11.25V15.5"
 				stroke="#F57474"
 				strokeOpacity="0.8"
-				strokeWidth="1.4"
+				strokeWidth="1.5"
 				strokeLinecap="round"
 				strokeLinejoin="round"
 			/>
 		</svg>
 	)
+}
+
+const DeleteIcon: React.FC<Partial<CustomIconComponentProps>> = (props) => {
+	return <Icon component={CustomDeleteIcon} {...props} />
 }
 
 export default memo(DeleteIcon)
