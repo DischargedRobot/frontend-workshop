@@ -65,6 +65,8 @@ const DepartmentTree = () => {
 							info.dropToGap, // бросили между узулами = true иначе внутрь false
 						)
 					}}
+					virtual={false}
+					motion={false}
 				/>
 			)}
 		</>

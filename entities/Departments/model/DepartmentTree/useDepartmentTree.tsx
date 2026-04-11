@@ -45,7 +45,7 @@ const useDepartmentTree = () => {
 	const departments = useDepartmentsStore(
 		(state) => state.departments[0]?.children,
 	)
-	console.log("useDepartmentTree, departments: ", departments)
+	// console.log("useDepartmentTree, departments: ", departments)
 	const changeDepartmentChildren = useDepartmentsStore(
 		(state) => state.changeDepartmentChildren,
 	)
@@ -55,15 +55,15 @@ const useDepartmentTree = () => {
 
 	const { mutate } = useSWRConfig()
 
-	console.log("useDepartmentTree, departments: ", organization)
+	// console.log("useDepartmentTree, departments: ", organization)
 
 	const { error } = useSWR<IDepartment[], APIError>(
 		organization.child // не видит, мб из-з гидратации,
 			? // поэтому тут првоерка
-				[
-					["department", "organizationId", "departmentId"],
-					["all", organization.id, organization.child.id],
-				]
+			[
+				["department", "organizationId", "departmentId"],
+				["all", organization.id, organization.child.id],
+			]
 			: null,
 		() =>
 			departmentApi.getDescedantOfDepartments(
@@ -146,7 +146,7 @@ const useDepartmentTree = () => {
 						...department,
 						isLeaf:
 							department.children.length === 0 ||
-							department.isService
+								department.isService
 								? true
 								: false,
 					}) as IDepartmentNode,

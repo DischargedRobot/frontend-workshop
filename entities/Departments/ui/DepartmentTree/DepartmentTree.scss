@@ -28,4 +28,14 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
+
+	.ant-tree-switcher {
+		.ant-tree-switcher-icon {
+			color: var(--text-color);
+		}
+	}
+
+	.ant-tree-drag-icon {
+		color: var(--text-color) !important;
+	}
 }
