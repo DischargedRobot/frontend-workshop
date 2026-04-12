@@ -9,6 +9,7 @@ import {
 import { departmentApi } from "@/entities/Departments"
 import { useOrganizationStore } from "@/entities/Organization"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
+import { ServerAPIError } from "@/shared/api/APIErrors"
 
 interface AddDepartmentForm {
 	name: string

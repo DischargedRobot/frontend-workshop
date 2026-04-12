@@ -19,7 +19,7 @@ const FONTS = {
 
 const COLOR = {
 	textColor: "#e3e3e3",
-	disabled: "6d6a6a79",
+	disabled: "#6d6a6a79",
 
 	backgroundTextColor: "#cfcfcf",
 	background: "#313131",
@@ -79,8 +79,13 @@ const theme: ThemeConfig = {
 			// cellPaddingBlock: 8,
 		},
 
+
 		Tree: {
+			colorBorder: COLOR.activeBackground, // цвет чекбокса и лиций
 			colorBgContainer: "",
+			directoryNodeSelectedColor: COLOR.activeBorder,
+			directoryNodeSelectedBg: COLOR.activeBorder,
+
 		},
 
 		Menu: {
