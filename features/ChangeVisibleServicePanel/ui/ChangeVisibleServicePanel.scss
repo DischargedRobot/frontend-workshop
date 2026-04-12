@@ -1,0 +1,47 @@
+.service-panel {
+	padding: 5px 0 0px;
+
+	height: auto;
+	width: 100%;
+
+	&__visibility-button {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		padding: 2px 8px;
+
+		height: auto;
+		width: 100%;
+
+		background-color: var(
+			--foregorund
+		);
+
+		border-radius: 0;
+		border-bottom: 2px solid
+			var(--stroke);
+
+		transition: transform 0.3s ease;
+
+		&_visible {
+			transform: rotate(0deg);
+		}
+
+		&_hidden {
+			transform: rotate(180deg);
+		}
+	}
+	& .service {
+	}
+	&__content {
+		transition: max-height 0.3s ease;
+		&_visible {
+			max-height: 400px;
+		}
+
+		&_hidden {
+			max-height: 0;
+			visibility: hidden;
+		}
+	}
+}

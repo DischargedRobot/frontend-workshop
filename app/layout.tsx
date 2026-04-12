@@ -48,11 +48,12 @@ const layout = {
 
 const theme: ThemeConfig = {
 	token: {
+		colorTextDescription: COLOR.textColor,
 		colorPrimary: COLOR.activeBackground,
 		colorText: COLOR.textColor,
 		colorBgBase: COLOR.foreground,
 		colorBgLayout: COLOR.background,
-		colorBorder: COLOR.stroke,
+		// colorBorder: COLOR.stroke,
 		colorTextPlaceholder: "#d2d2d2",
 		colorPrimaryActive: COLOR.activeBackground,
 		colorPrimaryBg: COLOR.foregroundSecond,

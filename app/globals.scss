@@ -3,7 +3,8 @@
 :root {
 	--segoe-ui: "Segoe UI", sans-serif;
 	--inter: "Inter", sans-serif;
-	--roboto-mono: "Roboto Mono", sans-serif;
+	--roboto-mono:
+		"Roboto Mono", sans-serif;
 	--text-size: 16px;
 	--bigText-size: 20px;
 	--litleTitle-size: 24px;
@@ -17,7 +18,11 @@
 	--active-background: #2d75c8;
 	--active-hover: #507fdc;
 	--stroke: rgb(84, 79, 79);
-	--stroke-opacity: color-mix(in srgb, var(--stroke), transparent 70%);
+	--stroke-opacity: color-mix(
+		in srgb,
+		var(--stroke),
+		transparent 70%
+	);
 	--active-border: #ececec;
 
 	--error-text-color: #f55858;
@@ -25,7 +30,8 @@
 	--shadow: #00000081;
 	--dark-transparent: #423b3b81;
 
-	--border-for-nav-panel: 2px solid #111111b1;
+	--border-for-nav-panel: 2px solid
+		#111111b1;
 	--drop-down-border-color: #a30c0c59;
 	// --text-size: 100%;
 
@@ -139,8 +145,11 @@ html {
 	max-width: 585px;
 	height: auto;
 
-	background: var(--active-background);
-	border: 3px solid var(--active-border);
+	background: var(
+		--active-background
+	);
+	border: 3px solid
+		var(--active-border);
 	border-radius: 20px;
 }
 

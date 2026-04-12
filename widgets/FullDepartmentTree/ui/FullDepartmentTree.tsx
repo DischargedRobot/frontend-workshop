@@ -9,6 +9,7 @@ import { DeleteSelectedDepartments } from "@/features/DeleteSelectedDepartments"
 import { SearchDropDownMenu } from "@/shared/model/SearchDropMenu"
 import { Can } from "@/shared/model/Ability"
 import { PointerEvent, useCallback, useMemo, useRef, useState } from "react"
+import { ChangeVisibleServicePanel } from "@/features/ChangeVisibleServicePanel"
 
 const TREE_MIN_W = 180
 const TREE_DEFAULT_W = 250
@@ -113,6 +114,7 @@ const FullDepartmentTree = () => {
 				onPointerUp={onPointerUp}
 				onPointerCancel={onPointerUp}
 			></div>
+			<ChangeVisibleServicePanel service={null} />
 		</div>
 	)
 }

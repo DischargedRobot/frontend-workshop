@@ -1,4 +1,10 @@
 {
 	"kiroAgent.configureMCP": "Disabled",
-	"typescript.autoClosingTags": true
+	"typescript.autoClosingTags": true,
+	"ecsstractor_port.attributes": "className",
+	"ecsstractor_port.bem_nesting": true,
+	"ecsstractor_port.brackets": false,
+	"ecsstractor_tsx_port.bem_nesting": true,
+	"ecsstractor_tsx_port.attributes": "className",
+	"ecsstractor_tsx_port.brackets": true
 }
