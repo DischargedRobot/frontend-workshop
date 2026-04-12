@@ -1,12 +1,5 @@
 import { memo } from "react"
-
-export interface IService {
-    serviceId: number
-    topic: string
-    username: string
-    password: string
-    groupName: string
-}
+import type { IService } from "@/entities/Departments/lib/service"
 
 interface Props {
     service: IService
@@ -30,7 +23,7 @@ const Service = (props: Props) => {
             <div className="service__row">
                 <article className="service__field">
                     <h5 className="service__label">Topic</h5>
-                    <span className="service__value">{service.topic}</span>
+                    <span className="service__value">{service.topicName}</span>
                 </article>
                 <article className="service__field">
                     <h5 className="service__label">Group Name</h5>

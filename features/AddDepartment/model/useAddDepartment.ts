@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { Form } from "antd"
 import {
+	IDepartment,
+	IService,
 	useDepartmentsStore,
 	useSelectedDepartmentsStore,
 } from "@/entities/Departments"
@@ -14,7 +16,9 @@ interface AddDepartmentForm {
 	parentId: number
 }
 
-export const useAddDepartment = () => {
+export const useAddDepartment = ({
+	onServiceCreated,
+}: { onServiceCreated?: (service: IService) => void } = {}) => {
 	const [form] = Form.useForm<AddDepartmentForm>()
 	const [isCollapsed, setIsCollapsed] = useState(true)
 
@@ -29,18 +33,51 @@ export const useAddDepartment = () => {
 	)
 	const handleError = useAPIErrorHandler()
 
-	const onFinish = async (values: AddDepartmentForm) => {
+	// добавление департамена
+	const onSubmit = async (values: AddDepartmentForm) => {
 		const parentId = values.parentId ?? selectedDepartments.at(-1)?.id
 		if (parentId == undefined) return
 
 		try {
-			const newDep = await departmentApi.addDepartment(
-				values.name,
-				organizationId,
-				parentId,
-				values.isService,
-			)
-			addDepartToParent(parentId, newDep)
+			console.log("Submitting form with values:", values) // Логируем значения формы
+			if (values.isService) {
+				const newService = await departmentApi.addService(
+					values.name,
+					organizationId,
+					parentId,
+				)
+
+				const [service, department]: [IService, IDepartment] = [
+					{
+						topicName: newService.topicName,
+						username: newService.username,
+						password: newService.password,
+						groupName: newService.groupName,
+					},
+					{
+						id: newService.id,
+						uuid: newService.uuid,
+						name: newService.name ?? "",
+						path: newService.path ?? "",
+						isService: true,
+						version: newService.version ?? 0,
+						children: [],
+						featureFlags: [],
+					},
+				]
+				addDepartToParent(parentId, department)
+
+				// Колбэк для передачи сервиса наверх (виджету)
+				onServiceCreated?.(service)
+			} else {
+				const newDep = await departmentApi.addDepartment(
+					values.name,
+					organizationId,
+					parentId,
+				)
+				addDepartToParent(parentId, newDep)
+			}
+
 			form.resetFields()
 			setIsCollapsed(true)
 		} catch (error) {
@@ -52,6 +89,6 @@ export const useAddDepartment = () => {
 		form,
 		isCollapsed,
 		setIsCollapsed,
-		onFinish,
+		onSubmit,
 	}
 }

@@ -4,6 +4,7 @@ import "./AddDepartment.scss"
 import { Button, Form, Input, Switch } from "antd"
 import { useAddDepartment } from "../model/useAddDepartment"
 import { memo } from "react"
+import { IService } from "@/entities/Departments"
 
 type DepartmentSelectorComponent = React.ComponentType<{
 	onChange: (id: number) => void
@@ -11,10 +12,11 @@ type DepartmentSelectorComponent = React.ComponentType<{
 
 type Props = {
 	DepartmentSelector: DepartmentSelectorComponent
+	onServiceCreated?: (service: IService) => void
 }
 
-const AddDepartment = ({ DepartmentSelector }: Props) => {
-	const { form, isCollapsed, setIsCollapsed, onFinish } = useAddDepartment()
+const AddDepartment = ({ DepartmentSelector, onServiceCreated }: Props) => {
+	const { form, isCollapsed, setIsCollapsed, onSubmit } = useAddDepartment({ onServiceCreated })
 
 	return (
 		<div className="add-department">
@@ -22,7 +24,7 @@ const AddDepartment = ({ DepartmentSelector }: Props) => {
 			<Form
 				form={form}
 				className={`add-department__panel ${isCollapsed ? "add-department__panel_collapsed" : ""}`}
-				onFinish={onFinish}
+				onFinish={onSubmit}
 				layout="vertical"
 			>
 				<Form.Item
@@ -48,17 +50,22 @@ const AddDepartment = ({ DepartmentSelector }: Props) => {
 						onChange={(id) => form.setFieldValue("parentId", id)}
 					/>
 				</Form.Item>
-				<Form.Item
-					name="isService"
-					label="isService"
-					valuePropName="checked"
-					initialValue={false}
-				>
-					<Switch />
-				</Form.Item>
+				<div className="add-department__switch-service">
+					<span >Сервис</span>
+					<Form.Item
+						name="isService"
+						valuePropName="checked"
+						initialValue={false}
+						className="add-department__switch"
+					>
+
+						<Switch />
+					</Form.Item>
+				</div>
+
 				<Button htmlType="submit">Создать</Button>
 			</Form>
-		</div>
+		</div >
 	)
 }
 

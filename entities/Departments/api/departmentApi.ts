@@ -1,14 +1,10 @@
 import { IDepartment } from "../lib/DepartmentType"
 import APIJsonRequest from "@/shared/api/APIJsonRequest"
-import {
-	isAPIError,
-	mapAPIErrors,
-} from "@/shared/api/APIErrors"
+import { isAPIError, mapAPIErrors } from "@/shared/api/APIErrors"
 import { IOrganization } from "@/entities/Organization"
+import { IService, IServiceDepartment } from "../lib"
 
-const URL_ORGANIZATION =
-	process.env
-		.NEXT_PUBLIC_API_ORGANIZATIONS_URL_V1
+const URL_ORGANIZATION = process.env.NEXT_PUBLIC_API_ORGANIZATIONS_URL_V1
 export interface IDepartmentResponse {
 	id: number
 	organizationId: number
@@ -26,87 +22,48 @@ interface IDepartmentsByOrganizationId {
 	total: number
 }
 
-const convertIDepartmentResponseToIDepartmentWithOrganization =
-	(
-		departmentsResponse: IDepartmentResponse[],
-		organization: IOrganization,
-	): IDepartment[] => {
-		// Мапим, чтобы потом было проще обратиться к узлу во время операций, а не писать find
-		const nodeMap = new Map<
-			number,
-			IDepartment
-		>()
+const convertIDepartmentResponseToIDepartmentWithOrganization = (
+	departmentsResponse: IDepartmentResponse[],
+	organization: IOrganization,
+): IDepartment[] => {
+	// Мапим, чтобы потом было проще обратиться к узлу во время операций, а не писать find
+	const nodeMap = new Map<number, IDepartment>()
 
-		// Обрабатываем вход в map
-		departmentsResponse.forEach(
-			(depResp) => {
-				nodeMap.set(
-					depResp.id,
-					{
-						...depResp,
-						children: [],
-						featureFlags:
-							[],
-					},
-				)
-			},
-		)
+	// Обрабатываем вход в map
+	departmentsResponse.forEach((depResp) => {
+		nodeMap.set(depResp.id, {
+			...depResp,
+			children: [],
+			featureFlags: [],
+		})
+	})
 
-		// Тут мы закидывает департаменты в детей других узлов
-		const nodes: IDepartment[] = []
-		// console.log(organization, 'org')
-		departmentsResponse.forEach(
-			(item) => {
-				const path =
-					item.path.split(".")
-				//TODO поменять условия местави, т.к. так будет быстрее
-				// тут не может быть undefined, толькое если бекенд накосячил накосячил...
-				if (path.length <= 2) {
-					if (
-						path.length == 2
-					) {
-						const node =
-							nodeMap.get(
-								parseInt(
-									path[1],
-								),
-							)!
-						organization.child.children.push(
-							node,
-						)
-						nodes.push(node)
-					} else {
-						organization.child =
-							nodeMap.get(
-								parseInt(
-									path[0],
-								),
-							)!
-					}
-				}
-				// условиие обхода корневого, т.к. у него длина 1
-				else if (
-					path.length > 2
-				) {
-					nodeMap
-						.get(
-							parseInt(
-								path.at(
-									-2,
-								)!,
-							),
-						)
-						?.children.push(
-							nodeMap.get(
-								item.id,
-							)!,
-						)
-				}
-			},
-		)
+	// Тут мы закидывает департаменты в детей других узлов
+	const nodes: IDepartment[] = []
+	// console.log(organization, 'org')
+	departmentsResponse.forEach((item) => {
+		const path = item.path.split(".")
+		//TODO поменять условия местави, т.к. так будет быстрее
+		// тут не может быть undefined, толькое если бекенд накосячил накосячил...
+		if (path.length <= 2) {
+			if (path.length == 2) {
+				const node = nodeMap.get(parseInt(path[1]))!
+				organization.child.children.push(node)
+				nodes.push(node)
+			} else {
+				organization.child = nodeMap.get(parseInt(path[0]))!
+			}
+		}
+		// условиие обхода корневого, т.к. у него длина 1
+		else if (path.length > 2) {
+			nodeMap
+				.get(parseInt(path.at(-2)!))
+				?.children.push(nodeMap.get(item.id)!)
+		}
+	})
 
-		return nodes
-	}
+	return nodes
+}
 
 // Собираем ответ в родительский отдел
 const reduceDepRespToParentDep = (
@@ -114,63 +71,34 @@ const reduceDepRespToParentDep = (
 	parentDepartment: IDepartment,
 ): IDepartment[] => {
 	// Мапим, чтобы потом было проще обратиться к узлу во время операций, а не писать find
-	const nodeMap = new Map<
-		number,
-		IDepartment
-	>()
+	const nodeMap = new Map<number, IDepartment>()
 
-	departmentsResponse.forEach(
-		(depResp) => {
-			nodeMap.set(depResp.id, {
-				...depResp,
-				children: [],
-				featureFlags: [],
-			})
-		},
-	)
+	departmentsResponse.forEach((depResp) => {
+		nodeMap.set(depResp.id, {
+			...depResp,
+			children: [],
+			featureFlags: [],
+		})
+	})
 
 	parentDepartment.children = []
 
-	departmentsResponse.forEach(
-		(depResp) => {
-			const path = depResp.path
-				.split(".")
-				.map((item) =>
-					parseInt(item),
-				)
-			// Если нету пути, то корявые данные
-			if (
-				path.at(-1) ===
-				undefined
-			) {
-				throw mapAPIErrors(500)
+	departmentsResponse.forEach((depResp) => {
+		const path = depResp.path.split(".").map((item) => parseInt(item))
+		// Если нету пути, то корявые данные
+		if (path.at(-1) === undefined) {
+			throw mapAPIErrors(500)
+		} else {
+			// Второй с конца - родитель, если наш, то кидаем
+			if (path.at(-2) === parentDepartment.id) {
+				parentDepartment.children.push(nodeMap.get(depResp.id)!)
 			} else {
-				// Второй с конца - родитель, если наш, то кидаем
-				if (
-					path.at(-2) ===
-					parentDepartment.id
-				) {
-					parentDepartment.children.push(
-						nodeMap.get(
-							depResp.id,
-						)!,
-					)
-				} else {
-					nodeMap
-						.get(
-							path.at(
-								-2,
-							)!,
-						)!
-						.children.push(
-							nodeMap.get(
-								depResp.id,
-							)!,
-						)
-				}
+				nodeMap
+					.get(path.at(-2)!)!
+					.children.push(nodeMap.get(depResp.id)!)
 			}
-		},
-	)
+		}
+	})
 
 	return parentDepartment.children
 }
@@ -181,66 +109,37 @@ const reduceDepRespToArray = (
 	departmentsResponse: IDepartmentResponse[],
 ): IDepartment[] => {
 	// Мапим, чтобы потом было проще обратиться к узлу во время операций, а не писать find
-	const nodeMap = new Map<
-		number,
-		IDepartment
-	>()
+	const nodeMap = new Map<number, IDepartment>()
 
-	departmentsResponse.forEach(
-		(depResp) => {
-			nodeMap.set(depResp.id, {
-				...depResp,
-				children: [],
-				featureFlags: [],
-			})
-		},
-	)
+	departmentsResponse.forEach((depResp) => {
+		nodeMap.set(depResp.id, {
+			...depResp,
+			children: [],
+			featureFlags: [],
+		})
+	})
 
 	const children: IDepartment[] = []
 
-	departmentsResponse.forEach(
-		(depResp) => {
-			const path = depResp.path
-				.split(".")
-				.map((item) =>
-					parseInt(item),
-				)
-			// Если нету пути, то корявые данные
+	departmentsResponse.forEach((depResp) => {
+		const path = depResp.path.split(".").map((item) => parseInt(item))
+		// Если нету пути, то корявые данные
+		if (path.at(-1) === undefined) {
+			throw mapAPIErrors(500)
+		} else {
+			// Второй с конца - родитель, если наш, то кидаем
 			if (
-				path.at(-1) ===
-				undefined
+				path.at(-2) !== undefined &&
+				nodeMap.get(path.at(-2)!) === undefined
 			) {
-				throw mapAPIErrors(500)
+				children.push(nodeMap.get(depResp.id)!)
 			} else {
-				// Второй с конца - родитель, если наш, то кидаем
-				if (
-					path.at(-2) !==
-						undefined &&
-					nodeMap.get(
-						path.at(-2)!,
-					) === undefined
-				) {
-					children.push(
-						nodeMap.get(
-							depResp.id,
-						)!,
-					)
-				} else {
-					nodeMap
-						.get(
-							path.at(
-								-2,
-							)!,
-						)!
-						.children.push(
-							nodeMap.get(
-								depResp.id,
-							)!,
-						)
-				}
+				nodeMap
+					.get(path.at(-2)!)!
+					.children.push(nodeMap.get(depResp.id)!)
 			}
-		},
-	)
+		}
+	})
 
 	return children
 }
@@ -253,23 +152,15 @@ function convertIDepartmentResponseToIDepartment(
 ): IDepartment[]
 
 function convertIDepartmentResponseToIDepartment(
-	departmentsResponse:
-		| IDepartmentResponse
-		| IDepartmentResponse[],
+	departmentsResponse: IDepartmentResponse | IDepartmentResponse[],
 ): IDepartment | IDepartment[] {
 	// Если передан массив
-	if (
-		Array.isArray(
-			departmentsResponse,
-		)
-	) {
-		return departmentsResponse.map(
-			(depResp) => ({
-				...depResp,
-				children: [],
-				featureFlags: [],
-			}),
-		)
+	if (Array.isArray(departmentsResponse)) {
+		return departmentsResponse.map((depResp) => ({
+			...depResp,
+			children: [],
+			featureFlags: [],
+		}))
 	}
 
 	// Если передан один объект
@@ -280,22 +171,30 @@ function convertIDepartmentResponseToIDepartment(
 	}
 }
 
-const departmentApi = {
-	getDepartmentsByOrganization:
-		async (
-			organization: IOrganization,
-		): Promise<IDepartment[]> => {
-			const responseData =
-				await APIJsonRequest<IDepartmentsByOrganizationId>(
-					`${URL_ORGANIZATION}/${organization.id}/nodes?limit=42&offset=0`,
-					{ method: "GET" },
-				)
+interface IServiceResponse extends IService, IDepartmentResponse {}
 
-			return convertIDepartmentResponseToIDepartmentWithOrganization(
-				responseData.items,
-				organization,
-			)
-		},
+/** @desc Конвертер из ответа сервиса в тип IServiceDepartment*/
+const convertIServiceResponseToIServiceDepartment = (
+	serviceResponse: IServiceResponse,
+): IServiceDepartment => ({
+	...serviceResponse,
+	children: [],
+	featureFlags: [],
+})
+
+const departmentApi = {
+	getDepartmentsByOrganization: async (
+		organization: IOrganization,
+	): Promise<IDepartment[]> => {
+		const responseData = await APIJsonRequest<IDepartmentsByOrganizationId>(
+			`${URL_ORGANIZATION}/${organization.id}/nodes?limit=42&offset=0`,
+		)
+
+		return convertIDepartmentResponseToIDepartmentWithOrganization(
+			responseData.items,
+			organization,
+		)
+	},
 
 	// *** Для детей ***
 	/** @desciption Возвращает детей отдела **/
@@ -303,19 +202,13 @@ const departmentApi = {
 		organizationId: number,
 		departmentId: number,
 	): Promise<IDepartment[]> => {
-		const responseData =
-			await APIJsonRequest<IDepartmentsByOrganizationId>(
-				`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/children`,
-				{ method: "GET" },
-			)
+		const responseData = await APIJsonRequest<IDepartmentsByOrganizationId>(
+			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/children`,
+		)
 		// convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
 		// reduceDepartmentResponceToParentDepartment(responseData.items.filter((dep) => dep.id != department.id), department)
 		return convertIDepartmentResponseToIDepartment(
-			responseData.items.filter(
-				(dep) =>
-					dep.id !=
-					departmentId,
-			),
+			responseData.items.filter((dep) => dep.id != departmentId),
 		)
 	},
 
@@ -325,23 +218,14 @@ const departmentApi = {
 		departmentId: number,
 		depthLevel: number | "" = "",
 	): Promise<IDepartment[]> => {
-		const responseData =
-			await APIJsonRequest<IDepartmentsByOrganizationId>(
-				`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/descendants?depth=${depthLevel}`,
-				{ method: "GET" },
-			)
-		console.log(
-			"getDescedantOfDepartments :",
-			responseData,
+		const responseData = await APIJsonRequest<IDepartmentsByOrganizationId>(
+			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/descendants?depth=${depthLevel}`,
 		)
+		console.log("getDescedantOfDepartments :", responseData)
 		// convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
 		// reduceDepartmentResponceToParentDepartment(responseData.items.filter((dep) => dep.id != department.id), department)
 		return reduceDepRespToArray(
-			responseData.items.filter(
-				(dep) =>
-					dep.id !=
-					departmentId,
-			),
+			responseData.items.filter((dep) => dep.id != departmentId),
 		)
 	},
 
@@ -353,27 +237,47 @@ const departmentApi = {
 		departmentName: string,
 		organizationId: number,
 		parentId: number,
-		isService: boolean = false,
 	): Promise<IDepartment> => {
-		const respDep =
-			await APIJsonRequest<IDepartmentResponse>(
-				`${URL_ORGANIZATION}/${organizationId}/nodes`,
-				{
-					method: "POST",
-					body: JSON.stringify(
-						{
-							name: departmentName,
-							isService,
-							parentId,
-						},
-					),
-				},
-			)
-		return convertIDepartmentResponseToIDepartment(
-			respDep,
+		const respDep = await APIJsonRequest<IDepartmentResponse>(
+			`${URL_ORGANIZATION}/${organizationId}/nodes`,
+			{
+				method: "POST",
+				body: JSON.stringify({
+					name: departmentName,
+					isService: false,
+					parentId,
+				}),
+			},
 		)
+		return convertIDepartmentResponseToIDepartment(respDep)
 	},
 
+	addService: async (
+		departmentName: string,
+		organizationId: number,
+		parentId: number,
+	): Promise<IServiceDepartment> => {
+		const response = await APIJsonRequest<IServiceResponse>(
+			`${URL_ORGANIZATION}/${organizationId}/nodes`,
+			{
+				method: "POST",
+				body: JSON.stringify({
+					name: departmentName,
+					isService: true,
+					parentId,
+				}),
+			},
+		)
+
+		return convertIServiceResponseToIServiceDepartment(response)
+	},
+
+	/**
+	 *
+	 * @param organizationId айди организации, в которой нужно удалить департамент
+	 * @param departmentId айди департамента, который нужно удалить
+	 * @returns
+	 */
 	removeDepartmentById: async (
 		organizationId: number,
 		departmentId: number,
@@ -388,15 +292,11 @@ const departmentApi = {
 			if (isAPIError(error)) {
 				switch (error.status) {
 					case 401: {
-						console.log(
-							error.message,
-						)
+						console.log(error.message)
 						return
 					}
 				}
 			}
-
-			console.log("всё плохо(((")
 		}
 	},
 
@@ -405,14 +305,9 @@ const departmentApi = {
 		departmentIds: number[],
 	) => {
 		await Promise.all(
-			departmentIds.map(
-				(departmentId) => {
-					departmentApi.removeDepartmentById(
-						organizationId,
-						departmentId,
-					)
-				},
-			),
+			departmentIds.map((departmentId) => {
+				departmentApi.removeDepartmentById(organizationId, departmentId)
+			}),
 		)
 	},
 
@@ -426,10 +321,8 @@ const departmentApi = {
 				method: "PATCH",
 				body: JSON.stringify({
 					name: `${newDepartment.name}`,
-					isService:
-						newDepartment.isService,
-					version:
-						newDepartment.version,
+					isService: newDepartment.isService,
+					version: newDepartment.version,
 				}),
 			},
 		)

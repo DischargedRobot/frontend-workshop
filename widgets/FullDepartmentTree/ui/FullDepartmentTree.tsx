@@ -2,7 +2,7 @@
 
 import "./FullDepartmentTree.scss"
 
-import { DepartmentTree, IDepartment } from "@/entities/Departments"
+import { DepartmentTree, IDepartment, IService } from "@/entities/Departments"
 import { AddDepartment } from "@/features/AddDepartment"
 import { useFullDepartmentTree } from "../model"
 import { DeleteSelectedDepartments } from "@/features/DeleteSelectedDepartments"
@@ -28,6 +28,7 @@ const clampWidth = (width: number) => {
 
 const FullDepartmentTree = () => {
 	const { organization, departments } = useFullDepartmentTree()
+	const [service, setService] = useState<null | IService>(null)
 
 	const DepartmentSelector = useCallback(
 		({ onChange }: { onChange: (id: number) => void }) => (
@@ -95,6 +96,7 @@ const FullDepartmentTree = () => {
 							<Can I="create" a="Department">
 								<AddDepartment
 									DepartmentSelector={DepartmentSelector}
+									onServiceCreated={setService}
 								/>
 							</Can>
 							<Can I="delete" a="Department">
@@ -114,7 +116,7 @@ const FullDepartmentTree = () => {
 				onPointerUp={onPointerUp}
 				onPointerCancel={onPointerUp}
 			></div>
-			<ChangeVisibleServicePanel service={null} />
+			<ChangeVisibleServicePanel service={service} />
 		</div>
 	)
 }

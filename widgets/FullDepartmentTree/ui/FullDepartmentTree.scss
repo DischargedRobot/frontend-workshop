@@ -26,9 +26,7 @@
 	flex-direction: column;
 	justify-content: space-between;
 
-	background-color: var(
-		--foreground-second
-	);
+	background-color: var(--foreground-second);
 
 	padding: 10px 0 0;
 
@@ -36,9 +34,7 @@
 	min-width: 200px;
 	max-width: min(360px, 40vw);
 
-	border-right: var(
-		--border-for-nav-panel
-	);
+	border-right: var(--border-for-nav-panel);
 	box-shadow: 2px 0 5px var(--shadow);
 
 	overflow-x: visible;
@@ -67,9 +63,9 @@
 
 		font-size: 16;
 
-		& * {
-			line-height: 0;
-		}
+		// & * {
+		// 	line-height: 0;
+		// }
 		gap: 10px;
 	}
 
@@ -86,13 +82,10 @@
 
 		border-radius: 50%;
 
-		background-color: var(
-			--ant-color-primary
-		);
+		background-color: var(--ant-color-primary);
 
 		svg {
-			transition: transform linear
-				0.2s;
+			transition: transform linear 0.2s;
 			font-size: 16;
 		}
 
