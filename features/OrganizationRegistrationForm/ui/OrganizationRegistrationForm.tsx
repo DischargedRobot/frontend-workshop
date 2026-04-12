@@ -2,6 +2,7 @@
 
 import { Button, Form, Alert } from "antd"
 import "./OrganizationRegistrationForm.scss"
+import { useRouter } from "next/navigation"
 
 import { useOrganizationRegistrationForm } from "../model"
 import { TextInput } from "@/shared/ui"
@@ -15,6 +16,7 @@ interface RegistrationFormValues {
 export const OrganizationRegistrationForm = () => {
 	const [form] = Form.useForm<RegistrationFormValues>()
 	const { onSubmit, loading, error } = useOrganizationRegistrationForm()
+	const router = useRouter()
 
 	return (
 		<Form
@@ -88,9 +90,13 @@ export const OrganizationRegistrationForm = () => {
 				</Form.Item>
 			</div>
 
-			<Button type="primary" htmlType="submit" loading={loading} block>
-				Зарегистрироваться
-			</Button>
+			<div className="registration-table__buttons">
+
+				<Button type="primary" htmlType="submit" loading={loading}>
+					Зарегистрироваться
+				</Button>
+			</div>
+
 		</Form>
 	)
 }

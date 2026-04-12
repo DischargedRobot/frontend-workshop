@@ -42,6 +42,12 @@
 	--toast-error: #d03b3b;
 	--toast-success: #47d73d;
 	--toast-warning: #d6df1e;
+
+	--text-muted: color-mix(
+		in srgb,
+		var(--text-color),
+		#666 50%
+	);
 }
 
 :root {

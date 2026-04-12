@@ -65,7 +65,7 @@ const theme: ThemeConfig = {
 
 		Button: {
 			colorBgContainer: COLOR.activeBackground,
-			colorBorder: COLOR.activeBorder,
+			// colorBorder: COLOR.activeBorder,
 		},
 
 		Table: {

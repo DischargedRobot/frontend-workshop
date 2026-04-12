@@ -18,3 +18,15 @@
 	@extend %flex-column;
 	align-items: center;
 }
+
+.registration__login {
+	@extend %flex-column;
+	justify-content: center;
+	align-items: center;
+
+	gap: 12px;
+	margin-top: 18px;
+}
+.registration__login__text {
+	color: var(--text-muted);
+}

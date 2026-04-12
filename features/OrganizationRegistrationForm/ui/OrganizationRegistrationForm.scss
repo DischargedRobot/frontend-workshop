@@ -5,18 +5,23 @@
 	@extend %flex-column;
 
 	padding: 38px 60px;
-	gap: 32px;
+	gap: 12px;
 
 	max-width: 705px;
 	max-height: 611px;
 
 	border: 2px solid var(--gray);
 	border-radius: 40px;
-}
 
-.registration-table__items {
-	@extend %flex-column;
-	gap: 18px;
+	&__items {
+		@extend %flex-column;
+		gap: 10px;
+	}
+}
+.registration-table__login-label_under-items {
+	margin-top: 18px;
+	display: flex;
+	justify-content: center;
 }
 
 .registration-table__title {
@@ -30,4 +35,13 @@
 
 .registration-table__row {
 	@extend %flex-column;
+}
+
+.registration-table__buttons {
+	@extend %flex-column;
+	justify-content: space-between;
+
+	gap: 12px;
+
+	margin-top: 16px;
 }

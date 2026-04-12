@@ -7,3 +7,16 @@
 	@extend %flex-column;
 	align-items: center;
 }
+
+.login__registeration {
+	@extend %flex-column;
+	justify-content: center;
+	align-items: center;
+
+	gap: 12px;
+	margin-top: 18px;
+}
+.login__registeration__text {
+	color: var(--text-muted);
+	font-size: 14px;
+}

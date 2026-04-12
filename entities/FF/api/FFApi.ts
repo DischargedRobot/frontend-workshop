@@ -176,7 +176,7 @@ const FFApi = {
 				method: "POST",
 				body: JSON.stringify({
 					name: ff.name,
-					vaue: ff.value,
+					value: ff.value,
 				}),
 			},
 		)

@@ -8,3 +8,13 @@
 	@extend %flex-column;
 	gap: 10px;
 }
+
+.authorisation-table__buttons {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	gap: 12px;
+
+	margin-top: 16px;
+}
