@@ -1,47 +1,130 @@
 .service-panel {
+	--animation-duration: 0.3s;
+
 	padding: 5px 0 0px;
 
 	height: auto;
 	width: 100%;
 
 	&__visibility-button {
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
-		padding: 2px 8px;
-
 		height: auto;
 		width: 100%;
 
+		&:hover {
+			background-color: var(
+				--background
+			);
+		}
+	}
+	.visibility-button {
+		display: flex;
+		align-items: center;
+
+		gap: 4px;
+		padding: 2px 10px;
+
 		background-color: var(
-			--foregorund
+			--foreground
 		);
 
-		border-radius: 0;
 		border-bottom: 2px solid
 			var(--stroke);
 
-		transition: transform 0.3s ease;
+		& .icon {
+			transition: transform
+				var(
+					--animation-duration
+				)
+				ease;
 
-		&_visible {
-			transform: rotate(0deg);
-		}
+			&_visible {
+				transform: rotate(0deg);
+			}
 
-		&_hidden {
-			transform: rotate(180deg);
+			&_hidden {
+				transform: rotate(
+					90deg
+				);
+			}
 		}
 	}
-	& .service {
-	}
+
 	&__content {
-		transition: max-height 0.3s ease;
+		overflow: hidden;
+		transition:
+			max-height
+				var(
+					--animation-duration
+				)
+				ease-out,
+			opacity
+				var(
+					--animation-duration
+				)
+				ease;
+		opacity: 1;
+		visibility: visible;
+
 		&_visible {
 			max-height: 400px;
 		}
 
 		&_hidden {
 			max-height: 0;
-			visibility: hidden;
+		}
+	}
+}
+
+.service {
+	display: grid;
+	gap: 10px;
+	padding: 12px;
+	container-type: inline-size;
+
+	background-color: var(--foreground);
+
+	&__row {
+		display: grid;
+		grid-template-columns: repeat(
+			2,
+			minmax(0, 1fr)
+		);
+		gap: 8px;
+	}
+
+	&__field {
+		display: grid;
+		gap: 4px;
+		padding: 8px 10px;
+
+		background-color: var(
+			--background
+		);
+		border: 1px solid
+			var(--stroke-opacity);
+		border-radius: 8px;
+	}
+
+	&__label {
+		font-family: var(--inter);
+		font-size: 12px;
+		font-weight: 600;
+		color: var(
+			--background-text-color
+		);
+	}
+
+	&__value {
+		font-family: var(--roboto-mono);
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--text-color);
+		word-break: break-word;
+	}
+
+	@container (max-width: 280px) {
+		&__row {
+			grid-template-columns: 1fr;
 		}
 	}
 }

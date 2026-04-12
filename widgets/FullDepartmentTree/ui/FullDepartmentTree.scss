@@ -21,11 +21,16 @@
 
 .department-tree-panel {
 	position: relative;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
 	background-color: var(
 		--foreground-second
 	);
 
-	padding: 10px 0;
+	padding: 10px 0 0;
 
 	flex: 0 0 auto;
 	min-width: 200px;

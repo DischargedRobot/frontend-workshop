@@ -16,13 +16,27 @@ const Service = (props: Props) => {
     const { service } = props
 
     return (
-
         <div className="service">
-            <div className="service__title">Service ID: {service.serviceId}</div>
-            <div className="service__title">Topic: {service.topic}</div>
-            <div className="service__subtitle">Username: {service.username}</div>
-            <div className="service__subtitle">Password: {service.password}</div>
-            <div className="service__subtitle">Group Name: {service.groupName}</div>
+            <div className="service__row">
+                <article className="service__field">
+                    <h5 className="service__label">Name</h5>
+                    <span className="service__value">{service.username}</span>
+                </article>
+                <article className="service__field">
+                    <h5 className="service__label">Password</h5>
+                    <span className="service__value">{service.password}</span>
+                </article>
+            </div>
+            <div className="service__row">
+                <article className="service__field">
+                    <h5 className="service__label">Topic</h5>
+                    <span className="service__value">{service.topic}</span>
+                </article>
+                <article className="service__field">
+                    <h5 className="service__label">Group Name</h5>
+                    <span className="service__value">{service.groupName}</span>
+                </article>
+            </div>
         </div>
     )
 }
