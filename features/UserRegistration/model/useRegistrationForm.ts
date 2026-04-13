@@ -35,7 +35,7 @@ export const useRegistrationForm = (token: string) => {
 			const error = err as APIError
 			switch (error.status) {
 				case 409:
-					seLogintError(error.customMessage ?? error.message)
+					seLogintError(error.message)
 					return
 				case 404:
 					showToast({

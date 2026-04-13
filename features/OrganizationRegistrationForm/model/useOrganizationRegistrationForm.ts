@@ -1,9 +1,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { APIError, isAPIError, loginApi } from "@/shared/api"
+import { isAPIError, loginApi } from "@/shared/api"
 import { useOrganizationStore } from "@/entities/Organization"
 import { organizationApiClient } from "@/entities/Organization"
-import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 
 export type FormValues = {
 	OrganizationName: string
@@ -26,7 +25,6 @@ export const useOrganizationRegistrationForm = () => {
 		(state) => state.setOrganization,
 	)
 
-	const handleAPIError = useAPIErrorHandler()
 	const onSubmit = async (data: FormValues) => {
 		try {
 			setLoading(true)
@@ -56,7 +54,7 @@ export const useOrganizationRegistrationForm = () => {
 					case 401:
 						setError({
 							status: 401,
-							message: err.customMessage ?? err.message,
+							message: err.message,
 						})
 						break
 					case 409:

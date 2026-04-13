@@ -5,7 +5,7 @@ export {
 	APIError,
 	isAPIError,
 	serverFFErrorToAPIError,
-	isServerAPIError,
+	isFFAPIError,
 } from "./APIErrors"
 export { default as APIJsonRequest } from "./APIJsonRequest"
 export { ConverterRoleRespToIRol } from "./loginApi"

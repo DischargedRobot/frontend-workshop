@@ -1,16 +1,17 @@
-interface IResponseError {
-	status: number | null
-	customMessage?: string
-}
+// interface IResponseError {
+// 	status: number | null
+// 	type: string
+// }
 
-export class APIError extends Error implements IResponseError {
+export class APIError extends Error {
 	static readonly errorType = "APIError" // лень писать постоянно при создании
 	constructor(
 		public status: number | null,
-		public message: string,
-		public customMessage?: string,
+		public title: string,
+		message?: string,
+		public type?: string,
 	) {
-		super((customMessage ?? message) || `Error ${APIError.errorType}`)
+		super((message ?? title) || `Error ${APIError.errorType}`)
 
 		this.name = "APIError"
 	}
@@ -30,8 +31,8 @@ export function isAPIError(error: unknown): error is APIError {
 			error.status >= 300 &&
 			error.status < 600 &&
 			//
-			"message" in error &&
-			typeof error.message === "string")
+			"title" in error &&
+			typeof error.title === "string")
 	)
 }
 
@@ -53,118 +54,149 @@ const APIErrors = {
 	SERVER: new APIError(500, "SERVER_ERROR", "Ошибка сервера"),
 }
 
-export class ServerAPIError extends APIError {
+interface IFFAPIError {
+	code: string
+	message: string
+	errorType: string
+}
+
+export class FFAPIError extends APIError implements IFFAPIError {
 	constructor(
 		public code: string,
 		public message: string,
 		public errorType: string,
 		status: number,
-		customMessage?: string,
 	) {
-		super(status, message, customMessage)
-		this.name = "ServerAPIError"
+		super(status, errorType, message, code)
+		this.name = "FFAPIError"
 	}
-	static isServerAPIError(error: unknown): error is ServerAPIError {
-		if (error instanceof ServerAPIError) return true
-		if (typeof error !== "object" || error === null) return false
+	static isFFAPIError(error: unknown): error is FFAPIError {
 		return (
-			"code" in error &&
-			typeof error.code === "string" &&
-			"errorType" in error &&
-			typeof error.errorType === "string" &&
-			"status" in error &&
-			typeof error.status === "number"
+			error instanceof FFAPIError ||
+			(isAPIError(error) &&
+				"code" in error &&
+				typeof error.code === "string" &&
+				"errorType" in error &&
+				typeof error.errorType === "string" &&
+				"status" in error &&
+				typeof error.status === "number")
 		)
 	}
 }
 
-// мб это и не нужно
-export const ServerAPIErrors = {
-	UNEXPECTED_ERROR: new ServerAPIError(
+interface IAuthAPIError {
+	info: string
+	message: string
+}
+
+export class AuthAPIError extends APIError implements IAuthAPIError {
+	constructor(
+		public info: string,
+		message: string,
+		status: number,
+	) {
+		super(status, "AUTH", message)
+		this.name = "AuthAPIError"
+	}
+	static isAuthAPIError(error: unknown): error is AuthAPIError {
+		return (
+			error instanceof AuthAPIError ||
+			(isAPIError(error) &&
+				"info" in error &&
+				typeof error.info === "string")
+		)
+	}
+}
+
+export const isAuthAPIError = (error: unknown) =>
+	AuthAPIError.isAuthAPIError(error)
+
+export const FFAPIErrors = {
+	UNEXPECTED_ERROR: new FFAPIError(
 		"00-0000",
 		"UNEXPECTED_ERROR",
 		"UNEXPECTED_ERROR",
 		500,
 	),
-	EMPTY_FIELD: new ServerAPIError(
+	EMPTY_FIELD: new FFAPIError(
 		"01-0001",
 		"Поле %s не может быть пустым или null",
 		"CLIENT_ERROR",
 		400,
 	),
-	BAD_LIMIT: new ServerAPIError(
+	BAD_LIMIT: new FFAPIError(
 		"01-0002",
 		"Некорректный формат limit",
 		"CLIENT_ERROR",
 		400,
 	),
-	BAD_OFFSET: new ServerAPIError(
+	BAD_OFFSET: new FFAPIError(
 		"01-0003",
 		"Некорректный формат offset",
 		"CLIENT_ERROR",
 		400,
 	),
-	NO_DATA: new ServerAPIError(
+	NO_DATA: new FFAPIError(
 		"01-0004",
 		"Нет данных по переданным параметрам",
 		"CLIENT_ERROR",
 		404,
 	),
-	INVALID_JSON: new ServerAPIError(
+	INVALID_JSON: new FFAPIError(
 		"01-0005",
 		"Некорректный JSON",
 		"CLIENT_ERROR",
 		400,
 	),
-	NOT_UNIQUE_ORGANIZATION_NAME: new ServerAPIError(
+	NOT_UNIQUE_ORGANIZATION_NAME: new FFAPIError(
 		"02-0001",
 		"Организация с таким именем уже существует",
 		"BUSINESS_ERROR",
 		409,
 	),
-	NOT_UNIQUE_ORGANIZATION_NODE_NAME_IN_ORGANIZATION: new ServerAPIError(
+	NOT_UNIQUE_ORGANIZATION_NODE_NAME_IN_ORGANIZATION: new FFAPIError(
 		"02-0002",
 		"Звено организации с таким именем в этой организации уже существует",
 		"BUSINESS_ERROR",
 		409,
 	),
-	SERVICE_CANNOT_HAVE_DESCENDANTS: new ServerAPIError(
+	SERVICE_CANNOT_HAVE_DESCENDANTS: new FFAPIError(
 		"02-0003",
 		"Сервис не может иметь потомков",
 		"BUSINESS_ERROR",
 		409,
 	),
-	OPTIMISTIC_LOCK: new ServerAPIError(
+	OPTIMISTIC_LOCK: new FFAPIError(
 		"02-0004",
 		"Устаревшая версия данных",
 		"BUSINESS_ERROR",
 		409,
 	),
-	CYCLE_MOVE: new ServerAPIError(
+	CYCLE_MOVE: new FFAPIError(
 		"02-0005",
 		"Нельзя переместить узел в дочерний ему или в него самого",
 		"BUSINESS_ERROR",
 		409,
 	),
-	MOVE_ROOT_NODE: new ServerAPIError(
+	MOVE_ROOT_NODE: new FFAPIError(
 		"02-0006",
 		"Нельзя переместить корневой узел организации",
 		"BUSINESS_ERROR",
 		409,
 	),
-	NOT_UNIQUE_FEATURE_FLAG_NAME_IN_ORGANIZATION: new ServerAPIError(
+	NOT_UNIQUE_FEATURE_FLAG_NAME_IN_ORGANIZATION: new FFAPIError(
 		"02-0007",
 		"Фича флаг с таким именем в этой организации уже существует",
 		"BUSINESS_ERROR",
 		409,
 	),
-	PARENT_NODE_MUST_BE_IN_SAME_ORGANIZATION: new ServerAPIError(
+	PARENT_NODE_MUST_BE_IN_SAME_ORGANIZATION: new FFAPIError(
 		"02-0008",
 		"Нельзя создать узел, родителем которого является узел другой организации",
 		"BUSINESS_ERROR",
 		409,
 	),
-	ORGANIZATION_CAN_HAVE_ONE_ROOT_NODE: new ServerAPIError(
+	ORGANIZATION_CAN_HAVE_ONE_ROOT_NODE: new FFAPIError(
 		"02-0009",
 		"Организация может иметь только один корневой узел",
 		"BUSINESS_ERROR",
@@ -172,30 +204,56 @@ export const ServerAPIErrors = {
 	),
 }
 
-/** @desc Конвертер: ServerAPIError -> APIError, устанавливаем errorType как message */
-export function serverFFErrorToAPIError(s: ServerAPIError): APIError {
-	const apiErr = new APIError(s.status, s.errorType, s.customMessage)
-	return apiErr
+/** @desc Конвертер:  APIError, устанавливаем errorType как message */
+export function toAPIError(
+	serverError: AuthAPIError | FFAPIError | unknown,
+): APIError {
+	if (isAuthAPIError(serverError)) {
+		// console.log(serverError, "authError")
+		return new APIError(serverError.status, "AUTH", serverError.message)
+	}
+	if (isFFAPIError(serverError)) {
+		console.log(
+			serverError,
+			serverError.errorType,
+			"ffError",
+			new APIError(
+				serverError.status,
+				serverError.errorType,
+				serverError.message,
+			).message,
+		)
+
+		return new APIError(
+			serverError.status,
+			serverError.errorType,
+			serverError.message,
+			serverError.code,
+		)
+	}
+	if (isAPIError(serverError)) {
+		console.log(serverError, "apiErrdsddsor", serverError.message)
+
+		return new APIError(
+			serverError.status,
+			serverError.title,
+			serverError.message,
+			serverError.type,
+		)
+	}
+
+	return mapAPIErrors(null)
 }
 
-export function isServerAPIError(error: unknown): error is ServerAPIError {
-	if (error instanceof ServerAPIError) return true
-	if (typeof error !== "object" || error === null) return false
-	return (
-		"code" in error &&
-		typeof error.code === "string" &&
-		"errorType" in error &&
-		typeof error.errorType === "string" &&
-		"status" in error &&
-		typeof error.status === "number"
-	)
+export function isFFAPIError(error: unknown): error is FFAPIError {
+	return FFAPIError.isFFAPIError(error)
 }
 
 // можно и просто map, но мне показалось, что в случае правок, будет проще написать кейс,
 // если ошибка уже есть, просто код другой, чем повторять в мап объекты
 export const mapAPIErrors = (
 	status: number | null | undefined,
-	customMessage?: string,
+	message?: string,
 ): APIError => {
 	let error: APIError
 
@@ -226,8 +284,8 @@ export const mapAPIErrors = (
 			)
 	}
 
-	if (customMessage) {
-		error.customMessage = customMessage
+	if (message) {
+		error.message = message
 	}
 
 	return error

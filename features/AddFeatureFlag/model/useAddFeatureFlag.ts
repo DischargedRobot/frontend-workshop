@@ -28,7 +28,6 @@ export const useAddFeatureFlag = (organization: IOrganization) => {
 		...(currentDep ? [currentDep] : []),
 	]
 
-	// обработка ошибки
 	const handleAPIError = useAPIErrorHandler([
 		{
 			error: new APIError(409, "Conflict"),
@@ -53,14 +52,7 @@ export const useAddFeatureFlag = (organization: IOrganization) => {
 			addFFToStore([ff])
 			// form.resetFields()
 		} catch (error) {
-			if (isAPIError(error) && error.status === 409) {
-				showToast({
-					type: "warning",
-					text: "Фич флаг с таким именем уже существует",
-				})
-			} else {
-				handleAPIError(error as APIError)
-			}
+			handleAPIError(error as APIError)
 		}
 	}
 

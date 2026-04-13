@@ -4,12 +4,15 @@ import { mutate } from "swr"
 import { FFApi, useFFFiltersStore, useFFStore } from "@/entities/FF"
 import { useBreadcrumbStore } from "@/entities/DepartmentBreadcamb"
 import { useOrganizationStore } from "@/entities/Organization"
-import { APIError } from "@/shared/api/APIErrors"
+import { APIError, mapAPIErrors } from "@/shared/api/APIErrors"
 import { showToast } from "@/shared/ui"
 
 import { departmentApi } from "../../api"
 import { IDepartment } from "../../lib"
 import { useDepartmentsStore } from "../useDepartmentsStore"
+import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
+import { ApiError } from "next/dist/server/api-utils"
+import { error } from "console"
 
 export const useDepartmentTableColumns = () => {
 	const organizationId = useOrganizationStore(
@@ -21,7 +24,7 @@ export const useDepartmentTableColumns = () => {
 	const changeDepartmentChildren = useDepartmentsStore(
 		(state) => state.changeDepartmentChildren,
 	)
-	const removeDepFromLocal = useDepartmentsStore(
+	const removeDepFromStore = useDepartmentsStore(
 		(state) => state.removeDepartments,
 	)
 
@@ -29,6 +32,12 @@ export const useDepartmentTableColumns = () => {
 	const setFFFilterDepartment = useFFFiltersStore(
 		(state) => state.setDepartment,
 	)
+
+	const handleError = useAPIErrorHandler([{
+		error: mapAPIErrors(404), handler: () => {
+			console.log("В этом отделе фич флагов нет")
+		}
+	}])
 
 	// Получение фич флагов для выбранного отдела
 	const getFFAndAddToStore = async (departmentId: number) => {
@@ -48,13 +57,9 @@ export const useDepartmentTableColumns = () => {
 				addFFToStore(FFs)
 			}
 		} catch (error) {
-			showToast({
-				type: "error",
-				text:
-					(error as { message?: string })?.message ??
-					"Что-то пошло не так",
-				duration: 3000,
-			})
+			console.log(error)
+			handleError(error)
+
 		}
 	}
 
@@ -101,7 +106,7 @@ export const useDepartmentTableColumns = () => {
 	const removeDepartment = async (dep: IDepartment) => {
 		try {
 			await departmentApi.removeDepartmentById(organizationId, dep.id)
-			removeDepFromLocal([dep])
+			removeDepFromStore([dep])
 		} catch (error) {
 			console.log(error, "error")
 		}

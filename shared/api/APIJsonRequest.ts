@@ -1,4 +1,4 @@
-import { APIError, mapAPIErrors } from "./APIErrors"
+import { isAPIError, mapAPIErrors, toAPIError } from "./APIErrors"
 
 const APIJsonRequest = async <T>(
 	endpoint: string,
@@ -17,7 +17,18 @@ const APIJsonRequest = async <T>(
 			credentials: "include",
 		})
 		if (!response.ok) {
-			throw mapAPIErrors(response.status)
+			const error = await response.json()
+			console.log(error, "error convert", {
+				...mapAPIErrors(response.status),
+				...error,
+			})
+
+			const apiError = toAPIError({
+				...mapAPIErrors(response.status),
+				...error,
+			})
+			// console.log(apiError.type, apiError.message, "convert")
+			throw apiError
 		}
 
 		const contentType = response.headers.get("content-type")
@@ -35,23 +46,18 @@ const APIJsonRequest = async <T>(
 
 		return data
 	} catch (error) {
-		// console.log(error, "APIJsonRequest")
+		console.log(error, "APIJsonRequest")
 		// если нет сети
 		if (error instanceof TypeError && error.message === "Failed to fetch") {
 			throw mapAPIErrors(null)
 		}
 
-		// если не наша, то пусть будет серверной (на всякий случай, мало ли)
-		if (!(error instanceof APIError)) {
+		// Проверяем структурно: ошибки после response.json() не являются экземпляром APIError.
+		if (!isAPIError(error)) {
 			throw mapAPIErrors(0)
 		}
 
-		// if (error !instanceof APIError) {
-		//     // Возвращаем неизвестную
-		//     throw mapAPIErrors(0)
-		// }
-
-		throw error as APIError
+		throw error
 	}
 }
 

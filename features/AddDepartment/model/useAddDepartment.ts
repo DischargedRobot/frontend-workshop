@@ -9,7 +9,7 @@ import {
 import { departmentApi } from "@/entities/Departments"
 import { useOrganizationStore } from "@/entities/Organization"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
-import { ServerAPIErrors } from "@/shared/api/APIErrors"
+import { FFAPIErrors, toAPIError } from "@/shared/api/APIErrors"
 import { showToast } from "@/shared/ui"
 
 interface AddDepartmentForm {
@@ -36,14 +36,26 @@ export const useAddDepartment = ({
 
 	const handleError = useAPIErrorHandler([
 		{
-			error: ServerAPIErrors.NOT_UNIQUE_ORGANIZATION_NODE_NAME_IN_ORGANIZATION,
+			error: toAPIError(
+				FFAPIErrors.NOT_UNIQUE_ORGANIZATION_NODE_NAME_IN_ORGANIZATION,
+			),
 			handler: () => {
 				showToast({
 					type: "error",
 					title: "Конфликт",
-					text: ServerAPIErrors
+					text: FFAPIErrors
 						.NOT_UNIQUE_ORGANIZATION_NODE_NAME_IN_ORGANIZATION
 						.message,
+				})
+			},
+		},
+		{
+			error: toAPIError(FFAPIErrors.SERVICE_CANNOT_HAVE_DESCENDANTS),
+			handler: () => {
+				showToast({
+					type: "error",
+					title: "Конфликт",
+					text: FFAPIErrors.SERVICE_CANNOT_HAVE_DESCENDANTS.message,
 				})
 			},
 		},

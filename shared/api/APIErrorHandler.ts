@@ -1,37 +1,83 @@
 "use client"
 
 import { useCallback } from "react"
-import { APIError, isAPIError, mapAPIErrors } from "./APIErrors"
+import {
+	APIError,
+	toAPIError,
+	isAPIError,
+	FFAPIError,
+	AuthAPIError,
+} from "./APIErrors"
 import { showToast } from "../ui"
 import { useRouter } from "next/navigation"
 
-interface CustomErrorHandler {
+interface CustomAPIErrorHandler {
 	error: APIError
 	handler: (error: APIError) => void
 }
 
-export const useAPIErrorHandler = (
-	customHandlers: CustomErrorHandler[] = [],
+interface CustomFFAPIErrorHandler {
+	error: FFAPIError
+	handler: (error: FFAPIError) => void
+}
+
+interface CustomErrorHandler<T extends APIError | FFAPIError> {
+	error: T extends APIError ? APIError : FFAPIError
+	handler: (error: T extends APIError ? APIError : FFAPIError) => void
+}
+export const useAPIErrorHandler = <T extends APIError | FFAPIError>(
+	customHandlers: CustomErrorHandler<T>[] = [],
+	defaultHandler?: (error: APIError) => void,
 ) => {
 	const router = useRouter()
 
 	// чтобы при рендере компонента не перезаписывалась повторно
 	const handleError = useCallback(
-		(error: APIError | Error) => {
-			const apiError: APIError = isAPIError(error)
-				? error
-				: mapAPIErrors(null)
+		(error: FFAPIError | AuthAPIError | APIError | Error | unknown) => {
+			console.log("custom2", customHandlers)
+
+			// if (isFFAPIError(error)) {
+			// 	const customHandler = customHandlers.find((handler) => {
+			// 		if (isFFAPIError(handler.error)) {
+			// 			return handler.error.code === error.code
+			// 		}
+			// 		return false
+			// 	})
+			// 	console.log(customHandler, "custom")
+			// 	if (customHandler) {
+			// 		customHandler.handler(error)
+			// 		return
+			// 	}
+			// }
 
 			// Сначала проверяем кастомные обработчики
-			const customHandler = customHandlers.find(
-				(handler) => handler.error.status === apiError.status,
-			)
+			if (isAPIError(error)) {
+				const customHandler = customHandlers.find((handler) => {
+					return handler.error.type === error.type
+				})
+				console.log(
+					customHandler,
+					"custom API Error",
+					isAPIError(error),
+					error.type,
+				)
 
-			if (customHandler) {
-				customHandler.handler(apiError)
-				return
+				if (customHandler) {
+					customHandler.handler(
+						error as T extends APIError ? APIError : FFAPIError,
+					)
+					return
+				}
 			}
 
+			const apiError: APIError = isAPIError(error)
+				? error
+				: toAPIError(error)
+
+			if (defaultHandler !== undefined) {
+				defaultHandler(apiError)
+				return
+			}
 			// Если кастомного обработчика нет, используем что есть
 			switch (apiError.status) {
 				case 401:
@@ -54,14 +100,22 @@ export const useAPIErrorHandler = (
 					// router.push("/internal")
 					break
 				default:
-					console.log("оШИБКА!!!!!")
-					showToast({
-						type: "warning",
-						text: error.message,
-					})
+					console.log(error, "оШИБКА!!!!!")
+
+					if (error instanceof Error) {
+						showToast({
+							type: "warning",
+							text: error.message,
+						})
+					} else {
+						showToast({
+							type: "error",
+							text: "Неизвестная ошибка",
+						})
+					}
 			}
 		},
-		[router, customHandlers],
+		[router, customHandlers, defaultHandler],
 	)
 
 	return handleError
