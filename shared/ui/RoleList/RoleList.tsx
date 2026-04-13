@@ -5,6 +5,7 @@ import "./RoleList.scss"
 import Role, { IRole } from "@/shared/model/Role"
 
 interface Props {
+	disabled?: boolean
 	roles?: IRole[]
 	value?: IRole[]
 	changeRoles?: () => void
@@ -16,13 +17,14 @@ const RoleList = (props: Props) => {
 
 	// Алиасы: roles = value, changeRoles = onChange
 	const rolesList = roles || value || []
-	const handleChange = changeRoles || onChange || (() => {})
+	const handleChange = changeRoles || onChange || (() => { })
 
 	return (
 		<ul className="role-list text text_tiny text_litle">
 			{rolesList.map((role) => (
 				<li key={crypto?.randomUUID()}>
 					<Role
+						disabled
 						role={role}
 						onClick={() => {
 							role.isEnabled = false

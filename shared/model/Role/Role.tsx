@@ -8,14 +8,20 @@ import { IRole } from "./types"
 interface Props {
 	role: IRole
 	onClick: () => void
+	disabled?: boolean
 }
 
 const Role = (props: Props) => {
-	const { role, onClick } = props
+	const { role, onClick, disabled } = props
 
+	console.log("Rendering Role:", role.name, "Disabled:", disabled)
 	return (
-		<button className="role" onClick={onClick}>
-			<CloseOutlined />
+		<button
+			className={`role ${disabled ? "role_disabled" : ""}`}
+			onClick={disabled ? undefined : onClick}
+			disabled={disabled}
+		>
+			{disabled ? null : <CloseOutlined />}
 			{role.name}
 		</button>
 	)
