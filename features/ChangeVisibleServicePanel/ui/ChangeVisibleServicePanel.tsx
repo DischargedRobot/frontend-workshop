@@ -17,7 +17,6 @@ interface Props {
 }
 
 const ChangeVisibleServicePanel = ({ service }: Props) => {
-    const serviceForPreview = service ?? MOCK_SERVICE
 
     const { isVisible, setIsVisible } = useChangeVisibleServicePanel()
 
@@ -31,8 +30,7 @@ const ChangeVisibleServicePanel = ({ service }: Props) => {
                 {isVisible ? "Тут сервис" : "Не тут сервис"}
             </button>
             <div className={`service-panel__content ${isVisible ? 'service-panel__content_visible' : 'service-panel__content_hidden'}`}>
-                <Service service={serviceForPreview} />
-                {!service && <Empty className="text" description="Пусто" />}
+                {!!service ? <Service service={service} /> : <Empty className="text" description="Пусто" />}
             </div>
         </div>
     )

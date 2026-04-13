@@ -5,7 +5,7 @@ const APIJsonRequest = async <T>(
 	options?: RequestInit,
 ): Promise<T> => {
 	try {
-		console.log("endpoint APIJsonRequest", endpoint)
+		// console.log("endpoint APIJsonRequest", endpoint)
 		const response = await fetch(endpoint, {
 			// credentials: 'include',
 			...options,
@@ -35,7 +35,7 @@ const APIJsonRequest = async <T>(
 
 		return data
 	} catch (error) {
-		console.log(error, "APIJsonRequest")
+		// console.log(error, "APIJsonRequest")
 		// если нет сети
 		if (error instanceof TypeError && error.message === "Failed to fetch") {
 			throw mapAPIErrors(null)

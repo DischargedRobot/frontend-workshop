@@ -57,7 +57,7 @@ const useDepartmentTree = () => {
 
 	// console.log("useDepartmentTree, departments: ", organization)
 
-	const { error } = useSWR<IDepartment[], APIError>(
+	const { error, isValidating } = useSWR<IDepartment[], APIError>(
 		organization.child // не видит, мб из-з гидратации,
 			? // поэтому тут првоерка
 			[
@@ -78,6 +78,8 @@ const useDepartmentTree = () => {
 			},
 		},
 	)
+
+	const loading = isValidating && (departments === undefined || departments.length === 0)
 
 	const loadData = useCallback(
 		async (node: IDepartmentNode) => {
@@ -161,6 +163,7 @@ const useDepartmentTree = () => {
 			filterDepartmentIds,
 			organizationId,
 			error,
+			loading,
 			loadData,
 			handleCheck,
 			handleDrop,
@@ -171,6 +174,7 @@ const useDepartmentTree = () => {
 			filterDepartmentIds,
 			organizationId,
 			error,
+			loading,
 			handleDrop,
 			handleCheck,
 			loadData,

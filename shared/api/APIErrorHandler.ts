@@ -10,11 +10,9 @@ interface CustomErrorHandler {
 	handler: (error: APIError) => void
 }
 
-interface Props {
-	customHandlers?: CustomErrorHandler[]
-}
-
-export const useAPIErrorHandler = ({ customHandlers = [] }: Props = {}) => {
+export const useAPIErrorHandler = (
+	customHandlers: CustomErrorHandler[] = [],
+) => {
 	const router = useRouter()
 
 	// чтобы при рендере компонента не перезаписывалась повторно

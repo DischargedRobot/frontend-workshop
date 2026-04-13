@@ -30,13 +30,12 @@ const PersonalLayoutContent = async ({ children }: Props) => {
 	const { profile, organization } = await functionInitApplication()
 
 	return (
-		<>
-			<InitApplication profile={profile} organization={organization} />
+		<InitApplication profile={profile} organization={organization}>
 			<AbilityProvider profile={profile}>
 				<NavigationMenu />
 				{children}
 			</AbilityProvider>
-		</>
+		</InitApplication >
 	)
 }
 

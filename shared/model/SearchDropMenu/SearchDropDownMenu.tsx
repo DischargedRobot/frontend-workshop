@@ -160,13 +160,9 @@ export const SearchDropDownMenu = <T,>({
 						</ul>
 					) : (
 						<ul className="search-dropdown__list">
-							{filteredOptions.map((option) => (
+							{filteredOptions.map((option, idx) => (
 								<li
-									key={
-										option.key
-											? String(option.key)
-											: String(option.value)
-									}
+									key={option.key ? String(option.key) : `opt-${idx}`}
 									onClick={() => handleSelect(option)}
 									onMouseDown={(e) => e.preventDefault()}
 									className={`search-dropdown__option ${option.value === selected ? "search-dropdown__option_selected" : ""}`}

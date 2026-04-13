@@ -21,12 +21,12 @@ const FFMenu = () => {
 	// const [departments, setDepartments] = useState([])
 
 	return (
-		<PageReadyWrapper>
-			<Content className="ff-menu">
-				<FullDepartmentTable />
-				<FullFeatureFlagsTable />
-			</Content>
-		</PageReadyWrapper>
+		// <PageReadyWrapper>
+		<Content className="ff-menu">
+			<FullDepartmentTable />
+			<FullFeatureFlagsTable />
+		</Content>
+		// </PageReadyWrapper>
 	)
 }
 

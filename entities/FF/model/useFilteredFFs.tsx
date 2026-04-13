@@ -42,13 +42,13 @@ const filterFunction: TFilterFunction = {
 	name: filterByName,
 }
 
-type filterFF = <T extends TFilterKey>(
+type TTilterFF = <T extends TFilterKey>(
 	filters: T[],
 	featureFlags: IFeatureFlag[],
 	filterArguments: IFilterFunctionsArguments,
 ) => IFeatureFlag[]
 
-const filterFF: filterFF = (filters, featureFlags, filterArguments) => {
+const filterFF: TTilterFF = (filters, featureFlags, filterArguments) => {
 	return filters.reduce((filteredFeatureFlags, filter) => {
 		return filterFunction[filter](
 			filteredFeatureFlags,
@@ -64,6 +64,7 @@ const useFilteredFFs = () => {
 			departmentIds: state.departmentIds,
 		})),
 	)
+
 
 	const featureFlags = useFFStore((state) => state.featureFlags)
 

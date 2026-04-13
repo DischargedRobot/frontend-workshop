@@ -5,9 +5,14 @@ import { error } from "console"
 
 const URL_ORGANIZATION = process.env.NEXT_PUBLIC_API_ORGANIZATIONS_URL_V1
 
-interface IFFByDepartmentLinkedResponse {
+interface FFByRelatedDepartmentResponse {
+	featureFlag: IFFresponse
+	belongsToNode: Omit<IDepartment, "children" | "featureFlags">
+}
+
+interface IFFsByDepartmentRelatedResponse {
 	nodeId: number
-	items: IFeatureFlagResponse[]
+	items: FFByRelatedDepartmentResponse[]
 	limit: number
 	offset: number
 	total: number
@@ -37,8 +42,11 @@ interface IFFsResponse {
 }
 
 interface IFeatureFlagResponse {
-	featureFlag: IFFresponse
-	belongsToNode: Omit<IDepartment, "children" | "featureFlags">
+	id: number
+	nodeId: number
+	name: string
+	value: boolean
+	version: number
 }
 
 const FFApi = {
@@ -49,7 +57,7 @@ const FFApi = {
 		offset: number,
 	): Promise<IFFsResponse> => {
 		const responseData =
-			await APIJsonRequest<IFFByDepartmentLinkedResponse>(
+			await APIJsonRequest<IFFsByDepartmentRelatedResponse>(
 				`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/feature-flags?limit=${count}&offset=${offset}`,
 			)
 		const { items, ...other } = responseData
@@ -112,7 +120,7 @@ const FFApi = {
 		organizationId: number,
 	): Promise<IFeatureFlag[]> => {
 		const responseData =
-			await APIJsonRequest<IFFByDepartmentLinkedResponse>(
+			await APIJsonRequest<IFFsByDepartmentRelatedResponse>(
 				`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/feature-flags/linked?limit=100&offset=0&relation=descendant`,
 			)
 		return responseData.items.map(
@@ -148,7 +156,7 @@ const FFApi = {
 		featureFlagId: number,
 		isEnabled: boolean,
 	): Promise<void> => {
-		const resp = await APIJsonRequest<IFeatureFlag[]>(
+		await APIJsonRequest<IFeatureFlag[]>(
 			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/feature-flags/${featureFlagId}`,
 			{ body: JSON.stringify({ value: isEnabled, version: 1 }) },
 		)
@@ -159,18 +167,18 @@ const FFApi = {
 		departmentId: number,
 		featureFlagId: number,
 	) => {
-		const resp = APIJsonRequest(
+		await APIJsonRequest(
 			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/feature-flags/${featureFlagId}`,
 			{ method: "DELETE" },
 		)
 	},
 
-	createFF: async (
+	addFF: async (
 		organizationId: number,
 		nodeId: number,
 		ff: Pick<IFeatureFlag, "name" | "value">,
 	): Promise<IFeatureFlag> => {
-		return APIJsonRequest<IFeatureFlag>(
+		const response = await APIJsonRequest<IFeatureFlagResponse>(
 			`${URL_ORGANIZATION}/${organizationId}/nodes/${nodeId}/feature-flags`,
 			{
 				method: "POST",
@@ -180,6 +188,13 @@ const FFApi = {
 				}),
 			},
 		)
+		return {
+			id: response.id,
+			name: response.name,
+			value: response.value,
+			departmentId: response.nodeId,
+			version: response.version,
+		}
 	},
 }
 

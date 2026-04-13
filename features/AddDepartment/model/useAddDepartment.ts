@@ -9,7 +9,8 @@ import {
 import { departmentApi } from "@/entities/Departments"
 import { useOrganizationStore } from "@/entities/Organization"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
-import { ServerAPIError } from "@/shared/api/APIErrors"
+import { ServerAPIErrors } from "@/shared/api/APIErrors"
+import { showToast } from "@/shared/ui"
 
 interface AddDepartmentForm {
 	name: string
@@ -32,7 +33,21 @@ export const useAddDepartment = ({
 	const selectedDepartments = useSelectedDepartmentsStore(
 		(state) => state.departments,
 	)
-	const handleError = useAPIErrorHandler()
+
+	const handleError = useAPIErrorHandler([
+		{
+			error: ServerAPIErrors.NOT_UNIQUE_ORGANIZATION_NODE_NAME_IN_ORGANIZATION,
+			handler: () => {
+				showToast({
+					type: "error",
+					title: "Конфликт",
+					text: ServerAPIErrors
+						.NOT_UNIQUE_ORGANIZATION_NODE_NAME_IN_ORGANIZATION
+						.message,
+				})
+			},
+		},
+	])
 
 	// добавление департамена
 	const onSubmit = async (values: AddDepartmentForm) => {
@@ -40,7 +55,6 @@ export const useAddDepartment = ({
 		if (parentId == undefined) return
 
 		try {
-			console.log("Submitting form with values:", values) // Логируем значения формы
 			if (values.isService) {
 				const newService = await departmentApi.addService(
 					values.name,
@@ -58,10 +72,10 @@ export const useAddDepartment = ({
 					{
 						id: newService.id,
 						uuid: newService.uuid,
-						name: newService.name ?? "",
-						path: newService.path ?? "",
+						name: newService.name,
+						path: newService.path,
 						isService: true,
-						version: newService.version ?? 0,
+						version: newService.version,
 						children: [],
 						featureFlags: [],
 					},

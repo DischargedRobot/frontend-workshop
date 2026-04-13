@@ -2,7 +2,7 @@
 
 import "./DepartmentTree.scss"
 
-import { Empty, Tree } from "antd"
+import { Empty, Tree, Spin } from "antd"
 import { memo } from "react"
 import useDepartmentTree from "../../model/DepartmentTree/useDepartmentTree"
 import TitleRender, { IDepartmentNode } from "./TitleRender"
@@ -14,14 +14,21 @@ const DepartmentTree = () => {
 		filterDepartmentIds,
 		organizationId,
 		error,
+		loading,
 		loadData,
 		handleCheck,
 		handleDrop,
 	} = useDepartmentTree()
 
+	console.log("DepartmentTree render", { departments, treeData, filterDepartmentIds })
+
 	return (
 		<>
-			{departments?.length === 0 ? (
+			{loading ? (
+				<div style={{ display: "flex", justifyContent: "center", padding: 24 }}>
+					<Spin size="large" />
+				</div>
+			) : departments?.length === 0 ? (
 				<Empty
 					description={
 						<span style={{ color: "var(--text-color) !important" }}>

@@ -2,13 +2,14 @@
 
 import { useState } from "react"
 import { Form } from "antd"
-import { FFApi, IFeatureFlag } from "@/entities/FF"
+import { FFApi, IFeatureFlag, useFFStore } from "@/entities/FF"
 import { APIError, isAPIError } from "@/shared/api"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 import { showToast } from "@/shared/ui"
 import { useBreadcrumbStore } from "@/entities/DepartmentBreadcamb"
 import { useShallow } from "zustand/shallow"
 import { IOrganization } from "@/entities/Organization/model/useOrganizationStore"
+import { Server } from "http"
 
 type FormValues = Pick<IFeatureFlag, "name" | "value" | "departmentId">
 
@@ -28,12 +29,29 @@ export const useAddFeatureFlag = (organization: IOrganization) => {
 	]
 
 	// обработка ошибки
-	const handleAPIError = useAPIErrorHandler()
+	const handleAPIError = useAPIErrorHandler([
+		{
+			error: new APIError(409, "Conflict"),
+			handler: () => {
+				showToast({
+					type: "warning",
+					text: "Фич флаг с таким именем уже существует",
+				})
+			},
+		},
+	])
+
+	const addFFToStore = useFFStore((state) => state.addFeatureFlags)
 	const handleFormSubmit = async (values: FormValues) => {
 		try {
-			await FFApi.createFF(organization.id, values.departmentId, values)
+			const ff = await FFApi.addFF(
+				organization.id,
+				values.departmentId,
+				values,
+			)
 			setIsVisible(false)
-			form.resetFields()
+			addFFToStore([ff])
+			// form.resetFields()
 		} catch (error) {
 			if (isAPIError(error) && error.status === 409) {
 				showToast({

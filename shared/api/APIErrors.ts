@@ -79,7 +79,7 @@ export class ServerAPIError extends APIError {
 }
 
 // мб это и не нужно
-const ServerAPIErrors = {
+export const ServerAPIErrors = {
 	UNEXPECTED_ERROR: new ServerAPIError(
 		"00-0000",
 		"UNEXPECTED_ERROR",
