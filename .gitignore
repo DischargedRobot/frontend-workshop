@@ -2,7 +2,7 @@
 build-and-push.sh
 build-and-push.ps1
 /.vscode/
-
+d.env*
 
 # dependencies
 /node_modules
