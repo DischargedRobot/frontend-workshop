@@ -1,7 +1,6 @@
 import { IDepartment } from "@/entities/Departments/lib"
 import APIJsonRequest from "@/shared/api/APIJsonRequest"
 import { IFeatureFlag } from "../lib/types"
-import { error } from "console"
 
 const URL_ORGANIZATION = process.env.NEXT_PUBLIC_API_ORGANIZATIONS_URL_V1
 

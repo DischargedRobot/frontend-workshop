@@ -27,6 +27,7 @@ interface Props {
 // )
 
 const PersonalLayoutContent = async ({ children }: Props) => {
+
 	const { profile, organization } = await functionInitApplication()
 
 	return (
