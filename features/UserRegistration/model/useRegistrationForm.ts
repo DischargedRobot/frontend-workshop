@@ -4,6 +4,8 @@ import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 import loginApi from "@/shared/api/loginApi"
 import { APIError, mapAPIErrors } from "@/shared/api"
 import { showToast } from "@/shared/ui"
+import { error } from "console"
+import { handler } from "next/dist/build/templates/app-route"
 
 interface RegistrationFormData {
 	login: string
@@ -12,15 +14,31 @@ interface RegistrationFormData {
 
 export const useRegistrationForm = (token: string) => {
 	const [loading, setLoading] = useState(false)
-	const [loginError, seLogintError] = useState<string>()
+	const [loginError, setLoginError] = useState<string>()
 	const router = useRouter()
 
-	const handleAPIError = useAPIErrorHandler()
+	const handleAPIError = useAPIErrorHandler([
+		{
+			error: mapAPIErrors(404),
+			handler: () => {
+				showToast({
+					type: "error",
+					text: "Ваша ссылка уже истекла",
+				})
+			},
+		},
+		{
+			error: mapAPIErrors(409),
+			handler: (error) => {
+				setLoginError(error.message)
+			},
+		},
+	])
 
 	const onSubmit = async (data: RegistrationFormData) => {
 		try {
 			setLoading(true)
-			seLogintError(undefined)
+			setLoginError(undefined)
 
 			await loginApi.registerUser(
 				{
@@ -29,23 +47,14 @@ export const useRegistrationForm = (token: string) => {
 				},
 				token,
 			)
+			await loginApi.logIn({
+				username: data.login,
+				password: data.password,
+			})
 
 			router.push("/personal/ffmenu")
 		} catch (err) {
-			const error = err as APIError
-			switch (error.status) {
-				case 409:
-					seLogintError(error.message)
-					return
-				case 404:
-					showToast({
-						type: "error",
-						text: "Ваша ссылка уже истекла",
-					})
-					return
-			}
-
-			handleAPIError(error)
+			handleAPIError(err)
 		} finally {
 			setLoading(false)
 		}
