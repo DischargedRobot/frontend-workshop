@@ -1,3 +1,11 @@
+export {
+	convertIDepartmentResponseToIDepartment,
+	convertIDepartmentResponseToIDepartmentWithOrganization,
+	reduceDepRespToParentDep,
+	reduceDepRespToArray,
+	convertIServiceResponseToIServiceDepartment,
+} from "./convert"
+
 export { type IDepartment } from "./DepartmentType"
 export { type TableData } from "./DepartmentTable"
 export { type IService } from "./service"
