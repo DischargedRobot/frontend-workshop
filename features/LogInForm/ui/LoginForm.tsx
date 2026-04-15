@@ -4,7 +4,6 @@ import "./LoginForm.scss"
 
 import { useLoginForm } from "../model"
 import { Button, Form, Input } from "antd"
-import { useRouter } from "next/navigation"
 import { TextInput } from "@/shared/ui"
 
 interface LoginFormValues {
@@ -15,7 +14,6 @@ interface LoginFormValues {
 export const LoginForm = () => {
 	const [form] = Form.useForm<LoginFormValues>()
 	const { onSubmit, loading, errorAuth } = useLoginForm()
-	const router = useRouter()
 
 	return (
 		<Form
