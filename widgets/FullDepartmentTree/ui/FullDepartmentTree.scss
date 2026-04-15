@@ -1,12 +1,12 @@
 @use "@/common/styles/placeholder.scss";
 
 .resize-column {
-	$size: 16px;
+	$size: 8px;
 	position: absolute;
 	top: 0;
 	right: calc(-1 * $size / 2);
-	z-index: 1000;
 
+	z-index: 1;
 	background-color: transparent;
 	height: 100%;
 	width: $size;
@@ -15,6 +15,14 @@
 	user-select: none;
 	cursor: col-resize;
 
+	&:hover {
+		background-color: color-mix(
+			in srgb,
+
+			var(--active-hover),
+			var(--dark-transparent)
+		);
+	}
 	// Для отладки - уберите после проверки
 	// background-color: rgba(255, 0, 0, 0.2);
 }
@@ -22,6 +30,7 @@
 .department-tree-panel {
 	position: relative;
 
+	z-index: 1;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -70,7 +79,6 @@
 	}
 
 	&__button {
-		z-index: 1;
 		position: absolute;
 		top: 40px;
 		right: 0;

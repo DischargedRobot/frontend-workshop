@@ -1,6 +1,7 @@
 .add-department {
 	position: relative;
 
+	z-index: 10;
 	width: max-content;
 	height: auto;
 
@@ -16,7 +17,6 @@
 	}
 
 	&__panel {
-		z-index: 100;
 		position: absolute;
 		top: 150%;
 		left: 0;

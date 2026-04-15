@@ -82,32 +82,33 @@ const FullDepartmentTree = () => {
 
 	return (
 		<div className="department-tree-panel" style={{ width: width }}>
-			<div style={{ position: "sticky", top: "10px" }}>
-				<div
-					style={{
-						display: "flex",
-						flexDirection: "column",
-						gap: "10px",
-					}}
-				>
-					<div className="department-tree-panel__title title text_big">
-						<h2>{organization.name}</h2>
-						<div className="department-tree-panel__buttons">
-							<Can I="create" a="Department">
-								<AddDepartment
-									DepartmentSelector={DepartmentSelector}
-									onServiceCreated={setService}
-								/>
-							</Can>
-							<Can I="delete" a="Department">
-								<DeleteSelectedDepartments />
-							</Can>
-						</div>
+			<div
+				style={{
+					position: "sticky",
+					zIndex: 10,
+					top: "10px",
+					display: "flex",
+					flexDirection: "column",
+					gap: "10px",
+				}}
+			>
+				<div className="department-tree-panel__title title text_big">
+					<h2>{organization.name}</h2>
+					<div className="department-tree-panel__buttons">
+						<Can I="create" a="Department">
+							<AddDepartment
+								DepartmentSelector={DepartmentSelector}
+								onServiceCreated={setService}
+							/>
+						</Can>
+						<Can I="delete" a="Department">
+							<DeleteSelectedDepartments />
+						</Can>
 					</div>
-					<Can I="read" a="Department">
-						<DepartmentTree />
-					</Can>
 				</div>
+				<Can I="read" a="Department">
+					<DepartmentTree />
+				</Can>
 			</div>
 			<div
 				className="resize-column"
