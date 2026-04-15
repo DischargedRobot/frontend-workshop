@@ -22,7 +22,7 @@ export interface IDepartmentResponse {
 	version: number
 }
 
-interface IDepartmentsByOrganizationId {
+export interface IDepartmentsByOrganizationId {
 	items: IDepartmentResponse[]
 	limit: number
 	offset: number
@@ -58,7 +58,7 @@ const departmentApi = {
 	},
 
 	// *** Для детей ***
-	/** @desciption Возвращает детей отдела **/
+	/** @desciption Возвращает детей отдела */
 	getChildrenOfDepartments: async (
 		organizationId: number,
 		departmentId: number,

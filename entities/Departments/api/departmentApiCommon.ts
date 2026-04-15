@@ -1,6 +1,8 @@
 import { APIJsonRequest } from "@/shared/api"
 import { IDepartment, IDepartmentResponse } from ".."
 import { convertIDepartmentResponseToIDepartment } from "../lib/convert"
+import { url } from "inspector"
+import { IDepartmentsByOrganizationId } from "./departmentApi"
 
 // TODO: отрефакторить все эти departmentApi
 export const departmentApiCommon = {
@@ -22,5 +24,24 @@ export const departmentApiCommon = {
 			department: convertIDepartmentResponseToIDepartment(dep),
 			organizationId: dep.organizationId,
 		}
+	},
+	/** @desciption Возвращает детей отдела */
+	getChildrenOfDepartments: async (
+		url: string,
+		organizationId: number,
+		departmentId: number,
+		cookieString?: string,
+	): Promise<IDepartment[]> => {
+		const responseData = await APIJsonRequest<IDepartmentsByOrganizationId>(
+			`${url}/${organizationId}/nodes/${departmentId}/children`,
+			{
+				headers: cookieString ? { Cookie: cookieString } : {},
+			},
+		)
+		// convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
+		// reduceDepartmentResponceToParentDepartment(responseData.items.filter((dep) => dep.id != department.id), department)
+		return convertIDepartmentResponseToIDepartment(
+			responseData.items.filter((dep) => dep.id != departmentId),
+		)
 	},
 }
