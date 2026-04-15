@@ -16,7 +16,7 @@ const AUTH_URL = process.env.API_AUT_SERVICE_URL_V1
 
 export const getMeServer = async (
 	cookiesString?: string,
-): Promise<IProfile & { uuidDepartment: string }> => {
+): Promise<Omit<IProfile, "departmentId"> & { uuidDepartment: string }> => {
 	console.log(AUTH_URL, "url for getMe ")
 	const response = await APIJsonRequest<GetMeResponse>(
 		`${AUTH_URL}/clients/me`,
@@ -28,7 +28,6 @@ export const getMeServer = async (
 
 	console.log(response, "response")
 	return {
-		id: response.id,
 		login: response.login,
 		password: response.password,
 		roles: response.roles.map((role) => ({

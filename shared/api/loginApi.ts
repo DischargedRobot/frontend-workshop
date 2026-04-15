@@ -40,16 +40,14 @@ console.log(AUTH_URL)
 // В shared т.к. часто используется другими
 const loginApi = {
 	registerOrganization: async (data: RegistrationRequest): Promise<void> => {
-		try {
-			const response = await APIJsonRequest<void>(
-				`${AUTH_URL}/register-organization`,
-				{
-					method: "POST",
-					body: JSON.stringify(data),
-				},
-			)
-			console.log(response)
-		} catch {}
+		const response = await APIJsonRequest<void>(
+			`${AUTH_URL}/register-organization`,
+			{
+				method: "POST",
+				body: JSON.stringify(data),
+			},
+		)
+		console.log(response)
 	},
 
 	logIn: async (data: LogInRequest) => {
@@ -88,7 +86,7 @@ const loginApi = {
 
 	getMe: async (
 		cookiesString?: string,
-	): Promise<IProfile & { uuidDepartment: string }> => {
+	): Promise<Omit<IProfile, "departmentId"> & { uuidDepartment: string }> => {
 		console.log(process.env.NEXT_PUBLIC_AUTH_SERVICE_URL_V1, "getMe url")
 		const response = await APIJsonRequest<GetMeResponse>(
 			`${process.env.NEXT_PUBLIC_AUTH_SERVICE_URL_V1}/clients/me`,
@@ -100,7 +98,6 @@ const loginApi = {
 
 		console.log(response)
 		return {
-			id: response.id,
 			login: response.login,
 			password: response.password,
 			roles: response.roles.map((role) => ({

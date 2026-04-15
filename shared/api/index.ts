@@ -4,7 +4,7 @@ export {
 	mapAPIErrors,
 	APIError,
 	isAPIError,
-	serverFFErrorToAPIError,
+	toAPIError,
 	isFFAPIError,
 } from "./APIErrors"
 export { default as APIJsonRequest } from "./APIJsonRequest"

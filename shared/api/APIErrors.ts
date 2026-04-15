@@ -257,6 +257,7 @@ export const mapAPIErrors = (
 ): APIError => {
 	let error: APIError
 
+	console.log(status, "mapAPIErrors")
 	switch (status) {
 		case null:
 			error = APIErrors.NETWORK

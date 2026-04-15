@@ -1,21 +1,15 @@
-import { IOrganization } from "../model/useOrganizationStore"
-import { organizationApi } from "./organizationApi"
+import { IOrganizationResponse, organizationApi } from "./organizationApi"
 
-const URL = process.env.NEXT_PUBLIC_API_FF_SERVICE_URL_V1
+const CLIENT_URL = process.env.NEXT_PUBLIC_API_FF_SERVICE_URL_V1
 
-if (!URL) {
+if (!CLIENT_URL) {
 	throw new Error("NEXT_PUBLIC_API_FF_SERVICE_URL_V1 is not defined")
 }
 
 export const organizationApiClient = {
 	getOrganization: async (
-		uuidDepartment: string,
-		cookieString?: string,
-	): Promise<IOrganization> => {
-		return organizationApi.getOrganization(
-			URL!,
-			uuidDepartment,
-			cookieString,
-		)
+		organisationId: number,
+	): Promise<IOrganizationResponse> => {
+		return organizationApi.getOrganization(CLIENT_URL, organisationId)
 	},
 }

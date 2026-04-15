@@ -2,16 +2,20 @@ import { create } from "zustand"
 import { IFeatureFlag } from "../lib"
 
 // const createData = (number: number): IFeatureFlag[] => {
+// 	const organisationNodeId = useOrganizationStore.getState().organization.child.id
+
 // 	return Array.from({ length: number }, (_, index) => ({
 // 		key: index,
 // 		id: index,
 // 		name: `FF${index}`,
-// 		departmentId: index,
+// 		departmentId: organisationNodeId,
 // 		departmentName: `Depart${index}`,
 // 		value: false,
 // 		description: "d".repeat(index),
 // 		lastModified: "11.11.2022",
+// 		version: 1,
 // 	}))
+
 // }
 
 interface IFFStore {

@@ -3,6 +3,8 @@ import { useRouter } from "next/navigation"
 import { isAPIError, loginApi } from "@/shared/api"
 import { useOrganizationStore } from "@/entities/Organization"
 import { organizationApiClient } from "@/entities/Organization"
+import { departmentApi } from "@/entities/Departments"
+import { useProfileStore } from "@/entities/Profile"
 
 export type FormValues = {
 	OrganizationName: string
@@ -20,7 +22,7 @@ export const useOrganizationRegistrationForm = () => {
 	const router = useRouter()
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState<RegistrationError | null>(null)
-
+	const setProfile = useProfileStore((state) => state.setProfile)
 	const setOrganization = useOrganizationStore(
 		(state) => state.setOrganization,
 	)
@@ -35,17 +37,40 @@ export const useOrganizationRegistrationForm = () => {
 				login: data.AdminName,
 				password: data.AdminPassword,
 			})
+
 			console.log("всё ок")
 			const response = await loginApi.logIn({
 				username: data.AdminName,
 				password: data.AdminPassword,
 			})
 
-			const organization = await organizationApiClient.getOrganization(
-				response.uuidDepartment,
+			const { department: organisationChild, organizationId } =
+				await departmentApi.getDepByUUID(response.uuidDepartment)
+			console.log(
+				"functionInitApplication organisationChild",
+				organisationChild,
 			)
 
+			const organization = {
+				...(await organizationApiClient.getOrganization(
+					organizationId,
+				)),
+				child: organisationChild,
+			}
+			console.log("functionInitApplication organization", organization)
+
+			const profile = {
+				login: response.login,
+				password: data.AdminPassword,
+				roles: response.roles,
+				departmentId: organisationChild.id,
+			}
+
+			// const organization = await organizationApiClient.getOrganization(
+			// 	response.uuidDepartment,
+			// )
 			setOrganization(organization)
+			setProfile(profile)
 			// console.log(organization, "orga")
 			router.push("/personal/ffmenu")
 		} catch (err) {
