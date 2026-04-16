@@ -91,6 +91,13 @@ export const useAPIErrorHandler = <T extends APIError | FFAPIError>(
 					})
 					break
 				case 404:
+					showToast({
+						title: "Данные отсутствуют",
+						text:
+							apiError.message ??
+							"Запрашиваемые данные не найдены",
+						type: "warning",
+					})
 					// router.push("/notFound")
 					break
 				case 409:

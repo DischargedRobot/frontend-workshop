@@ -10,6 +10,10 @@ import { SearchDropDownMenu } from "@/shared/model/SearchDropMenu"
 import { Can } from "@/shared/model/Ability"
 import { PointerEvent, useCallback, useMemo, useRef, useState } from "react"
 import { ChangeVisibleServicePanel } from "@/features/ChangeVisibleServicePanel"
+import { userApiClient } from "@/entities/User/api"
+import { useUsersStore } from "@/entities/User"
+import { mutate, useSWRConfig } from "swr"
+import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 
 const TREE_MIN_W = 180
 const TREE_DEFAULT_W = 250
@@ -45,6 +49,7 @@ const FullDepartmentTree = () => {
 		[departments],
 	)
 
+	// TODO: вынести ресайз в хук
 	const dragRef = useRef<{
 		startX: number
 		startW: number
@@ -70,7 +75,6 @@ const FullDepartmentTree = () => {
 		const next = clampWidth(d.startW + (e.clientX - d.startX))
 		setWidth(next)
 	}, [])
-	// console.log(width)
 
 	const onPointerUp = useCallback((e: PointerEvent<HTMLDivElement>) => {
 		const drag = dragRef.current
@@ -79,6 +83,47 @@ const FullDepartmentTree = () => {
 			e.currentTarget.releasePointerCapture(e.pointerId)
 		}
 	}, [])
+
+	// При загрузке дерева отделов 
+	const setUsers = useUsersStore((state) => state.setUsers)
+	const onLoadedDepartments = useCallback(async (department: IDepartment[]) => {
+		console.log("onLoadedDepartments start", department)
+		const users = await mutate(
+			[["users", "departmentIds"], ["all", department.map((dep) => dep.id)]].toString(),
+			await userApiClient.getUsersByDepartments(department)
+		)
+
+		setUsers(users ?? [])
+		console.log("onLoadedDepartments end", users)
+
+	}, [setUsers])
+
+
+	const handleError = useAPIErrorHandler()
+
+
+	// При выделении листа дерева отделов подгружаем юзеров этого отдела в стор, 
+	// при снятии выделения удаляем юзеров этого отдела из стора
+	const { cache } = useSWRConfig()
+	const addUsers = useUsersStore((state) => state.addUsers)
+	const onCheckLeaf = useCallback((department: IDepartment) => {
+		const key = [["users", "departmentId"], ["all", department.id]].toString()
+
+		// Сразу используем кеш, если есть
+		const cached = cache.get(key)?.data
+		if (cached) addUsers(cached)
+
+		// Всегда подгружаем свежие данные в фоне
+		mutate(key, () => userApiClient.getUsersByDepartment(department))
+			.then(users => { if (users) addUsers(users) })
+			.catch(handleError)
+	}, [addUsers, cache, handleError])
+
+	// при снятии check с листа дерева отделов удаляем юзеров этого отдела из стора
+	const deleteUsersByDepartmentId = useUsersStore((state) => state.deleteUsersByDepartmentId)
+	const onUncheckLeaf = useCallback((department: IDepartment) => {
+		deleteUsersByDepartmentId(department.id)
+	}, [deleteUsersByDepartmentId])
 
 	return (
 		<div className="department-tree-panel" style={{ width: width }}>
@@ -107,7 +152,11 @@ const FullDepartmentTree = () => {
 					</div>
 				</div>
 				<Can I="read" a="Department">
-					<DepartmentTree />
+					<DepartmentTree
+						onLoaded={onLoadedDepartments}
+						onCheckLeaf={onCheckLeaf}
+						onUncheckLeaf={onUncheckLeaf}
+					/>
 				</Can>
 			</div>
 			<div

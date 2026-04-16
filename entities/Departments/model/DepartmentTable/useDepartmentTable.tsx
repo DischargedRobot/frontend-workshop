@@ -38,14 +38,14 @@ export const useDepartmentTable = () => {
 		(state) => state.setDepartments,
 	)
 
-	const selectRow = (selectedRowKeys: IDepartment[]) => {
-		if (selectedRowKeys.length === 0) {
+	const selectRow = (selectedRows: IDepartment[]) => {
+		if (selectedRows.length === 0) {
 			setSelectedDepartments([
 				...departmentPath,
 				...departmentPath.at(-1)!.children,
 			])
 		} else {
-			setSelectedDepartments(selectedRowKeys)
+			setSelectedDepartments(selectedRows)
 		}
 	}
 

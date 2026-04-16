@@ -9,11 +9,13 @@ import TitleRender, { IDepartmentNode } from "./TitleRender"
 import { IDepartment } from "../../lib"
 
 interface Props {
+	onCheckLeaf?: (department: IDepartment) => void
+	onUncheckLeaf?: (department: IDepartment) => void
 	onLoaded?: (departments: IDepartment[]) => void
 }
 
 
-const DepartmentTree = ({ onLoaded }: Props) => {
+const DepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 	const {
 		departments,
 		treeData,
@@ -24,7 +26,7 @@ const DepartmentTree = ({ onLoaded }: Props) => {
 		loadData,
 		handleCheck,
 		handleDrop,
-	} = useDepartmentTree({ onLoaded })
+	} = useDepartmentTree({ onLoaded, onCheckLeaf, onUncheckLeaf })
 
 	console.log("DepartmentTree render", { departments, treeData, filterDepartmentIds })
 
@@ -45,11 +47,12 @@ const DepartmentTree = ({ onLoaded }: Props) => {
 			) : (
 				<Tree
 					checkedKeys={filterDepartmentIds}
-					onCheck={(checkedKeys) => {
+					onCheck={(checkedKeys, info) => {
+						const node = info.node as unknown as IDepartmentNode
 						if (Array.isArray(checkedKeys)) {
-							handleCheck(checkedKeys as number[])
+							handleCheck(checkedKeys as number[], node, info.checked)
 						} else {
-							handleCheck(checkedKeys.checked as number[])
+							handleCheck(checkedKeys.checked as number[], node, info.checked)
 						}
 					}}
 					className="tree text-table text-table_litle text-table_tiny"

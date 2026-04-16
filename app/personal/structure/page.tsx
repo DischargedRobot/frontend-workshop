@@ -12,7 +12,7 @@ import { departmentApiServer } from "@/entities/Departments/api/departmentApiSer
 
 async function getUsers(departments: Awaited<ReturnType<typeof getDepartments>>, cookiesStore: string) {
 	try {
-		return await userApiServer.getUsersByDepartment(departments, cookiesStore)
+		return await userApiServer.getUsersByDepartments(departments, cookiesStore)
 	} catch {
 		return []
 	}

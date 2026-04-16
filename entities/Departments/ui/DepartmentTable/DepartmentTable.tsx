@@ -15,8 +15,8 @@ const TableDepartment = () => {
 			rowClassName={"text-table text-table_litle text-table_tiny"}
 			rowSelection={{
 				type: "checkbox",
-				onChange: (selectedRowKeys) =>
-					selectRow(selectedRowKeys as number[]),
+				onChange: (selectedRowKeys, selectedRows) =>
+					selectRow(selectedRows),
 			}}
 			rowKey="id"
 			expandable={{ childrenColumnName: "_NEVER_" }}

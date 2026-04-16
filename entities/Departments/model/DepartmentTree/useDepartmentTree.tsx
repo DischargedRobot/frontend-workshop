@@ -30,8 +30,10 @@ const getDepartmentAndAllChildren = (
 
 interface Props {
 	onLoaded?: (departments: IDepartment[]) => void
+	onCheckLeaf?: (department: IDepartment) => void
+	onUncheckLeaf?: (department: IDepartment) => void
 }
-const useDepartmentTree = ({ onLoaded }: Props) => {
+const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 	const setFilterDepartmentIds = useUserFiltersStore(
 		(state) => state.setDepartmentIds,
 	)
@@ -60,6 +62,10 @@ const useDepartmentTree = ({ onLoaded }: Props) => {
 
 	// console.log("useDepartmentTree, departments: ", organization)
 
+	// первоначальная загрузка дерева отделов при загрузки компонента,
+	//  мб лучше в useEffect это всё обернуть, а не так, ключ-то
+	// (айди организации и корвеного отдела) не меняется в пределах сессии, 
+	// но тогда я не смогу в другом компоненте обратится
 	const { error, isValidating } = useSWR<IDepartment[], APIError>(
 		organization.child // не видит, мб из-з гидратации,
 			? // поэтому тут првоерка
@@ -75,10 +81,13 @@ const useDepartmentTree = ({ onLoaded }: Props) => {
 				2,
 			),
 		{
-			onSuccess: (data) => {
-				changeChild({ ...organization.child, children: data })
-				changeDepartmentChildren(organization.child, data)
-				onLoaded?.(data)
+			revalidateOnFocus: false,
+			revalidateOnReconnect: false,
+			revalidateIfStale: false,
+			onSuccess: (departments) => {
+				changeChild({ ...organization.child, children: departments })
+				changeDepartmentChildren(organization.child, departments)
+				onLoaded?.([...departments])
 			},
 		},
 	)
@@ -118,14 +127,16 @@ const useDepartmentTree = ({ onLoaded }: Props) => {
 	)
 
 	const handleCheck = useCallback(
-		(checkedKeys: number[]) => {
+		(checkedKeys: number[], node: IDepartmentNode, checked: boolean) => {
 			setFilterDepartmentIds(checkedKeys)
 			const selectedDeps = getDepartmentAndAllChildren(
 				departments || [],
 			).filter((dep) => checkedKeys.includes(dep.id))
 			setSelectedDepartments(selectedDeps)
+			if (checked) onCheckLeaf?.(node)
+			else onUncheckLeaf?.(node)
 		},
-		[setFilterDepartmentIds, departments, setSelectedDepartments],
+		[setFilterDepartmentIds, departments, setSelectedDepartments, onCheckLeaf, onUncheckLeaf],
 	)
 
 	// Обработчик перетаскивания отдела в дереве

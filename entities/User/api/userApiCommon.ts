@@ -11,7 +11,7 @@ export interface IUserResponseItem {
 }
 
 export const userApiCommon = {
-	getUserByDepartment: async (
+	getUsersByDepartment: async (
 		clientsUrl: string,
 		department: IDepartment,
 		cookies?: string,
@@ -31,14 +31,14 @@ export const userApiCommon = {
 		}))
 	},
 
-	getUsersByDepartment: async (
+	getUsersByDepartments: async (
 		clientsUrl: string,
 		departments: IDepartment[],
 		cookies?: string,
 	): Promise<IUser[]> => {
 		const results = await Promise.all(
 			departments.map((dep) =>
-				userApiCommon.getUserByDepartment(clientsUrl, dep, cookies),
+				userApiCommon.getUsersByDepartment(clientsUrl, dep, cookies),
 			),
 		)
 
