@@ -26,6 +26,6 @@ export const InitApplication: React.FC<{
 
 	if (isLoading) return null
 
-	console.log("InitApplication render", profile, organization, isLoading, organization.child)
+	// console.log("InitApplication render", profile, organization, isLoading, organization.child)
 	return <>{children}</>
 }

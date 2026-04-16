@@ -20,23 +20,23 @@ export const functionInitApplication = cache(
 		try {
 			const { uuidDepartment, ...profile } =
 				await getMeServer(cookieHeader)
-			console.log("functionInitApplication profile", profile)
+			// console.log("functionInitApplication profile", profile)
 
 			const { department: organisationChild, organizationId } =
 				await departmentApiServer.getDepByUUID(
 					uuidDepartment,
 					cookieHeader,
 				)
-			console.log(
-				"functionInitApplication organisationChild",
-				organisationChild,
-			)
+			// console.log(
+			// 	"functionInitApplication organisationChild",
+			// 	organisationChild,
+			// )
 
 			const organization = await organizationApiServer.getOrganization(
 				organizationId,
 				cookieHeader,
 			)
-			console.log("functionInitApplication organization", organization)
+			// console.log("functionInitApplication organization", organization)
 
 			return {
 				profile,

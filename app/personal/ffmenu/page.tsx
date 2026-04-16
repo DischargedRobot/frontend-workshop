@@ -3,61 +3,51 @@ import "./ffmenu.scss"
 import FullDepartmentTable from "@/widgets/FullDepartmentTable/FullDepartmentTable"
 import { Content } from "antd/es/layout/layout"
 import { FullFeatureFlagsTable } from "@/widgets/FullFeatureFlagsTable"
-import FFApi from "@/entities/FF/api/FFApi"
 import { functionInitApplication } from "../functionInitApplication"
 import { InitFFMenu } from "./InitFFMenu"
 import { departmentApiServer } from "@/entities/Departments/api/departmentApiServer"
 import { cookies } from "next/headers"
 
+async function getDepartments(organizationId: number, childId: number, cookiesStore: string) {
+	try {
+		return await departmentApiServer.getChildrenOfDepartments(
+			organizationId,
+			childId,
+			cookiesStore,
+		)
+	} catch {
+		return []
+	}
+}
+
 async function getFFMenuData() {
 	try {
 		const { organization } = await functionInitApplication()
-
 		const cookiesStore = (await cookies()).toString()
 
-		const departments = await departmentApiServer.getChildrenOfDepartments(
-			organization.id,
-			organization.child.id,
-			cookiesStore,
-		)
+		console.log("getDepartmentsStart", organization.id, organization.child.id)
 
-		const { FFs: featureFlags } = await FFApi.getFFsByDepartments(
-			[organization.child.id, ...departments.map((d) => d.id)],
-			organization.id,
-			100,
-			0,
-		)
+		return getDepartments(organization.id, organization.child.id, cookiesStore)
 
-		return featureFlags
 	} catch {
 		return []
 	}
 }
 
 const FFMenu = async () => {
-	// const {featureFlags, setFeatureFlags,departments, getFeatureFlagsByDepartments} =
-	//     useFFMenu(useShallow(state => ({
-	//         getFeatureFlagsByDepartments: state.getFeatureFlagsByDepartments,
-	//         featureFlags: state.featureFlags,
-	//         departments: state.departments,
-	//         setFeatureFlags: state.setFeatureFlags
-	//     })))
-	// TODO:: после хлебных крошек
-	// const {
-	//   getDepartmentsByPath: getDepartments
-	// } = useDepartment()
 
-	// const [departments, setDepartments] = useState([])
-
-	// await FFApi.getFFsByDepartments()
 	console.log("unrender FFMenu")
 
-	const featureFlags = await getFFMenuData()
+	const { organization } = await functionInitApplication()
+	const departments = await getFFMenuData()
 
-	console.log("render FFMenu")
+	console.log("render FFMenu", departments)
 
 	return (
-		<InitFFMenu FFs={featureFlags}>
+		<InitFFMenu
+			departments={[organization.child, ...departments]}
+			organization={organization}
+		>
 			<Content className="ff-menu">
 				<FullDepartmentTable />
 				<FullFeatureFlagsTable />

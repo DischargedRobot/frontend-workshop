@@ -35,17 +35,17 @@ export const useDepartmentTable = () => {
 	)
 
 	const setSelectedDepartments = useFFFiltersStore(
-		(state) => state.setDepartment,
+		(state) => state.setDepartments,
 	)
 
-	const selectRow = (selectedRowKeys: number[]) => {
+	const selectRow = (selectedRowKeys: IDepartment[]) => {
 		if (selectedRowKeys.length === 0) {
 			setSelectedDepartments([
-				...departmentPath.map((dep) => dep.id),
-				...departmentPath.at(-1)!.children.map((dep) => dep.id),
+				...departmentPath,
+				...departmentPath.at(-1)!.children,
 			])
 		} else {
-			setSelectedDepartments(selectedRowKeys as number[])
+			setSelectedDepartments(selectedRowKeys)
 		}
 	}
 

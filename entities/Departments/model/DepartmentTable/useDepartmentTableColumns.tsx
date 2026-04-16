@@ -29,8 +29,8 @@ export const useDepartmentTableColumns = () => {
 	)
 
 	const addFFToStore = useFFStore((state) => state.addFeatureFlags)
-	const setFFFilterDepartment = useFFFiltersStore(
-		(state) => state.setDepartment,
+	const setFFFilterDepartments = useFFFiltersStore(
+		(state) => state.setDepartments,
 	)
 
 	const handleError = useAPIErrorHandler([{
@@ -83,10 +83,10 @@ export const useDepartmentTableColumns = () => {
 
 				if (children != undefined) {
 					changeDepartmentChildren(department, children)
-					setFFFilterDepartment([
-						department.id,
-						...path.map((dep) => dep.id),
-						...children.map((child) => child.id),
+					setFFFilterDepartments([
+						department,
+						...path,
+						...children,
 					])
 				}
 			} catch (error) {
@@ -95,10 +95,10 @@ export const useDepartmentTableColumns = () => {
 				}
 			}
 		} else {
-			setFFFilterDepartment([
-				department.id,
-				...path.map((dep) => dep.id),
-				...childrenLastDepartment.map((child) => child.id),
+			setFFFilterDepartments([
+				department,
+				...path,
+				...childrenLastDepartment,
 			])
 		}
 	}

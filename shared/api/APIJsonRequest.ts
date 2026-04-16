@@ -18,10 +18,10 @@ const APIJsonRequest = async <T>(
 		})
 		if (!response.ok) {
 			const error = await response.json()
-			console.log(error, "error convert", {
-				...mapAPIErrors(response.status),
-				...error,
-			})
+			// console.log(error, "error convert", {
+			// 	...mapAPIErrors(response.status),
+			// 	...error,
+			// })
 
 			const apiError = toAPIError({
 				...mapAPIErrors(response.status),

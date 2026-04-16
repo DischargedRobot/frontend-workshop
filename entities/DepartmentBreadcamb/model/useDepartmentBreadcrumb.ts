@@ -14,7 +14,7 @@ export const useDepartmentBreadcrumb = () => {
 	)
 
 	const setDepartmentFilters = useFFFiltersStore(
-		(state) => state.setDepartment,
+		(state) => state.setDepartments,
 	)
 
 	useEffect(() => {
@@ -24,10 +24,7 @@ export const useDepartmentBreadcrumb = () => {
 	// при клике берём всех до текущего включительно
 	// и детей текущего отдела и закидывает в фильтр для фф
 	const onBreadcrumbClick = (item: IDepartment, index: number) => {
-		setDepartmentFilters([
-			...path.slice(0, index + 1).map((department) => department.id),
-			...item.children.map((department) => department.id),
-		])
+		setDepartmentFilters([...path.slice(0, index + 1), ...item.children])
 		setPath(path.slice(0, index + 1))
 	}
 

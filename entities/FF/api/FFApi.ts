@@ -26,6 +26,7 @@ interface IFFresponse {
 }
 
 interface IFeatureFlagByDepartmentResponse {
+	nodeId: number
 	items: IFFresponse[]
 	limit: number
 	offset: number
@@ -50,55 +51,66 @@ interface IFeatureFlagResponse {
 
 const FFApi = {
 	getFeatureFlagsByDepartment: async (
-		departmentId: number,
+		department: IDepartment,
 		organizationId: number,
 		count: number,
 		offset: number,
 	): Promise<IFFsResponse> => {
+		console.log(
+			"url",
+			`${URL_ORGANIZATION}/${organizationId}/nodes/${department.id}/feature-flags?limit=${count}&offset=${offset}`,
+		)
 		const responseData =
-			await APIJsonRequest<IFFsByDepartmentRelatedResponse>(
-				`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/feature-flags?limit=${count}&offset=${offset}`,
+			await APIJsonRequest<IFeatureFlagByDepartmentResponse>(
+				`${URL_ORGANIZATION}/${organizationId}/nodes/${department.id}/feature-flags?limit=${count}&offset=${offset}`,
 			)
 		const { items, ...other } = responseData
+		console.log("getFeatureFlagsByDepartment", responseData)
 		return {
-			FFs: items.map(
-				({
-					featureFlag: { nodeId, ...featureFlag },
-					belongsToNode: belongsToNode,
-				}) => ({
-					...featureFlag,
-					departmentId: nodeId,
-					departmentName: belongsToNode.name,
-				}),
-			),
+			FFs: items.map(({ nodeId, ...ff }) => ({
+				...ff,
+				departmentId: nodeId,
+				departmentName: department.name,
+			})),
 			...other,
 		}
 	},
 
 	// Получаем фича флаги по отделам
 	getFFsByDepartments: async (
-		departmentIds: number[],
+		department: IDepartment[],
 		organizationId: number,
 		count: number,
 		offset: number,
 	): Promise<{ FFs: IFeatureFlag[]; isEnd: boolean }> => {
 		const FFs: IFeatureFlag[] = []
-		let numberDepartment = departmentIds.length
+		let numberDepartment = department.length
 		let isEnd = false
 
 		while (count > 0 && numberDepartment > 0) {
 			// запрашиваем у каждого отдела потихоньку пока не закончатся
 			--numberDepartment
 			try {
-				const response = await FFApi.getFeatureFlagsByDepartment(
-					departmentIds[numberDepartment],
+				console.log(
+					"getFeatureFlagsByDepartment",
+					department[numberDepartment],
 					organizationId,
 					count,
 					offset,
 				)
+
+				const response = await FFApi.getFeatureFlagsByDepartment(
+					department[numberDepartment],
+					organizationId,
+					count,
+					offset,
+				)
+				console.log("getFeatureFlagsByDepartment", response)
+
 				count -= response.total
 				FFs.push(...response.FFs)
-			} catch {
+			} catch (error) {
+				console.log("Error in getFeatureFlagsByDepartment", error)
 				continue
 			}
 		}

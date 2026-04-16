@@ -12,50 +12,45 @@ import { useOrganizationStore } from "@/entities/Organization"
 const EMPTY_ARRAY: IFeatureFlag[] = []
 
 const useGetFFsFromServer = () => {
-	// console.log(filters, 'filters')
-	const filterDepartmentIds = useFFFiltersStore(
-		useShallow((state) => state.departmentIds),
+	const filterDepartments = useFFFiltersStore(
+		useShallow((state) => state.departments),
 	)
+
 	const organizationId = useOrganizationStore(
 		(state) => state.organization.id,
 	)
 
 	//TODO: может так и не надо, малоли, стоит ли так переделывать везде?
 	const key = useMemo(() => {
-		const sortedIds = [...filterDepartmentIds].sort().join(",")
+		const sortedIds = filterDepartments
+			.map((dep) => dep.id)
+			.sort()
+			.join(",")
+
 		return [
 			"organizationId",
 			"departmentIds",
 			"featureflags",
 			organizationId,
 			sortedIds,
-		]
-	}, [filterDepartmentIds, organizationId])
-	// TODO: сделать set?
+		].toString()
+	}, [filterDepartments, organizationId])
+
+	console.log("filterDepartments in useGetFFsFromServer", filterDepartments)
 	const addFF = useFFStore((state) => state.addFeatureFlags)
 
-	const {
-		data: response,
-		error,
-		isLoading,
-	} = useSWR<Awaited<ReturnType<typeof FFApi.getFFsByDepartments>>, APIError>(
-		key,
-		() =>
-			FFApi.getFFsByDepartments(
-				filterDepartmentIds,
-				organizationId,
-				50,
-				0,
-			),
-		// {onSuccess: (data) => {
-		//     console.log(data)
-		//     addFF(data?.FFs ?? EMPTY_ARRAY);
-		// }}
+	const { data, error, isLoading } = useSWR<
+		Awaited<ReturnType<typeof FFApi.getFFsByDepartments>>,
+		APIError
+	>(key, () =>
+		FFApi.getFFsByDepartments(filterDepartments, organizationId, 50, 0),
 	)
 
+	// TODO: сделать set?
+
 	useEffect(() => {
-		addFF(response?.FFs ?? EMPTY_ARRAY)
-	}, [response?.FFs, addFF])
+		addFF(data?.FFs ?? EMPTY_ARRAY)
+	}, [data?.FFs, addFF])
 	// if (error) {
 	//     return showToast({type: 'error', text: error.message, duration: 3000})
 	// }

@@ -19,7 +19,7 @@ export const useFullFeatureFlagsTable = () => {
 	// Событие для кнопки "обновить"
 	const reloadFeatureFlags = async () => {
 		const response = await FFApi.getFFsByDepartments(
-			lastDep.children.map((dep) => dep.id),
+			lastDep.children,
 			organization.id,
 			100,
 			0,

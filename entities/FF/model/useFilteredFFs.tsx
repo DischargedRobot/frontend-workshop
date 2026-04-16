@@ -58,17 +58,19 @@ const filterFF: TTilterFF = (filters, featureFlags, filterArguments) => {
 }
 
 const useFilteredFFs = () => {
-	const filters = useFFFiltersStore(
-		useShallow((state) => ({
-			name: state.name,
-			departmentIds: state.departmentIds,
-		})),
-	)
+	const name = useFFFiltersStore((state) => state.name)
+	const departments = useFFFiltersStore(useShallow((state) => state.departments))
 
+	const filters: IFilterFunctionsArguments = useMemo(
+		() => ({
+			name,
+			departmentIds: departments.map((dep) => dep.id),
+		}),
+		[name, departments],
+	)
 
 	const featureFlags = useFFStore((state) => state.featureFlags)
 
-	console.log(filters, featureFlags, "filter")
 	return useMemo(
 		() => filterFF(["departmentIds", "name"], featureFlags, filters),
 		[featureFlags, filters],

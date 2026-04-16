@@ -2,13 +2,13 @@ import { IDepartment } from "@/entities/Departments/lib"
 import { create } from "zustand"
 
 interface IFilter {
-	departmentIds: number[]
+	departments: IDepartment[]
 	name: string
 }
 
 interface IFFFiltersStore extends IFilter {
-	setDepartment: (newDepartmentIds: number[]) => void
-	addDepartmentId: (newDepartmentId: number) => void
+	setDepartments: (newDepartment: IDepartment[]) => void
+	addDepartmentId: (newDepartment: IDepartment) => void
 	addDepartmentAndItChildren: (newDepartment: IDepartment) => void
 
 	setName: (newName: string) => void
@@ -16,33 +16,32 @@ interface IFFFiltersStore extends IFilter {
 }
 
 const useFFFiltersStore = create<IFFFiltersStore>((set, get) => ({
-	departmentIds: [],
+	departments: [],
 	name: "",
 
-	setDepartment: (newDepartmentIds) =>
-		set({ departmentIds: newDepartmentIds }),
-	addDepartmentId: (newDepartmentId) =>
+	setDepartments: (departments) => set({ departments }),
+
+	addDepartmentId: (newDepartment) =>
 		set((state) => ({
-			departmentIds: [
-				...new Set([...state.departmentIds, newDepartmentId]),
+			departments: [
+				...new Set([...state.departments, newDepartment]),
 			],
 		})),
 
 	addDepartmentAndItChildren: (newDepartment) =>
 		set((state) => {
-			const newDepIdAndItsChildrenIds = newDepartment.children
-				.map((dep) => dep.id)
-				.concat(newDepartment.id)
+			const newDepAndItsChildren = newDepartment.children
+				.concat(newDepartment)
 
-			const filteredDepartment = newDepIdAndItsChildrenIds.filter(
-				(newDepId) => {
-					return !state.departmentIds.includes(newDepId)
+			const filteredDepartment = newDepAndItsChildren.filter(
+				(newDep) => {
+					return !state.departments.some((dep) => dep.id === newDep.id)
 				},
 			)
 
 			return {
-				departmentIds: [
-					...new Set([...state.departmentIds, ...filteredDepartment]),
+				departments: [
+					...new Set([...state.departments, ...filteredDepartment]),
 				],
 			}
 		}),
