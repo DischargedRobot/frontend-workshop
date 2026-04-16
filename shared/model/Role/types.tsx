@@ -26,15 +26,42 @@ type KeyByValue<T, V> = {
 export type TROLE_VALUE_TO_KEY = {
 	[key in TROLE]: KeyByValue<typeof TROLE, key>
 }
+
 // Обратный маппинг: "DELETE_DEPARTMENT_ROLE" -> "DD"
 export const TROLE_VALUE_TO_KEY = Object.fromEntries(
 	Object.entries(TROLE).map(([key, value]) => [value, key]),
 ) as TROLE_VALUE_TO_KEY
 
+
 export interface IRole {
 	name: TROLEKey
 	type: TROLE
 	isEnabled: boolean
+}
+
+// Если ключ присутствует в объекте TROLE — это `TROLEKey`
+function isTRoleKey(k: string): k is TROLEKey {
+	return k in TROLE
+}
+
+export function toIRole(key: TROLEKey): IRole
+export function toIRole(key: keyof TROLE_VALUE_TO_KEY): IRole
+export function toIRole(key: TROLEKey | keyof TROLE_VALUE_TO_KEY): IRole {
+	if (isTRoleKey(key)) {
+		return {
+			name: key,
+			type: TROLE[key],
+			isEnabled: true,
+		}
+	}
+
+	// Иначе считаем, что передали значение `TROLE` 
+	// и конвертируем через обратный маппинг
+	return {
+		name: TROLE_VALUE_TO_KEY[key],
+		type: key,
+		isEnabled: true,
+	}
 }
 
 export type NameOfRoleAction =
