@@ -12,15 +12,16 @@ interface IUseUsers {
 	deleteUserById: (userId: number) => void
 }
 
-const createIntialRoles = (): IRole[] => {
-	const roles: IRole[] = []
-	for (const value of Object.values(TROLE)) {
-		roles.push({ name: "DC", type: value, isEnabled: false })
-	}
-	return roles
-}
-const dep = { id: 1, name: "d", children: [], featureFlags: [], link: "" }
+// const createIntialRoles = (): IRole[] => {
+// 	const roles: IRole[] = []
+// 	for (const value of Object.values(TROLE)) {
+// 		roles.push({ name: "DC", type: value, isEnabled: false })
+// 	}
+// 	return roles
+// }
+// const dep = { id: 1, name: "d", children: [], featureFlags: [], link: "" }
 
+// TODO: разделить на 2 стора
 const useUsersStore = create<IUseUsers>((set, get) => ({
 	users: [],
 	setUsers: (users) => set({ users }),

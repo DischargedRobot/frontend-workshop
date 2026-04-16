@@ -5,15 +5,18 @@ import "./UserList.scss"
 import { useFilteredUsers } from "../../model/UserList"
 import useUsersStore from "../../model/useUsersStore"
 import { UserCard } from "../UserCard"
+import { IUser } from "../../lib"
 
-const UserList = () => {
-	const users = useUsersStore((state) => state.users)
-	const setUser = useUsersStore((state) => state.setUser)
-	const filteredUsers = useFilteredUsers(users)
+interface Props {
+	users: IUser[]
+	setUser: (user: IUser) => void
+}
+
+const UserList = ({ users, setUser }: Props) => {
 
 	return (
 		<ul className="user-list ">
-			{filteredUsers.map((user) => (
+			{users.map((user) => (
 				<UserCard key={user.id} user={user} setUser={setUser} />
 			))}
 		</ul>

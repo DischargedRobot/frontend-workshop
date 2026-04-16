@@ -2,14 +2,14 @@
 
 import "./FullUserList.scss"
 
-import { useUserFiltersStore } from "@/entities/User"
 import UserList from "@/entities/User/ui/UserList/UserList"
 import { AddUser } from "@/features/AddUser"
 import UserSearch from "@/features/UserSearch/ui/UserSearch"
 import { Can } from "@/shared/model/Ability"
+import { useFullUserList } from "../model"
 
 export const FullUserList = () => {
-	const setLogin = useUserFiltersStore((state) => state.setLogin)
+	const { users, setUser, setLogin } = useFullUserList()
 
 	return (
 		<div className="full-user-list">
@@ -28,7 +28,7 @@ export const FullUserList = () => {
 			</div>
 
 			<Can I="read" a="User">
-				<UserList />
+				<UserList users={users} setUser={setUser} />
 			</Can>
 		</div>
 	)
