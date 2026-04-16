@@ -43,7 +43,7 @@ export const useNavigationItems = (): MenuItemType[] => {
 			items.push({
 				key: "structure",
 				icon: <StructureMenuIcon />,
-				label: <Link href="structure">Структура организации</Link>,
+				label: <Link href="structure">Структура</Link>,
 			})
 		}
 

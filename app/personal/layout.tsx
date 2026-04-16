@@ -1,6 +1,6 @@
-import NavigationMenu from "@/features/NavigationMenu/ui/NavigationMenu"
+import { NavigationMenu } from "@/widgets/NavigationMenu"
 import { Metadata } from "next"
-import React, { Suspense } from "react"
+import React from "react"
 import { InitApplication } from "./InitApplication"
 import { functionInitApplication } from "./functionInitApplication"
 import { AbilityProvider } from "@/shared/model/Ability"

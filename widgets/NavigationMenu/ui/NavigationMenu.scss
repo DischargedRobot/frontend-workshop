@@ -1,0 +1,163 @@
+@use "@/common/styles/variables" as vars;
+
+.navigation-menu {
+	&-sider {
+		z-index: 1000;
+
+		position: sticky;
+
+		align-items: center;
+
+		min-width: 80px;
+		height: 100vh;
+
+		color: var(--text);
+
+		background-color: var(--foreground);
+		box-shadow: 3px 0 10px var(--shadow);
+		border-right: 1px solid var(--border-for-nav-panel);
+
+		transition: width 0.3s ease;
+
+		.ant-layout-sider-children {
+			align-content: center;
+		}
+	}
+	ul {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		padding: 20px 10px 0;
+		height: 100%;
+		border-inline-end: none;
+	}
+
+	li {
+		display: flex !important;
+		padding-left: 10px !important;
+		// align-items: center;
+	}
+
+	svg {
+		margin-right: 16px;
+		min-width: 32px;
+		// max-width: 32px; // на всякий случай, чтобы в ширь тоже не колбасило
+	}
+
+	&__item_selected {
+		background-color: var(--ant-color-primary-active);
+	}
+
+	&_collapsed {
+		width: 80px;
+	}
+
+	&__collapsing-button {
+		position: absolute;
+		right: 0;
+		top: 18px;
+		transform: translate(50%, 0);
+
+		padding: 4px;
+		font-size: 16px;
+
+		border-radius: 50%;
+
+		background-color: var(--foreground-second);
+		box-shadow: 2px 0 2px #00000081;
+
+		&:hover {
+			box-shadow: 4px 0 5px #00000081;
+		}
+
+		line-height: 0;
+	}
+
+	.ant-menu {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: clamp(10px, 8px + 0.63vw, 20px) !important;
+		width: 100%;
+	}
+
+	@media (max-width: vars.$medium-breakpoint) {
+		&-sider {
+			z-index: 1000; // чтобы наверняка
+
+			position: fixed;
+
+			bottom: 0;
+			top: unset;
+			width: 100% !important;
+			max-width: 100% !important;
+
+			padding: 10px 0;
+			height: min-content;
+
+			box-shadow: 0 -3px 10px var(--shadow);
+			border-top: 1px solid var(--border-for-nav-panel);
+			background-color: var(--foreground);
+		}
+
+		svg {
+			margin-right: 0;
+		}
+
+		&__collapsing-button {
+			display: none;
+		}
+
+		.ant-menu {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			gap: clamp(10px, 8px + 0.63vw, 20px) !important;
+			width: 100%;
+		}
+
+		.ant-menu-root {
+			padding: 0;
+		}
+
+		.ant-menu-item {
+			flex: 1;
+			flex-direction: column;
+			height: auto;
+			align-items: center;
+
+			padding: 5px 0 !important;
+
+			border-radius: 8px !important;
+
+			color: var(--text-color) !important;
+
+			&::after {
+				display: none !important;
+			}
+		}
+
+		.ant-menu-item-selected {
+			background-color: var(--active) !important;
+		}
+
+		.ant-menu-overflow-item-rest {
+			display: none !important;
+		}
+
+		.ant-menu-item .ant-menu-title-content {
+			font-size: 10px;
+			line-height: 1;
+		}
+	}
+}
+
+.collapsed-icon {
+	svg {
+		min-width: 16px;
+		width: 16px;
+		margin-right: 0;
+	}
+}
