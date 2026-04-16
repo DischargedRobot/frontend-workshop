@@ -13,7 +13,7 @@ interface Props {
 }
 
 const RoleList = (props: Props) => {
-	const { roles, value, changeRoles, onChange } = props
+	const { roles, value, changeRoles, onChange, disabled = false } = props
 
 	// Алиасы: roles = value, changeRoles = onChange
 	const rolesList = roles || value || []
@@ -24,7 +24,7 @@ const RoleList = (props: Props) => {
 			{rolesList.map((role, idx) => (
 				<li key={role.name ?? idx}>
 					<Role
-						disabled
+						disabled={disabled}
 						role={role}
 						onClick={() => {
 							role.isEnabled = false

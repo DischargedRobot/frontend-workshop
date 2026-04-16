@@ -1,32 +1,10 @@
 .add-button {
-	display: flex;
-	align-items: center;
 	flex-shrink: 0;
-
-	gap: 10px;
 	padding: 4px;
-	border-radius: 20px;
 	background-color: transparent;
 
-	// TODO:объединить класы в reload и заихпандерить
 	&:hover {
-		// background-color: var(--foreground);
 		background-color: var(--dark-transparent);
-
-		box-shadow: 0 2px 3px var(--shadow);
-
-		color: var(--text-color);
-
-		svg {
-			color: var(--active-hover);
-		}
-	}
-
-	& svg {
-		min-width: var(--size-button-icon);
-		min-height: var(--size-button-icon);
-
-		color: var(--active);
 	}
 
 	&.disabled {

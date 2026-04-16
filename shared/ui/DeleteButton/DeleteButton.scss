@@ -1,21 +1,10 @@
 .delete-button {
 	padding: 4px;
 	flex-shrink: 0;
-
-	border-radius: 20px;
 	background-color: transparent;
-
-	color: var(--active);
 
 	&:hover {
 		color: var(--active-hover);
 		background-color: var(--dark-transparent);
-		box-shadow: 0 2px 3px var(--shadow);
-	}
-	& svg {
-		min-width: var(--size-button-icon);
-		min-height: var(--size-button-icon);
-
-		color: var(--active);
 	}
 }

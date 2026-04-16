@@ -17,8 +17,8 @@
 	}
 
 	& svg {
-		min-width: 16px;
-		min-height: 16px;
+		min-width: var(--size-button-icon);
+		min-height: var(--size-button-icon);
 		color: var(--active);
 	}
 }

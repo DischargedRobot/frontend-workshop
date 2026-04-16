@@ -6,7 +6,7 @@ import ThemeSettings from "./ThemeSettings/ThemeSettings"
 
 const ProfileSettings = () => {
 	return (
-		<div className="user-settings">
+		<div className="profile-settings">
 			<LanguageSettings />
 			<ThemeSettings />
 			<TextSizeSettings />

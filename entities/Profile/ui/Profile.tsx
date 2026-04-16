@@ -41,9 +41,9 @@ export const Profile = ({
 		[roles],
 	)
 
-	const handleRolesChange = (newRoles: IRole[]) => {
-		form.setFieldsValue({ roles: newRoles })
-	}
+	// const handleRolesChange = (newRoles: IRole[]) => {
+	// 	form.setFieldsValue({ roles: newRoles })
+	// }
 
 	const handleSubmit = (values: IProfile) => {
 		console.log("Form values:", values)
@@ -58,6 +58,7 @@ export const Profile = ({
 			autoComplete="off"
 			onFinish={handleSubmit}
 		>
+
 			<div className="profile-grid__avatar">
 				<Avatar rightButton={logOutButton} />
 			</div>
@@ -77,17 +78,18 @@ export const Profile = ({
 				<Input disabled value={departmentName} />
 			</Form.Item>
 
+
 			<div className="profile-grid__roles-wrapper">
 				<h2 className="role-list__title">Роли</h2>
 				<Form.Item name="roles" className="profile-grid__roles">
-					<RoleList roles={filterRoleList} />
+					<RoleList roles={filterRoleList} disabled />
 				</Form.Item>
 			</div>
 
 			{onSubmit && (
 				<Form.Item className="profile-grid__submit">
 					<Button type="primary" htmlType="submit">
-						Сохранить
+						Сохранитьdff
 					</Button>
 				</Form.Item>
 			)}
