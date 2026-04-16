@@ -6,8 +6,14 @@ import { Empty, Tree, Spin } from "antd"
 import { memo } from "react"
 import useDepartmentTree from "../../model/DepartmentTree/useDepartmentTree"
 import TitleRender, { IDepartmentNode } from "./TitleRender"
+import { IDepartment } from "../../lib"
 
-const DepartmentTree = () => {
+interface Props {
+	onLoaded?: (departments: IDepartment[]) => void
+}
+
+
+const DepartmentTree = ({ onLoaded }: Props) => {
 	const {
 		departments,
 		treeData,
@@ -18,7 +24,7 @@ const DepartmentTree = () => {
 		loadData,
 		handleCheck,
 		handleDrop,
-	} = useDepartmentTree()
+	} = useDepartmentTree({ onLoaded })
 
 	console.log("DepartmentTree render", { departments, treeData, filterDepartmentIds })
 

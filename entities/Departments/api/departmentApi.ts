@@ -29,6 +29,36 @@ export interface IDepartmentsByOrganizationId {
 	total: number
 }
 
+interface IDepartmentChildrenResponse {
+	nodeId: number
+	items: IDepartmentResponse[]
+}
+
+interface IDepartmentsSubtreeResponse {
+	id: number
+	uuid: string
+	path: string
+	name: string
+	isService: boolean
+	version: number
+	children: IDepartmentsSubtreeResponse[]
+}
+
+function convertSubtreeToIDepartment(
+	node: IDepartmentsSubtreeResponse,
+): IDepartment {
+	return {
+		id: node.id,
+		uuid: node.uuid,
+		path: node.path,
+		name: node.name,
+		isService: node.isService,
+		version: node.version,
+		featureFlags: [],
+		children: node.children.map(convertSubtreeToIDepartment),
+	}
+}
+
 interface IServiceResponse extends IService, IDepartmentResponse {}
 
 const CLIENT_URL = process.env.NEXT_PUBLIC_API_FF_SERVICE_URL_V1
@@ -63,14 +93,24 @@ const departmentApi = {
 		organizationId: number,
 		departmentId: number,
 	): Promise<IDepartment[]> => {
-		const responseData = await APIJsonRequest<IDepartmentsByOrganizationId>(
+		const response = await APIJsonRequest<IDepartmentChildrenResponse>(
 			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/children`,
 		)
 		// convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
 		// reduceDepartmentResponceToParentDepartment(responseData.items.filter((dep) => dep.id != department.id), department)
 		return convertIDepartmentResponseToIDepartment(
-			responseData.items.filter((dep) => dep.id != departmentId),
+			response.items.filter((dep) => dep.id != departmentId),
 		)
+	},
+
+	getSubTreeOfDepartments: async (
+		organizationId: number,
+		departmentId: number,
+	): Promise<IDepartment[]> => {
+		const response = await APIJsonRequest<IDepartmentsSubtreeResponse[]>(
+			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/subtree`,
+		)
+		return response.map(convertSubtreeToIDepartment)
 	},
 
 	/** @desciption Возвращает первых детей, запрашивает потомков и потомков потомков **/

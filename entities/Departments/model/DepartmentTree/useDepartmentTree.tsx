@@ -28,7 +28,10 @@ const getDepartmentAndAllChildren = (
 	)
 }
 
-const useDepartmentTree = () => {
+interface Props {
+	onLoaded?: (departments: IDepartment[]) => void
+}
+const useDepartmentTree = ({ onLoaded }: Props) => {
 	const setFilterDepartmentIds = useUserFiltersStore(
 		(state) => state.setDepartmentIds,
 	)
@@ -73,8 +76,9 @@ const useDepartmentTree = () => {
 			),
 		{
 			onSuccess: (data) => {
-				changeChild(data)
+				changeChild({ ...organization.child, children: data })
 				changeDepartmentChildren(organization.child, data)
+				onLoaded?.(data)
 			},
 		},
 	)

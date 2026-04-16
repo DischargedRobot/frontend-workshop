@@ -32,16 +32,24 @@ export const departmentApiCommon = {
 		departmentId: number,
 		cookieString?: string,
 	): Promise<IDepartment[]> => {
-		const responseData = await APIJsonRequest<IDepartmentsByOrganizationId>(
-			`${url}/${organizationId}/nodes/${departmentId}/children`,
+		console.log(
+			"getChildrenOfDepartments input data:",
+			url,
+			organizationId,
+			departmentId,
+		)
+		const response = await APIJsonRequest<IDepartmentsByOrganizationId>(
+			`${url}/organizations/${organizationId}/nodes/${departmentId}/children`,
 			{
 				headers: cookieString ? { Cookie: cookieString } : {},
 			},
 		)
+		console.log("getChildrenOfDepartments response:", response)
+
 		// convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
 		// reduceDepartmentResponceToParentDepartment(responseData.items.filter((dep) => dep.id != department.id), department)
 		return convertIDepartmentResponseToIDepartment(
-			responseData.items.filter((dep) => dep.id != departmentId),
+			response.items.filter((dep) => dep.id != departmentId),
 		)
 	},
 }

@@ -45,7 +45,7 @@ const FFMenu = async () => {
 
 	return (
 		<InitFFMenu
-			departments={[organization.child, ...departments]}
+			departments={departments}
 			organization={organization}
 		>
 			<Content className="ff-menu">

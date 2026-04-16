@@ -12,6 +12,7 @@ interface Props {
 export const InitStructureOrganization = ({ users, children }: Props) => {
     const setUsers = useUsersStore((state) => state.setUsers)
 
+
     useEffect(() => {
         setUsers(users)
     }, [users, setUsers])

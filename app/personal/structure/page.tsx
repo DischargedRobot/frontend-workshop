@@ -10,6 +10,14 @@ import { InitStructureOrganization } from "./InitStructureOrganization"
 import { cookies } from "next/headers"
 import { departmentApiServer } from "@/entities/Departments/api/departmentApiServer"
 
+async function getUsers(departments: Awaited<ReturnType<typeof getDepartments>>, cookiesStore: string) {
+	try {
+		return await userApiServer.getUsersByDepartment(departments, cookiesStore)
+	} catch {
+		return []
+	}
+}
+
 async function getDepartments(organizationId: number, childId: number, cookiesStore: string) {
 	try {
 		return await departmentApiServer.getChildrenOfDepartments(
@@ -27,7 +35,7 @@ const StructureOrganization = async () => {
 	const cookiesStore = (await cookies()).toString()
 	const departments = await getDepartments(organization.id, organization.child.id, cookiesStore)
 
-	const users = await userApiServer.getUsersByDepartment(departments, cookiesStore)
+	const users = await getUsers(departments, cookiesStore)
 
 	return (
 		<InitStructureOrganization users={users}>

@@ -11,20 +11,17 @@ export interface IOrganization {
 interface IOrganizationStore {
 	organization: IOrganization
 	setOrganization: (newOrganization: IOrganization) => void
-	changeChild: (newChildren: IDepartment[]) => void
+	changeChild: (newChildren: IDepartment) => void
 }
 
 export const useOrganizationStore = create<IOrganizationStore>((set) => ({
 	organization: {} as IOrganization, // только в начале так, потом сразу подгружается
 	setOrganization: (organization) => set({ organization }),
-	changeChild: (newChildren) =>
+	changeChild: (newChild) =>
 		set((state) => ({
 			organization: {
 				...state.organization,
-				child: {
-					...state.organization.child,
-					children: newChildren,
-				},
+				child: newChild,
 			},
 		})),
 }))
