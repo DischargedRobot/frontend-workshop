@@ -10,9 +10,11 @@ ARG NEXT_PUBLIC_CLIENT_URL_V1
 ARG NEXT_PUBLIC_API_FF_SERVICE_URL_V1
 ARG NEXT_PUBLIC_API_ORGANIZATIONS_URL_V1
 # для сервера - мидлеваре
-ARG API_FF_SERVICE_URL_V1
-ARG API_AUT_SERVICE_URL_V1
 ARG API_GATEWAY_URL
+ARG API_FF_SERVICE_URL_V1
+ARG API_FF_ORGANIZATIONS_URL_V1
+ARG API_AUT_SERVICE_URL_V1
+ARG API_AUT_CLIENT_URL_V1
 
 # Переменные для сборки
 ENV NEXT_PUBLIC_AUTH_SERVICE_URL_V1=$NEXT_PUBLIC_AUTH_SERVICE_URL_V1
@@ -22,14 +24,17 @@ ENV NEXT_PUBLIC_API_FF_SERVICE_URL_V1=$NEXT_PUBLIC_API_FF_SERVICE_URL_V1
 ENV NEXT_PUBLIC_API_ORGANIZATIONS_URL_V1=$NEXT_PUBLIC_API_ORGANIZATIONS_URL_V1
 # для сервера - мидлеваре
 ENV API_FF_SERVICE_URL_V1=$API_FF_SERVICE_URL_V1
+ENV API_FF_ORGANIZATIONS_URL_V1=$API_FF_ORGANIZATIONS_URL_V1
 ENV API_AUT_SERVICE_URL_V1=$API_AUT_SERVICE_URL_V1
+ENV API_AUT_CLIENT_URL_V1=$API_AUT_CLIENT_URL_V1
 ENV API_GATEWAY_URL=$API_GATEWAY_URL
 
 # Копируем только package.json для кеширования зависимостей
 COPY package*.json ./
 
-# Зависимости (включая dev для сборки)
-RUN npm ci && npm cache clean --force
+# Зависимости (без dev-зависимостей)
+# Устанавливаем только production-зависимости, чтобы сборка проходила без dev-пакетов.
+RUN npm ci --omit=dev && npm cache clean --force
 
 # Копируем исходный код (исключая ненужные файлы)
 COPY . .
@@ -37,8 +42,7 @@ COPY . .
 # Собираем приложение
 RUN npm run build
 
-# Удаляем dev зависимости после сборки  попростиь других проверить что если с омит две зпустить сам сборку
-RUN npm prune --omit=dev
+# dev-зависимости не устанавливаются, поэтому prune не нужен
 
 # Запуск
 FROM node:alpine AS runner
@@ -47,6 +51,8 @@ WORKDIR /application
 # Получаем переменные из build args
 ARG API_FF_SERVICE_URL_V1
 ARG API_AUT_SERVICE_URL_V1
+ARG API_AUT_CLIENT_URL_V1
+ARG API_FF_ORGANIZATIONS_URL_V1
 ARG API_GATEWAY_URL
 
 ENV NODE_ENV=production
@@ -55,6 +61,8 @@ ENV PORT=3000
 # Переменные для runtime (серверные функции)
 ENV API_FF_SERVICE_URL_V1=$API_FF_SERVICE_URL_V1
 ENV API_AUT_SERVICE_URL_V1=$API_AUT_SERVICE_URL_V1
+ENV API_AUT_CLIENT_URL_V1=$API_AUT_CLIENT_URL_V1
+ENV API_FF_ORGANIZATIONS_URL_V1=$API_FF_ORGANIZATIONS_URL_V1
 ENV API_GATEWAY_URL=$API_GATEWAY_URL
 
 # можно и без, но так безопасней
