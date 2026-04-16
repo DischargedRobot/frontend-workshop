@@ -1,1 +1,1 @@
-export { default } from "./ReloadFeaturesFlags"
+export { default as ReloadFeatureFlags } from "./ui"

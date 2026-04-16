@@ -2,8 +2,6 @@
 
 import "./UserList.scss"
 
-import { useFilteredUsers } from "../../model/UserList"
-import useUsersStore from "../../model/useUsersStore"
 import { UserCard } from "../UserCard"
 import { IUser } from "../../lib"
 
@@ -17,7 +15,9 @@ const UserList = ({ users, setUser }: Props) => {
 	return (
 		<ul className="user-list ">
 			{users.map((user) => (
-				<UserCard key={user.id} user={user} setUser={setUser} />
+				<li key={user.id} className="user-list__item">
+					<UserCard user={user} setUser={setUser} />
+				</li>
 			))}
 		</ul>
 	)

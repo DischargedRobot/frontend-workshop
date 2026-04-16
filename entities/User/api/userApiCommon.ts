@@ -1,4 +1,5 @@
 import APIJsonRequest from "@/shared/api/APIJsonRequest"
+import { isAPIError } from "@/shared/api/APIErrors"
 import { IUser } from "../lib"
 import { IDepartment } from "@/entities/Departments"
 import { toIRole, TROLE } from "@/shared/model/Role/types"
@@ -38,7 +39,13 @@ export const userApiCommon = {
 	): Promise<IUser[]> => {
 		const results = await Promise.all(
 			departments.map((dep) =>
-				userApiCommon.getUsersByDepartment(clientsUrl, dep, cookies),
+				userApiCommon
+					.getUsersByDepartment(clientsUrl, dep, cookies)
+					.catch((error) => {
+						if (isAPIError(error) && error.status === 404)
+							return [] as IUser[]
+						throw error
+					}),
 			),
 		)
 

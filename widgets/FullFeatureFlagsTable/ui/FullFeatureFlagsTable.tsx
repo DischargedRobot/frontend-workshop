@@ -3,11 +3,11 @@
 import { FFTable, useFilteredFFs } from "@/entities/FF"
 import { AddFeatureFlag } from "@/features/AddFeatureFlag"
 import FFSearch from "@/features/FFSearch/FFSearch"
-import ReloadFeaturesFlags from "@/features/ReloadFeatureFlags/ReloadFeaturesFlags"
 import { FFTableFilters } from "@/features/FFTableFilters"
 import { Flex } from "antd"
 import { useFullFeatureFlagsTable } from "../model"
 import { Can } from "@/shared/model/Ability"
+import { ReloadFeatureFlags } from "@/features/ReloadFeatureFlags"
 
 const FullFeatureFlagsTable = () => {
 	const { organization, setFeatureFlagName, reloadFeatureFlags } =
@@ -26,7 +26,7 @@ const FullFeatureFlagsTable = () => {
 					<Can I="create" a="FF">
 						<AddFeatureFlag organization={organization} />
 					</Can>
-					<ReloadFeaturesFlags onClick={reloadFeatureFlags} />
+					<ReloadFeatureFlags onClick={reloadFeatureFlags} />
 				</Flex>
 				<FFTable featureFlags={featureFlags} />
 			</Can>

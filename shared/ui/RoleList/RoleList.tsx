@@ -21,8 +21,8 @@ const RoleList = (props: Props) => {
 
 	return (
 		<ul className="role-list text text_tiny text_litle">
-			{rolesList.map((role) => (
-				<li key={crypto?.randomUUID()}>
+			{rolesList.map((role, idx) => (
+				<li key={role.name ?? idx}>
 					<Role
 						disabled
 						role={role}

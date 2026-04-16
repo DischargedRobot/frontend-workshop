@@ -3,6 +3,8 @@ import "./AddButton.scss"
 import { MouseEvent } from "react"
 import { PlusCircleOutlined } from "@ant-design/icons"
 
+import { IconButton } from "../IconButton"
+
 type Props = {
 	children?: React.ReactNode
 	type?: "button" | "submit" | "reset"
@@ -12,15 +14,15 @@ type Props = {
 
 const AddButton = ({ type = "button", onClick, disabled, children }: Props) => {
 	return (
-		<button
-			className={`add-button text text_litle text_tiny ${disabled ? "disabled" : ""}`}
+		<IconButton
+			icon={<PlusCircleOutlined />}
+			className="add-button"
 			type={type}
 			onClick={onClick}
 			disabled={disabled}
 		>
-			<PlusCircleOutlined />
 			{children}
-		</button>
+		</IconButton>
 	)
 }
 

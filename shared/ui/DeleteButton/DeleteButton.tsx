@@ -5,6 +5,8 @@ import "./DeleteButton.scss"
 import { DeleteIcon } from "@/shared/assets/Icon"
 import { MouseEventHandler } from "react"
 
+import { IconButton } from "../IconButton"
+
 interface Props {
 	onClick?: MouseEventHandler<HTMLButtonElement>
 	className?: string
@@ -12,8 +14,6 @@ interface Props {
 
 export const DeleteButton = ({ onClick, className = "" }: Props) => {
 	return (
-		<button className={`delete-button ${className}`} onClick={onClick}>
-			<DeleteIcon />
-		</button>
+		<IconButton icon={<DeleteIcon />} className={`delete-button ${className}`} onClick={onClick} />
 	)
 }

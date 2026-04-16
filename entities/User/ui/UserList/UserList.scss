@@ -1,9 +1,14 @@
 @use "@/common/styles/placeholder.scss";
 
 .user-list {
+	overflow: auto;
+
 	@extend %flex;
 	flex-wrap: wrap;
+	flex: 1 1 0;
 
 	row-gap: 10px;
 	gap: 10px;
+
+	@extend %scrollbar;
 }

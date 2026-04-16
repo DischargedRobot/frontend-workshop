@@ -84,22 +84,19 @@ const FullDepartmentTree = () => {
 		}
 	}, [])
 
+	const handleError = useAPIErrorHandler()
+
 	// При загрузке дерева отделов 
 	const setUsers = useUsersStore((state) => state.setUsers)
 	const onLoadedDepartments = useCallback(async (department: IDepartment[]) => {
-		console.log("onLoadedDepartments start", department)
-		const users = await mutate(
-			[["users", "departmentIds"], ["all", department.map((dep) => dep.id)]].toString(),
-			await userApiClient.getUsersByDepartments(department)
-		)
+		const key = [["users", "departmentIds"], ["all", department.map((dep) => dep.id)]].toString()
+
+		const users = await mutate(key,
+			userApiClient.getUsersByDepartments(department))
+			.catch(handleError)
 
 		setUsers(users ?? [])
-		console.log("onLoadedDepartments end", users)
-
-	}, [setUsers])
-
-
-	const handleError = useAPIErrorHandler()
+	}, [setUsers, handleError])
 
 
 	// При выделении листа дерева отделов подгружаем юзеров этого отдела в стор, 
