@@ -27,9 +27,12 @@ export const AbilityContext = createContext<ProfileAbility>(
 )
 
 export const defineAbility = (profile: IProfile): ProfileAbility => {
-	const { can, build } = new AbilityBuilder<ProfileAbility>(
+	const { cannot, can, build } = new AbilityBuilder<ProfileAbility>(
 		createMongoAbility,
 	)
+
+	// Запрещаем всё по умолчанию (хотя и так запретиться, если roles пустой)
+	cannot("manage", "all")
 
 	// Проверяем каждую роль профиля
 	profile.roles.forEach((role) => {
