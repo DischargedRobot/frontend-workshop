@@ -6,6 +6,32 @@
 	gap: 30px;
 
 	&__tabs {
+		display: flex;
 		width: 100%;
+
+		.ant-tabs-tab {
+			flex: 1;
+			padding: 10px;
+			border-radius: 16px 16px 0 0;
+		}
+
+		.ant-tabs-tab-active {
+			color: var(--active-color);
+			background-color: var(--foreground-second);
+		}
+
+		.ant-tabs-nav {
+			margin-bottom: 0;
+		}
+
+		.ant-tabs-nav-list {
+			position: relative;
+			display: flex;
+			justify-content: space-between;
+
+			margin-bottom: 0;
+
+			width: 100%;
+		}
 	}
 }

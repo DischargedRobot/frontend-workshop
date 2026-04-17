@@ -5,7 +5,10 @@ import "./StructureOrganization.scss"
 import { Content } from "antd/es/layout/layout"
 import { FullUserList } from "@/widgets/FullUserList"
 import { FullDepartmentTree } from "@/widgets/FullDepartmentTree"
-import { Tabs } from "antd"
+import { Grid, Tabs } from "antd"
+
+const { useBreakpoint } = Grid
+
 const StructureOrganization = () => {
 
 	const items = [
@@ -13,12 +16,19 @@ const StructureOrganization = () => {
 		{ label: "Пользователи", key: "users", children: <FullUserList /> },
 	]
 
+	const isMobile = !useBreakpoint().sm
 	return (
 		<Content className="structure-organization">
-			<Tabs
-				className="structure-organization__tabs"
-				items={items}
-			/>
+			{isMobile
+				? <Tabs
+					className="structure-organization__tabs title title_litle"
+					items={items}
+				/>
+				: <>
+					<FullDepartmentTree />
+					<FullUserList />
+				</>
+			}
 		</Content>
 	)
 }

@@ -16,7 +16,7 @@
 
 	max-width: 315px;
 	// max-height: 258px;
-	height: auto;
+	height: min-content;
 
 	background-color: var(--foreground);
 	border-radius: 20px;
