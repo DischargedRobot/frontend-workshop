@@ -5,14 +5,14 @@ import { Switch } from "antd"
 import { FilterOutlined } from "@ant-design/icons"
 import { useState } from "react"
 
-const FFTableFilters = () => {
+const FFTableFilters = ({ className }: { className?: string }) => {
 	const columns = useFFTableFiltersStore((state) => state.visibleColumns)
 	const toggle = useFFTableFiltersStore((state) => state.toggleVisibleColumn)
 
 	const [isCollapsed, setIsCollapsed] = useState(true)
 	return (
 		<div
-			className="ff-table-filters"
+			className={`ff-table-filters${className ? ` ${className}` : ""}`}
 			onBlur={(e) => {
 				if (
 					!(

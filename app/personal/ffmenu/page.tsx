@@ -1,58 +1,35 @@
+"use client"
+
 import "./ffmenu.scss"
 
-import FullDepartmentTable from "@/widgets/FullDepartmentTable/FullDepartmentTable"
 import { Content } from "antd/es/layout/layout"
+import FullDepartmentTable from "@/widgets/FullDepartmentTable/FullDepartmentTable"
 import { FullFeatureFlagsTable } from "@/widgets/FullFeatureFlagsTable"
-import { functionInitApplication } from "../functionInitApplication"
-import { InitFFMenu } from "./InitFFMenu"
-import { departmentApiServer } from "@/entities/Departments/api/departmentApiServer"
-import { cookies } from "next/headers"
+import { Grid, Tabs } from "antd"
 
-async function getDepartments(organizationId: number, childId: number, cookiesStore: string) {
-	try {
-		return await departmentApiServer.getChildrenOfDepartments(
-			organizationId,
-			childId,
-			cookiesStore,
-		)
-	} catch {
-		return []
-	}
-}
+const { useBreakpoint } = Grid
 
-async function getFFMenuData() {
-	try {
-		const { organization } = await functionInitApplication()
-		const cookiesStore = (await cookies()).toString()
+const FFMenu = () => {
+	const isMobile = !useBreakpoint().sm
 
-		console.log("getDepartmentsStart", organization.id, organization.child.id)
-
-		return getDepartments(organization.id, organization.child.id, cookiesStore)
-
-	} catch {
-		return []
-	}
-}
-
-const FFMenu = async () => {
-
-	console.log("unrender FFMenu")
-
-	const { organization } = await functionInitApplication()
-	const departments = await getFFMenuData()
-
-	console.log("render FFMenu", departments)
+	const items = [
+		{ label: "Отделы", key: "departments", children: <FullDepartmentTable /> },
+		{ label: "Feature Flags", key: "ff", children: <FullFeatureFlagsTable /> },
+	]
 
 	return (
-		<InitFFMenu
-			departments={departments}
-			organization={organization}
-		>
-			<Content className="ff-menu">
-				<FullDepartmentTable />
-				<FullFeatureFlagsTable />
-			</Content>
-		</InitFFMenu>
+		<Content className="ff-menu">
+			{isMobile
+				? <Tabs
+					className="ff-menu__tabs"
+					items={items}
+				/>
+				: <>
+					<FullDepartmentTable />
+					<FullFeatureFlagsTable />
+				</>
+			}
+		</Content>
 	)
 }
 

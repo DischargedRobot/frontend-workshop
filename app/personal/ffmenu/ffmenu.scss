@@ -5,6 +5,31 @@
 .ff-menu {
 	@extend %flex-column;
 
-	gap: 15px;
-	margin: clamp(15px, 2vw, 20px) clamp(10px, 2vw, 20px);
+	gap: 30px;
+	&__tabs {
+		display: flex;
+		width: 100%;
+
+		.ant-tabs-tab {
+			flex: 1;
+			padding: 10px;
+			border-radius: 16px 16px 0 0;
+		}
+
+		.ant-tabs-tab-active {
+			color: var(--active-color);
+			background-color: var(--foreground-second);
+		}
+
+		.ant-tabs-nav {
+		}
+
+		.ant-tabs-nav-list {
+			position: relative;
+			display: flex;
+			justify-content: space-between;
+
+			width: 100%;
+		}
+	}
 }

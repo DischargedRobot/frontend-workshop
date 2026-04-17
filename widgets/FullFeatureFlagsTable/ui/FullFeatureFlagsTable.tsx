@@ -1,33 +1,38 @@
 "use client"
 
+import "./FullFeatureFlagsTable.scss"
+
 import { FFTable, useFilteredFFs } from "@/entities/FF"
 import { AddFeatureFlag } from "@/features/AddFeatureFlag"
 import FFSearch from "@/features/FFSearch/FFSearch"
 import { FFTableFilters } from "@/features/FFTableFilters"
-import { Flex } from "antd"
 import { useFullFeatureFlagsTable } from "../model"
 import { Can } from "@/shared/model/Ability"
 import { ReloadFeatureFlags } from "@/features/ReloadFeatureFlags"
 
 const FullFeatureFlagsTable = () => {
-	const { organization, setFeatureFlagName, reloadFeatureFlags } =
+	const { organization, reloadFeatureFlags } =
 		useFullFeatureFlagsTable()
 
 	const featureFlags = useFilteredFFs()
 
 	return (
-		<div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+		<div className="full-feature-flags-table">
 			<Can I="read" a="FF">
-				<Flex align="center" gap={30}>
-					<FFTableFilters />
+				<div className="full-feature-flags-table__toolbar">
+					<FFTableFilters className="full-feature-flags-table__filters" />
 					<FFSearch
-						onSearch={(e) => setFeatureFlagName(e.target.value)}
+						className="full-feature-flags-table__search"
 					/>
-					<Can I="create" a="FF">
-						<AddFeatureFlag organization={organization} />
-					</Can>
-					<ReloadFeatureFlags onClick={reloadFeatureFlags} />
-				</Flex>
+					<div className="full-feature-flags-table__actions">
+						<Can I="create" a="FF">
+							<AddFeatureFlag organization={organization} />
+						</Can>
+						<Can I="read" a="FF">
+							<ReloadFeatureFlags onClick={reloadFeatureFlags} />
+						</Can>
+					</div>
+				</div>
 				<FFTable featureFlags={featureFlags} />
 			</Can>
 		</div>

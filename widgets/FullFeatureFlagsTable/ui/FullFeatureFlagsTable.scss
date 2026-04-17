@@ -1,0 +1,33 @@
+@use "@/common/styles/placeholder.scss";
+@use "@/common/styles/variables.scss" as vars;
+
+.full-feature-flags-table {
+	@extend %flex-column;
+
+	gap: 10px;
+	padding: 10px;
+
+	&__toolbar {
+		display: grid;
+		grid-template-areas: "filters search actions";
+		grid-template-columns: auto 1fr auto;
+		align-items: center;
+		gap: 16px;
+
+		@media (max-width: vars.$small-breakpoint) {
+			grid-template-areas:
+				"search search"
+				"filters actions";
+			grid-template-columns: 1fr auto;
+		}
+	}
+
+	&__filters { grid-area: filters; }
+	&__search  { grid-area: search; }
+	&__actions {
+		grid-area: actions;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+}

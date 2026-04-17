@@ -7,20 +7,23 @@ const { Search } = Input
 
 type SearchProps = GetProps<typeof Input.Search>
 
-// TODO:: заглушка
-const onSearch: SearchProps["onSearch"] = (value, _, info) => {
-	console.log(info?.source, value)
-}
+// // TODO:: заглушка
+// const onSearch: SearchProps["onSearch"] = (value, _, info) => {
+// 	console.log(info?.source, value)
+// }
 
 const FFSearch = ({
 	onSearch,
+	className,
 }: {
 	onSearch?: React.ChangeEventHandler<HTMLInputElement>
+	className?: string
 }) => {
 	const setFeatureFlagName = useFFFiltersStore((state) => state.setName)
 
 	return (
 		<Search
+			className={className}
 			type={"search"}
 			enterButton
 			onChange={(e) => setFeatureFlagName(e.target.value)}

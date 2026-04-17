@@ -1,5 +1,4 @@
-import { FFApi, useFFStore, useFFFiltersStore } from "@/entities/FF"
-import { useDepartmentsStore } from "@/entities/Departments"
+import { FFApi, useFFStore } from "@/entities/FF"
 import { useOrganizationStore } from "@/entities/Organization"
 import { useShallow } from "zustand/shallow"
 import { useBreadcrumbStore } from "@/entities/DepartmentBreadcamb"
@@ -14,7 +13,6 @@ export const useFullFeatureFlagsTable = () => {
 	)
 
 	const setFeatureFlag = useFFStore((state) => state.setFeatureFlags)
-	const setFeatureFlagName = useFFFiltersStore((state) => state.setName)
 
 	// Событие для кнопки "обновить"
 	const reloadFeatureFlags = async () => {
@@ -30,7 +28,6 @@ export const useFullFeatureFlagsTable = () => {
 	return {
 		organization,
 		lastDepInBredcrumb: lastDep?.id ?? organization.child.id,
-		setFeatureFlagName,
 		reloadFeatureFlags,
 	}
 }
