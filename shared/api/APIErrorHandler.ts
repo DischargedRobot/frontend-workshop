@@ -34,8 +34,6 @@ export const useAPIErrorHandler = <T extends APIError | FFAPIError>(
 	// чтобы при рендере компонента не перезаписывалась повторно
 	const handleError = useCallback(
 		(error: FFAPIError | AuthAPIError | APIError | Error | unknown) => {
-			console.log("custom2", customHandlers)
-
 			// if (isFFAPIError(error)) {
 			// 	const customHandler = customHandlers.find((handler) => {
 			// 		if (isFFAPIError(handler.error)) {
@@ -55,12 +53,6 @@ export const useAPIErrorHandler = <T extends APIError | FFAPIError>(
 				const customHandler = customHandlers.find((handler) => {
 					return handler.error.type === error.type
 				})
-				console.log(
-					customHandler,
-					"custom API Error",
-					isAPIError(error),
-					error.type,
-				)
 
 				if (customHandler) {
 					customHandler.handler(

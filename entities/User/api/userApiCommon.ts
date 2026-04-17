@@ -23,13 +23,32 @@ export const userApiCommon = {
 				headers: cookies ? { Cookie: cookies } : {},
 			},
 		)
-
-		return response.map((user) => ({
-			id: user.id,
-			login: user.login,
-			departmentId: department.id,
-			roles: user.roles.map(toIRole),
+		const roleTypes = Object.getOwnPropertyNames(TROLE) as TROLE[]
+		const allRoles = roleTypes.map((role) => ({
+			...toIRole(role),
+			isEnabled: false,
 		}))
+		const users = response.map((user) => {
+			const userRoles = user.roles.map((role) => toIRole(role).type)
+			return {
+				id: user.id,
+				login: user.login,
+				department: department,
+				roles: allRoles.map((role) => ({
+					...role,
+					isEnabled: userRoles.includes(role.type),
+				})),
+			}
+		})
+
+		// console.log(
+		// 	users,
+		// 	"Fetched users for department",
+
+		// 	allRoles,
+		// 	department.name,
+		// )
+		return users
 	},
 
 	getUsersByDepartments: async (

@@ -49,7 +49,7 @@ const useUsersStore = create<IUseUsers>((set, get) => ({
 	deleteUsersByDepartmentId: (departmentId: number) =>
 		set((state) => ({
 			users: state.users.filter(
-				(user) => user.departmentId !== departmentId,
+				(user) => user.department.id !== departmentId,
 			),
 		})),
 

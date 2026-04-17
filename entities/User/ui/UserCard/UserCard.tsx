@@ -11,6 +11,9 @@ import RoleStatus from "@/shared/model/RolesStatus/RolesStatus"
 import UserDepartmentsDropDownMenu from "@/features/UserDepartmentsDropDownMenu"
 import { useUserCard } from "../../model/UserCard"
 import { Can } from "@/shared/model/Ability"
+import { areRolesEqual } from "../../model/UserCard/useUserCard"
+import { Select } from "antd"
+import { SelectDepartmentSearchDropMenu } from "@/features/SelectDepartmentSearchDropMenu"
 
 interface Props {
 	user: IUser
@@ -19,11 +22,6 @@ interface Props {
 
 const UserCard = ({ user, setUser }: Props) => {
 	const {
-		register,
-		handleSubmit,
-		errors,
-		isDirty,
-		control,
 		saveData,
 		resetData,
 		roles,
@@ -33,7 +31,13 @@ const UserCard = ({ user, setUser }: Props) => {
 		toggleSelected,
 		deleteUserById,
 		changeStatusRole,
+		userDepartment,
+		setUserDepartment,
+		isDirty,
 	} = useUserCard(user, setUser)
+	console.log("usercard", userDepartment?.id !== (user.department.id ?? null) ||
+		!areRolesEqual(roles, user.roles || []),
+		{ userId: user.id, dept: userDepartment, userDept: user.department, roles, userRoles: user.roles })
 
 	return (
 		<div className={`user-card ${isSelected ? "user-card_selected" : ""}`}>
@@ -52,41 +56,20 @@ const UserCard = ({ user, setUser }: Props) => {
 					</button>
 				</Can>
 			</span>
-			<form
-				className="user-card__personal-data"
-				onSubmit={handleSubmit(saveData)}
-			>
-				<label className="user-card__field">
-					<input
-						className="user-card__input text text_litle text_tiny"
-						type="text"
-						placeholder="Логин"
-						{...register("login", {
-							minLength: {
-								value: 1,
-								message:
-									"Имя должно содержать хотя бы 1 символ",
-							},
-							required: "Это поле обязательно для заполнения",
-						})}
-					/>
-					<span className="user-card__error text text_tiny">
-						{errors.login?.message?.toString()}
-					</span>
-				</label>
+			<div className="user-card__personal-data">
+				<h2 className="user-card__name">{user.login}</h2>
 				<div>
-					<UserDepartmentsDropDownMenu
-						currentDepartment={user.departmentId}
-						control={control}
+
+					<SelectDepartmentSearchDropMenu
+						defaultValue={userDepartment ?? user.department}
+						onSelect={(dep) => setUserDepartment(prev => dep ?? prev)}
 					/>
-					<span className="user-card__error">
-						{errors.departmentId?.message ?? ""}
-					</span>
+
 				</div>
-				<div>
+				<div style={{ display: "flex", justifyContent: "space-between" }}>
 					<button
 						className={`text text_litle ${!isDirty ? "disabled" : ""}`}
-						type="submit"
+						onClick={saveData}
 						disabled={!isDirty}
 					>
 						Сохранить
@@ -99,7 +82,7 @@ const UserCard = ({ user, setUser }: Props) => {
 						Отменить
 					</button>
 				</div>
-			</form>
+			</div>
 			<div className="user-card__role-list text text_tiny">
 				<div className="role-list__title">
 					<h2>Роли</h2>
@@ -116,4 +99,9 @@ const UserCard = ({ user, setUser }: Props) => {
 	)
 }
 
-export default memo(UserCard)
+export default memo(UserCard, (prev, next) => {
+	return prev.user.id === next.user.id &&
+		prev.user.login === next.user.login &&
+		prev.user.department.id === next.user.department.id &&
+		areRolesEqual(prev.user.roles || [], next.user.roles || [])
+})

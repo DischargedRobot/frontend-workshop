@@ -5,5 +5,5 @@ export interface IUser {
 	id: number
 	login: string
 	roles: IRole[]
-	departmentId?: IDepartment["id"]
+	department: IDepartment
 }

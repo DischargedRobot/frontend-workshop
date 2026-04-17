@@ -11,8 +11,6 @@ export const departmentApiCommon = {
 		uuidDepartment: string,
 		cookieString?: string,
 	): Promise<{ department: IDepartment; organizationId: number }> => {
-		console.log(uuidDepartment, "getDepByUUID", url)
-
 		const dep = await APIJsonRequest<IDepartmentResponse>(
 			`${url}/find-node?organizationNodeUuid=${uuidDepartment}`,
 			{
@@ -32,19 +30,13 @@ export const departmentApiCommon = {
 		departmentId: number,
 		cookieString?: string,
 	): Promise<IDepartment[]> => {
-		console.log(
-			"getChildrenOfDepartments input data:",
-			url,
-			organizationId,
-			departmentId,
-		)
+        
 		const response = await APIJsonRequest<IDepartmentsByOrganizationId>(
 			`${url}/organizations/${organizationId}/nodes/${departmentId}/children`,
 			{
 				headers: cookieString ? { Cookie: cookieString } : {},
 			},
 		)
-		console.log("getChildrenOfDepartments response:", response)
 
 		// convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
 		// reduceDepartmentResponceToParentDepartment(responseData.items.filter((dep) => dep.id != department.id), department)

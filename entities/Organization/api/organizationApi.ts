@@ -13,8 +13,6 @@ export const organizationApi = {
 		organisationId: number,
 		cookieString?: string,
 	): Promise<IOrganizationResponse> => {
-		console.log(organisationId, "getOrganization", url)
-
 		return APIJsonRequest<IOrganizationResponse>(
 			`${url}/organizations/${organisationId}`,
 			{

@@ -122,7 +122,6 @@ const departmentApi = {
 		const responseData = await APIJsonRequest<IDepartmentsByOrganizationId>(
 			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/descendants?depth=${depthLevel}`,
 		)
-		console.log("getDescedantOfDepartments :", responseData)
 		// convertIDepartmentResponseToIDepartment(responseData.items.filter((dep) => dep.id != departmentId))
 		// reduceDepartmentResponceToParentDepartment(responseData.items.filter((dep) => dep.id != department.id), department)
 		return reduceDepRespToArray(

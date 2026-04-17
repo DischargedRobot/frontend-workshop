@@ -1,10 +1,10 @@
 @use "@/common/styles/placeholder.scss";
 
 .roles-status {
-	position: absolute;
-	bottom: -170px;
-	right: -10px;
-	transform: translate(100%, 0);
+	// position: absolute;
+	// bottom: -170px;
+	// right: -10px;
+	// transform: translate(100%, 0);
 	z-index: 10;
 
 	display: flex;
@@ -17,6 +17,10 @@
 	background-color: #373737;
 	box-shadow: 0 2px 2px var(--shadow);
 
+	&-popover {
+		background: transparent !important;
+		padding: 0;
+	}
 	hr {
 		border: 1px solid var(--stroke);
 	}
@@ -37,6 +41,7 @@
 		@extend %flex;
 		justify-content: space-between;
 
+		width: 100%;
 		gap: 10px;
 	}
 }

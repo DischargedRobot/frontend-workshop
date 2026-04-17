@@ -1,7 +1,7 @@
 "use client"
 import { AddButton } from "@/shared/ui"
 import "./AddDepartment.scss"
-import { Button, Form, Input, Switch } from "antd"
+import { Button, Form, Input, Popover, Switch } from "antd"
 import { useAddDepartment } from "../model/useAddDepartment"
 import { memo } from "react"
 import { IService } from "@/entities/Departments"
@@ -21,50 +21,53 @@ const AddDepartment = ({ DepartmentSelector, onServiceCreated }: Props) => {
 	return (
 		<div className="add-department">
 			<AddButton onClick={() => setIsCollapsed((prev) => !prev)} />
-			<Form
-				form={form}
-				className={`add-department__panel ${isCollapsed ? "add-department__panel_collapsed" : ""}`}
-				onFinish={onSubmit}
-				layout="vertical"
+			<Popover
+				placement="bottom"
 			>
-				<Form.Item
-					className="add-department__field"
-					name="name"
-					rules={[
-						{ required: true, message: "Введите название отдела" },
-					]}
+				<Form
+					form={form}
+					className={`add-department__panel ${isCollapsed ? "add-department__panel_collapsed" : ""}`}
+					onFinish={onSubmit}
+					layout="vertical"
 				>
-					<Input autoComplete="off" placeholder="Название отдела" />
-				</Form.Item>
-				<Form.Item
-					name="parentId"
-					label="Родительский отдел"
-					rules={[
-						{
-							required: true,
-							message: "Выберите родительский отдел",
-						},
-					]}
-				>
-					<DepartmentSelector
-						onChange={(id) => form.setFieldValue("parentId", id)}
-					/>
-				</Form.Item>
-				<div className="add-department__switch-service">
-					<span >Сервис</span>
 					<Form.Item
-						name="isService"
-						valuePropName="checked"
-						initialValue={false}
-						className="add-department__switch"
+						className="add-department__field"
+						name="name"
+						rules={[
+							{ required: true, message: "Введите название отдела" },
+						]}
 					>
-
-						<Switch />
+						<Input autoComplete="off" placeholder="Название отдела" />
 					</Form.Item>
-				</div>
+					<Form.Item
+						name="parentId"
+						rules={[
+							{
+								required: true,
+								message: "Выберите родительский отдел",
+							},
+						]}
+					>
+						<DepartmentSelector
+							onChange={(id) => form.setFieldValue("parentId", id)}
+						/>
+					</Form.Item>
+					<div className="add-department__switch-service">
+						<span >Сервис</span>
+						<Form.Item
+							name="isService"
+							valuePropName="checked"
+							initialValue={false}
+							className="add-department__switch"
+						>
 
-				<Button htmlType="submit">Создать</Button>
-			</Form>
+							<Switch />
+						</Form.Item>
+					</div>
+
+					<Button htmlType="submit">Создать</Button>
+				</Form>
+			</Popover>
 		</div >
 	)
 }

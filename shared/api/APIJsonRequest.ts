@@ -46,7 +46,6 @@ const APIJsonRequest = async <T>(
 
 		return data
 	} catch (error) {
-		console.log(error, "APIJsonRequest")
 		// если нет сети
 		if (error instanceof TypeError && error.message === "Failed to fetch") {
 			throw mapAPIErrors(null)

@@ -23,8 +23,8 @@ const filterByDepartmentIds = (users: IUser[], departmentsId: number[]) => {
 	}
 
 	return users.filter((user) => {
-		if (user.departmentId !== undefined) {
-			return departmentsId.includes(user.departmentId)
+		if (user.department.id !== undefined) {
+			return departmentsId.includes(user.department.id)
 		}
 		return false
 	})

@@ -120,7 +120,10 @@ export default function RootLayout({
 		<html lang="en">
 			<body
 				style={
+
 					{
+						overflow: "hidden",
+
 						"--text-color": COLOR.textColor,
 						"--active-hover": COLOR.hoverActive,
 						"--active-background": COLOR.activeBackground,

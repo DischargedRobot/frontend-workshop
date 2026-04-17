@@ -14,7 +14,8 @@ const Avatar = ({ leftButton, rightButton, size }: AvatarProps) => {
 	return (
 		<div className="avatar">
 			<Image
-				className="avatar__image"
+				style={{ minWidth: size ?? 64, minHeight: size ?? 64 }}
+				className="avatar__image "
 				src={img}
 				alt="Profile"
 				width={size ?? 64}

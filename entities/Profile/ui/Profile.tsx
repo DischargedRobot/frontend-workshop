@@ -45,7 +45,6 @@ export const Profile = ({
 	// }
 
 	const handleSubmit = (values: IProfile) => {
-		console.log("Form values:", values)
 		onSubmit?.(values)
 	}
 
@@ -88,7 +87,7 @@ export const Profile = ({
 			{onSubmit && (
 				<Form.Item className="profile-grid__submit">
 					<Button type="primary" htmlType="submit">
-						Сохранитьdff
+						Сохранить
 					</Button>
 				</Form.Item>
 			)}

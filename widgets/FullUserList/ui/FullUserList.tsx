@@ -14,7 +14,6 @@ export const FullUserList = () => {
 	const { users, setUser, setLogin } = useFullUserList()
 	const departments = useSelectedDepartmentsStore((s) => s.departments)
 
-	console.log("render FullUserList", users)
 	return (
 		<div className="full-user-list">
 			<div className="full-user-list__title">

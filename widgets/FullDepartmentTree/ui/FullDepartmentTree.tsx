@@ -43,7 +43,7 @@ const FullDepartmentTree = () => {
 					value: dep,
 				}))}
 				onSelect={(dep) => dep && onChange(dep.id)}
-				placeholder="Выберите отдел"
+				placeholder="Родительский отдел"
 			/>
 		),
 		[departments],

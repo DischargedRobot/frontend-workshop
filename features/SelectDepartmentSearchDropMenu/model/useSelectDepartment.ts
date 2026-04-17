@@ -22,6 +22,7 @@ export const useSelectDepartment = ({
 	const options = useMemo(
 		() =>
 			departments.map((dep) => ({
+				key: dep.id,
 				label: dep.name,
 				value: dep,
 			})),

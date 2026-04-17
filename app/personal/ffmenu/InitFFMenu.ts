@@ -24,7 +24,6 @@ export const InitFFMenu = ({ children, departments, organization }: Props) => {
 		(state) => state.changeChild,
 	)
 
-	console.log(departments, "InitFFMenu", organization.child)
 	useEffect(() => {
 		const childWithDepartments = {
 			...organization.child,

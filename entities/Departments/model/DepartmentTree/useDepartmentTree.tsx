@@ -50,7 +50,6 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 	const departments = useDepartmentsStore(
 		(state) => state.departments[0]?.children,
 	)
-	// console.log("useDepartmentTree, departments: ", departments)
 	const changeDepartmentChildren = useDepartmentsStore(
 		(state) => state.changeDepartmentChildren,
 	)
@@ -59,8 +58,6 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 	)
 
 	const { mutate } = useSWRConfig()
-
-	// console.log("useDepartmentTree, departments: ", organization)
 
 	// первоначальная загрузка дерева отделов при загрузки компонента,
 	//  мб лучше в useEffect это всё обернуть, а не так, ключ-то

@@ -213,17 +213,6 @@ export function toAPIError(
 		return new APIError(serverError.status, "AUTH", serverError.message)
 	}
 	if (isFFAPIError(serverError)) {
-		console.log(
-			serverError,
-			serverError.errorType,
-			"ffError",
-			new APIError(
-				serverError.status,
-				serverError.errorType,
-				serverError.message,
-			).message,
-		)
-
 		return new APIError(
 			serverError.status,
 			serverError.errorType,
@@ -232,8 +221,6 @@ export function toAPIError(
 		)
 	}
 	if (isAPIError(serverError)) {
-		console.log(serverError, "apiErrdsddsor", serverError.message)
-
 		return new APIError(
 			serverError.status,
 			serverError.title,
@@ -257,7 +244,6 @@ export const mapAPIErrors = (
 ): APIError => {
 	let error: APIError
 
-	console.log(status, "mapAPIErrors")
 	switch (status) {
 		case null:
 			error = APIErrors.NETWORK

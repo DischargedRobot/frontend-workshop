@@ -10,7 +10,6 @@ import ProfileTestingPanelForTheme from "@/features/ProfileTestingPanelForTheme"
 
 export const ProfileContainer = () => {
 	const profile = useProfileStore((state) => state.profile)
-	console.log(profile, "ProfileContainer")
 	return (
 		<>
 			<div className="profile">

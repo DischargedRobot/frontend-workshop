@@ -56,16 +56,11 @@ const FFApi = {
 		count: number,
 		offset: number,
 	): Promise<IFFsResponse> => {
-		console.log(
-			"url",
-			`${URL_ORGANIZATION}/${organizationId}/nodes/${department.id}/feature-flags?limit=${count}&offset=${offset}`,
-		)
 		const responseData =
 			await APIJsonRequest<IFeatureFlagByDepartmentResponse>(
 				`${URL_ORGANIZATION}/${organizationId}/nodes/${department.id}/feature-flags?limit=${count}&offset=${offset}`,
 			)
 		const { items, ...other } = responseData
-		console.log("getFeatureFlagsByDepartment", responseData)
 		return {
 			FFs: items.map(({ nodeId, ...ff }) => ({
 				...ff,
@@ -91,26 +86,16 @@ const FFApi = {
 			// запрашиваем у каждого отдела потихоньку пока не закончатся
 			--numberDepartment
 			try {
-				console.log(
-					"getFeatureFlagsByDepartment",
-					department[numberDepartment],
-					organizationId,
-					count,
-					offset,
-				)
-
 				const response = await FFApi.getFeatureFlagsByDepartment(
 					department[numberDepartment],
 					organizationId,
 					count,
 					offset,
 				)
-				console.log("getFeatureFlagsByDepartment", response)
 
 				count -= response.total
 				FFs.push(...response.FFs)
 			} catch (error) {
-				console.log("Error in getFeatureFlagsByDepartment", error)
 				continue
 			}
 		}

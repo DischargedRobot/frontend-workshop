@@ -25,6 +25,7 @@ interface SearchableDropdownProps<T> {
 	placeholder?: string
 	disabled?: boolean
 	className?: string
+	equalOption: keyof T
 }
 
 export const SearchDropDownMenu = <T,>({
@@ -34,17 +35,42 @@ export const SearchDropDownMenu = <T,>({
 	placeholder = "Выберите...",
 	disabled = false,
 	className = "",
+	equalOption,
 }: SearchableDropdownProps<T>) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const [selected, setSelected] = useState<T | null>(defaultValue ?? null)
 	const [userInput, setUserInput] = useState<string>(() => {
-		if (defaultValue === undefined) return ""
-		const found = options.find((opt) => opt.value === defaultValue)
-		return found ? found.label : ""
+		if (defaultValue === undefined || defaultValue === null) return ""
+		if (equalOption) {
+			const found = options.find((opt) => opt.value[equalOption] === defaultValue[equalOption])
+			return found ? found.label : ""
+		} else {
+			const found = options.find((opt) => opt.value === defaultValue)
+			return found ? found.label : ""
+		}
 	})
 	const containerRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLInputElement>(null)
 
+	// почему-то undefiend при первом рендере, хотя defaultValue передаётся нормально.
+	//  Возможно, из-за того, что options ещё не загрузились. 
+	// Поэтому добавил проверку на undefined
+	useEffect(() => {
+		if (defaultValue === undefined || defaultValue === null) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect
+			setSelected(null)
+			setUserInput("")
+			return
+		}
+		const found = options.find((opt) => opt.value[equalOption] === defaultValue[equalOption])
+		if (found) {
+			setSelected(found.value)
+			setUserInput(found.label)
+		} else {
+			setSelected(null)
+			setUserInput("")
+		}
+	}, [defaultValue, options, equalOption])
 	// const searchTerm = isOpen ? userInput : userInput
 
 	const filteredOptions = useMemo(
@@ -57,11 +83,11 @@ export const SearchDropDownMenu = <T,>({
 
 	// провермяем, есть ли опция с таким именем
 	const isUserInputValid = useMemo(() => {
-		const found = options.find((opt) => opt.value === selected)
+		const found = options.find((opt) => opt.value[equalOption] === selected?.[equalOption])
 		return found
 			? userInput.toLowerCase() === found.label.toLowerCase()
 			: false
-	}, [userInput, selected, options])
+	}, [userInput, selected, options, equalOption])
 
 	useEffect(() => {
 		const handleClickOutside = (e: MouseEvent) => {

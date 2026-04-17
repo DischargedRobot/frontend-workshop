@@ -36,18 +36,16 @@ interface RoleResponse {
 }
 
 const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL_V1
-console.log(AUTH_URL)
 // В shared т.к. часто используется другими
 const loginApi = {
 	registerOrganization: async (data: RegistrationRequest): Promise<void> => {
-		const response = await APIJsonRequest<void>(
+		await APIJsonRequest<void>(
 			`${AUTH_URL}/register-organization`,
 			{
 				method: "POST",
 				body: JSON.stringify(data),
 			},
 		)
-		console.log(response)
 	},
 
 	logIn: async (data: LogInRequest) => {
@@ -87,7 +85,6 @@ const loginApi = {
 	getMe: async (
 		cookiesString?: string,
 	): Promise<Omit<IProfile, "departmentId"> & { uuidDepartment: string }> => {
-		console.log(process.env.NEXT_PUBLIC_AUTH_SERVICE_URL_V1, "getMe url")
 		const response = await APIJsonRequest<GetMeResponse>(
 			`${process.env.NEXT_PUBLIC_AUTH_SERVICE_URL_V1}/clients/me`,
 			{
@@ -95,8 +92,7 @@ const loginApi = {
 				cache: "no-store", // т.к. вызываем на сервере иногда
 			},
 		)
-
-		console.log(response)
+        
 		return {
 			login: response.login,
 			password: response.password,

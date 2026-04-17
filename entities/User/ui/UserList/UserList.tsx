@@ -3,6 +3,7 @@
 import "./UserList.scss"
 
 import { UserCard } from "../UserCard"
+import { memo } from "react"
 import { IUser } from "../../lib"
 
 interface Props {
@@ -23,4 +24,4 @@ const UserList = ({ users, setUser }: Props) => {
 	)
 }
 
-export default UserList
+export default memo(UserList)
