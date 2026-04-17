@@ -70,4 +70,15 @@ export const userApiCommon = {
 
 		return results.flat()
 	},
+
+	deleteUserById: async (
+		clientsUrl: string,
+		userId: number,
+		cookies?: string,
+	) => {
+		await APIJsonRequest(`${clientsUrl}/${userId}`, {
+			method: "DELETE",
+			headers: cookies ? { Cookie: cookies } : {},
+		})
+	},
 }

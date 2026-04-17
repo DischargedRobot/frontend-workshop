@@ -14,6 +14,7 @@ import { Can } from "@/shared/model/Ability"
 import { areRolesEqual } from "../../model/UserCard/useUserCard"
 import { Select } from "antd"
 import { SelectDepartmentSearchDropMenu } from "@/features/SelectDepartmentSearchDropMenu"
+import { DeleteButton } from "@/shared/ui"
 
 interface Props {
 	user: IUser
@@ -29,7 +30,7 @@ const UserCard = ({ user, setUser }: Props) => {
 		filterRoleList,
 		isSelected,
 		toggleSelected,
-		deleteUserById,
+		deleteUser,
 		changeStatusRole,
 		userDepartment,
 		setUserDepartment,
@@ -48,12 +49,10 @@ const UserCard = ({ user, setUser }: Props) => {
 			<span className="user-card__avatar">
 				<Avatar />
 				<Can I="delete" an="User">
-					<button
+					<DeleteButton
 						className="user-card__delete-button"
-						onClick={() => deleteUserById(user.id)}
-					>
-						<DeleteIcon />
-					</button>
+						onClick={() => deleteUser()}
+					/>
 				</Can>
 			</span>
 			<div className="user-card__personal-data">
