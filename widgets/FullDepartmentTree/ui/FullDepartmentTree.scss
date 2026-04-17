@@ -1,4 +1,5 @@
 @use "@/common/styles/placeholder.scss";
+@use "@/common/styles/variables" as vars;
 
 .resize-column {
 	$size: 8px;
@@ -30,7 +31,7 @@
 .department-tree-panel {
 	position: relative;
 
-	z-index: 1;
+	z-index: 10;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -112,5 +113,20 @@
 		//     border: 2px solid #535353;
 		//     border-left: none;
 		// }
+	}
+
+	@media (max-width: vars.$medium-breakpoint) {
+		position: fixed;
+		left: 0;
+
+		width: 100%;
+		max-width: 100%;
+
+		padding: 10px 0;
+		height: 100vh;
+
+		box-shadow: 0 -3px 10px var(--shadow);
+		border-top: 1px solid var(--border-for-nav-panel);
+		background-color: var(--foreground);
 	}
 }

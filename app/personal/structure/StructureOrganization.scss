@@ -4,4 +4,8 @@
 	@extend %flex;
 
 	gap: 30px;
+
+	&__tabs {
+		width: 100%;
+	}
 }
