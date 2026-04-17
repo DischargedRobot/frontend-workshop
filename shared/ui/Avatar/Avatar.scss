@@ -3,18 +3,26 @@
 	display: inline-block;
 
 	&__image {
-		border-radius: 50px;
+		border-radius: 50%;
 	}
 
-	&__button-left {
+	&__button {
 		position: absolute;
-		bottom: 0;
-		left: 0;
-	}
+		padding: 5px;
+		border-radius: 50%;
+		background-color: var(--foreground-second);
 
-	&__button-right {
-		position: absolute;
-		bottom: 0;
-		right: 0;
+		&_left {
+			bottom: 0;
+			left: 0;
+
+			transform: translate(-25%, 25%);
+		}
+		&_right {
+			bottom: 0;
+			right: 0;
+
+			transform: translate(25%, 25%);
+		}
 	}
 }

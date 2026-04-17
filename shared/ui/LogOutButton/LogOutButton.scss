@@ -1,0 +1,19 @@
+.icon-button.log-out-button {
+	color: var(--dangerous, red) !important;
+	padding: 4px;
+	flex-shrink: 0;
+	background-color: transparent;
+
+	& svg {
+		color: var(--dangerous, red);
+	}
+
+	&:hover {
+		color: var(--dangerous-hover, darkred);
+		background-color: var(--dark-transparent);
+
+		& svg {
+			color: var(--dangerous-hover, darkred);
+		}
+	}
+}

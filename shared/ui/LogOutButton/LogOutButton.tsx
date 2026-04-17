@@ -1,5 +1,6 @@
-import { Button } from "antd"
 import { LogoutOutlined } from "@ant-design/icons"
+import { IconButton } from "../IconButton"
+import "./LogOutButton.scss"
 
 interface LogOutButtonProps {
 	onClick?: () => void
@@ -8,8 +9,8 @@ interface LogOutButtonProps {
 
 export const LogOutButton = ({ onClick, label }: LogOutButtonProps) => {
 	return (
-		<Button danger icon={<LogoutOutlined />} type="text" onClick={onClick}>
+		<IconButton icon={<LogoutOutlined />} onClick={onClick} className="log-out-button">
 			{label}
-		</Button>
+		</IconButton>
 	)
 }

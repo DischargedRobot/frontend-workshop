@@ -16,15 +16,11 @@ const Avatar = ({ leftButton, rightButton }: AvatarProps) => {
 				className="avatar__image"
 				src={img}
 				alt="Profile"
-				width={64}
-				height={64}
+				width={100}
+				height={100}
 			/>
-			{leftButton && (
-				<div className="avatar__button-left">{leftButton}</div>
-			)}
-			{rightButton && (
-				<div className="avatar__button-right">{rightButton}</div>
-			)}
+			{leftButton && <div className="avatar__button avatar__button_left">{leftButton}</div>}
+			{rightButton && <div className="avatar__button avatar__button_right">{rightButton}</div>}
 		</div>
 	)
 }

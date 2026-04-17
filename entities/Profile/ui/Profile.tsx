@@ -12,9 +12,8 @@ import { IRole } from "@/shared/model/Role"
 interface ProfileProps {
 	profile: IProfile
 	departmentName?: string
-	loading?: boolean
 	onSubmit?: (values: IProfile) => void
-	logOutButton?: React.ReactNode
+	logOutButton: React.ReactNode
 }
 
 export const Profile = ({
@@ -59,7 +58,7 @@ export const Profile = ({
 			onFinish={handleSubmit}
 		>
 
-			<div className="profile-grid__avatar">
+			<div className="profile__avatar">
 				<Avatar rightButton={logOutButton} />
 			</div>
 
