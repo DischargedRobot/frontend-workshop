@@ -5,7 +5,7 @@
 	overflow: hidden;
 	.ant-tree-node-content-wrapper {
 		// чтобы не ставить фиксированный width
-		overflow: hidden;
+		width: 100%;
 	}
 	// класс появляющийся при перетаскивании и наложении объекта на другой
 	.drop-target {
@@ -21,12 +21,14 @@
 	}
 
 	.ant-tree-title {
-		max-width: 100% !important;
-		line-height: 1;
-		display: block;
-		overflow: hidden !important;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		& > input {
+			line-height: 1;
+			display: block;
+			overflow: hidden !important;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 100% !important;
+		}
 	}
 
 	.ant-tree-switcher {

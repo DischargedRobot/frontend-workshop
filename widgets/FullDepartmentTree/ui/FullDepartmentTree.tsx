@@ -124,16 +124,7 @@ const FullDepartmentTree = () => {
 
 	return (
 		<div className="department-tree-panel" style={{ width: width }}>
-			<div
-				style={{
-					position: "sticky",
-					zIndex: 10,
-					top: "10px",
-					display: "flex",
-					flexDirection: "column",
-					gap: "10px",
-				}}
-			>
+			<div className="department-tree-panel__container">
 				<div className="department-tree-panel__title title text_big">
 					<h2>{organization.name}</h2>
 					<div className="department-tree-panel__buttons">

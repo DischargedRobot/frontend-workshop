@@ -1,4 +1,5 @@
 @use "@/common/styles/placeholder.scss";
+
 @use "@/common/styles/variables" as vars;
 
 .resize-column {
@@ -59,6 +60,13 @@
 			width: 0px;
 		}
 	}
+
+	&__container {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
 	&__title {
 		@extend %flex;
 		justify-content: space-between;

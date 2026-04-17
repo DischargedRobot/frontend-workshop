@@ -129,14 +129,31 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 	const handleCheck = useCallback(
 		(checkedKeys: number[], node: IDepartmentNode, checked: boolean) => {
 			setFilterDepartmentIds(checkedKeys)
-			const selectedDeps = getDepartmentAndAllChildren(
-				departments || [],
-			).filter((dep) => checkedKeys.includes(dep.id))
-			setSelectedDepartments(selectedDeps)
-			if (checked) onCheckLeaf?.(node)
-			else onUncheckLeaf?.(node)
+
+			const selectedDeps = getDepartmentAndAllChildren(departments || [])
+				.filter((dep) => checkedKeys.includes(dep.id))
+
+			// Если ни один отедл не выбран, то ставим детей первого уровня
+			setSelectedDepartments(
+				selectedDeps.length === 0
+					? organization.child.children
+					: selectedDeps
+			)
+
+			if (checked) {
+				onCheckLeaf?.(node)
+			} else {
+				onUncheckLeaf?.(node)
+			}
 		},
-		[setFilterDepartmentIds, departments, setSelectedDepartments, onCheckLeaf, onUncheckLeaf],
+		[
+			setFilterDepartmentIds,
+			departments,
+			organization,
+			setSelectedDepartments,
+			onCheckLeaf,
+			onUncheckLeaf,
+		],
 	)
 
 	// Обработчик перетаскивания отдела в дереве
