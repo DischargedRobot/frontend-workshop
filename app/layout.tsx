@@ -1,5 +1,6 @@
 import { ConfigProvider, Layout, ThemeConfig } from "antd"
 import "./main.scss"
+import "./MainLayout.scss"
 // import style from './main.scss'
 // import
 import type { Metadata } from "next"
@@ -156,7 +157,7 @@ export default function RootLayout({
 			>
 				{/* theme={theme} */}
 				<ConfigProvider theme={theme}>
-					<Layout hasSider className="body-layout">
+					<Layout hasSider className="body-layout" rootClassName="main-layout ">
 						{children}
 						<Toasts />
 					</Layout>

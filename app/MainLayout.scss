@@ -1,0 +1,15 @@
+@use "@/common/styles/variables" as vars;
+
+.main-layout {
+	display: flex !important;
+	height: 100vh;
+
+	@media (max-width: vars.$medium-breakpoint) {
+		flex-direction: column-reverse !important;
+	}
+
+	& main {
+		height: 100% !important;
+		width: 100% !important;
+	}
+}

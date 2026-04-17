@@ -59,7 +59,7 @@ export const Profile = ({
 		>
 
 			<div className="profile__avatar">
-				<Avatar rightButton={logOutButton} />
+				<Avatar rightButton={logOutButton} size={100} />
 			</div>
 
 			<Form.Item

@@ -5,6 +5,11 @@
 
 	gap: 30px;
 
+	// height: 100vh;
+
+	.ant-tabs-content {
+		height: 100%;
+	}
 	&__tabs {
 		display: flex;
 		width: 100%;
@@ -32,6 +37,10 @@
 			margin-bottom: 0;
 
 			width: 100%;
+		}
+
+		.ant-tabs-tabpane {
+			height: 100%;
 		}
 	}
 }
