@@ -12,6 +12,7 @@
 	width: calc(150px + 10vw);
 
 	border-radius: 20px;
+	border-left: 10px solid;
 
 	&_fade-in {
 		opacity: 1;
@@ -46,15 +47,19 @@
 	}
 
 	&_warning {
-		background-color: var(--toast-warning);
+		color: var(--toast-text);
+		border-color: color-mix(in srgb, var(--toast-bg-warning), #252525 46%);
+		background-color: var(--toast-bg-warning);
 	}
 
 	&_error {
-		background-color: var(--toast-error);
+		color: var(--toast-text);
+		background-color: var(--toast-bg-error);
 	}
 
 	&_success {
-		background-color: var(--toast-success);
+		color: var(--toast-text);
+		background-color: var(--toast-bg-success);
 	}
 
 	&__icon {

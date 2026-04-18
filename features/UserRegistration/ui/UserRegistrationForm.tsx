@@ -5,6 +5,7 @@ import { Button, Form } from "antd"
 import { useRegistrationForm } from "../model"
 import { TextInput } from "@/shared/ui"
 import { memo } from "react"
+import { checkPasswordAntdForm } from "@/shared/model/CheckPassword"
 
 interface RegistrationForm {
 	login: string
@@ -21,10 +22,12 @@ const UserRegistrationForm = ({ token }: Props) => {
 
 	return (
 		<Form
+			validateTrigger="onBlur"
 			className="user-registration-form"
 			form={form}
 			layout="vertical"
 			onFinish={onSubmit}
+			requiredMark={false}
 		>
 			{/* {loginError && (
 				<Form.Item>
@@ -51,7 +54,7 @@ const UserRegistrationForm = ({ token }: Props) => {
 						message: "Логин должен быть не менее 3 символов",
 					},
 					{
-						pattern: /^[a-zA-Z0-9_-]+$/,
+						pattern: /^[a-zA-Z0-9_-]+/,
 						message:
 							"Логин может содержать только буквы латинского алфавита, цифры, подчеркивание и дефис",
 					},
@@ -59,27 +62,33 @@ const UserRegistrationForm = ({ token }: Props) => {
 			>
 				<TextInput error={loginError} placeholder="Логин" />
 			</Form.Item>
-
+			{/* checkPasswordAntdForm */}
 			<Form.Item
 				label="Пароль"
 				name="password"
 				rules={[
-					{
-						required: true,
-						message: "Введите пароль",
-					},
-					{
-						min: 8,
-						message: "Пароль должен быть не менее 8 символов",
-					},
-					{
-						pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-						message:
-							"Пароль должен содержать заглавные буквы, строчные буквы и цифры",
-					},
+					() => ({
+						validator: (_, value) => {
+							return checkPasswordAntdForm(value)
+						}
+					}),
 				]}
 			>
 				<TextInput type="password" placeholder="Пароль" />
+			</Form.Item>
+
+			<Form.Item
+				label="Подтверждение пароля"
+				name="confirm"
+				rules={[
+					() => ({
+						validator: (_, value) => {
+							return checkPasswordAntdForm(value)
+						}
+					}),
+				]}
+			>
+				<TextInput type="password" placeholder="Подтверждение пароля" />
 			</Form.Item>
 
 			<Button
@@ -91,7 +100,7 @@ const UserRegistrationForm = ({ token }: Props) => {
 			>
 				Зарегистрироваться
 			</Button>
-		</Form>
+		</Form >
 	)
 }
 

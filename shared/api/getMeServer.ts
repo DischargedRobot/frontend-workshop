@@ -12,7 +12,7 @@ interface GetMeResponse {
 	settings?: object
 }
 
-const AUTH_URL = process.env.API_AUT_SERVICE_URL_V1
+const AUTH_URL = process.env.API_AUTH_SERVICE_URL_V1
 
 export const getMeServer = async (
 	cookiesString?: string,

@@ -12,15 +12,15 @@ import {
 import { showToast } from "../ui"
 import { useRouter } from "next/navigation"
 
-interface CustomAPIErrorHandler {
-	error: APIError
-	handler: (error: APIError) => void
-}
+// interface CustomAPIErrorHandler {
+// 	error: APIError
+// 	handler: (error: APIError) => void
+// }
 
-interface CustomFFAPIErrorHandler {
-	error: FFAPIError
-	handler: (error: FFAPIError) => void
-}
+// interface CustomFFAPIErrorHandler {
+// 	error: FFAPIError
+// 	handler: (error: FFAPIError) => void
+// }
 
 interface CustomErrorHandler<T extends APIError | FFAPIError> {
 	error: T extends APIError ? APIError : FFAPIError
@@ -35,32 +35,17 @@ export const useAPIErrorHandler = <T extends APIError | FFAPIError>(
 	// чтобы при рендере компонента не перезаписывалась повторно
 	const handleError = useCallback(
 		(error: FFAPIError | AuthAPIError | APIError | Error | unknown) => {
-			// if (isFFAPIError(error)) {
-			// 	const customHandler = customHandlers.find((handler) => {
-			// 		if (isFFAPIError(handler.error)) {
-			// 			return handler.error.code === error.code
-			// 		}
-			// 		return false
-			// 	})
-			// 	console.log(customHandler, "custom")
-			// 	if (customHandler) {
-			// 		customHandler.handler(error)
-			// 		return
-			// 	}
-			// }
-
 			// Сначала проверяем кастомные обработчики
 			if (isFFAPIError(error)) {
 				const customHandler = customHandlers.find((handler) => {
 					return (
-						handler.error.type && handler.error.type === error.type
+						"errorType" in handler.error &&
+						handler.error.errorType === error.errorType
 					)
 				})
 
 				if (customHandler) {
-					customHandler.handler(
-						error as T extends APIError ? APIError : FFAPIError,
-					)
+					customHandler.handler(error)
 					return
 				}
 			} else if (isAPIError(error)) {
