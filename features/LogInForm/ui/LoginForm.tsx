@@ -21,6 +21,7 @@ export const LoginForm = () => {
 			form={form}
 			layout="vertical"
 			onFinish={onSubmit}
+			requiredMark={false}
 		>
 			{errorAuth && (
 				<span className="error-message">{errorAuth.message}</span>
@@ -40,7 +41,7 @@ export const LoginForm = () => {
 				<TextInput type="password" placeholder="Пароль" />
 			</Form.Item>
 			<div className="authorisation-table__buttons">
-				<Button htmlType="submit" loading={loading}>
+				<Button htmlType="submit" className="form-button" loading={loading}>
 					Войти
 				</Button>
 			</div>

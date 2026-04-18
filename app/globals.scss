@@ -34,10 +34,32 @@
 	--disabled: #38333330;
 	--disabled-mix: #5a53539c;
 
+	--secondary-color: #323234;
+
+	--textinput-bg: var(--foreground);
+	--textinput-bg-active: var(--secondary-color);
+
+	--textinput-border: var(--stroke-opacity);
+	--textinput-border-active: var(--stroke-opacity);
+
+	// BUTTON COLORS //
+	--formbutton-bg-active: var(--active-background);
+	--formbutton-bg-hover: var(--active-hover);
+	--formbutton-bg-disabled: var(--disabled);
+
+	--formbutton-text-active: var(--text-color);
+	--formbutton-text-hover: var(--text-color);
+	--formbutton-text-disabled: var(--text-muted);
 	// Toasts colors
-	--toast-error: #d03b3b;
-	--toast-success: #47d73d;
-	--toast-warning: #d6df1e;
+	--toast-bg-error: #ffabab;
+	--toast-bg-success: #a1fa99;
+	--toast-bg-warning: #ffde91;
+
+	--toast-text: #383838;
+
+	--toast-text-error: var(--text-color);
+	--toast-text-success: var(--text-color);
+	--toast-text-warning: var(--text-color);
 
 	--text-muted: color-mix(in srgb, var(--text-color), #666 50%);
 
@@ -55,6 +77,18 @@
 	);
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	outline: none;
+	-webkit-border-image: none;
+	caret-color: var(--text-color) !important;
+	-webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+	-webkit-text-fill-color: var(--text-color) !important;
+	transition: background-color ease-in-out 5000s !important; // а то с углов не уйдёт
+}
+
 :root {
 	--size-button-icon: 20px;
 }
@@ -62,6 +96,10 @@
 // html {
 // 	overflow-y: scroll;
 // }
+
+.ant-form-item {
+	margin-bottom: 0px;
+}
 
 .body-layout {
 	margin: 0 auto;
@@ -153,15 +191,21 @@
 	}
 }
 
-.button {
-	padding: 16px 48px;
+.form-button {
+	padding: 6px 10px;
 
+	width: 100%;
 	max-width: 585px;
 	height: auto;
 
-	background: var(--active-background);
-	border: 3px solid var(--active-border);
-	border-radius: 20px;
+	// color: var(--formbutton-text);
+	// background: var(--formbutton-bg-active);
+	border-radius: 10px;
+
+	&:hover {
+		// background: var(--formbutton-bg-hover);
+		// color: var(--formbutton-text-hover);
+	}
 }
 
 /* @media (prefers-color-scheme: dark) {

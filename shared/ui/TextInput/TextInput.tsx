@@ -30,6 +30,7 @@ const TextInput = (props: Props) => {
 		<label className="text-filed text text_litle">
 			{label && <span>{label}</span>}
 			<input
+				autoComplete="off"
 				className={`text-filed__input ${className}`}
 				{...inputProps}
 				value={internalValue}

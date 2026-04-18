@@ -35,11 +35,20 @@ const COLOR = {
 	foregroundSecond: "#292929cb",
 	strokeNavPanel: "#111111e8",
 
-	// colorPrimary: '#2a5dd2'
+	// BUTTON COLORS //
+	formbuttonBg: "var(--active-background)",
+	formbuttonBgActive: "var(--active-background)",
+	formbuttonBgHover: "var(--active-hover)",
+	formbuttonBgDisabled: "var(--disabled)",
+
+	formbuttonText: "var(--text-color)",
+	formbuttonTextActive: "var(--text-color)",
+	formbuttonTextHover: "var(--text-color)",
+	formbuttonTextDisabled: "var(--text-muted)",
 }
 
 export const metadata: Metadata = {
-	title: "Registration",
+	title: "RedFlags",
 }
 
 // TODO: вот так для всех сделать
@@ -58,6 +67,9 @@ const theme: ThemeConfig = {
 		colorTextPlaceholder: "#d2d2d2",
 		colorPrimaryActive: COLOR.activeBackground,
 		colorPrimaryBg: COLOR.foregroundSecond,
+
+		colorTextDisabled: COLOR.formbuttonTextDisabled,
+
 	},
 	components: {
 		Layout: {
@@ -65,7 +77,22 @@ const theme: ThemeConfig = {
 		},
 
 		Button: {
-			colorBgContainer: COLOR.activeBackground,
+			// BG
+			colorBgBase: COLOR.formbuttonBg,
+			defaultBg: COLOR.formbuttonBg,
+			defaultHoverBg: COLOR.formbuttonBgHover,
+			defaultActiveBg: COLOR.formbuttonBgActive,
+			defaultBgDisabled: COLOR.formbuttonBgDisabled,
+
+			// TEXT
+			defaultHoverColor: COLOR.formbuttonTextHover,
+			defaultActiveColor: COLOR.formbuttonTextActive,
+			defaultColor: COLOR.formbuttonText,
+
+
+			// defaultShadow: `0 2px 5px var(--shadow)`,
+			// primaryShadow: `0 2px 5px var(--shadow)`
+
 			// colorBorder: COLOR.activeBorder,
 		},
 
@@ -137,6 +164,8 @@ export default function RootLayout({
 						"--button-base-background": COLOR.buttonBaseBackground,
 						"--disabled": COLOR.disabled,
 						"--background-text-color": COLOR.backgroundTextColor,
+
+
 						// ...style
 						// "--ant-color-text-quaternary": COLOR.textColor,
 						// "--ant-color-text-secondary": COLOR.textColor,

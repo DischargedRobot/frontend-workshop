@@ -1,0 +1,12 @@
+@use "@/common/styles/placeholder.scss";
+
+.change-profile-personal-form {
+	@extend %flex-column;
+	justify-content: center;
+	align-items: center;
+
+	max-width: 400px;
+	margin: 0 auto;
+
+	height: 100%;
+}

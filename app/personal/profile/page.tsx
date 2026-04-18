@@ -9,6 +9,7 @@ import { Content } from "antd/es/layout/layout"
 import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { Profile } from "@/entities/Profile"
+import { ChangeProfilePersonalData } from "@/features/ChangeProfilePersonalData"
 
 const ProfilePage = () => {
 
@@ -59,7 +60,7 @@ const ProfilePage = () => {
 						onAnimationEnd={() => {
 							setIsAnimating(false)
 							setPrevPanel(null)
-							console.log('Animation ended, current panel:', currentPanel, 'isAnimating:', isAnimating)
+							// console.log('Animation ended, current panel:', currentPanel, 'isAnimating:', isAnimating)
 						}}
 						ref={animationContainer}
 						className={`panel ${isAnimating ? (direction === 'left' ? 'animate-exit-left' : 'animate-exit-right') : ''}`}
@@ -87,7 +88,7 @@ function renderPanel(key: string | null) {
 		case 'profile':
 			return <ProfileContainer />
 		case 'changePassword':
-			return <div style={{ padding: 20 }}>Форма смены пароля (заглушка)</div>
+			return <ChangeProfilePersonalData />
 		case 'theme':
 			return <ProfileSettings />
 		default:
