@@ -1,0 +1,1 @@
+export { checkPasswordAntdForm } from "./checkPasswordAntdForm"
