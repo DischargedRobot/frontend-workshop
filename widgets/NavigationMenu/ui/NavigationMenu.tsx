@@ -7,6 +7,7 @@ import Sider from "antd/es/layout/Sider"
 import { useState } from "react"
 import { RightOutlined } from "@ant-design/icons"
 import { useNavigationItems } from "../model"
+import { usePathname, useSearchParams } from "next/navigation"
 
 const { useBreakpoint } = Grid
 
@@ -16,6 +17,8 @@ const NavigationMenu = () => {
 	const isMobile = !screens.md
 
 	const navItems = useNavigationItems()
+
+	const pathname = usePathname();
 
 
 	return (
@@ -39,6 +42,7 @@ const NavigationMenu = () => {
 					</button>
 				)}
 				<Menu
+					selectedKeys={[pathname]}
 					items={navItems}
 					mode={isMobile ? "horizontal" : "inline"}
 					tooltip={isMobile ? false : { placement: "right" }}

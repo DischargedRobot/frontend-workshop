@@ -1,10 +1,7 @@
 .icon-button.delete-button {
-	padding: 4px;
 	flex-shrink: 0;
-	background-color: transparent;
 
 	&:hover {
-		color: var(--active-hover);
-		background-color: var(--dark-transparent);
+		// color: var(--active-hover);
 	}
 }

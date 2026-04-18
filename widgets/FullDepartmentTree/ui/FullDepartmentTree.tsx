@@ -14,6 +14,7 @@ import { userApiClient } from "@/entities/User/api"
 import { useUsersStore, useUserFiltersStore } from "@/entities/User"
 import { mutate, useSWRConfig } from "swr"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
+import { SelectDepartmentSearchDropMenu } from "@/features/SelectDepartmentSearchDropMenu"
 
 const TREE_MIN_W = 180
 const TREE_DEFAULT_W = 250
@@ -36,15 +37,10 @@ const FullDepartmentTree = () => {
 
 	const DepartmentSelector = useCallback(
 		({ onChange }: { onChange: (id: number) => void }) => (
-			<SearchDropDownMenu<IDepartment>
-				options={departments.map((dep) => ({
-					key: dep.id,
-					label: dep.name,
-					value: dep,
-				}))}
+			<SelectDepartmentSearchDropMenu
+				departments={departments}
 				onSelect={(dep) => dep && onChange(dep.id)}
 				placeholder="Родительский отдел"
-				equalOption="id"
 			/>
 		),
 		[departments],

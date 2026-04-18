@@ -32,27 +32,27 @@ export const useNavigationItems = (): MenuItemType[] => {
 				),
 			},
 			{
-				key: "profile",
+				key: "/personal/profile",
 				icon: <ProfileIcon />,
-				label: <Link href="profile">Профиль</Link>,
+				label: <Link href="/personal/profile">Профиль</Link>,
 			},
 		]
 
 		// Проверяем разрешения на просмотр отделов и исполнителей
 		if (ability.can("read", "Department") || ability.can("read", "User")) {
 			items.push({
-				key: "structure",
+				key: "/personal/structure",
 				icon: <StructureMenuIcon />,
-				label: <Link href="structure">Структура</Link>,
+				label: <Link href="/personal/structure">Структура</Link>,
 			})
 		}
 
 		// Проверяем разрешение на чтение FF для меню
 		if (ability.can("read", "FF") && ability.can("read", "Department")) {
 			items.push({
-				key: "ffmenu",
+				key: "/personal/ffmenu",
 				icon: <FFMenuIcon />,
-				label: <Link href="ffmenu">Меню с FF</Link>,
+				label: <Link href="/personal/ffmenu">Меню с FF</Link>,
 			})
 		}
 

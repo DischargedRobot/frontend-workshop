@@ -9,7 +9,7 @@ const ProfileSettings = () => {
 		<div className="profile-settings">
 			<LanguageSettings />
 			<ThemeSettings />
-			<TextSizeSettings />
+			{/* <TextSizeSettings /> */}
 			<button> Сохранить </button>
 		</div>
 	)

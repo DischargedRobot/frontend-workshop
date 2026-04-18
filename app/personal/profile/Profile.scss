@@ -3,3 +3,73 @@
 	justify-content: center;
 	align-items: center;
 }
+
+.profile-panel-area {
+	position: relative;
+	width: 100%;
+	/* adjust height as needed */
+	min-height: 360px;
+	overflow: hidden;
+}
+
+.panel {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+@keyframes enterFromRight {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0%);
+	}
+}
+
+@keyframes enterFromLeft {
+	from {
+		transform: translateX(-100%);
+	}
+	to {
+		transform: translateX(0%);
+	}
+}
+
+@keyframes exitToLeft {
+	from {
+		transform: translateX(0%);
+	}
+	to {
+		transform: translateX(-100%);
+	}
+}
+
+@keyframes exitToRight {
+	from {
+		transform: translateX(0%);
+	}
+	to {
+		transform: translateX(100%);
+	}
+}
+
+$animation-duration: 0.4s;
+
+.animate-enter-from-right {
+	animation: enterFromRight $animation-duration ease forwards;
+}
+
+.animate-enter-from-left {
+	animation: enterFromLeft $animation-duration ease forwards;
+}
+
+.animate-exit-left {
+	animation: exitToLeft $animation-duration ease forwards;
+}
+
+.animate-exit-right {
+	animation: exitToRight $animation-duration ease forwards;
+}

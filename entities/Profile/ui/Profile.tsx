@@ -55,12 +55,12 @@ export const Profile = ({
 			className="profile-grid"
 			autoComplete="off"
 			onFinish={handleSubmit}
+			requiredMark={false}
 		>
 
-			<div className="profile__avatar">
+			<div className="profile-grid__avatar">
 				<Avatar rightButton={logOutButton} size={100} />
 			</div>
-
 			<Form.Item
 				label="Логин"
 				name="login"
@@ -69,13 +69,14 @@ export const Profile = ({
 				<Input disabled placeholder="Логин" />
 			</Form.Item>
 
+
+
 			<Form.Item
 				label="Текущий отдел"
 				className="profile-grid__department"
 			>
 				<Input disabled value={departmentName} />
 			</Form.Item>
-
 
 			<div className="profile-grid__roles-wrapper">
 				<h2 className="role-list__title">Роли</h2>

@@ -1,3 +1,5 @@
+@use "@/common/styles/placeholder.scss";
+
 .role-list {
 	display: flex;
 	flex-wrap: wrap;
@@ -12,5 +14,9 @@
 	padding: 10px;
 
 	border: 1px solid var(--stroke);
-	border-radius: 20;
+	border-radius: 20px;
+
+	* {
+		@extend %scrollbar;
+	}
 }

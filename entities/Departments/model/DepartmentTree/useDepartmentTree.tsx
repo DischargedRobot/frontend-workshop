@@ -84,33 +84,32 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 
 	const loading = isValidating && (departments === undefined || departments.length === 0)
 
-	const loadData = useCallback(
-		async (node: IDepartmentNode) => {
-			if (node.isLeaf) return
-			try {
-				const children = await mutate(
-					[
-						["organizationId", "departmentId"],
-						[organizationId, node.id],
-					],
-					() =>
-						departmentApi.getDescedantOfDepartments(
-							organization.id,
-							node.id,
-							2,
-						),
-				)
-				if (children != undefined) {
-					changeDepartmentChildren(node, children)
-				}
-			} catch (error) {
-				if (error instanceof APIError && error.status === 404) {
-					changeDepartmentChildren(node, [])
-				}
-			}
-		},
-		[mutate, organizationId, organization.id, changeDepartmentChildren],
-	)
+	// const loadData = useCallback(
+	// 	async (node: IDepartmentNode) => {
+	// 		if (node.isLeaf) return
+	// 		try {
+	// 			const children = await mutate(
+	// 				[
+	// 					["organizationId", "departmentId"],
+	// 					[organizationId, node.id],
+	// 				],
+	// 				() =>
+	// 					departmentApi.getDescedantOfDepartments(
+	// 						organization.id,
+	// 						node.id,
+	// 						2,
+	// 					),
+	// 			)
+	// 			if (children != undefined) {
+	// 			}
+	// 		} catch (error) {
+	// 			if (error instanceof APIError && error.status === 404) {
+	// 				changeDepartmentChildren(node, [])
+	// 			}
+	// 		}
+	// 	},
+	// 	[mutate, organizationId, organization.id, changeDepartmentChildren],
+	// )
 
 	const setSelectedDepartments = useSelectedDepartmentsStore(
 		(state) => state.setDepartments,
@@ -182,7 +181,6 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 			organizationId,
 			error,
 			loading,
-			loadData,
 			handleCheck,
 			handleDrop,
 		}),
@@ -194,7 +192,6 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 			loading,
 			handleDrop,
 			handleCheck,
-			loadData,
 		],
 	)
 }

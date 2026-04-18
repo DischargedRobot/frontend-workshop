@@ -40,6 +40,19 @@
 	--toast-warning: #d6df1e;
 
 	--text-muted: color-mix(in srgb, var(--text-color), #666 50%);
+
+	--hover-mix: #828282;
+	--icon-bg-color: color-mix(in srgb, var(--foreground), #000000 10%);
+	--icon-bg-color-hover: color-mix(
+		in srgb,
+		var(--foreground),
+		var(--hover-mix) 10%
+	);
+	--icon-bg-color-disabled: color-mix(
+		in srgb,
+		var(--background),
+		var(--disabled-mix)
+	);
 }
 
 :root {
@@ -56,6 +69,9 @@
 	min-height: 100vh;
 	width: 100%;
 
+	* {
+		@extend %scrollbar;
+	}
 	// background-color: var(--background);
 	// color: var(--text-color);
 }

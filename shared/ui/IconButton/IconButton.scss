@@ -1,20 +1,36 @@
 .icon-button {
 	display: flex;
 	align-items: center;
+	flex-shrink: 0;
+
 	gap: 10px;
-	padding: 10px;
+	padding: 6px;
 
 	border-radius: 20px;
-	background-color: rgb(47, 47, 47);
+	background-color: var(--icon-bg-color);
+	box-shadow: 0 2px 3px var(--shadow);
 
 	&:hover {
-		background-color: var(--);
-		box-shadow: 0 2px 3px var(--shadow);
+		background-color: var(--icon-bg-color-hover);
 		color: var(--text-color);
 
 		svg {
 			color: var(--active-hover);
 		}
+	}
+
+	&.disabled {
+		&:hover {
+			box-shadow: none;
+			color: none;
+		}
+
+		svg {
+			color: color-mix(in srgb, var(--active), var(--disabled-mix));
+		}
+
+		color: color-mix(in srgb, var(--text-color), var(--disabled-mix));
+		background-color: var(--disabled);
 	}
 
 	& svg {

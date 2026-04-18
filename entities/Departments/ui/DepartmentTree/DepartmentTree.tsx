@@ -22,7 +22,6 @@ const DepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 		organizationId,
 		error,
 		loading,
-		loadData,
 		handleCheck,
 		handleDrop,
 	} = useDepartmentTree({ onLoaded, onCheckLeaf, onUncheckLeaf })
@@ -56,7 +55,6 @@ const DepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 					}}
 					className="tree text-table text-table_litle text-table_tiny"
 					checkable
-					loadData={loadData}
 					checkStrictly
 					selectable={true}
 					titleRender={(node) => (
@@ -81,6 +79,7 @@ const DepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 							info.dropToGap, // бросили между узулами = true иначе внутрь false
 						)
 					}}
+					// что-то для снижения рендеров
 					virtual={false}
 					motion={false}
 				/>

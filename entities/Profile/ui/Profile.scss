@@ -1,6 +1,14 @@
+@use "@/common/styles/placeholder.scss";
+
 .profile-grid {
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: repeat(3, auto);
+	grid-template-areas:
+		"avatar login"
+		"avatar department"
+		"roles roles";
+
 	align-items: center;
 
 	gap: 16px;
@@ -13,18 +21,22 @@
 	}
 
 	&__avatar {
+		grid-area: avatar;
 		display: flex;
 		align-items: start;
 		padding-top: 8px;
 	}
 
 	&__login {
+		grid-area: login;
 	}
 
 	&__department {
+		grid-area: department;
 	}
 
 	&__roles-wrapper {
+		grid-area: roles;
 	}
 
 	&__roles {
