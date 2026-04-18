@@ -1,1 +1,2 @@
-export { default as userApiClient } from "./userApiClient"
+export { userApiClient } from "./userApiServer"
+export { userApiServer } from "./userApiServer"

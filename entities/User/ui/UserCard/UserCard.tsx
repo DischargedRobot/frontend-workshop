@@ -5,14 +5,11 @@ import "./UserCard.scss"
 import Avatar from "@/shared/ui/Avatar"
 import RoleList from "@/shared/ui/RoleList"
 import { IUser } from "../../lib/types"
-import { DeleteIcon } from "@/shared/assets/Icon"
 import { memo } from "react"
 import RoleStatus from "@/shared/model/RolesStatus/RolesStatus"
-import UserDepartmentsDropDownMenu from "@/features/UserDepartmentsDropDownMenu"
 import { useUserCard } from "../../model/UserCard"
 import { Can } from "@/shared/model/Ability"
 import { areRolesEqual } from "../../model/UserCard/useUserCard"
-import { Select } from "antd"
 import { SelectDepartmentSearchDropMenu } from "@/features/SelectDepartmentSearchDropMenu"
 import { DeleteButton } from "@/shared/ui"
 
@@ -35,10 +32,13 @@ const UserCard = ({ user, setUser }: Props) => {
 		userDepartment,
 		setUserDepartment,
 		isDirty,
+		departments,
 	} = useUserCard(user, setUser)
 	console.log("usercard", userDepartment?.id !== (user.department.id ?? null) ||
 		!areRolesEqual(roles, user.roles || []),
 		{ userId: user.id, dept: userDepartment, userDept: user.department, roles, userRoles: user.roles })
+
+
 
 	return (
 		<div className={`user-card ${isSelected ? "user-card_selected" : ""}`}>
@@ -60,8 +60,9 @@ const UserCard = ({ user, setUser }: Props) => {
 				<div>
 
 					<SelectDepartmentSearchDropMenu
-						defaultValue={userDepartment ?? user.department}
+						defaultValue={user.department}
 						onSelect={(dep) => setUserDepartment(prev => dep ?? prev)}
+						departments={departments}
 					/>
 
 				</div>

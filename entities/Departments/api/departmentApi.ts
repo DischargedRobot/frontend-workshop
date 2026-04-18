@@ -81,10 +81,7 @@ const departmentApi = {
 			`${URL_ORGANIZATION}/${organization.id}/nodes?limit=42&offset=0`,
 		)
 
-		return convertIDepartmentResponseToIDepartmentWithOrganization(
-			responseData.items,
-			organization,
-		)
+		return convertIDepartmentResponseToIDepartment(responseData.items)
 	},
 
 	// *** Для детей ***

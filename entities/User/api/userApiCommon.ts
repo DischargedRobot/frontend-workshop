@@ -72,13 +72,63 @@ export const userApiCommon = {
 	},
 
 	deleteUserById: async (
-		clientsUrl: string,
+		url: string,
 		userId: number,
 		cookies?: string,
-	) => {
-		await APIJsonRequest(`${clientsUrl}/${userId}`, {
+	): Promise<void> => {
+		await APIJsonRequest(`${url}/${userId}`, {
 			method: "DELETE",
 			headers: cookies ? { Cookie: cookies } : {},
+		})
+	},
+
+	deleteRolesFromUser: async (
+		url: string,
+		userId: number,
+		roles: TROLE[],
+		cookies?: string,
+	): Promise<void> => {
+		await APIJsonRequest(`${url}/${userId}/roles/remove`, {
+			method: "DELETE",
+			headers: cookies ? { Cookie: cookies } : {},
+			body: JSON.stringify({
+				roleNames: roles,
+			}),
+		})
+	},
+
+	addRolesToUser: async (
+		url: string,
+		userId: number,
+		roles: TROLE[],
+		cookies?: string,
+	): Promise<TROLE[]> => {
+		const response = await APIJsonRequest<TROLE[]>(
+			`${url}/${userId}/roles/add`,
+			{
+				method: "POST",
+				headers: cookies ? { Cookie: cookies } : {},
+				body: JSON.stringify({
+					roleNames: roles,
+				}),
+			},
+		)
+
+		return response as TROLE[]
+	},
+
+	patchDepartmentToUser: async (
+		url: string,
+		userId: number,
+		department: IDepartment,
+		cookies?: string,
+	): Promise<void> => {
+		await APIJsonRequest(`${url}/${userId}/department`, {
+			method: "PATCH",
+			headers: cookies ? { Cookie: cookies } : {},
+			body: JSON.stringify({
+				departmentUUID: department.uuid,
+			}),
 		})
 	},
 }

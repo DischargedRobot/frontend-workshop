@@ -21,3 +21,18 @@ export const userApiServer = Object.fromEntries(
 		createWrapper(key as TUserApiKeys, SERVER_USERS_URL),
 	]),
 ) as TUserApiServer
+
+const CLIENT_USERS_URL = process.env.NEXT_PUBLIC_CLIENT_URL_V1 || ""
+
+if (!CLIENT_USERS_URL) {
+	console.warn("NEXT_PUBLIC_CLIENT_URL_V1 is not defined")
+}
+
+type TUserApiClient = ApiServer<TUserApi>
+
+export const userApiClient = Object.fromEntries(
+	Object.entries(userApiCommon).map(([key]) => [
+		key,
+		createWrapper(key as TUserApiKeys, CLIENT_USERS_URL),
+	]),
+) as TUserApiClient

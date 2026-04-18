@@ -1,9 +1,14 @@
 import { useCallback, useMemo, useState } from "react"
-import { IRole } from "@/shared/model/Role"
+import { getDifferentRoles, IRole } from "@/shared/model/Role"
 import { IUser } from "../../lib/types"
 import useUsersStore from "../useUsersStore"
-import { IDepartment } from "@/entities/Departments"
+import { IDepartment, useDepartmentsStore } from "@/entities/Departments"
 import useDeleteUser from "./useDeleteUser"
+import { userApiClient } from "../../api"
+import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
+import { useShallow } from "zustand/shallow"
+import { showToast } from "@/shared/ui"
+import { mapAPIErrors } from "@/shared/api"
 
 
 export const areRolesEqual = (aRoles: IRole[], bRoles: IRole[]) => {
@@ -44,9 +49,70 @@ export const useUserCard = (user: IUser, setUser: (user: IUser) => void) => {
 	// 	!areRolesEqual(roles, user.roles || []),
 	// 	{ userId: user.id, dept: userDepartment?.id, userDept: user.department.id, roles, userRoles: user.roles })
 
-	const saveData = () => {
+	const errorHandler = useCallback(() => {
+		showToast({ type: "error", text: "Пльзователя с таким айди не существует" })
+	}, [])
+	const errorHandlers = useMemo(
+		() => [
+			{
+				error: mapAPIErrors(404),
+				handler: errorHandler,
+			},
+		],
+		[errorHandler],
+	)
+	const handleErrorDeleteRole = useAPIErrorHandler(errorHandlers)
+	const handleErrorAddRole = useAPIErrorHandler(errorHandlers)
 
-		setUser({ ...user, department: userDepartment ?? user.department, roles: [...roles] })
+	const saveData = async () => {
+		// массивы ролей 100% совпдают по размеру и содержимому, только значения включения разное
+		const diffRoles = getDifferentRoles(user.roles, roles)
+
+		// проверка департмаента
+		if (!!userDepartment && userDepartment.id !== (user.department.id ?? null)) {
+			try {
+				await userApiClient.patchDepartmentToUser(user.id, userDepartment)
+				setUser({ ...user, department: userDepartment ?? user.department })
+			} catch (err) {
+				handleErrorDeleteRole(err)
+				return
+			}
+		}
+
+		// Делаем в 2 захода изменение ролей, чтобы не откатывать всё, 
+		// а просто изменить то, что уже изменено
+		// сначлача удаляем и устанавливаем
+		let rolesAfterDeletion: IRole[] = []
+		const deletedRoles = diffRoles.filter(role => role.different === "changed" && role.newIsEnabled === false)
+		if (deletedRoles.length) {
+			try {
+				await userApiClient.deleteRolesFromUser(user.id, deletedRoles.map(role => role.type))
+				const deletedTypes = deletedRoles.map(r => r.type)
+				rolesAfterDeletion = (user.roles).map(r =>
+					deletedTypes.includes(r.type) ? { ...r, isEnabled: false } : r,
+				)
+				setUser({ ...user, department: userDepartment ?? user.department, roles: rolesAfterDeletion })
+			} catch (err) {
+				handleErrorDeleteRole(err)
+				return
+			}
+		}
+
+		// потом добавляем и устаналиваем
+		const addedRoles = diffRoles.filter(role => role.different === "changed" && role.newIsEnabled === true)
+		if (addedRoles.length) {
+			try {
+				await userApiClient.addRolesToUser(user.id, addedRoles.map(role => role.type))
+				const addedTypes = addedRoles.map(r => r.type)
+				const afterAddition = (rolesAfterDeletion.length ? rolesAfterDeletion : user.roles).map(r =>
+					addedTypes.includes(r.type) ? { ...r, isEnabled: true } : r,
+				)
+				setUser({ ...user, department: userDepartment ?? user.department, roles: afterAddition })
+			} catch (err) {
+				handleErrorAddRole(err)
+				return
+			}
+		}
 	}
 
 	const resetData = () => {
@@ -54,12 +120,13 @@ export const useUserCard = (user: IUser, setUser: (user: IUser) => void) => {
 		setRoles([...user.roles])
 	}
 
+
+	const departments = useDepartmentsStore(useShallow(
+		(state) => state.getDepartmentsIncludingAllChildrenWithoutRoot(),
+	))
+
 	return {
-		register: () => ({}),
-		handleSubmit: (fn: () => void) => fn,
-		errors: {},
 		isDirty,
-		control: undefined,
 		saveData,
 		resetData,
 		roles,
@@ -71,5 +138,6 @@ export const useUserCard = (user: IUser, setUser: (user: IUser) => void) => {
 		changeStatusRole,
 		userDepartment,
 		setUserDepartment,
+		departments,
 	}
 }

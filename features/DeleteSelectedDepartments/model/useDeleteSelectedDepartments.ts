@@ -36,8 +36,8 @@ export const useDeleteSelectedDepartments = () => {
 			removeSelectedDepartments()
 			setUsers(
 				users.map((user) =>
-					user.departmentId != undefined &&
-					selectedIds.includes(user.departmentId)
+					user.department.id != undefined &&
+					selectedIds.includes(user.department.id)
 						? { ...user, departmentId: undefined }
 						: user,
 				),

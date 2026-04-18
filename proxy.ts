@@ -2,7 +2,7 @@ import { connection, NextRequest, NextResponse } from "next/server"
 
 const protectRoutes = ["/personal"]
 
-const AUTH_URL = `${process.env.NEXT_PUBLIC_AUTH_URL_V1}`
+const AUTH_URL = `${process.env.API_AUT_SERVICE_URL_V1}/auth`
 
 // ставим полученный куки из респонса в некст респонс
 const setCookieFromApiResponse = (
@@ -82,6 +82,10 @@ export default async function proxy(request: NextRequest) {
 	// если без кук получает доступ к защищёному пути - редиректим,
 	// если не защищёный и нет куки то пофиг на куки
 	// если не защищённый и есть куки то надо рефрешить куки
+	console.log("Checking access for path:", pathname)
+	console.log("Is protected path:", isProtectedPath)
+	console.log("Has session cookie:", hasSession)
+
 	if (!isProtectedPath && !hasSession) {
 		return NextResponse.next()
 	} else if (!hasSession) {
@@ -98,6 +102,7 @@ export default async function proxy(request: NextRequest) {
 					Cookie: cookieHeader,
 				},
 			})
+
 			console.log(`${AUTH_URL}/refresh`, "refresh url", cookieHeader)
 
 			// если не смогли срефрешить, то на логин
@@ -107,7 +112,7 @@ export default async function proxy(request: NextRequest) {
 			}
 
 			const next = NextResponse.next()
-			// setCookieFromApiResponse(response, next, "SESSION")
+			setCookieFromApiResponse(response, next, "SESSION")
 			console.log("всё ок")
 
 			return next

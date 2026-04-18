@@ -71,6 +71,12 @@ const useFilteredUsers = (users: IUser[]) => {
 		[filterArguments],
 	)
 
+	console.log(
+		"users in filter",
+		users,
+		filterArguments,
+		filterUsers(["departmentIds", "login"], users),
+	)
 	return useMemo(() => {
 		const filteredUsers = filterUsers(["departmentIds", "login"], users)
 		return filteredUsers

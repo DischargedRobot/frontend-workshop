@@ -27,9 +27,7 @@ export const useAddDepartment = ({
 	const addDepartToParent = useDepartmentsStore(
 		(state) => state.addDepartmentToParent,
 	)
-	const organizationId = useOrganizationStore(
-		(state) => state.organization.id,
-	)
+	const organization = useOrganizationStore((state) => state.organization)
 	const selectedDepartments = useSelectedDepartmentsStore(
 		(state) => state.departments,
 	)
@@ -70,7 +68,7 @@ export const useAddDepartment = ({
 			if (values.isService) {
 				const newService = await departmentApi.addService(
 					values.name,
-					organizationId,
+					organization.id,
 					parentId,
 				)
 
@@ -99,7 +97,7 @@ export const useAddDepartment = ({
 			} else {
 				const newDep = await departmentApi.addDepartment(
 					values.name,
-					organizationId,
+					organization.id,
 					parentId,
 				)
 				addDepartToParent(parentId, newDep)
@@ -111,6 +109,9 @@ export const useAddDepartment = ({
 			handleError(error as Error)
 		}
 	}
+
+	// const departments = useDepartmentsStore((state) => state.departments)
+	// console.log(organization, "organization", departments)
 
 	return {
 		form,

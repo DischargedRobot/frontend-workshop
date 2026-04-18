@@ -13,6 +13,7 @@ interface Props {
 	disabled?: boolean
 	className?: string
 	defaultValue?: IDepartment
+	departments: IDepartment[]
 }
 
 const SelectDepartmentSearchDropMenu = ({
@@ -21,11 +22,12 @@ const SelectDepartmentSearchDropMenu = ({
 	disabled,
 	className,
 	defaultValue,
+	departments,
 }: Props) => {
 
-	const departments = useDepartmentsStore(useShallow(
-		(state) => state.getDepartmentsIncludingAllChildren(),
-	))
+	// const departments = useDepartmentsStore(useShallow(
+	// 	(state) => state.getDepartmentsIncludingAllChildren(),
+	// ))
 	const { options } = useSelectDepartment({ departments })
 
 	// console.log(defaultValue, "Selectssa")

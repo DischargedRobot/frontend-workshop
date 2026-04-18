@@ -7,6 +7,8 @@ interface IFilterStore {
 
 	setLogin: (login: string) => void
 	setDepartmentIds: (departmentIds: number[]) => void
+	addDepartmentId: (departmentId: number) => void
+	removeDepartmentId: (departmentId: number) => void
 	setFilters: (filters: Partial<IFilteringFunctionArguments>) => void
 }
 
@@ -16,6 +18,18 @@ const useUserFiltersStore = create<IFilterStore>((set) => ({
 
 	setLogin: (login) => set({ login }),
 	setDepartmentIds: (departmentIds) => set({ departmentIds }),
+	addDepartmentId: (departmentId) =>
+		set((state) => ({
+			departmentIds: Array.from(
+				new Set([...state.departmentIds, departmentId]),
+			),
+		})),
+	removeDepartmentId: (departmentId) =>
+		set((state) => ({
+			departmentIds: state.departmentIds.filter(
+				(id) => id !== departmentId,
+			),
+		})),
 	setFilters: (filters) => set(filters),
 }))
 

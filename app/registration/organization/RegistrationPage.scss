@@ -17,6 +17,8 @@
 .registration__content {
 	@extend %flex-column;
 	align-items: center;
+	justify-content: center;
+	height: 100%;
 }
 
 .registration__login {

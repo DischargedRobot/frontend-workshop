@@ -14,16 +14,13 @@ interface Props {
 const AddUserRoles = ({ roles, value, onChange }: Props) => {
 
 	const displayRoles = roles ?? value ?? DEFAULT_ROLES
-	// console.log(displayRoles, "DisplayRoles")
 	const handleRoleChange = (role: IRole, isEnabled: boolean) => {
 		const updatedRole = { ...role, isEnabled }
 		const updatedRoles = displayRoles.map((r) =>
 			r.type === role.type ? updatedRole : r,
 		)
-		// console.log(updatedRoles, "Update", updatedRole)
 		onChange(updatedRoles, updatedRole)
 	}
-	// console.log(displayRoles, "AddUserRoles", value, "sa", roles)
 
 	const titles = ["Сотрудники", "Фич флаги", "Отделы"]
 	const countCollumn = titles.length
