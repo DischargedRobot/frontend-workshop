@@ -12,23 +12,31 @@
 
 .registration {
 	@extend %center_content;
-}
-
-.registration__content {
 	@extend %flex-column;
 	align-items: center;
 	justify-content: center;
-	height: 100%;
-}
 
-.registration__login {
-	@extend %flex-column;
-	justify-content: center;
-	align-items: center;
+	gap: 20px;
 
-	gap: 12px;
-	margin-top: 18px;
-}
-.registration__login__text {
-	color: var(--text-muted);
+	max-width: 300px;
+	width: 100%;
+	height: auto;
+
+	&__content {
+		@extend %flex-column;
+		align-items: center;
+		justify-content: center;
+
+		gap: 30px;
+
+		width: 100%;
+	}
+
+	&__login {
+		width: 100%;
+	}
+
+	&__login__text {
+		color: var(--text-muted);
+	}
 }

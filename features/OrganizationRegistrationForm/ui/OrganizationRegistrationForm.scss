@@ -4,20 +4,40 @@
 .registration-table {
 	@extend %flex-column;
 
-	padding: 38px 60px;
-	gap: 12px;
+	gap: 30px;
 
-	max-width: 705px;
-	max-height: 611px;
+	width: 100%;
+	height: auto;
 
-	border: 2px solid var(--gray);
-	border-radius: 40px;
-
-	&__items {
+	&__admin {
 		@extend %flex-column;
-		gap: 10px;
+		justify-content: center;
+		gap: 20px;
+	}
+
+	&__content {
+		@extend %flex-column;
+
+		gap: 30px;
+		padding: 30px 20px;
+
+		box-shadow: 1px 1px 5px var(--shadow);
+		background-color: var(--foreground);
+		border: 2px solid var(--gray);
+		border-radius: 20px;
 	}
 }
+
+.auth-input {
+	width: 100%;
+	max-width: 585px;
+	height: auto;
+
+	color: var(--text-color);
+	background: var(--foreground);
+	border-radius: 10px;
+}
+
 .registration-table__login-label_under-items {
 	margin-top: 18px;
 	display: flex;
@@ -25,6 +45,7 @@
 }
 
 .registration-table__title {
+	width: 100%;
 }
 
 .form__table-rows {

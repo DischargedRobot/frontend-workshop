@@ -1,101 +1,116 @@
 "use client"
 
-import { Button, Form, Alert } from "antd"
+import { Button, Form } from "antd"
 import "./OrganizationRegistrationForm.scss"
-import { useRouter } from "next/navigation"
+// import { useRouter } from "next/navigation"
 
 import { useOrganizationRegistrationForm } from "../model"
 import { TextInput } from "@/shared/ui"
+import { checkPasswordAntdForm } from "@/shared/model/CheckPassword"
 
-interface RegistrationFormValues {
+export interface RegistrationFormValues {
 	OrganizationName: string
-	AdminName: string
-	AdminPassword: string
+	login: string
+	password: string
 }
 
 export const OrganizationRegistrationForm = () => {
 	const [form] = Form.useForm<RegistrationFormValues>()
-	const { onSubmit, loading, error } = useOrganizationRegistrationForm()
-	const router = useRouter()
+	const { onSubmit, loading, error, clearFieldError } = useOrganizationRegistrationForm()
+	// const router = useRouter()
 
 	return (
 		<Form
+			validateTrigger="onBlur"
 			className="registration-table"
 			form={form}
+			autoComplete="off"
 			layout="vertical"
 			onFinish={onSubmit}
+			onValuesChange={(changedValues) => {
+				if (changedValues?.login) {
+					clearFieldError("login", changedValues.login)
+				}
+				if (changedValues?.OrganizationName) {
+					clearFieldError("organization", changedValues.OrganizationName)
+				}
+			}}
+			requiredMark={false}
 		>
-			{error && (
-				<Form.Item>
-					<Alert
-						title="Ошибка регистрации"
-						description={error.message}
-						type="error"
-						showIcon
-						closable
-					/>
-				</Form.Item>
-			)}
-
-			<Form.Item
-				label="Название организации"
-				name="OrganizationName"
-				rules={[
-					{
-						required: true,
-						message: "Введите название организации",
-					},
-				]}
-			>
-				<TextInput placeholder="Название организация" />
-			</Form.Item>
-
-			<div className="registration-table__items">
-				<h3 className="title title_very-litle">
-					Профиль администрации
-				</h3>
-
+			<div className="registration-table__content">
 				<Form.Item
-					label="Логин"
-					name="AdminName"
+					// label="Название организации"
+					name="OrganizationName"
 					rules={[
 						{
 							required: true,
-							message: "Введите логин",
+							message: "Введите название организации",
 						},
 					]}
+					help={error?.organization}
 				>
-					<TextInput placeholder="Логин" />
+					<TextInput placeholder="Название организация" />
 				</Form.Item>
 
-				<Form.Item
-					label="Пароль"
-					name="AdminPassword"
-					rules={[
-						{
-							required: true,
-							message: "Это поле обязательно для заполнения",
-						},
-						{
-							min: 8,
-							message: "Размер пароля должен быть больше 6",
-						},
-						{
-							max: 25,
-							message: "Размер пароля должен быть меньше 25",
-						},
-					]}
-				>
-					<TextInput type="password" placeholder="Пароль" />
-				</Form.Item>
+				<div className="registration-table__admin">
+					<h3 className="title title_very-litle">
+						Профиль администрации
+					</h3>
+					<Form.Item
+						// label="Логин"
+						name="login"
+						rules={[
+							{
+								required: true,
+								message: "Введите логин",
+							},
+						]}
+						help={error?.login}
+
+					>
+						<TextInput placeholder="Логин" />
+					</Form.Item>
+					<Form.Item
+						// label="Пароль"
+						name="password"
+						rules={[
+							{
+								validator: (_, value) => {
+									return checkPasswordAntdForm(value)
+								}
+							}
+						]}
+					>
+						<TextInput type="password" placeholder="Пароль" />
+					</Form.Item>
+					<Form.Item
+						// label="Подтверждение пароля"
+						name="confirm"
+						dependencies={["password"]}
+						rules={[
+							({ getFieldValue }) => ({
+								validator(_, value) {
+									if (!value || getFieldValue("password") === value) {
+										return Promise.resolve()
+									}
+									return Promise.reject(new Error("Пароли не совпадают"))
+								}
+							})
+						]}
+					>
+						<TextInput type="password" placeholder="Подтверждение пароля" />
+					</Form.Item>
+
+				</div>
 			</div>
 
-			<div className="registration-table__buttons">
-
-				<Button type="primary" htmlType="submit" loading={loading}>
-					Зарегистрироваться
-				</Button>
-			</div>
+			<Button
+				className="form-button"
+				type="primary"
+				htmlType="submit"
+				loading={loading}
+			> {loading ? "Регистрация..." : "Зарегистрироваться"}
+			</Button>
 
 		</Form>
 	)

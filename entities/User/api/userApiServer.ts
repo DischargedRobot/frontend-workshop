@@ -1,10 +1,10 @@
 import { userApiCommon } from "./userApiCommon"
 import { ApiServer, createWrapperCommon } from "./universalApiClientServer"
 
-const SERVER_USERS_URL = process.env.API_AUT_CLIENT_URL_V1 || ""
+const SERVER_USERS_URL = process.env.API_AUTH_CLIENT_URL_V1 || ""
 
 if (!SERVER_USERS_URL) {
-	console.warn("API_AUT_CLIENT_URL_V1 is not defined")
+	console.warn("API_AUTH_CLIENT_URL_V1 is not defined")
 }
 
 type TUserApi = typeof userApiCommon
