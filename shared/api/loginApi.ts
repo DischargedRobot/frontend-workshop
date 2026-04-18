@@ -35,17 +35,20 @@ interface RoleResponse {
 	name: TROLE
 }
 
+interface IPatchProfileRequest {
+	oldPassword: string
+	newLogin: string
+	newPassword: string
+}
+
 const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL_V1
 // В shared т.к. часто используется другими
 const loginApi = {
 	registerOrganization: async (data: RegistrationRequest): Promise<void> => {
-		await APIJsonRequest<void>(
-			`${AUTH_URL}/register-organization`,
-			{
-				method: "POST",
-				body: JSON.stringify(data),
-			},
-		)
+		await APIJsonRequest<void>(`${AUTH_URL}/register-organization`, {
+			method: "POST",
+			body: JSON.stringify(data),
+		})
 	},
 
 	logIn: async (data: LogInRequest) => {
@@ -92,7 +95,7 @@ const loginApi = {
 				cache: "no-store", // т.к. вызываем на сервере иногда
 			},
 		)
-        
+
 		return {
 			login: response.login,
 			password: response.password,
@@ -104,6 +107,13 @@ const loginApi = {
 			uuidDepartment: response.uuidDepartament,
 			settings: response.settings,
 		}
+	},
+
+	patchMe: async (data: IPatchProfileRequest): Promise<void> => {
+		await APIJsonRequest<void>(`${AUTH_URL}/clients/me`, {
+			method: "PATCH",
+			body: JSON.stringify(data),
+		})
 	},
 
 	registerUser: async (

@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { IProfile } from "../lib"
+import { IProfile } from "../lib/profileTypes"
 
 interface IProfileStore {
 	profile: IProfile

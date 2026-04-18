@@ -12,6 +12,7 @@
 		"test:watch": "jest --watch",
 		"test:coverage": "jest --coverage"
 	},
+	"sideEffects": false,
 	"dependencies": {
 		"@ant-design/icons": "^6.1.0",
 		"@casl/ability": "^6.8.0",

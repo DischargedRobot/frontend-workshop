@@ -1,7 +1,7 @@
 "use client"
 
 import { Form, Input, Spin, Button } from "antd"
-import { IProfile } from "../lib"
+import { IProfile } from "../lib/profileTypes"
 import Avatar from "@/shared/ui/Avatar"
 import RoleList from "@/shared/ui/RoleList"
 import RoleStatus from "@/shared/model/RolesStatus/RolesStatus"
@@ -66,7 +66,7 @@ export const Profile = ({
 				name="login"
 				className="profile-grid__login"
 			>
-				<Input disabled placeholder="Логин" />
+				<Input placeholder="Логин" />
 			</Form.Item>
 
 
@@ -75,7 +75,7 @@ export const Profile = ({
 				label="Текущий отдел"
 				className="profile-grid__department"
 			>
-				<Input disabled value={departmentName} />
+				<Input value={departmentName} />
 			</Form.Item>
 
 			<div className="profile-grid__roles-wrapper">

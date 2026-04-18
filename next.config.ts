@@ -19,6 +19,18 @@ const nextConfig: NextConfig = {
 		},
 	},
 	reactCompiler: true,
+	experimental: {
+		optimizePackageImports: [
+			"antd",
+			"@ant-design/icons",
+			"swr",
+			"zustand",
+			"react-hook-form",
+			"@casl/ability",
+			"@casl/react",
+			"next-auth",
+		],
+	},
 }
 
 export default nextConfig

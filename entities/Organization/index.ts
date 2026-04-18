@@ -1,4 +1,4 @@
-export { organizationApiClient } from "./api"
+export { organizationApiClient } from "./api/organizationApiClient"
 
-export { useOrganizationStore } from "./model"
-export type { IOrganization } from "./model"
+export { useOrganizationStore } from "./model/useOrganizationStore"
+export type { IOrganization } from "./model/useOrganizationStore"

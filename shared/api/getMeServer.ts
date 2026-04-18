@@ -21,7 +21,7 @@ export const getMeServer = async (
 		`${AUTH_URL}/clients/me`,
 		{
 			headers: cookiesString ? { Cookie: cookiesString } : {},
-			cache: "no-store", // т.к. вызываем на сервере иногда
+			cache: "no-store", // чтобы сервак не кшеировал
 		},
 	)
 
