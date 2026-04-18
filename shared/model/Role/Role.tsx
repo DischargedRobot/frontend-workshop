@@ -14,7 +14,6 @@ interface Props {
 const Role = (props: Props) => {
 	const { role, onClick, disabled = false } = props
 
-	console.log("Rendering Role:", role.name, "Disabled:", disabled)
 	return (
 		<button
 			className={`role ${disabled ? "role_disabled" : ""}`}

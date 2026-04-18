@@ -2,7 +2,7 @@
 
 import "./FullDepartmentTree.scss"
 
-import { DepartmentTree, IDepartment, IService } from "@/entities/Departments"
+import { DepartmentTree, IDepartment, IService, useDepartmentsStore } from "@/entities/Departments"
 import { AddDepartment } from "@/features/AddDepartment"
 import { useFullDepartmentTree } from "../model"
 import { DeleteSelectedDepartments } from "@/features/DeleteSelectedDepartments"
@@ -11,7 +11,7 @@ import { Can } from "@/shared/model/Ability"
 import { PointerEvent, useCallback, useMemo, useRef, useState } from "react"
 import { ChangeVisibleServicePanel } from "@/features/ChangeVisibleServicePanel"
 import { userApiClient } from "@/entities/User/api"
-import { useUsersStore } from "@/entities/User"
+import { useUsersStore, useUserFiltersStore } from "@/entities/User"
 import { mutate, useSWRConfig } from "swr"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 
@@ -44,6 +44,7 @@ const FullDepartmentTree = () => {
 				}))}
 				onSelect={(dep) => dep && onChange(dep.id)}
 				placeholder="Родительский отдел"
+				equalOption="id"
 			/>
 		),
 		[departments],
@@ -103,24 +104,42 @@ const FullDepartmentTree = () => {
 	// при снятии выделения удаляем юзеров этого отдела из стора
 	const { cache } = useSWRConfig()
 	const addUsers = useUsersStore((state) => state.addUsers)
-	const onCheckLeaf = useCallback((department: IDepartment) => {
-		const key = [["users", "departmentId"], ["all", department.id]].toString()
+	const addDepartmentId = useUserFiltersStore((s) => s.addDepartmentId)
+	const removeDepartmentId = useUserFiltersStore((s) => s.removeDepartmentId)
+	const setDepartmentIds = useUserFiltersStore((s) => s.setDepartmentIds)
 
-		// Сразу используем кеш, если есть
+	// const rootDepartments = useDepartmentsStore((state) => state.child.children) || []
+
+	// при установке check добавляем id в фильтры и подгружаем пользователей
+	const onCheckLeaf = useCallback((department: IDepartment, checkedKeys: number[]) => {
+		// Если ни один отедл выдлене не блы, значит там сидят корневые
+		// и нужно их убрать, поэтому сет
+		console.log(checkedKeys, "OnCheckLeaf")
+		if (checkedKeys.length === 1) {
+			setDepartmentIds([department.id])
+		} else {
+			addDepartmentId(department.id)
+		}
+
+		const key = [["users", "departmentId"], ["all", department.id]].toString()
 		const cached = cache.get(key)?.data
 		if (cached) addUsers(cached)
-
-		// Всегда подгружаем свежие данные в фоне
 		mutate(key, () => userApiClient.getUsersByDepartment(department))
 			.then(users => { if (users) addUsers(users) })
 			.catch(handleError)
-	}, [addUsers, cache, handleError])
+	}, [addUsers, cache, handleError, addDepartmentId, setDepartmentIds])
 
-	// при снятии check с листа дерева отделов удаляем юзеров этого отдела из стора
-	const deleteUsersByDepartmentId = useUsersStore((state) => state.deleteUsersByDepartmentId)
-	const onUncheckLeaf = useCallback((department: IDepartment) => {
-		deleteUsersByDepartmentId(department.id)
-	}, [deleteUsersByDepartmentId])
+	// при снятии check с листа дерева отделов удаляем id из фильтров (не удаляем пользователей из стора)
+	const onUncheckLeaf = useCallback((department: IDepartment, checkedKeys: number[]) => {
+		removeDepartmentId(department.id)
+		// Если после удаления не осталось выбранных отделов — ставим корневые (центральные)
+		console.log(checkedKeys, "onUncheckLeaf")
+		if (checkedKeys.length === 0) {
+			const rootDepartments = useDepartmentsStore.getState().departments[0].children || []
+			const rootIds = rootDepartments.map((d) => d.id)
+			setDepartmentIds(rootIds)
+		}
+	}, [removeDepartmentId, setDepartmentIds])
 
 	return (
 		<div className="department-tree-panel" style={{ width: width }}>

@@ -51,6 +51,7 @@ interface DepartmentStoreExtensions {
 		department: IDepartment,
 	) => void
 	getDepartmentsIncludingAllChildren: () => IDepartment[]
+	getDepartmentsIncludingAllChildrenWithoutRoot: () => IDepartment[]
 	changeParentDepartment: (dep: IDepartment, newParentDepId: number) => void
 }
 
@@ -112,7 +113,12 @@ export const useDepartmentsStore =
 		},
 
 		getDepartmentsIncludingAllChildren: () =>
-			getDepartmentAndAllChildren(get().departments as IDepartment[]),
+			getDepartmentAndAllChildren(get().departments),
+
+		getDepartmentsIncludingAllChildrenWithoutRoot: () => {
+			const all = getDepartmentAndAllChildren(get().departments)
+			return all.slice(1)
+		},
 
 		changeParentDepartment: (department, newParentId) =>
 			set((state) => {

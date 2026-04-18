@@ -9,7 +9,7 @@ export class APIError extends Error {
 		public status: number | null,
 		public title: string,
 		message?: string,
-		public type?: string,
+		public type?: string, // поле для FFAPIError
 	) {
 		super((message ?? title) || `Error ${APIError.errorType}`)
 

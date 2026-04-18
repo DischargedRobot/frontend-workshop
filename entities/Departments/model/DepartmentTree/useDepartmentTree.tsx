@@ -5,7 +5,6 @@ import { departmentApi } from "../../api"
 import { useCallback, useMemo } from "react"
 import { APIError } from "@/shared/api/APIErrors"
 import { IDepartment } from "../../lib"
-import { useUserFiltersStore } from "@/entities/User"
 import type { IDepartmentNode } from "../../ui/DepartmentTree/TitleRender"
 import { useSelectedDepartmentsStore } from "../useSelectedDepartmentsStore"
 
@@ -30,16 +29,10 @@ const getDepartmentAndAllChildren = (
 
 interface Props {
 	onLoaded?: (departments: IDepartment[]) => void
-	onCheckLeaf?: (department: IDepartment) => void
-	onUncheckLeaf?: (department: IDepartment) => void
+	onCheckLeaf?: (department: IDepartment, checkedKeys: number[]) => void
+	onUncheckLeaf?: (department: IDepartment, checkedKeys: number[]) => void
 }
 const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
-	const setFilterDepartmentIds = useUserFiltersStore(
-		(state) => state.setDepartmentIds,
-	)
-	const filterDepartmentIds = useUserFiltersStore(
-		(state) => state.departmentIds,
-	)
 
 	const organization = useOrganizationStore((state) => state.organization)
 	const organizationId = useOrganizationStore(
@@ -125,28 +118,25 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 
 	const handleCheck = useCallback(
 		(checkedKeys: number[], node: IDepartmentNode, checked: boolean) => {
-			setFilterDepartmentIds(checkedKeys)
-
 			const selectedDeps = getDepartmentAndAllChildren(departments || [])
 				.filter((dep) => checkedKeys.includes(dep.id))
 
-			// Если ни один отедл не выбран, то ставим детей первого уровня
+			// Если ни один отедл не выбран, 
+			// то ставим детей первого уровня
 			setSelectedDepartments(
 				selectedDeps.length === 0
-					? organization.child.children
+					? useDepartmentsStore.getState().departments[0]?.children || []
 					: selectedDeps
 			)
 
 			if (checked) {
-				onCheckLeaf?.(node)
+				onCheckLeaf?.(node, checkedKeys)
 			} else {
-				onUncheckLeaf?.(node)
+				onUncheckLeaf?.(node, checkedKeys)
 			}
 		},
 		[
-			setFilterDepartmentIds,
 			departments,
-			organization,
 			setSelectedDepartments,
 			onCheckLeaf,
 			onUncheckLeaf,
@@ -189,7 +179,6 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 		() => ({
 			departments,
 			treeData,
-			filterDepartmentIds,
 			organizationId,
 			error,
 			loading,
@@ -200,7 +189,6 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 		[
 			departments,
 			treeData,
-			filterDepartmentIds,
 			organizationId,
 			error,
 			loading,

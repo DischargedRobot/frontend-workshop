@@ -7,6 +7,7 @@ import {
 	isAPIError,
 	FFAPIError,
 	AuthAPIError,
+	isFFAPIError,
 } from "./APIErrors"
 import { showToast } from "../ui"
 import { useRouter } from "next/navigation"
@@ -49,9 +50,22 @@ export const useAPIErrorHandler = <T extends APIError | FFAPIError>(
 			// }
 
 			// Сначала проверяем кастомные обработчики
-			if (isAPIError(error)) {
+			if (isFFAPIError(error)) {
 				const customHandler = customHandlers.find((handler) => {
-					return handler.error.type === error.type
+					return (
+						handler.error.type && handler.error.type === error.type
+					)
+				})
+
+				if (customHandler) {
+					customHandler.handler(
+						error as T extends APIError ? APIError : FFAPIError,
+					)
+					return
+				}
+			} else if (isAPIError(error)) {
+				const customHandler = customHandlers.find((handler) => {
+					return handler.error.status === error.status
 				})
 
 				if (customHandler) {
