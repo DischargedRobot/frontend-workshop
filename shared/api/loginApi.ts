@@ -42,6 +42,7 @@ interface IPatchProfileRequest {
 }
 
 const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL_V1
+const CLIENT_URL = process.env.NEXT_PUBLIC_CLIENT_URL_V1
 // В shared т.к. часто используется другими
 const loginApi = {
 	registerOrganization: async (data: RegistrationRequest): Promise<void> => {
@@ -89,7 +90,7 @@ const loginApi = {
 		cookiesString?: string,
 	): Promise<Omit<IProfile, "departmentId"> & { uuidDepartment: string }> => {
 		const response = await APIJsonRequest<GetMeResponse>(
-			`${process.env.NEXT_PUBLIC_AUTH_SERVICE_URL_V1}/clients/me`,
+			`${CLIENT_URL}/me`,
 			{
 				headers: cookiesString ? { Cookie: cookiesString } : {},
 				cache: "no-store", // т.к. вызываем на сервере иногда
@@ -110,7 +111,7 @@ const loginApi = {
 	},
 
 	patchMe: async (data: IPatchProfileRequest): Promise<void> => {
-		await APIJsonRequest<void>(`${AUTH_URL}/clients/me`, {
+		await APIJsonRequest<void>(`${CLIENT_URL}/me`, {
 			method: "PATCH",
 			body: JSON.stringify(data),
 		})

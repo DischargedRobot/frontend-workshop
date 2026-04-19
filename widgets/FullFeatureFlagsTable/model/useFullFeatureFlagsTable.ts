@@ -2,6 +2,7 @@ import { FFApi, useFFStore } from "@/entities/FF"
 import { useOrganizationStore } from "@/entities/Organization"
 import { useShallow } from "zustand/shallow"
 import { useBreadcrumbStore } from "@/entities/DepartmentBreadcamb"
+import { useCallback } from "react"
 
 export const useFullFeatureFlagsTable = () => {
 	const organization = useOrganizationStore((state) => state.organization)
@@ -15,7 +16,7 @@ export const useFullFeatureFlagsTable = () => {
 	const setFeatureFlag = useFFStore((state) => state.setFeatureFlags)
 
 	// Событие для кнопки "обновить"
-	const reloadFeatureFlags = async () => {
+	const reloadFeatureFlags = useCallback(async () => {
 		const response = await FFApi.getFFsByDepartments(
 			lastDep.children,
 			organization.id,
@@ -23,7 +24,7 @@ export const useFullFeatureFlagsTable = () => {
 			0,
 		)
 		setFeatureFlag(response.FFs)
-	}
+	}, [lastDep, organization, setFeatureFlag])
 
 	return {
 		organization,

@@ -5,8 +5,8 @@ import React, { useEffect, useRef, useState } from "react"
 import { Form, Input, Button, message } from "antd"
 import Avatar from "@/shared/ui/Avatar"
 import { useProfileStore } from "@/entities/Profile"
-import { loginApi } from "@/shared/api"
-import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
+import { isAPIError, loginApi } from "@/shared/api"
+import useChangeProfileErrorHandler from "@/features/ChangeProfilePersonalData/model/useChangeProfileErrorHandler"
 import type {
     ChangeProfilePersonalDataForm,
     ChangeProfilePersonalDataSave,
@@ -14,6 +14,7 @@ import type {
 import { showToast, TextInput } from "@/shared/ui"
 import { useCheckPassword } from "@/shared/lib"
 import { TextInputPassword } from "@/shared/ui/TextInput"
+import { useRouter } from "next/router"
 
 interface Props {
     onSave?: (data: ChangeProfilePersonalDataSave) => void
@@ -26,7 +27,9 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
 
     useEffect(() => {
         form.setFieldsValue({ login: profileLogin })
-
+        // намеренно не храним пароль
+        initialRef.current = { login: profileLogin, password: "" }
+        // console.log("Set form login sadato", profileLogin)
     }, [profileLogin, form])
 
     const { validator: validatePassword, PasswordChecksComponent } =
@@ -34,12 +37,15 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
 
     const passwordWatcher = Form.useWatch("password", form)
 
-    const handleAPIError = useAPIErrorHandler()
+    const handleAPIError = useChangeProfileErrorHandler()
 
     const [isDirty, setIsDirty] = useState(false)
     const initialRef = useRef<Omit<ChangeProfilePersonalDataForm, "currentPassword" | "confirm"> | Record<string, string>>({})
 
-    const handleFinish = async (values: ChangeProfilePersonalDataForm) => {
+
+    // const error = useRef<string | null>(null)
+
+    const handleFinish = async (values: ChangeProfilePersonalDataForm,) => {
         const { login, password, currentPassword } = values
 
         try {
@@ -56,10 +62,11 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
             if (onSave) {
                 onSave({ login, password })
             }
-
-            initialRef.current = { login, password }
+            setIsDirty(false)
             showToast({ type: "success", text: "Данные сохранены" })
         } catch (err) {
+            // if (isAPIError(err) && err.status === 403) {
+            // }
             handleAPIError(err as Error)
         }
     }
@@ -69,6 +76,7 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
 
     return (
         <Form
+            initialValues={{ login: profileLogin, password: "" }}
             // onValuesChange={onValuesChange}
             className="change-profile-personal-form"
             form={form}
@@ -77,9 +85,9 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
             autoComplete="off"
             requiredMark={false}
             onValuesChange={(_changed, all) => {
-                const { currentPassword, ...withoutCurrentPassword } = all
+                const { currentPassword, confirm, ...withoutCurrentPassword } = all
+                // console.log(withoutCurrentPassword, initialRef.current, "compare", JSON.stringify(withoutCurrentPassword), JSON.stringify(initialRef.current))
                 setIsDirty(JSON.stringify(withoutCurrentPassword) !== JSON.stringify(initialRef.current))
-
             }}
         >
             <div
