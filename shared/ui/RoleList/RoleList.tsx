@@ -8,8 +8,8 @@ interface Props {
 	disabled?: boolean
 	roles?: IRole[]
 	value?: IRole[]
-	changeRoles?: () => void
-	onChange?: () => void
+	changeRoles?: (roles: IRole[]) => void
+	onChange?: (roles: IRole[]) => void
 }
 
 const RoleList = (props: Props) => {
@@ -27,8 +27,9 @@ const RoleList = (props: Props) => {
 						disabled={disabled}
 						role={role}
 						onClick={() => {
-							role.isEnabled = false
-							handleChange()
+							const newRoles = rolesList.map((r, i) => i === idx ? { ...r, isEnabled: false } : r)
+							// console.log("handleChange", newRoles)
+							handleChange(newRoles.filter(r => r.isEnabled === true))
 						}}
 					/>
 				</li>

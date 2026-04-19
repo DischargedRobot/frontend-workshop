@@ -8,7 +8,7 @@ import { APIError, mapAPIErrors } from "@/shared/api"
 import { showToast } from "@/shared/ui"
 import { useMemo } from "react"
 import { handler } from "next/dist/build/templates/app-route"
-import { FFAPIErrors, isFFAPIError } from "@/shared/api/APIErrors"
+import { FFAPIErrors, isAPIError, isFFAPIError } from "@/shared/api/APIErrors"
 
 export const useFFTable = () => {
 	const organizationId = useOrganizationStore(
@@ -72,7 +72,6 @@ export const useFFTable = () => {
 				showToast({
 					type: "error",
 					title: "Ошибка при получении фичи",
-
 					text: "Фича не найдена. Возможно, она была удалена другим пользователем. Пожалуйста, обновите страницу или список фич флагов",
 				}),
 		},
@@ -105,11 +104,16 @@ export const useFFTable = () => {
 					updateFF({ ...previouslyFF, isToggling: false })
 				}
 			} catch (innerError) {
+				if (isAPIError(innerError) && innerError.status === 404) {
+					removeFFFromLocal([previouslyFF])
+					return
+				}
+
 				handlerGetAPIError(error)
 
 				updateFF({ ...previouslyFF, isToggling: false })
 			}
-			handleToggleAPIError(error as APIError)
+			handleToggleAPIError(error)
 		} finally {
 			setToggling(FF.id, false)
 		}

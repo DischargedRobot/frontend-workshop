@@ -27,9 +27,14 @@ export const useUserCard = (user: IUser, setUser: (user: IUser) => void) => {
 		userId: user.id,
 	})
 
-
-	const changeStatusRole = useCallback((): void => {
-		setRoles([...user.roles])
+	// вызывается при клике на роль в листе ролей
+	// принимает только активные роли
+	const changeStatusRole = useCallback((enabledRoles: IRole[]): void => {
+		const enabledTypes = enabledRoles.map(role => role.type)
+		const base = user.roles
+		// console.log("changeStatusRole", { enabledRoles, base })
+		const updated = base.map(role => ({ ...role, isEnabled: enabledTypes.includes(role.type) }))
+		setRoles(updated)
 	}, [user.roles])
 
 	// Роли для списка под перснальными данными в карточке
@@ -38,7 +43,7 @@ export const useUserCard = (user: IUser, setUser: (user: IUser) => void) => {
 	// переименуем (так красивше просто)
 	const toggleSelected = () => setIsSelected((prev) => !prev)
 
-	// Проверка, что правко не было
+	// Проверка, что правок не было
 	const isDirty = useMemo(() => {
 		return (
 			userDepartment?.id !== (user.department.id ?? null) ||

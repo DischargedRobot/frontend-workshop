@@ -26,7 +26,7 @@ const DepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 		handleDrop,
 	} = useDepartmentTree({ onLoaded, onCheckLeaf, onUncheckLeaf })
 
-	console.log("DepartmentTree render", { departments, treeData })
+	// console.log("DepartmentTree render", { departments, treeData })
 
 	return (
 		<>
