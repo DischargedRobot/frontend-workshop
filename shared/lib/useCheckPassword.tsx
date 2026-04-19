@@ -45,10 +45,10 @@ export function useCheckPassword() {
                     Содержит цифру
                 </li>
                 <li style={{ color: checks.hasUpperCase ? "green" : "red" }}>
-                    Содержит заглавную букву
+                    Содержит заглавную букву латинского алфавита
                 </li>
                 <li style={{ color: checks.hasLowerCase ? "green" : "red" }}>
-                    Содержит строчную букву
+                    Содержит строчную букву латинского алфавита
                 </li>
                 <li style={{ color: checks.hasSpecialChar ? "green" : "red" }}>
                     Содержит специальный символ (!, ^, -, _, &, ?)

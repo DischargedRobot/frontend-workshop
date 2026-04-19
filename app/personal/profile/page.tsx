@@ -13,8 +13,6 @@ import { ChangeProfilePersonalData } from "@/features/ChangeProfilePersonalData"
 
 const ProfilePage = () => {
 
-	const pathname = usePathname()
-
 	const order = ['profile', 'changePassword', 'theme']
 
 	const [currentPanel, setCurrentPanel] = useState('profile')
@@ -37,10 +35,10 @@ const ProfilePage = () => {
 		const handleAnimationEnd = () => {
 			setIsAnimating(false)
 			setPrevPanel(null)
-			console.log('Animation ended, current panel:', currentPanel, 'isAnimating:', isAnimating)
+			// console.log('Animation ended, current panel:', currentPanel, 'isAnimating:', isAnimating)
 		}
 		const container = animationContainer.current
-		console.log('Animation ended,', container, 'current panel:', currentPanel, 'isAnimating:', isAnimating)
+		// console.log('Animation ended,', container, 'current panel:', currentPanel, 'isAnimating:', isAnimating)
 
 		if (!container) return
 		container.addEventListener('animationend', handleAnimationEnd)

@@ -2,10 +2,10 @@
 import "./ChangeProfilePersonalData.scss"
 
 import React, { useEffect, useRef, useState } from "react"
-import { Form, Input, Button, message } from "antd"
+import { Form, Button } from "antd"
 import Avatar from "@/shared/ui/Avatar"
 import { useProfileStore } from "@/entities/Profile"
-import { isAPIError, loginApi } from "@/shared/api"
+import { loginApi } from "@/shared/api"
 import useChangeProfileErrorHandler from "@/features/ChangeProfilePersonalData/model/useChangeProfileErrorHandler"
 import type {
     ChangeProfilePersonalDataForm,
@@ -14,7 +14,6 @@ import type {
 import { showToast, TextInput } from "@/shared/ui"
 import { useCheckPassword } from "@/shared/lib"
 import { TextInputPassword } from "@/shared/ui/TextInput"
-import { useRouter } from "next/router"
 
 interface Props {
     onSave?: (data: ChangeProfilePersonalDataSave) => void
@@ -37,7 +36,7 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
 
     const passwordWatcher = Form.useWatch("password", form)
 
-    const handleAPIError = useChangeProfileErrorHandler()
+    const { profileApiError, handleProfileApiError, clearProfileApiErrorField } = useChangeProfileErrorHandler()
 
     const [isDirty, setIsDirty] = useState(false)
     const initialRef = useRef<Omit<ChangeProfilePersonalDataForm, "currentPassword" | "confirm"> | Record<string, string>>({})
@@ -65,14 +64,9 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
             setIsDirty(false)
             showToast({ type: "success", text: "Данные сохранены" })
         } catch (err) {
-            // if (isAPIError(err) && err.status === 403) {
-            // }
-            handleAPIError(err as Error)
+            handleProfileApiError(err)
         }
     }
-    //  onBlur={() => markBlurred("currentPassword")}
-
-
 
     return (
         <Form
@@ -81,12 +75,18 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
             className="change-profile-personal-form"
             form={form}
             layout="vertical"
-            onFinish={(values) => { console.log(values); handleFinish(values) }}
+            onFinish={(values) => handleFinish(values)}
             autoComplete="off"
             requiredMark={false}
-            onValuesChange={(_changed, all) => {
+            onValuesChange={(changed, all) => {
                 const { currentPassword, confirm, ...withoutCurrentPassword } = all
-                // console.log(withoutCurrentPassword, initialRef.current, "compare", JSON.stringify(withoutCurrentPassword), JSON.stringify(initialRef.current))
+                // очищаем серверные ошибки при изменении соответствующих полей
+                if (changed?.login) {
+                    clearProfileApiErrorField('login')
+                }
+                if (changed?.currentPassword) {
+                    clearProfileApiErrorField('password')
+                }
                 setIsDirty(JSON.stringify(withoutCurrentPassword) !== JSON.stringify(initialRef.current))
             }}
         >
@@ -103,6 +103,14 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
                 <Form.Item
                     label="Логин"
                     name="login"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Введите логин",
+                        }
+                    ]}
+                    help={profileApiError.login ?? undefined}
+                    validateStatus={profileApiError.login ? 'error' : undefined}
                 >
                     {/* onBlur={() => markBlurred("login")} */}
                     <TextInput placeholder={profileLogin} />
@@ -117,6 +125,8 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
                             message: "Введите текущий пароль",
                         },
                     ]}
+                    help={profileApiError.password ?? undefined}
+                    validateStatus={profileApiError.password ? 'error' : undefined}
                 >
                     <TextInputPassword autoComplete="off" type="password" placeholder="Текущий пароль" />
                 </Form.Item>

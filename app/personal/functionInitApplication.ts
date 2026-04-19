@@ -14,27 +14,35 @@ export const functionInitApplication = cache(
 		organization: IOrganization
 	}> {
 		const cookieStore = await cookies()
-		// Получаем конкретную куку
 		const cookieHeader = cookieStore.toString()
+
 		try {
 			const { uuidDepartment, ...profile } =
 				await getMeServer(cookieHeader)
+
 			const { department: organisationChild, organizationId } =
 				await departmentApiServer.getDepByUUID(
 					uuidDepartment,
 					cookieHeader,
 				)
+
 			const organization = await organizationApiServer.getOrganization(
 				organizationId,
 				cookieHeader,
 			)
-			return {
+
+			console.log(
+				organization,
+				"organization in functionInitApplication",
 				profile,
+			)
+			return {
+				profile: { ...profile, departmentName: organization.name },
 				organization: { ...organization, child: organisationChild },
 			}
 		} catch (err) {
 			const error = err as APIError
-			if (error.status === 401) {
+			if (error.status === 401 || error.status === 404) {
 				redirect("/login")
 			} else {
 				throw err

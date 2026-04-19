@@ -32,17 +32,6 @@ const UserRegistrationForm = ({ token }: Props) => {
 			onFinish={onSubmit}
 			requiredMark={false}
 		>
-			{/* {loginError && (
-				<Form.Item>
-					<Alert
-						title="Ошибка регистрации"
-						description={error.message}
-						type="error"
-						showIcon
-						closable
-					/>
-				</Form.Item>
-			)} */}
 
 			<Form.Item
 				label="Логин"
@@ -65,8 +54,8 @@ const UserRegistrationForm = ({ token }: Props) => {
 			>
 				<TextInput error={loginError} placeholder="Логин" />
 			</Form.Item>
-			{/* checkPasswordAntdForm */}
 			<Form.Item
+				validateTrigger="onChange"
 				label="Пароль"
 				name="password"
 				rules={[

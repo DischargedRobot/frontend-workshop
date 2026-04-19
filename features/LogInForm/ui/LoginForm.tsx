@@ -3,8 +3,9 @@
 import "./LoginForm.scss"
 
 import { useLoginForm } from "../model"
-import { Button, Form, Input } from "antd"
+import { Button, Form } from "antd"
 import { TextInput } from "@/shared/ui"
+import { TextInputPassword } from "@/shared/ui/TextInput"
 
 interface LoginFormValues {
 	login: string
@@ -38,7 +39,7 @@ export const LoginForm = () => {
 				name="password"
 				rules={[{ required: true, message: "Введите пароль" }]}
 			>
-				<TextInput type="password" placeholder="Пароль" />
+				<TextInputPassword placeholder="Пароль" />
 			</Form.Item>
 			<div className="authorisation-table__buttons">
 				<Button htmlType="submit" className="form-button" loading={loading}>

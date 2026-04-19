@@ -1,11 +1,19 @@
-import { useRouter } from "next/router"
-import { useMemo } from "react"
+import { useRouter } from "next/navigation"
+import { useMemo, useCallback, useState } from "react"
 import { mapAPIErrors } from "@/shared/api"
-import { showToast } from "@/shared/ui"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
+
+export type ProfileApiError = {
+	login?: string | null
+	password?: string | null
+}
 
 export default function useChangeProfileErrorHandler() {
 	const router = useRouter()
+	const [profileApiError, setProfileApiError] = useState<ProfileApiError>({
+		login: null,
+		password: null,
+	})
 
 	const handlers = useMemo(
 		() => [
@@ -15,16 +23,38 @@ export default function useChangeProfileErrorHandler() {
 			},
 			{
 				error: mapAPIErrors(403),
-				handler: () =>
-					showToast({ type: "error", text: "Неверный текущий пароль" }),
+				handler: () => {
+					setProfileApiError((prev) => ({
+						...prev,
+						password: "Неверный текущий пароль",
+					}))
+				},
 			},
 			{
 				error: mapAPIErrors(409),
-				handler: () => showToast({ type: "error", text: "Логин занят" }),
+				handler: () => {
+					setProfileApiError((prev) => ({
+						...prev,
+						login: "Логин занят",
+					}))
+				},
 			},
 		],
 		[router],
 	)
 
-	return useAPIErrorHandler(handlers)
+	const handleProfileApiError = useAPIErrorHandler(handlers)
+
+	const clearProfileApiErrorField = useCallback(
+		(field: keyof ProfileApiError) => {
+			setProfileApiError((prev) => ({ ...prev, [field]: null }))
+		},
+		[],
+	)
+
+	return {
+		profileApiError,
+		handleProfileApiError,
+		clearProfileApiErrorField,
+	}
 }

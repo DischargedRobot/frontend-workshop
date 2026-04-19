@@ -6,4 +6,5 @@ export interface IProfile {
 	departmentId?: number
 	roles: IRole[]
 	settings?: object
+	departmentName: string
 }

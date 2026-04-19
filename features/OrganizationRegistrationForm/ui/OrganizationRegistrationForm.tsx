@@ -2,8 +2,6 @@
 
 import { Button, Form } from "antd"
 import "./OrganizationRegistrationForm.scss"
-// import { useRouter } from "next/navigation"
-
 import { useOrganizationRegistrationForm } from "../model"
 import { TextInput } from "@/shared/ui"
 import { useCheckPassword } from "@/shared/lib"
@@ -19,8 +17,6 @@ export const OrganizationRegistrationForm = () => {
 	const [form] = Form.useForm<RegistrationFormValues>()
 
 	const { onSubmit, loading, error, clearFieldError } = useOrganizationRegistrationForm()
-
-	// const router = useRouter()
 
 	const { validator: validatePassword, PasswordChecksComponent } = useCheckPassword()
 	const passwordWatcher = Form.useWatch("password", form)
@@ -78,6 +74,7 @@ export const OrganizationRegistrationForm = () => {
 						<TextInput placeholder="Логин" />
 					</Form.Item>
 					<Form.Item
+						validateTrigger="onChange"
 						// label="Пароль"
 						name="password"
 						rules={[
