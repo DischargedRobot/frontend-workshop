@@ -1,3 +1,5 @@
+@use "@/common/styles/placeholder.scss";
+
 .add-feature-flag {
 	position: relative;
 	display: flex;
@@ -50,21 +52,27 @@
 }
 
 .feature-flag-form {
-	display: flex;
-	flex-direction: column;
+	@extend %flex-column;
 
 	gap: 15px;
 	padding: 10px 10px;
 
-	width: auto;
+	max-width: clamp(200px, 160px + 12.5vw, 400px);
+	width: max-content;
 	height: auto;
 
 	border-radius: 20px;
 	background-color: var(--foreground);
 
 	&__data {
-		display: flex;
-		align-items: center;
+		@extend %flex;
+		justify-content: space-between;
+		align-items: start;
 		gap: 10px;
+
+		> * {
+			flex: 0 1 auto;
+			width: auto;
+		}
 	}
 }

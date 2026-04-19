@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from "react"
 import { getDifferentRoles, IRole } from "@/shared/model/Role"
 import { IUser } from "../../lib/types"
-import useUsersStore from "../useUsersStore"
 import { IDepartment, useDepartmentsStore } from "@/entities/Departments"
 import useDeleteUser from "./useDeleteUser"
 import { userApiClient } from "../../api"
@@ -50,9 +49,6 @@ export const useUserCard = (user: IUser, setUser: (user: IUser) => void) => {
 			!areRolesEqual(roles, user.roles || [])
 		)
 	}, [userDepartment, user.department, roles, user.roles])
-	// console.log("useUsercard", userDepartment?.id !== (user.department.id ?? null) ||
-	// 	!areRolesEqual(roles, user.roles || []),
-	// 	{ userId: user.id, dept: userDepartment?.id, userDept: user.department.id, roles, userRoles: user.roles })
 
 	const errorHandler = useCallback(() => {
 		showToast({ type: "error", text: "Пльзователя с таким айди не существует" })
@@ -141,7 +137,6 @@ export const useUserCard = (user: IUser, setUser: (user: IUser) => void) => {
 		toggleSelected,
 		deleteUser,
 		changeStatusRole,
-		userDepartment,
 		setUserDepartment,
 		departments,
 	}

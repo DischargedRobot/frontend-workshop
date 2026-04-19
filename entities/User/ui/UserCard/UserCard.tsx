@@ -29,16 +29,10 @@ const UserCard = ({ user, setUser }: Props) => {
 		toggleSelected,
 		deleteUser,
 		changeStatusRole,
-		userDepartment,
 		setUserDepartment,
 		isDirty,
 		departments,
 	} = useUserCard(user, setUser)
-	console.log("usercard", userDepartment?.id !== (user.department.id ?? null) ||
-		!areRolesEqual(roles, user.roles || []),
-		{ userId: user.id, dept: userDepartment, userDept: user.department, roles, userRoles: user.roles })
-
-
 
 	return (
 		<div className={`user-card ${isSelected ? "user-card_selected" : ""}`}>
