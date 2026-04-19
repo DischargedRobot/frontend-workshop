@@ -22,7 +22,7 @@ function validatePassword(password: string): PasswordChecks {
         hasNumber: /\d/.test(password),
         hasUpperCase: /[A-Z]/.test(password),
         hasLowerCase: /[a-z]/.test(password),
-        hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+        hasSpecialChar: /[!^-_&?]/.test(password),
     }
 }
 
@@ -51,7 +51,7 @@ export function useCheckPassword() {
                     Содержит строчную букву
                 </li>
                 <li style={{ color: checks.hasSpecialChar ? "green" : "red" }}>
-                    Содержит специальный символ
+                    Содержит специальный символ (!, ^, -, _, &, ?)
                 </li>
             </ul>
         ),

@@ -5,8 +5,16 @@
 	justify-content: center;
 	align-items: center;
 
+	gap: 30px;
+
 	max-width: 400px;
 	margin: 0 auto;
 
 	height: 100%;
+
+	&__content {
+		gap: 10px;
+
+		width: 100%;
+	}
 }

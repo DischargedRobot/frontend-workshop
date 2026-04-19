@@ -5,7 +5,8 @@ import { Button, Form } from "antd"
 import { useRegistrationForm } from "../model"
 import { TextInput } from "@/shared/ui"
 import { memo } from "react"
-import { checkPasswordAntdForm } from "@/shared/model/CheckPassword"
+import { useCheckPassword } from "@/shared/lib"
+import { TextInputPassword } from "@/shared/ui/TextInput"
 
 interface RegistrationForm {
 	login: string
@@ -19,6 +20,8 @@ interface Props {
 const UserRegistrationForm = ({ token }: Props) => {
 	const [form] = Form.useForm<RegistrationForm>()
 	const { onSubmit, loading, loginError } = useRegistrationForm(token)
+
+	const { validator: validatePassword, PasswordChecksComponent } = useCheckPassword()
 
 	return (
 		<Form
@@ -69,26 +72,33 @@ const UserRegistrationForm = ({ token }: Props) => {
 				rules={[
 					() => ({
 						validator: (_, value) => {
-							return checkPasswordAntdForm(value)
-						}
+							const ok = validatePassword(value || "")
+							return ok
+								? Promise.resolve()
+								: Promise.reject(new Error("Пароль не соответствует требованиям"))
+						},
 					}),
 				]}
+				help={<PasswordChecksComponent />}
 			>
-				<TextInput type="password" placeholder="Пароль" />
+				<TextInputPassword placeholder="Пароль" />
 			</Form.Item>
 
 			<Form.Item
 				label="Подтверждение пароля"
 				name="confirm"
 				rules={[
-					() => ({
+					({ getFieldValue }) => ({
 						validator: (_, value) => {
-							return checkPasswordAntdForm(value)
-						}
+							const pass = getFieldValue("password")
+							if (value !== pass) return Promise.reject(new Error("Пароли не совпадают"))
+							const ok = validatePassword(value || "")
+							return ok ? Promise.resolve() : Promise.reject(new Error("Пароль не соответствует требованиям"))
+						},
 					}),
 				]}
 			>
-				<TextInput type="password" placeholder="Подтверждение пароля" />
+				<TextInputPassword placeholder="Подтверждение пароля" />
 			</Form.Item>
 
 			<Button

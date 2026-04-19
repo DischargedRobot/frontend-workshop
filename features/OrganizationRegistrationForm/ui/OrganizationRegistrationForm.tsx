@@ -6,7 +6,8 @@ import "./OrganizationRegistrationForm.scss"
 
 import { useOrganizationRegistrationForm } from "../model"
 import { TextInput } from "@/shared/ui"
-import { checkPasswordAntdForm } from "@/shared/model/CheckPassword"
+import { useCheckPassword } from "@/shared/lib"
+import { TextInputPassword } from "@/shared/ui/TextInput"
 
 export interface RegistrationFormValues {
 	OrganizationName: string
@@ -16,8 +17,14 @@ export interface RegistrationFormValues {
 
 export const OrganizationRegistrationForm = () => {
 	const [form] = Form.useForm<RegistrationFormValues>()
+
 	const { onSubmit, loading, error, clearFieldError } = useOrganizationRegistrationForm()
+
 	// const router = useRouter()
+
+	const { validator: validatePassword, PasswordChecksComponent } = useCheckPassword()
+	const passwordWatcher = Form.useWatch("password", form)
+
 
 	return (
 		<Form
@@ -76,12 +83,14 @@ export const OrganizationRegistrationForm = () => {
 						rules={[
 							{
 								validator: (_, value) => {
-									return checkPasswordAntdForm(value)
+									const ok = validatePassword(value || "")
+									return ok ? Promise.resolve() : Promise.reject(new Error("Пароль не соответствует требованиям"))
 								}
 							}
 						]}
+						help={passwordWatcher ? <PasswordChecksComponent /> : undefined}
 					>
-						<TextInput type="password" placeholder="Пароль" />
+						<TextInputPassword placeholder="Пароль" />
 					</Form.Item>
 					<Form.Item
 						// label="Подтверждение пароля"
@@ -98,7 +107,7 @@ export const OrganizationRegistrationForm = () => {
 							})
 						]}
 					>
-						<TextInput type="password" placeholder="Подтверждение пароля" />
+						<TextInputPassword placeholder="Подтверждение пароля" />
 					</Form.Item>
 
 				</div>

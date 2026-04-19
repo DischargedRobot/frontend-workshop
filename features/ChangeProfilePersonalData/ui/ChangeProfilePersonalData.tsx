@@ -1,7 +1,7 @@
 "use client"
 import "./ChangeProfilePersonalData.scss"
 
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Form, Input, Button, message } from "antd"
 import Avatar from "@/shared/ui/Avatar"
 import { useProfileStore } from "@/entities/Profile"
@@ -13,52 +13,31 @@ import type {
 } from "../types"
 import { showToast, TextInput } from "@/shared/ui"
 import { useCheckPassword } from "@/shared/lib"
+import { TextInputPassword } from "@/shared/ui/TextInput"
 
 interface Props {
     onSave?: (data: ChangeProfilePersonalDataSave) => void
 }
 
 const ChangeProfilePersonalData = ({ onSave }: Props) => {
-    const profile = useProfileStore((state) => state.profile)
-    const setLogin = useProfileStore((state) => state.setLogin)
-    const setPassword = useProfileStore((state) => state.setPassword)
-
+    const profileLogin = useProfileStore((state) => state.profile.login)
+    const setProfileLogin = useProfileStore((state) => state.setLogin)
     const [form] = Form.useForm<ChangeProfilePersonalDataForm>()
-    // const [blurredFields, setBlurredFields] = useState<Record<string, boolean>>({})
-
-    // const markBlurred = (name: keyof Omit<ChangeProfilePersonalDataForm, "currentPassword">) => {
-    //     if (blurredFields[name]) return
-    //     setBlurredFields((prev) => ({ ...(prev || {}), [name]: true }))
-    //     // run validation on blur so messages appear
-    //     form.validateFields([name]).catch(() => { })
-    // }
 
     useEffect(() => {
-        form.setFieldsValue({ login: profile.login })
-    }, [profile.login, form])
+        form.setFieldsValue({ login: profileLogin })
 
-    // const onValuesChange = (changedValues: Partial<ChangeProfilePersonalDataForm>, allValues: ChangeProfilePersonalDataForm) => {
-    //     const changedKey = Object.keys(changedValues)[0] as keyof ChangeProfilePersonalDataForm | undefined
-    //     if (!changedKey) return
-
-    //     const isBlurred = !!blurredFields[changedKey as string]
-    //     if (!isBlurred) return // don't show/clear errors until first blur
-
-    //     // как только пользователь вводит после того, как поле было валидационно потрогано (blur), скрываем ошибки
-    //     form.setFields([{ name: changedKey, errors: [] }])
-
-    //     if (changedKey === "password") {
-    //         const confirmErrors = form.getFieldError("confirm")
-    //         if (confirmErrors.length && allValues.confirm && allValues.confirm === allValues.password) {
-    //             form.setFields([{ name: "confirm", errors: [] }])
-    //         }
-    //     }
-    // }
+    }, [profileLogin, form])
 
     const { validator: validatePassword, PasswordChecksComponent } =
         useCheckPassword()
 
+    const passwordWatcher = Form.useWatch("password", form)
+
     const handleAPIError = useAPIErrorHandler()
+
+    const [isDirty, setIsDirty] = useState(false)
+    const initialRef = useRef<Omit<ChangeProfilePersonalDataForm, "currentPassword" | "confirm"> | Record<string, string>>({})
 
     const handleFinish = async (values: ChangeProfilePersonalDataForm) => {
         const { login, password, currentPassword } = values
@@ -66,37 +45,42 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
         try {
             await loginApi.patchMe({
                 oldPassword: currentPassword,
-                newLogin: login,
-                newPassword: password || "",
+                newLogin: login === profileLogin ? undefined : login,
+                newPassword: password ? password : undefined,
             })
 
-            if (login && login !== profile.login) {
-                setLogin(login)
-            }
-
-            if (password) {
-                setPassword(password)
+            if (login && login !== profileLogin) {
+                setProfileLogin(login)
             }
 
             if (onSave) {
                 onSave({ login, password })
             }
 
+            initialRef.current = { login, password }
             showToast({ type: "success", text: "Данные сохранены" })
         } catch (err) {
             handleAPIError(err as Error)
         }
     }
     //  onBlur={() => markBlurred("currentPassword")}
+
+
+
     return (
         <Form
             // onValuesChange={onValuesChange}
             className="change-profile-personal-form"
             form={form}
             layout="vertical"
-            onFinish={handleFinish}
+            onFinish={(values) => { console.log(values); handleFinish(values) }}
             autoComplete="off"
             requiredMark={false}
+            onValuesChange={(_changed, all) => {
+                const { currentPassword, ...withoutCurrentPassword } = all
+                setIsDirty(JSON.stringify(withoutCurrentPassword) !== JSON.stringify(initialRef.current))
+
+            }}
         >
             <div
                 style={{
@@ -107,57 +91,54 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
             >
                 <Avatar size={80} />
             </div>
-            <Form.Item
-                label="Логин"
-                name="login"
-                rules={[{ required: true, message: "Введите логин" }]}
-            >
-                {/* onBlur={() => markBlurred("login")} */}
-                <TextInput />
-            </Form.Item>
+            <div className="change-profile-personal-form__content">
+                <Form.Item
+                    label="Логин"
+                    name="login"
+                >
+                    {/* onBlur={() => markBlurred("login")} */}
+                    <TextInput placeholder={profileLogin} />
+                </Form.Item>
 
-            <Form.Item
-                label="Текущий пароль"
-                name="currentPasswordBrauzerZae"
-                rules={[
-                    {
-                        required: true,
-                        message: "Введите текущий пароль",
-                    },
-                ]}
-            >
-                <TextInput type="password" placeholder="Текущий пароль" />
-            </Form.Item>
-
-            <Form.Item
-                validateTrigger="onChange"
-                label="Новый пароль"
-                name="password"
-                rules={[
-                    {
-                        validator: (_, value) => {
-                            const ok = validatePassword(value || "")
-                            return ok
-                                ? Promise.resolve()
-                                : Promise.reject()
+                <Form.Item
+                    label="Текущий пароль"
+                    name="currentPassword"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Введите текущий пароль",
                         },
+                    ]}
+                >
+                    <TextInputPassword autoComplete="off" type="password" placeholder="Текущий пароль" />
+                </Form.Item>
+
+                <Form.Item
+                    label="Новый пароль"
+                    name="password"
+                    rules={[
+                        {
+                            validator: (_, value) => {
+                                if (!value) return Promise.resolve()
+                                const ok = validatePassword(value || "")
+                                return ok ? Promise.resolve() : Promise.reject()
+                            },
+                        },
+                    ]}
+                    help={passwordWatcher ? <PasswordChecksComponent /> : undefined}
+                >
+                    <TextInputPassword placeholder="Оставьте пустым, чтобы не менять" />
+                </Form.Item>
+
+                <Form.Item
+                    validateTrigger="onChange"
+                    name="confirm"
+                    label="Подтвердите пароль"
+                    dependencies={["password"]}
+                    rules={[{
+                        required: !!form.getFieldValue("password"),
+                        message: "Подтвердите новый пароль",
                     },
-                ]}
-                help={<PasswordChecksComponent />}
-            >
-                <TextInput
-                    type="password"
-                    placeholder="Оставьте пустым, чтобы не менять"
-                />
-            </Form.Item>
-
-            <Form.Item
-                validateTrigger="onChange"
-
-                name="confirm"
-                label="Подтвердите пароль"
-                dependencies={["password"]}
-                rules={[
                     ({ getFieldValue }) => ({
                         validator(_, value) {
                             const pass = getFieldValue("password")
@@ -172,17 +153,17 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
                             )
                         },
                     }),
-                ]}
-            >
-                <TextInput placeholder="Повторите пароль" />
-            </Form.Item>
-
+                    ]}
+                >
+                    <TextInputPassword placeholder="Повторите пароль" />
+                </Form.Item>
+            </div>
             <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" {...(isDirty ? {} : { disabled: true })}>
                     Сохранить
                 </Button>
             </Form.Item>
-        </Form>
+        </Form >
     )
 }
 

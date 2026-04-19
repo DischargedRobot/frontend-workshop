@@ -5,6 +5,7 @@
 	border-radius: 10px;
 
 	overflow: hidden;
+	position: relative;
 
 	&__input {
 		color: var(--text-color);
@@ -15,19 +16,36 @@
 		border: 1px solid var(--textinput-border);
 		border-radius: 10px;
 
-		// &:-webkit-autofill,
-		// &:-webkit-autofill:hover,
-		// &:-webkit-autofill:focus,
-		// &:-webkit-autofill:active {
-		// }
+		width: 100%;
 
-		// &:-webkit-autofill::first-line {
-		// 	color: var(--textinput-border) !important;
-		// }
+		&:-webkit-autofill,
+		&:-webkit-autofill:hover,
+		&:-webkit-autofill:focus,
+		&:-webkit-autofill:active {
+			-webkit-box-shadow: 0 0 0px 1000px var(--textinput-bg) inset !important;
+			-webkit-text-fill-color: var(--text-color) !important;
+			transition: background-color 5000s ease-in-out 0s;
+		}
+	}
 
-		// &:active {
-		// 	box-shadow: 0 0 0 2px var(--shadow);
-		// 	outline: none;
-		// }
+	&__input_password {
+		padding-right: 30px;
+		outline: none;
+	}
+	&__toggle {
+		position: absolute;
+		right: 8px;
+		top: 50%;
+		transform: translateY(-50%);
+
+		border: none;
+		padding: 4px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+
+		background: transparent;
+		color: var(--text-color);
+		cursor: pointer;
 	}
 }

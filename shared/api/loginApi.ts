@@ -37,8 +37,8 @@ interface RoleResponse {
 
 interface IPatchProfileRequest {
 	oldPassword: string
-	newLogin: string
-	newPassword: string
+	newLogin?: string
+	newPassword?: string
 }
 
 const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL_V1

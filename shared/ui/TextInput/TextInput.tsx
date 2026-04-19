@@ -1,6 +1,5 @@
-// TextInput.tsx
 import "./TextInput.scss"
-import { InputHTMLAttributes, useState, ChangeEvent } from "react"
+import { InputHTMLAttributes, useState, ChangeEvent, memo } from "react"
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
 	label?: string
@@ -41,4 +40,4 @@ const TextInput = (props: Props) => {
 	)
 }
 
-export default TextInput
+export default memo(TextInput)
