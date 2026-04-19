@@ -71,15 +71,32 @@ export class FFAPIError extends APIError implements IFFAPIError {
 		this.name = "FFAPIError"
 	}
 	static isFFAPIError(error: unknown): error is FFAPIError {
+		// console.log(
+		// 	"isFFAPIError",
+		// 	Object.values(error),
+		// 	isAPIError(error),
+		// 	("code" in error &&
+		// 		typeof error.code === "string" &&
+		// 		"errorType" in error &&
+		// 		typeof error.errorType === "string" &&
+		// 		"status" in error &&
+		// 		typeof error.status === "number") ||
+		// 		("type" in error &&
+		// 			typeof error.type === "string" &&
+		// 			error.type !== undefined),
+		// )
 		return (
 			error instanceof FFAPIError ||
 			(isAPIError(error) &&
-				"code" in error &&
-				typeof error.code === "string" &&
-				"errorType" in error &&
-				typeof error.errorType === "string" &&
-				"status" in error &&
-				typeof error.status === "number")
+				(("code" in error &&
+					typeof error.code === "string" &&
+					"errorType" in error &&
+					typeof error.errorType === "string" &&
+					"status" in error &&
+					typeof error.status === "number") ||
+					("type" in error &&
+						typeof error.type === "string" &&
+						error.type !== undefined)))
 		)
 	}
 }
@@ -212,6 +229,7 @@ export function toAPIError(
 		// console.log(serverError, "authError")
 		return new APIError(serverError.status, "AUTH", serverError.message)
 	}
+	console.log(serverError, "ffError")
 	if (isFFAPIError(serverError)) {
 		return new APIError(
 			serverError.status,

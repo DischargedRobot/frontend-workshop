@@ -36,11 +36,19 @@ export const useAPIErrorHandler = <T extends APIError | FFAPIError>(
 	const handleError = useCallback(
 		(error: FFAPIError | AuthAPIError | APIError | Error | unknown) => {
 			// Сначала проверяем кастомные обработчики
+
 			if (isFFAPIError(error)) {
+				// console.log(
+				// 	"isFFAPIError handleError",
+				// 	Object.values(error),
+				// 	isFFAPIError(error),
+				// )
+
 				const customHandler = customHandlers.find((handler) => {
 					return (
-						"errorType" in handler.error &&
-						handler.error.errorType === error.errorType
+						"type" in handler.error &&
+						handler.error.type !== undefined &&
+						handler.error.type === error.type
 					)
 				})
 

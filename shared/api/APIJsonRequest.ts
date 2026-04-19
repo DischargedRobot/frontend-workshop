@@ -27,7 +27,7 @@ const APIJsonRequest = async <T>(
 				...mapAPIErrors(response.status),
 				...error,
 			})
-			// console.log(apiError.type, apiError.message, "convert")
+			// console.log(Object.values(apiError), "convert", error)
 			throw apiError
 		}
 

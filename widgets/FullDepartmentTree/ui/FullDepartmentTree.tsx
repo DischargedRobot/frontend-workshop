@@ -110,7 +110,7 @@ const FullDepartmentTree = () => {
 	const onCheckLeaf = useCallback((department: IDepartment, checkedKeys: number[]) => {
 		// Если ни один отедл выдлене не блы, значит там сидят корневые
 		// и нужно их убрать, поэтому сет
-		console.log(checkedKeys, "OnCheckLeaf")
+		// console.log(checkedKeys, "OnCheckLeaf")
 		if (checkedKeys.length === 1) {
 			setDepartmentIds([department.id])
 		} else {
@@ -129,7 +129,7 @@ const FullDepartmentTree = () => {
 	const onUncheckLeaf = useCallback((department: IDepartment, checkedKeys: number[]) => {
 		removeDepartmentId(department.id)
 		// Если после удаления не осталось выбранных отделов — ставим корневые (центральные)
-		console.log(checkedKeys, "onUncheckLeaf")
+		// console.log(checkedKeys, "onUncheckLeaf")
 		if (checkedKeys.length === 0) {
 			const rootDepartments = useDepartmentsStore.getState().departments[0].children || []
 			const rootIds = rootDepartments.map((d) => d.id)

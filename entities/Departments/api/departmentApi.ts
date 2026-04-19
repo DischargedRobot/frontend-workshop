@@ -18,7 +18,7 @@ export interface IDepartmentResponse {
 	uuid: string
 	path: string
 	name: string
-	isService: false
+	isService: boolean
 	version: number
 }
 
@@ -27,6 +27,15 @@ export interface IDepartmentsByOrganizationId {
 	limit: number
 	offset: number
 	total: number
+}
+
+export interface IChangeDepartmentParentResponse {
+	id: number
+	uuid: string
+	oldPath: string
+	newPath: string
+	version: number
+	movedDescendants: IDepartmentResponse
 }
 
 interface IDepartmentChildrenResponse {
@@ -225,6 +234,27 @@ const departmentApi = {
 		)
 
 		newDepartment.version++
+	},
+
+	changeDepartmentParent: async (
+		department: IDepartment,
+		newParentId: number,
+		organizationId: number,
+	): Promise<IDepartment> => {
+		const response = await APIJsonRequest<IChangeDepartmentParentResponse>(
+			`${URL_ORGANIZATION}/${organizationId}/nodes/${department.id}/move`,
+			{
+				method: "POST",
+				body: JSON.stringify({
+					newParentId: newParentId,
+					version: department.version,
+				}),
+			},
+		)
+
+		return convertIDepartmentResponseToIDepartment(
+			response.movedDescendants,
+		)
 	},
 }
 
