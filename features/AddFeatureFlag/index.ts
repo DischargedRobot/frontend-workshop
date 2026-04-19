@@ -1,1 +1,1 @@
-export { AddFeatureFlag } from "./ui"
+export { AddFeatureFlag } from "./ui/AddFeatureFlag"

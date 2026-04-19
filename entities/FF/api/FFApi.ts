@@ -1,6 +1,8 @@
 import { IDepartment } from "@/entities/Departments/lib"
 import APIJsonRequest from "@/shared/api/APIJsonRequest"
 import { IFeatureFlag } from "../lib/types"
+import { isFFAPIError } from "@/shared/api"
+import { FFAPIErrors } from "@/shared/api/APIErrors"
 
 const URL_ORGANIZATION = process.env.NEXT_PUBLIC_API_ORGANIZATIONS_URL_V1
 
@@ -135,27 +137,62 @@ const FFApi = {
 		departmentIds: number[],
 		organizationId: number,
 	): Promise<IFeatureFlag[]> => {
-		const response = await Promise.all(
+		// Используем allSettled, чтобы не ломать объединение при ошибке одного из запросов
+		const response = await Promise.allSettled(
 			departmentIds.map((departmentId) =>
 				FFApi.getFFsByDepAndItsChildren(departmentId, organizationId),
 			),
 		)
 
-		return response.reduce((allDepartments, departments) => {
+		const successful: IFeatureFlag[][] = []
+		response.forEach((resp) => {
+			if (resp.status === "fulfilled") {
+				successful.push(resp.value)
+			}
+		})
+
+		return successful.reduce((allDepartments, departments) => {
 			return [...departments, ...allDepartments]
 		}, [])
 	},
 
-	switchFeatureFlags: async (
+	getFFById: async (
 		organizationId: number,
 		departmentId: number,
-		featureFlagId: number,
-		isEnabled: boolean,
-	): Promise<void> => {
-		await APIJsonRequest<IFeatureFlag[]>(
-			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/feature-flags/${featureFlagId}`,
-			{ body: JSON.stringify({ value: isEnabled, version: 1 }) },
+		featureFlag: IFeatureFlag,
+	): Promise<IFeatureFlag> => {
+		const response = await APIJsonRequest<IFeatureFlagResponse>(
+			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/feature-flags/${featureFlag.id}`,
 		)
+		const { nodeId, ...ff } = response
+		return {
+			...ff,
+			departmentId: nodeId,
+			departmentName: featureFlag.departmentName,
+		}
+	},
+
+	switchFF: async (
+		organizationId: number,
+		featureFlag: IFeatureFlag,
+		isEnabled: boolean,
+	): Promise<IFeatureFlag> => {
+		const response = await APIJsonRequest<IFeatureFlagResponse>(
+			`${URL_ORGANIZATION}/${organizationId}/nodes/${featureFlag.departmentId}/feature-flags/${featureFlag.id}`,
+			{
+				method: "PATCH",
+				body: JSON.stringify({
+					value: isEnabled,
+					version: featureFlag.version,
+				}),
+			},
+		)
+		const { nodeId, ...ff } = response
+		return {
+			...ff,
+			departmentId: nodeId,
+			departmentName: featureFlag.departmentName,
+		}
 	},
 
 	removeFF: async (

@@ -11,8 +11,7 @@ import { Can } from "@/shared/model/Ability"
 import { ReloadFeatureFlags } from "@/features/ReloadFeatureFlags"
 
 const FullFeatureFlagsTable = () => {
-	const { organization, reloadFeatureFlags } =
-		useFullFeatureFlagsTable()
+	const organization = useFullFeatureFlagsTable()
 
 	const featureFlags = useFilteredFFs()
 
@@ -29,7 +28,7 @@ const FullFeatureFlagsTable = () => {
 							<AddFeatureFlag organization={organization} />
 						</Can>
 						<Can I="read" a="FF">
-							<ReloadFeatureFlags onClick={reloadFeatureFlags} />
+							<ReloadFeatureFlags />
 						</Can>
 					</div>
 				</div>

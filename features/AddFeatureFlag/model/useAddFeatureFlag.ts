@@ -3,13 +3,14 @@
 import { useState } from "react"
 import { Form } from "antd"
 import { FFApi, IFeatureFlag, useFFStore } from "@/entities/FF"
-import { APIError, isAPIError } from "@/shared/api"
+import { APIError, isAPIError, mapAPIErrors } from "@/shared/api"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 import { showToast } from "@/shared/ui"
 import { useBreadcrumbStore } from "@/entities/DepartmentBreadcamb"
 import { useShallow } from "zustand/shallow"
 import { IOrganization } from "@/entities/Organization/model/useOrganizationStore"
 import { Server } from "http"
+import { FFAPIErrors } from "@/shared/api/APIErrors"
 
 type FormValues = Pick<IFeatureFlag, "name" | "value" | "departmentId">
 

@@ -43,16 +43,16 @@ export const AddFeatureFlag = ({ organization }: Props) => {
 								{
 									required: true,
 									message:
-										"Пожалуйста, введите имя фич флага",
+										"Фич флаг должен иметь название",
 								},
 								{
 									min: 1,
 									message:
-										"Длина имени фич флага должно быть больше 1",
+										"Длина названия фич флага должно быть больше 1",
 								},
 							]}
 						>
-							<TextInput placeholder="Имя фич флага" />
+							<TextInput placeholder="Название фич флага" />
 						</Form.Item>
 
 						<Form.Item name="value" valuePropName="checked">

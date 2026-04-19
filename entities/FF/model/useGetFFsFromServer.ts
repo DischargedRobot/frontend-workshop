@@ -36,14 +36,17 @@ const useGetFFsFromServer = () => {
 		].toString()
 	}, [filterDepartments, organizationId])
 
-	console.log("filterDepartments in useGetFFsFromServer", filterDepartments)
+	// console.log("filterDepartments in useGetFFsFromServer", filterDepartments)
 	const addFF = useFFStore((state) => state.addFeatureFlags)
 
 	const { data, error, isLoading } = useSWR<
 		Awaited<ReturnType<typeof FFApi.getFFsByDepartments>>,
 		APIError
-	>(key, () =>
-		FFApi.getFFsByDepartments(filterDepartments, organizationId, 50, 0),
+	>(
+		key,
+		() =>
+			FFApi.getFFsByDepartments(filterDepartments, organizationId, 50, 0),
+		{ revalidateOnFocus: false, revalidateIfStale: false },
 	)
 
 	// TODO: сделать set?

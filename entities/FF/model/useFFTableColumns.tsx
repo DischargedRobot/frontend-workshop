@@ -30,10 +30,14 @@ export const useFFTableColumns = ({
 			title: "Включён",
 			key: "value",
 			dataIndex: "value",
-			render: (value: boolean, FF) => (
+			render: (value: boolean, FF: IFeatureFlag) => (
 				<Switch
-					defaultChecked={value}
-					onChange={(checked) => toggleFF(FF, checked)}
+					disabled={!!FF.isToggling}
+					checked={value}
+					onChange={(checked) => {
+						console.log(FF, checked, "toggle", value)
+						toggleFF(FF, checked)
+					}}
 				/>
 			),
 		},
