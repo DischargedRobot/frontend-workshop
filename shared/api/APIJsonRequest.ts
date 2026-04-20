@@ -5,7 +5,6 @@ const APIJsonRequest = async <T>(
 	options?: RequestInit,
 ): Promise<T> => {
 	try {
-		// console.log("endpoint APIJsonRequest", endpoint)
 		const response = await fetch(endpoint, {
 			// credentials: 'include',
 			...options,

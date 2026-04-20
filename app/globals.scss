@@ -1,16 +1,16 @@
 @use "@/common/styles/placeholder.scss";
 
-:root {
-	--base-l: 0.72;
-	--base-c: 0.14;
-	--base-h: 250;
+// :root {
+// 	--base-l: 0.72;
+// 	--base-c: 0.14;
+// 	--base-h: 250;
 
-	--base-color: oklch(var(--base-l) var(--base-c) var(--base-h));
+// 	--base-color: oklch(var(--base-l) var(--base-c) var(--base-h));
 
-	--inverse-like: oklch(
-		calc(1 - var(--base-l)) var(--base-c) calc(var(--base-h) + 180)
-	);
-}
+// 	--inverse-like: oklch(
+// 		calc(1 - var(--base-l)) var(--base-c) calc(var(--base-h) + 180)
+// 	);
+// }
 
 :root {
 	// --main-color: "#0b57d0" !important;
@@ -127,9 +127,12 @@ input:-webkit-autofill:active {
 	--size-button-icon: 20px;
 }
 
+html,
+body {
+	background: var(--background);
+}
 html {
 	@extend %scrollbar;
-	// 	overflow-y: scroll;
 }
 
 .ant-form-item {
@@ -147,7 +150,6 @@ html {
 		@extend %scrollbar;
 	}
 	main {
-		overflow-y: auto;
 	}
 
 	// background-color: var(--background);

@@ -2,13 +2,14 @@
 
 import "./DepartmentTable.scss"
 
-import { Table } from "antd"
+import { Empty, Table } from "antd"
 import { useDepartmentTableColumns } from "../../model"
 import { useDepartmentTable } from "../../model/DepartmentTable"
+import { NotFoundIcon } from "@/shared/assets/Icon/NotFoundIcon/NotFoundIcon"
 
 const TableDepartment = () => {
 	const { isHidden, departments, selectRow } = useDepartmentTable()
-	const { columns } = useDepartmentTableColumns()
+	const { columns, isLoading } = useDepartmentTableColumns()
 
 	return (
 		<Table
@@ -25,6 +26,19 @@ const TableDepartment = () => {
 			pagination={{ placement: ["bottomCenter"], pageSize: 6 }}
 			size="small"
 			className={`department-table ${isHidden && "hidden"}`}
+			locale={{
+
+				emptyText: (!isLoading &&
+					<Empty
+						image={<NotFoundIcon />}
+						description={
+							<span style={{ color: "var(--text-color)" }}>
+								{"Отделов нет"}
+							</span>
+						}
+					/>
+				),
+			}}
 		/>
 	)
 }

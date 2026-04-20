@@ -110,8 +110,6 @@ export const useAPIErrorHandler = <T extends APIError | FFAPIError>(
 					// router.push("/internal")
 					break
 				default:
-					console.log(error, "оШИБКА!!!!!")
-
 					if (error instanceof Error) {
 						showToast({
 							type: "warning",

@@ -50,7 +50,7 @@ const TitleRender = (props: Props): React.ReactNode => {
 					}
 				}}
 				onDoubleClick={() => {
-					console.log("double click")
+					// console.log("double click")
 					setIsEditable(true)
 				}}
 			/>

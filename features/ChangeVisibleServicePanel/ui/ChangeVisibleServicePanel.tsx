@@ -27,7 +27,7 @@ const ChangeVisibleServicePanel = ({ service }: Props) => {
                 onClick={() => setIsVisible((prev) => !prev)}
             >
                 <RightOutlined className={`icon ${isVisible ? "icon_visible" : "icon_hidden"}`} />
-                {isVisible ? "Тут сервис" : "Не тут сервис"}
+                {isVisible ? "Скрыть" : "Показать сервис"}
             </button>
             <div className={`service-panel__content ${isVisible ? 'service-panel__content_visible' : 'service-panel__content_hidden'}`}>
                 {!!service ? <Service service={service} /> : <Empty className="text" description="Пусто" />}

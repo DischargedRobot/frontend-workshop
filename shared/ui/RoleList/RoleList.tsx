@@ -28,7 +28,6 @@ const RoleList = (props: Props) => {
 						role={role}
 						onClick={() => {
 							const newRoles = rolesList.map((r, i) => i === idx ? { ...r, isEnabled: false } : r)
-							// console.log("handleChange", newRoles)
 							handleChange(newRoles.filter(r => r.isEnabled === true))
 						}}
 					/>

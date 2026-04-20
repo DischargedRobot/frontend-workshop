@@ -31,11 +31,6 @@ const FONTS = {
 // textActive: "#d0d0d0",
 // background: "#303032",
 
-
-
-
-
-
 const COLOR = {
 	backgroundTextColor: "#cfcfcf",
 	foreground: "#989299",
@@ -48,15 +43,12 @@ const COLOR = {
 	foregroundSecond: "#292929cb",
 	strokeNavPanel: "#111111e8",
 
-
-
 	// MAIN PALETTE
 	main: "#0b57d0",
 	secondary: "#2c2b2b",
 	text: "#d2d2d2",
 	textActive: "#d0d0d0",
 	background: "#323233",
-
 
 	// helper colors
 	disabled: "#6d6a6a79",
@@ -67,7 +59,6 @@ const COLOR = {
 	activeMix: "#453e3eb8", // для кнопок и активных элементов
 	strokeMix: "#4d4d4d4b",
 
-
 	switchBgActive: "#2a2828", // пока не надо
 
 	// CHEKBOX 
@@ -75,7 +66,6 @@ const COLOR = {
 
 	// MODAL
 	modalBg: "color-mix(in srgb, var(--secondary-color), #000000 80%)",
-
 
 	// USER CARD
 	usercardBg: "var(--menu-bg)",

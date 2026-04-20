@@ -1,0 +1,12 @@
+.sprite-loader {
+	animation: spin 1s steps(6) infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: translateX(0%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
+}

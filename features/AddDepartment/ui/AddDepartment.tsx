@@ -5,7 +5,7 @@ import "./AddDepartment.scss"
 import { AddButton } from "@/shared/ui"
 import { Button, Form, Input, Popover, Switch } from "antd"
 import { useAddDepartment } from "../model/useAddDepartment"
-import { memo } from "react"
+import { memo, useState } from "react"
 import { IService } from "@/entities/Departments"
 
 type DepartmentSelectorComponent = React.ComponentType<{
@@ -69,6 +69,7 @@ const AddDepartment = ({ DepartmentSelector, onServiceCreated }: Props) => {
 		</div>
 	)
 
+	const [isOpen, setIsOpen] = useState(false)
 
 	return (
 
@@ -78,6 +79,9 @@ const AddDepartment = ({ DepartmentSelector, onServiceCreated }: Props) => {
 			autoAdjustOverflow
 			placement="bottom"
 			trigger="click"
+			open={isOpen}
+			onOpenChange={(open) => setIsOpen(open)}
+			destroyOnHidden
 		>
 			<span>
 				<AddButton onClick={() => setIsCollapsed((prev) => !prev)} />

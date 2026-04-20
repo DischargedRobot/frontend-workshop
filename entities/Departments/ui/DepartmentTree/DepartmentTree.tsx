@@ -8,6 +8,7 @@ import useDepartmentTree from "../../model/DepartmentTree/useDepartmentTree"
 import TitleRender, { IDepartmentNode } from "./TitleRender"
 import { IDepartment } from "../../lib"
 import { isDeepStrictEqual } from "util"
+import { NotFoundIcon } from "@/shared/assets/Icon/NotFoundIcon/NotFoundIcon"
 
 interface Props {
 	isEditable?: boolean
@@ -38,6 +39,7 @@ const DepartmentTree = ({ isEditable, onLoaded, onCheckLeaf, onUncheckLeaf }: Pr
 				</div>
 			) : departments?.length === 0 ? (
 				<Empty
+					image={<NotFoundIcon />}
 					description={
 						<span style={{ color: "var(--text-color) !important" }}>
 							{error?.message ?? "Отделов нет :("}

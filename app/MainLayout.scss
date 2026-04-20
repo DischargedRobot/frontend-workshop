@@ -3,6 +3,7 @@
 .main-layout {
 	display: flex !important;
 	height: 100vh;
+	overflow-x: auto;
 
 	@media (max-width: vars.$medium-breakpoint) {
 		flex-direction: column-reverse !important;

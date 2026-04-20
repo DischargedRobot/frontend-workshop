@@ -10,6 +10,7 @@ import { departmentApi } from "../../api"
 import { IDepartment } from "../../lib"
 import { useDepartmentsStore } from "../useDepartmentsStore"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
+import { useState } from "react"
 
 export const useDepartmentTableColumns = () => {
 	const organizationId = useOrganizationStore(
@@ -54,14 +55,15 @@ export const useDepartmentTableColumns = () => {
 				addFFToStore(FFs)
 			}
 		} catch (error) {
-			console.log(error)
 			handleError(error)
 
 		}
 	}
 
+	const [isLoading, setIsLoading] = useState(false)
 	// Грузим департаменты с сервера, когда переходим на какой-то из
 	const loadData = async (department: IDepartment): Promise<void> => {
+		setIsLoading(true)
 		const childrenLastDepartment = department.children
 
 		if (!department.isService) {
@@ -98,6 +100,7 @@ export const useDepartmentTableColumns = () => {
 				...childrenLastDepartment,
 			])
 		}
+		setIsLoading(false)
 	}
 
 	const removeDepartment = async (dep: IDepartment) => {
@@ -105,7 +108,7 @@ export const useDepartmentTableColumns = () => {
 			await departmentApi.removeDepartmentById(organizationId, dep.id)
 			removeDepFromStore([dep])
 		} catch (error) {
-			console.log(error, "error")
+			// handleError(error)
 		}
 	}
 
@@ -117,7 +120,7 @@ export const useDepartmentTableColumns = () => {
 			minWidth: 100,
 		},
 		{
-			title: "",
+			title: "К отделу",
 			dataIndex: "link",
 			key: "link",
 			width: "64px",
@@ -134,7 +137,7 @@ export const useDepartmentTableColumns = () => {
 			),
 		},
 		{
-			title: "",
+			title: "Удалить",
 			key: "delete",
 			width: "64px",
 			align: "center",
@@ -149,5 +152,5 @@ export const useDepartmentTableColumns = () => {
 		},
 	]
 
-	return { columns }
+	return { columns, isLoading }
 }

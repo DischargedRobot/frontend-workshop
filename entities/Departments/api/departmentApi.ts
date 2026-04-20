@@ -56,7 +56,7 @@ export interface IDepartmentsSubtreeResponse {
 export function convertSubtreeToIDepartment(
 	node: IDepartmentsSubtreeResponse,
 ): IDepartment {
-	console.log(node, "convertSubtreeToIDepartment node")
+	// console.log(node, "convertSubtreeToIDepartment node")
 	return {
 		id: node.id,
 		uuid: node.uuid,
@@ -194,12 +194,10 @@ const departmentApi = {
 				`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}`,
 				{ method: "DELETE" },
 			)
-			console.log("всё хорошо")
 		} catch (error: unknown) {
 			if (isAPIError(error)) {
 				switch (error.status) {
 					case 401: {
-						console.log(error.message)
 						return
 					}
 				}

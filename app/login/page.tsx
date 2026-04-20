@@ -6,6 +6,8 @@ import Link from "next/link"
 import { Button } from "antd"
 
 const Login = () => {
+
+
 	return (
 		<Content className="login">
 			<div className="login__content">
