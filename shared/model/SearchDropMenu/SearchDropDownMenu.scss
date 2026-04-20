@@ -31,7 +31,7 @@
 		border: none;
 		border-radius: 9px;
 
-		background: var(--foreground);
+		background-color: var(--secondary);
 	}
 
 	&__arrow {
@@ -46,7 +46,7 @@
 
 		transform: translateY(-50%);
 
-		background: none;
+		background-color: transparent;
 
 		color: var(--text-color);
 
@@ -74,7 +74,7 @@
 		max-height: 220px;
 		width: 100%;
 
-		background: var(--background);
+		background-color: var(--background);
 		border-radius: 8px;
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 	}
@@ -99,14 +99,14 @@
 
 		cursor: pointer;
 
-		transition: background 0.15s;
+		transition: background-color 0.15s;
 
 		&:hover {
-			background: var(--hover);
+			background-color: var(--hover);
 		}
 
 		&_selected {
-			background: var(--active-hover);
+			background-color: var(--active-hover);
 		}
 	}
 }

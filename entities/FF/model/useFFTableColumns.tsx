@@ -1,11 +1,14 @@
 import useFFTableFiltersStore from "@/features/FFTableFilters/model/useFFTableFiltersStore"
 import { DeleteIcon, InfoIcon } from "@/shared/assets/Icon"
-import { Switch } from "antd"
+import { Grid, Switch } from "antd"
 import { IFeatureFlag } from "../lib/types"
 import { TFFTableColumns } from "../ui/FFTable"
 import { AbilityContext } from "@/shared/model/Ability"
-import { useProfileStore } from "@/entities/Profile"
+import { } from "@/entities/Profile"
 import { useAbility } from "@casl/react"
+import { useEffect, useMemo } from "react"
+
+
 
 interface Params {
 	removeFF: (FF: IFeatureFlag) => Promise<void>
@@ -17,12 +20,13 @@ export const useFFTableColumns = ({
 	toggleFF,
 }: Params): TFFTableColumns => {
 	const filters = useFFTableFiltersStore((state) => state.visibleColumns)
-
 	const columns: TFFTableColumns = [
 		{
 			title: "Имя",
 			key: "name",
 			dataIndex: "name",
+			minWidth: 120,
+			ellipsis: true,
 		},
 		{
 			hidden: !filters.value.isVisible,
@@ -35,37 +39,49 @@ export const useFFTableColumns = ({
 					disabled={!!FF.isToggling}
 					checked={value}
 					onChange={(checked) => {
-						console.log(FF, checked, "toggle", value)
+						// console.log(FF, checked, "toggle", value)
 						toggleFF(FF, checked)
 					}}
 				/>
 			),
 		},
 		{
-			title: "Отдел/Проект",
+			title: "Отдел",
 			key: "departmentName",
 			dataIndex: "departmentName",
+			minWidth: 80,
+			ellipsis: true,
 			hidden: !filters.departmentName.isVisible,
-		},
-		{
-			align: "center",
-			title: "Последнее изменение",
-			key: "lastModified",
-			dataIndex: "lastModified",
-			hidden: !filters.lastModified.isVisible,
-		},
-		{
-			align: "center",
-			title: "Описание",
-			key: "description",
-			dataIndex: "description",
-			render: (value: string) => <InfoIcon info={value} />,
-			hidden: !filters.description.isVisible,
-		},
-	]
+		},]
+
+
+
+	const isMobile = !Grid.useBreakpoint().sm
+	if (!isMobile) {
+		columns.push(
+			{
+				align: "center",
+				title: "Последнее изменение",
+				key: "lastUpdate",
+				dataIndex: "lastUpdate",
+				hidden: !filters.lastUpdate.isVisible,
+				ellipsis: true,
+			},
+			{
+				align: "center",
+				title: "Описание",
+				key: "description",
+				dataIndex: "description",
+				render: (value: string) => <InfoIcon info={value} />,
+				hidden: !filters.description.isVisible,
+				ellipsis: true,
+			},
+		)
+	}
+
+
 
 	const ability = useAbility(AbilityContext)
-
 	if (ability.can("delete", "FF")) {
 		columns.push({
 			align: "center",
@@ -79,5 +95,8 @@ export const useFFTableColumns = ({
 			width: "64px",
 		})
 	}
+
+
+
 	return columns
 }

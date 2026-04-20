@@ -3,6 +3,7 @@ import { IDepartment } from "../../lib"
 import { DataNode } from "antd/es/tree"
 import { departmentApi } from "../../api"
 import { useDepartmentsStore } from "../../model"
+import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 
 export interface IDepartmentNode
 	extends IDepartment, Omit<DataNode, "children" | "isService"> { }
@@ -10,12 +11,13 @@ export interface IDepartmentNode
 interface Props {
 	node: IDepartmentNode
 	organizationId: number
+	isEditableProp?: boolean
 }
 
 const TitleRender = (props: Props): React.ReactNode => {
-	const { node, organizationId } = props
+	const { node, organizationId, isEditableProp } = props
 
-	const [isEditable, setIsEditable] = useState(false)
+	const [isEditable, setIsEditable] = useState(isEditableProp ?? false)
 	const [title, setTitle] = useState(node?.name)
 	const inputRef = useRef<HTMLInputElement>(null)
 	useEffect(() => {
@@ -27,46 +29,31 @@ const TitleRender = (props: Props): React.ReactNode => {
 		(state) => state.changeDepartmentName,
 	)
 
+	const handleAPIError = useAPIErrorHandler()
 	return (
 		<>
-			{/* TODO: Просто дизейблед надо */}
-			{/* {isEditable ? ( */}
 			<input
-				readOnly={!isEditable}
+				readOnly={!isEditableProp && !isEditable}
 				style={{ paddingLeft: "8px" }}
 				ref={inputRef}
-				// onClick={(e) => {e.stopPropagation()}}
 				onChange={(e) => setTitle(e.target.value)}
 				value={title}
 				onBlur={(e) => {
-					if (e.target.value.trim() === inputRef.current?.value) {
-						changeName(node, e.target.value)
+					setIsEditable(false)
+					if (e.target.value.trim() !== node.name) {
 						departmentApi.changeDepartmentName(
 							{ ...node, name: e.target.value },
 							organizationId,
-						)
-						console.log("sdfsdfdsf")
-
-						setIsEditable(false)
+						).then(() => {
+							changeName(node, e.target.value)
+						}).catch(handleAPIError)
 					}
 				}}
 				onDoubleClick={() => {
+					console.log("double click")
 					setIsEditable(true)
-					console.log("ssss")
 				}}
 			/>
-			{/* ) : (
-				<span
-					style={{ margin: "10px 0" }}
-					// onClick={(e) => {e.stopPropagation()}}
-					onDoubleClick={() => {
-						setIsEditable(true)
-						console.log("ssss")
-					}}
-				>
-					{title}
-				</span>
-			)} */}
 		</>
 	)
 }

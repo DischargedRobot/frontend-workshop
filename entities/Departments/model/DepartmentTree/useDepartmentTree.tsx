@@ -3,10 +3,12 @@ import useSWR, { useSWRConfig } from "swr"
 import { useDepartmentsStore } from "../useDepartmentsStore"
 import { departmentApi } from "../../api"
 import { useCallback, useMemo } from "react"
-import { APIError } from "@/shared/api/APIErrors"
+import { APIError, FFAPIErrors } from "@/shared/api/APIErrors"
 import { IDepartment } from "../../lib"
 import type { IDepartmentNode } from "../../ui/DepartmentTree/TitleRender"
 import { useSelectedDepartmentsStore } from "../useSelectedDepartmentsStore"
+import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
+import { showToast } from "@/shared/ui"
 
 const getDepartmentAndAllChildren = (
 	departments: IDepartment[],
@@ -68,7 +70,6 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 			departmentApi.getDescedantOfDepartments(
 				organization.id,
 				organization.child.id,
-				2,
 			),
 		{
 			revalidateOnFocus: false,
@@ -142,20 +143,85 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 		],
 	)
 
+
+	// оптимизировать
+	const handleMoveDepAPIError = useAPIErrorHandler([{
+		error: FFAPIErrors.SERVICE_CANNOT_HAVE_DESCENDANTS,
+		handler: () => {
+			showToast({
+				type: "error",
+				title: "Ошибка при перемещении отдела",
+				text: "Сервис не может иметь потомков",
+			})
+		},
+
+	},
+	{
+		error: FFAPIErrors.OPTIMISTIC_LOCK,
+		handler: () => {
+			showToast({
+				type: "error",
+				title: "Ошибка при перемещении отдела",
+				text: "Сервис не может иметь потомков",
+			})
+		}
+	}])
+
+	// TODO: должен блокировать любые изменения с отделом,
+	//  пока не будет получен ответ от сервера
 	// Обработчик перетаскивания отдела в дереве
 	const handleDrop = useCallback(
-		(
+		async (
 			dragNode: IDepartmentNode, // Перетаскиваемый отдел
-			dropNodeId: number, // ID узла, куда падает
+			dropNode: IDepartmentNode, // ID узла, куда падает
 			dropToGap: boolean, // true = между узлами, false = внутри узла
 		) => {
 			// Если внутри узла (не между узлами)
-			if (!dropToGap) {
-				// Сделать перетаскиваемый отдел дочерним для целевого узла
-				changeParentDep(dragNode, dropNodeId)
+			console.log("handleDrop", { dragNode, dropNode, dropToGap })
+
+			// if (!dropToGap) {
+			try {
+				const responseDep = await departmentApi.changeDepartmentParent(
+					dragNode as IDepartment,
+					dropNode as IDepartment,
+					organization.id,
+				)
+
+				// // После успешного изменения получим свежие дети корневого отдела
+				// const key = [
+				// 	["department", "organizationId", "departmentId"],
+				// 	["all", organization.id, organization.child.id],
+				// ]
+
+				// const fresh = await mutate(
+				// 	key,
+				// 	() =>
+				// 		departmentApi.getDescedantOfDepartments(
+				// 			organization.id,
+				// 			organization.child.id,
+				// 		),
+				// )
+
+				// if (fresh && Array.isArray(fresh)) {
+				// 	changeChild({ ...organization.child, children: fresh })
+				// 	changeDepartmentChildren(organization.child, fresh)
+				// 	onLoaded?.([...fresh])
+				// }
+				changeParentDep(dragNode, dropNode.id)
+			} catch (err) {
+				handleMoveDepAPIError(err)
+				// console.log("Failed to move department", err)
+				// // Откатим изменения, перезагрузив данные из API
+				// await mutate(
+				// 	[
+				// 		["department", "organizationId", "departmentId"],
+				// 		["all", organization.id, organization.child.id],
+				// 	],
+				// )
 			}
+			// } else {
 		},
-		[changeParentDep],
+		[changeParentDep, changeChild, onLoaded, organization.child, changeDepartmentChildren, mutate, handleMoveDepAPIError, organization.id, organization.child, organization.child?.id],
 	)
 
 	const treeData = useMemo(

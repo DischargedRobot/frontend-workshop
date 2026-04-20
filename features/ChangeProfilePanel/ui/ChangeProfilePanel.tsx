@@ -24,9 +24,9 @@ const ChangeProfileMenu: React.FC<{
     const isMobile = !screens.md;
 
     const items: MenuProps['items'] = [
-        { key: 'profile', icon: <UserOutlined style={{ fontSize: isMobile ? "" : 32 }} />, label: isMobile ? '' : 'Профиль' },
-        { key: 'changePassword', icon: <LockOutlined style={{ fontSize: isMobile ? "" : 32 }} />, label: isMobile ? '' : 'Сменить пароль' },
-        { key: 'theme', icon: <PictureOutlined style={{ fontSize: isMobile ? "" : 32 }} />, label: isMobile ? '' : 'Тема' },
+        { key: 'profile', icon: <UserOutlined style={{ fontSize: isMobile ? 16 : "" }} />, label: isMobile ? '' : 'Профиль' },
+        { key: 'changePassword', icon: <LockOutlined style={{ fontSize: isMobile ? 16 : "" }} />, label: isMobile ? '' : 'Сменить пароль' },
+        { key: 'theme', icon: <PictureOutlined style={{ fontSize: isMobile ? 16 : "" }} />, label: isMobile ? '' : 'Тема' },
     ];
     return (
         <Menu
@@ -37,6 +37,7 @@ const ChangeProfileMenu: React.FC<{
             selectedKeys={[selectedKey]}
             onClick={({ key }) => onSelect(key)}
             style={{ width: 220 }}
+            {...(isMobile && { disabledOverflow: true })} // чтобы при горизонтальном режиме не бегали кнопки
         />
 
     );

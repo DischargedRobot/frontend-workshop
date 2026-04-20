@@ -1,6 +1,23 @@
 @use "@/common/styles/placeholder.scss";
 
 :root {
+	--base-l: 0.72;
+	--base-c: 0.14;
+	--base-h: 250;
+
+	--base-color: oklch(var(--base-l) var(--base-c) var(--base-h));
+
+	--inverse-like: oklch(
+		calc(1 - var(--base-l)) var(--base-c) calc(var(--base-h) + 180)
+	);
+}
+
+:root {
+	// --main-color: "#0b57d0" !important;
+	// --secondary-color: "#141313" !important;
+	// --text-color: "#d2d2d2" !important;
+	// --text-active-color: "#d0d0d0" !important;
+	// --background-color: "#424242" !important;
 	--segoe-ui: "Segoe UI", sans-serif;
 	--inter: "Inter", sans-serif;
 	--roboto-mono: "Roboto Mono", sans-serif;
@@ -11,8 +28,6 @@
 
 	// --ant-table-row-hover-bg: #da6060;
 	--background-text-color: #cfcfcf;
-	--background: #2a2828;
-	--text-color: #e3e3e3;
 	--foreground: #323234;
 	--active-background: #2d75c8;
 	--active-color: #0b57d0;
@@ -34,8 +49,21 @@
 	--disabled: #38333330;
 	--disabled-mix: #5a53539c;
 
+	// MAIN PALETTE
+	--main-color: #0b57d0;
 	--secondary-color: #323234;
+	--text-color: #e3e3e3;
+	--background-color: #2a2828;
 
+	// DEPARTMENT TREE
+	--department-tree-panel-bg: color-mix(
+		in srgb,
+		var(--secondary-color),
+		#3f3f3f69 32%
+	);
+	--popover-bg: red;
+
+	// TEXTINPUT COLORS
 	--textinput-bg: var(--foreground);
 	--textinput-bg-active: var(--secondary-color);
 
@@ -52,8 +80,12 @@
 	--formbutton-text-disabled: var(--text-muted);
 	// Toasts colors
 	--toast-bg-error: #ffabab;
-	--toast-bg-success: #a1fa99;
+	--toast-bg-success: #c5f7dc;
 	--toast-bg-warning: #ffde91;
+
+	--toast-border-warning: #ca8e0c;
+	--toast-border-success: #20b428;
+	--toast-border-error: #b61919;
 
 	--toast-text: #383838;
 
@@ -64,17 +96,19 @@
 	--text-muted: color-mix(in srgb, var(--text-color), #666 50%);
 
 	--hover-mix: #828282;
-	--icon-bg-color: color-mix(in srgb, var(--foreground), #000000 10%);
-	--icon-bg-color-hover: color-mix(
+	--iconbutton-bg: color-mix(in srgb, var(--foreground), #000000 10%);
+	--iconbutton-bg-hover: color-mix(
 		in srgb,
 		var(--foreground),
 		var(--hover-mix) 10%
 	);
-	--icon-bg-color-disabled: color-mix(
+	--iconbutton-bg-disabled: color-mix(
 		in srgb,
 		var(--background),
 		var(--disabled-mix)
 	);
+
+	--popover-bg: color-mix(in srgb, var(--background-color), #434343 20%);
 }
 
 input:-webkit-autofill,
@@ -93,12 +127,13 @@ input:-webkit-autofill:active {
 	--size-button-icon: 20px;
 }
 
-// html {
-// 	overflow-y: scroll;
-// }
+html {
+	@extend %scrollbar;
+	// 	overflow-y: scroll;
+}
 
 .ant-form-item {
-	margin-bottom: 0px;
+	margin-bottom: 25px;
 	width: 100%;
 }
 
@@ -111,6 +146,10 @@ input:-webkit-autofill:active {
 	* {
 		@extend %scrollbar;
 	}
+	main {
+		overflow-y: auto;
+	}
+
 	// background-color: var(--background);
 	// color: var(--text-color);
 }
@@ -208,13 +247,28 @@ input:-webkit-autofill:active {
 		// color: var(--formbutton-text-hover);
 	}
 }
+// main: "#0b57d0",
+// secondary: "#141313",
+// text: "#d2d2d2",
+// textActive: "#d0d0d0",
+// background: "#303032",
+:root {
+	--main-color: "#0b57d0" !important;
+	--secondary-color: "#141313" !important;
+	--text-color: "#d2d2d2" !important;
+	--text-active-color: "#d0d0d0" !important;
+	--background-color: "#424242" !important;
+}
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
+// @media (prefers-color-scheme: light) {
+// 	:root {
+// 		--main-color: "#1a63d8";
+// 		--secondary-color: "#292929";
+// 		--text-color: "#d2d2d2";
+// 		--text-active-color: "#d0d0d0";
+// 		--background-color: "#424242";
+// 	}
+// }
 /* 
 html,
 body {

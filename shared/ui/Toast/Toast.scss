@@ -9,7 +9,7 @@
 	justify-items: center;
 	padding: 5px;
 
-	width: calc(150px + 10vw);
+	width: calc(200px + 10vw);
 
 	border-radius: 20px;
 	border-left: 10px solid;
@@ -48,16 +48,18 @@
 
 	&_warning {
 		color: var(--toast-text);
-		border-color: color-mix(in srgb, var(--toast-bg-warning), #252525 46%);
+		border-color: var(--toast-border-warning);
 		background-color: var(--toast-bg-warning);
 	}
 
 	&_error {
+		border-color: var(--toast-border-error);
 		color: var(--toast-text);
 		background-color: var(--toast-bg-error);
 	}
 
 	&_success {
+		border-color: var(--toast-border-success);
 		color: var(--toast-text);
 		background-color: var(--toast-bg-success);
 	}

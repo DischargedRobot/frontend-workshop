@@ -1,7 +1,7 @@
 .add-department {
 	position: relative;
 
-	z-index: 10;
+	z-index: 1000;
 	width: max-content;
 	height: auto;
 
@@ -54,5 +54,12 @@
 	.ant-form-item {
 		margin: 0;
 		width: auto;
+	}
+
+	&-popover {
+		width: 100px;
+		height: 100px;
+		background: transparent !important;
+		padding: 0;
 	}
 }

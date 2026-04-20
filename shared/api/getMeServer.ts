@@ -26,6 +26,7 @@ export const getMeServer = async (
 	)
 
 	return {
+		departmentName: "", // т.к. на фронте по uuid департамента получаем имя, а на бэке его нет
 		login: response.login,
 		password: response.password,
 		roles: response.roles.map((role) => ({

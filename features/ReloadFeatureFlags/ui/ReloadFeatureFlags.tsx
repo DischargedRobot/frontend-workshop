@@ -25,6 +25,7 @@ const ReloadFeatureFlags = ({ onClick }: Props) => {
 
     // Событие для кнопки "обновить"
     const reloadFeatureFlags = useCallback(async () => {
+        console.log("reload feature flags", lastDep)
         const response = await FFApi.getFFsByDepartments(
             lastDep.children,
             organization.id,

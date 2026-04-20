@@ -106,7 +106,6 @@ const AddUser = () => {
 								<Button
 									className="add-user__reset-button"
 									disabled={isClean}
-									type="primary"
 									htmlType="reset"
 									onClick={handleReset}
 								>

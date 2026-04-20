@@ -3,48 +3,51 @@ import { userApiServer } from "@/entities/User/api/userApiServer"
 import { InitStructureOrganization } from "./InitStructureOrganization"
 import { cookies } from "next/headers"
 import { departmentApiServer } from "@/entities/Departments/api/departmentApiServer"
+import { IOrganization } from "@/entities/Organization"
 
 async function getUsers(
-    departments: Awaited<ReturnType<typeof getDepartments>>,
+    department: Awaited<ReturnType<typeof getDepartment>>,
     cookiesStore: string,
 ) {
     try {
-        return await userApiServer.getUsersByDepartments(departments, cookiesStore)
+        return await userApiServer.getUsersByDepartments(department.children, cookiesStore)
     } catch {
         return []
     }
 }
 
-async function getDepartments(
-    organizationId: number,
-    childId: number,
+async function getDepartment(
+    organization: IOrganization,
     cookiesStore: string,
 ) {
     try {
-        return await departmentApiServer.getChildrenOfDepartments(
-            organizationId,
-            childId,
+        return await departmentApiServer.getSubTreeOfDepartments(
+            organization.id,
+            organization.child.id,
             cookiesStore,
         )
     } catch {
-        return []
+        return { ...organization.child }
     }
 }
 
 const StructureOrganizationLayout = async ({ children }: { children: React.ReactNode }) => {
     const { organization } = await functionInitApplication()
     const cookiesStore = (await cookies()).toString()
-    const departments = await getDepartments(
-        organization.id,
-        organization.child.id,
+    const departments = await getDepartment(
+        organization,
         cookiesStore,
     )
     const users = await getUsers(departments, cookiesStore)
 
+    const organizationWithDepartments = {
+        ...organization, child: { ...departments }
+    }
+    console.log(departments, "StructureOrganizationLayout get departments", organizationWithDepartments)
     return (
-        <InitStructureOrganization users={users}>
+        <InitStructureOrganization users={users} organization={organizationWithDepartments} >
             {children}
-        </InitStructureOrganization>
+        </InitStructureOrganization >
     )
 }
 

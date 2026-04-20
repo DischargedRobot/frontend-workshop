@@ -18,6 +18,7 @@
 		"@casl/ability": "^6.8.0",
 		"@casl/react": "^5.0.1",
 		"antd": "^6.3.1",
+		"chroma-js": "^3.2.0",
 		"next": "16.2.3",
 		"next-auth": "^4.24.13",
 		"react": "19.2.3",
@@ -28,6 +29,7 @@
 		"zustand": "^5.0.11"
 	},
 	"devDependencies": {
+		"@types/chroma-js": "^3.1.2",
 		"@types/jest": "^30.0.0",
 		"@types/node": "^20",
 		"@types/react": "^19",

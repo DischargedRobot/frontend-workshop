@@ -20,6 +20,7 @@ interface IFFsByDepartmentRelatedResponse {
 }
 
 interface IFFresponse {
+	lastUpdate: string
 	id: number
 	nodeId: number
 	name: string
@@ -43,13 +44,15 @@ interface IFFsResponse {
 	total: number
 }
 
-interface IFeatureFlagResponse {
-	id: number
-	nodeId: number
-	name: string
-	value: boolean
-	version: number
-}
+const convertDateFF = (dateISO: string) =>
+	new Date(dateISO).toLocaleString("ru-RU", {
+		day: "2-digit",
+		month: "2-digit",
+		year: "2-digit",
+		hour: "2-digit",
+		minute: "2-digit",
+		second: "2-digit",
+	})
 
 const FFApi = {
 	getFeatureFlagsByDepartment: async (
@@ -64,8 +67,9 @@ const FFApi = {
 			)
 		const { items, ...other } = responseData
 		return {
-			FFs: items.map(({ nodeId, ...ff }) => ({
+			FFs: items.map(({ nodeId, lastUpdate, ...ff }) => ({
 				...ff,
+				lastUpdate: convertDateFF(lastUpdate),
 				departmentId: nodeId,
 				departmentName: department.name,
 			})),
@@ -96,6 +100,7 @@ const FFApi = {
 				)
 
 				count -= response.total
+
 				FFs.push(...response.FFs)
 			} catch (error) {
 				continue
@@ -123,10 +128,11 @@ const FFApi = {
 			)
 		return responseData.items.map(
 			({
-				featureFlag: { nodeId, ...featureFlag },
+				featureFlag: { nodeId, lastUpdate, ...featureFlag },
 				belongsToNode: belongsToNode,
 			}) => ({
 				...featureFlag,
+				lastUpdate: convertDateFF(lastUpdate),
 				departmentId: nodeId,
 				departmentName: belongsToNode.name,
 			}),
@@ -161,12 +167,14 @@ const FFApi = {
 		departmentId: number,
 		featureFlag: IFeatureFlag,
 	): Promise<IFeatureFlag> => {
-		const response = await APIJsonRequest<IFeatureFlagResponse>(
+		const response = await APIJsonRequest<IFFresponse>(
 			`${URL_ORGANIZATION}/${organizationId}/nodes/${departmentId}/feature-flags/${featureFlag.id}`,
 		)
-		const { nodeId, ...ff } = response
+		const { nodeId, lastUpdate, ...ff } = response
+
 		return {
 			...ff,
+			lastUpdate: convertDateFF(lastUpdate),
 			departmentId: nodeId,
 			departmentName: featureFlag.departmentName,
 		}
@@ -177,7 +185,7 @@ const FFApi = {
 		featureFlag: IFeatureFlag,
 		isEnabled: boolean,
 	): Promise<IFeatureFlag> => {
-		const response = await APIJsonRequest<IFeatureFlagResponse>(
+		const response = await APIJsonRequest<IFFresponse>(
 			`${URL_ORGANIZATION}/${organizationId}/nodes/${featureFlag.departmentId}/feature-flags/${featureFlag.id}`,
 			{
 				method: "PATCH",
@@ -187,9 +195,10 @@ const FFApi = {
 				}),
 			},
 		)
-		const { nodeId, ...ff } = response
+		const { nodeId, lastUpdate, ...ff } = response
 		return {
 			...ff,
+			lastUpdate: convertDateFF(lastUpdate),
 			departmentId: nodeId,
 			departmentName: featureFlag.departmentName,
 		}
@@ -206,27 +215,30 @@ const FFApi = {
 		)
 	},
 
+	// 2026-04-17T20:27:46.342245Z
 	addFF: async (
 		organizationId: number,
 		nodeId: number,
 		ff: Pick<IFeatureFlag, "name" | "value">,
 	): Promise<IFeatureFlag> => {
-		const response = await APIJsonRequest<IFeatureFlagResponse>(
+		const {
+			nodeId: nodeIdResponse,
+			lastUpdate: lastUpdateResponse,
+			...FFResponse
+		} = await APIJsonRequest<IFFresponse>(
 			`${URL_ORGANIZATION}/${organizationId}/nodes/${nodeId}/feature-flags`,
 			{
 				method: "POST",
 				body: JSON.stringify({
-					name: ff.name,
+					name: ff.name.trim(),
 					value: ff.value,
 				}),
 			},
 		)
 		return {
-			id: response.id,
-			name: response.name,
-			value: response.value,
-			departmentId: response.nodeId,
-			version: response.version,
+			...FFResponse,
+			lastUpdate: convertDateFF(lastUpdateResponse),
+			departmentId: nodeIdResponse,
 		}
 	},
 }

@@ -229,7 +229,7 @@ export function toAPIError(
 		// console.log(serverError, "authError")
 		return new APIError(serverError.status, "AUTH", serverError.message)
 	}
-	console.log(serverError, "ffError")
+	// console.log(serverError, "ffError")
 	if (isFFAPIError(serverError)) {
 		return new APIError(
 			serverError.status,

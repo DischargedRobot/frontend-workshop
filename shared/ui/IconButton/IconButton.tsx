@@ -2,7 +2,7 @@ import "./IconButton.scss"
 
 import { MouseEvent, ReactNode } from "react"
 
-interface Props {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	icon: ReactNode
 	children?: ReactNode
 	onClick?: (e: MouseEvent<HTMLButtonElement>) => void
@@ -18,6 +18,7 @@ const IconButton = ({
 	type = "button",
 	disabled = false,
 	className = "",
+	...otherProps
 }: Props) => {
 	return (
 		<button
@@ -25,6 +26,7 @@ const IconButton = ({
 			type={type}
 			onClick={onClick}
 			disabled={disabled}
+			{...otherProps}
 		>
 			{icon}
 			{children}

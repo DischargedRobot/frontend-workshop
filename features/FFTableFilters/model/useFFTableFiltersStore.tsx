@@ -4,7 +4,7 @@ import { create } from "zustand"
 export type TFeatureFlagTable = {
 	[K in keyof Omit<
 		Required<IFeatureFlag>,
-		"id" | "departmentId" | "name" | "version"
+		"id" | "departmentId" | "name" | "version" | 'isToggling'
 	>]: {
 		name: string
 		isVisible: boolean
@@ -22,7 +22,7 @@ const useFFTableFiltersStore = create<IFFTableFiltersStore>((set, get) => ({
 	visibleColumns: {
 		departmentName: { name: "Отдел", isVisible: true },
 		value: { name: "Статус", isVisible: true },
-		lastModified: { name: "Последнее изменние", isVisible: true },
+		lastUpdate: { name: "Последнее изменние", isVisible: true },
 		description: { name: "Описание", isVisible: true },
 	},
 	setVisibleColumns: (newVisibleColumns) =>

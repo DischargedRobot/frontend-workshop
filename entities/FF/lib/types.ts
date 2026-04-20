@@ -7,7 +7,7 @@ export interface IFeatureFlag extends IToggleFF {
 	departmentId: number
 	departmentName?: string
 	value: boolean
-	lastModified?: string
+	lastUpdate?: string
 	description?: string
 	version: number
 }

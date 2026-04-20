@@ -12,7 +12,7 @@ import { IFeatureFlag } from "../lib"
 // 		departmentName: `Depart${index}`,
 // 		value: false,
 // 		description: "d".repeat(index),
-// 		lastModified: "11.11.2022",
+// 		lastUpdate: "11.11.2022",
 // 		version: 1,
 // 	}))
 

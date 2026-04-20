@@ -5,6 +5,7 @@ import "./FFTable.scss"
 import { Empty, Table, TableProps } from "antd"
 import { useGetFFsFromServer, useFFTable } from "../model"
 import { IFeatureFlag } from "../lib/types"
+import { NotFoundIcon } from "@/shared/assets/Icon/NotFoundIcon/NotFoundIcon"
 
 export type TFFTableColumns = TableProps<IFeatureFlag>["columns"]
 
@@ -27,14 +28,15 @@ const FFTable = ({ featureFlags }: Props) => {
 			dataSource={featureFlags}
 			columns={columns}
 			tableLayout="fixed"
-			loading={isLoading}
+			loading={{ description: "Загрузка...", spinning: isLoading }}
 			locale={{
-				emptyText: (
+
+				emptyText: (!isLoading &&
 					<Empty
-						image={Empty.PRESENTED_IMAGE_SIMPLE}
+						image={<NotFoundIcon />}
 						description={
 							<span style={{ color: "var(--text-color)" }}>
-								{"Фич флагов нет :("}
+								{"Фич флагов нет"}
 							</span>
 						}
 					/>

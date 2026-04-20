@@ -2,7 +2,11 @@ import { APIJsonRequest } from "@/shared/api"
 import { IDepartment, IDepartmentResponse } from ".."
 import { convertIDepartmentResponseToIDepartment } from "../lib/convert"
 import { url } from "inspector"
-import { IDepartmentsByOrganizationId } from "./departmentApi"
+import {
+	convertSubtreeToIDepartment,
+	IDepartmentsByOrganizationId,
+	IDepartmentsSubtreeResponse,
+} from "./departmentApi"
 
 // TODO: отрефакторить все эти departmentApi
 export const departmentApiCommon = {
@@ -30,7 +34,6 @@ export const departmentApiCommon = {
 		departmentId: number,
 		cookieString?: string,
 	): Promise<IDepartment[]> => {
-        
 		const response = await APIJsonRequest<IDepartmentsByOrganizationId>(
 			`${url}/organizations/${organizationId}/nodes/${departmentId}/children`,
 			{
@@ -43,5 +46,21 @@ export const departmentApiCommon = {
 		return convertIDepartmentResponseToIDepartment(
 			response.items.filter((dep) => dep.id != departmentId),
 		)
+	},
+
+	getSubTreeOfDepartments: async (
+		url: string,
+		organizationId: number,
+		departmentId: number,
+		cookieString?: string,
+	): Promise<IDepartment> => {
+		const response = await APIJsonRequest<IDepartmentsSubtreeResponse>(
+			`${url}/organizations/${organizationId}/nodes/${departmentId}/subtree`,
+			{
+				headers: cookieString ? { Cookie: cookieString } : {},
+			},
+		)
+
+		return convertSubtreeToIDepartment(response)
 	},
 }

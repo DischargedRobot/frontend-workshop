@@ -6,15 +6,16 @@ import { DepartmentTree, IDepartment, IService, useDepartmentsStore } from "@/en
 import { AddDepartment } from "@/features/AddDepartment"
 import { useFullDepartmentTree } from "../model"
 import { DeleteSelectedDepartments } from "@/features/DeleteSelectedDepartments"
-import { SearchDropDownMenu } from "@/shared/model/SearchDropMenu"
 import { Can } from "@/shared/model/Ability"
-import { PointerEvent, useCallback, useMemo, useRef, useState } from "react"
+import { PointerEvent, useCallback, useRef, useState } from "react"
 import { ChangeVisibleServicePanel } from "@/features/ChangeVisibleServicePanel"
 import { userApiClient } from "@/entities/User/api"
 import { useUsersStore, useUserFiltersStore } from "@/entities/User"
 import { mutate, useSWRConfig } from "swr"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 import { SelectDepartmentSearchDropMenu } from "@/features/SelectDepartmentSearchDropMenu"
+import { mapAPIErrors } from "@/shared/api"
+import { EditButton } from "@/shared/ui/EditButton"
 
 const TREE_MIN_W = 180
 const TREE_DEFAULT_W = 250
@@ -81,7 +82,10 @@ const FullDepartmentTree = () => {
 		}
 	}, [])
 
-	const handleError = useAPIErrorHandler()
+	const handleError = useAPIErrorHandler([{
+		error: mapAPIErrors(404),
+		handler: () => { }
+	}])
 
 	// При загрузке дерева отделов 
 	const setUsers = useUsersStore((state) => state.setUsers)
@@ -137,6 +141,8 @@ const FullDepartmentTree = () => {
 		}
 	}, [removeDepartmentId, setDepartmentIds])
 
+	const [isEditable, setIsEditable] = useState(false)
+
 	return (
 		<div className="department-tree-panel" style={{ width: width }}>
 			<div className="department-tree-panel__container">
@@ -152,10 +158,14 @@ const FullDepartmentTree = () => {
 						<Can I="delete" a="Department">
 							<DeleteSelectedDepartments />
 						</Can>
+						<Can I="update" a="Department">
+							<EditButton onClick={() => setIsEditable(prev => !prev)} />
+						</Can>
 					</div>
 				</div>
 				<Can I="read" a="Department">
 					<DepartmentTree
+						isEditable={isEditable}
 						onLoaded={onLoadedDepartments}
 						onCheckLeaf={onCheckLeaf}
 						onUncheckLeaf={onUncheckLeaf}

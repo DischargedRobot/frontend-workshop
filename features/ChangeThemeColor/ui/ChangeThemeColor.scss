@@ -1,3 +1,5 @@
+@use "@/common/styles/variables.scss" as vars;
+
 .color-picker {
 	display: flex;
 	flex-direction: column;
@@ -23,6 +25,8 @@
 		& > :first-child {
 			border-radius: 16px 0 0 16px;
 		}
+
+		overflow-x: scroll;
 	}
 
 	&__block {
@@ -49,6 +53,12 @@
 			border-radius: 16px;
 			z-index: 100;
 		}
+
+		@media (max-width: vars.$medium-breakpoint) {
+			&:hover {
+				transform: scale(1.2) !important;
+			}
+		}
 	}
 
 	&__block_selected {
@@ -59,6 +69,10 @@
 		z-index: 10;
 
 		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+
+		@media (max-width: vars.$medium-breakpoint) {
+			transform: scale(1.1);
+		}
 	}
 
 	&__block-label {

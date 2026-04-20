@@ -7,11 +7,11 @@
 	padding: 6px;
 
 	border-radius: 20px;
-	background-color: var(--icon-bg-color);
+	background-color: var(--iconbutton-bg);
 	box-shadow: 0 2px 3px var(--shadow);
 
 	&:hover {
-		background-color: var(--icon-bg-color-hover);
+		background-color: var(--iconbutton-bg-hover);
 		color: var(--text-color);
 
 		svg {
@@ -20,6 +20,9 @@
 	}
 
 	&.disabled {
+		cursor: not-allowed;
+		box-shadow: none;
+		color: none;
 		&:hover {
 			box-shadow: none;
 			color: none;
@@ -30,7 +33,7 @@
 		}
 
 		color: color-mix(in srgb, var(--text-color), var(--disabled-mix));
-		background-color: var(--disabled);
+		background-color: var(--iconbutton-bg-disabled);
 	}
 
 	& svg {

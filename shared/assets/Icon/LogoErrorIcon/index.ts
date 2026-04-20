@@ -1,0 +1,1 @@
+export { LogoErrorIcon } from "./LogoErrorIcon"

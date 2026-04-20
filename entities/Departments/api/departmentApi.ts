@@ -43,19 +43,20 @@ interface IDepartmentChildrenResponse {
 	items: IDepartmentResponse[]
 }
 
-interface IDepartmentsSubtreeResponse {
+export interface IDepartmentsSubtreeResponse {
 	id: number
 	uuid: string
 	path: string
 	name: string
 	isService: boolean
 	version: number
-	children: IDepartmentsSubtreeResponse[]
+	children?: IDepartmentsSubtreeResponse[]
 }
 
-function convertSubtreeToIDepartment(
+export function convertSubtreeToIDepartment(
 	node: IDepartmentsSubtreeResponse,
 ): IDepartment {
+	console.log(node, "convertSubtreeToIDepartment node")
 	return {
 		id: node.id,
 		uuid: node.uuid,
@@ -64,7 +65,7 @@ function convertSubtreeToIDepartment(
 		isService: node.isService,
 		version: node.version,
 		featureFlags: [],
-		children: node.children.map(convertSubtreeToIDepartment),
+		children: node.children?.map(convertSubtreeToIDepartment) || [],
 	}
 }
 
@@ -238,23 +239,31 @@ const departmentApi = {
 
 	changeDepartmentParent: async (
 		department: IDepartment,
-		newParentId: number,
+		newParent: IDepartment,
 		organizationId: number,
-	): Promise<IDepartment> => {
+	): Promise<IDepartment[]> => {
 		const response = await APIJsonRequest<IChangeDepartmentParentResponse>(
 			`${URL_ORGANIZATION}/${organizationId}/nodes/${department.id}/move`,
 			{
 				method: "POST",
 				body: JSON.stringify({
-					newParentId: newParentId,
-					version: department.version,
+					newParentId: newParent.id,
+					version: newParent.version,
 				}),
 			},
 		)
 
-		return convertIDepartmentResponseToIDepartment(
-			response.movedDescendants,
-		)
+		const { movedDescendants, oldPath, newPath, ...newDep } = response
+		const responseDep: IDepartment = {
+			...department,
+			path: newPath,
+			...newDep,
+		}
+
+		return [
+			convertIDepartmentResponseToIDepartment(movedDescendants),
+			responseDep,
+		]
 	},
 }
 

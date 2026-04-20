@@ -7,7 +7,7 @@ import Sider from "antd/es/layout/Sider"
 import { useState } from "react"
 import { RightOutlined } from "@ant-design/icons"
 import { useNavigationItems } from "../model"
-import { usePathname, useSearchParams } from "next/navigation"
+import { usePathname } from "next/navigation"
 
 const { useBreakpoint } = Grid
 

@@ -6,7 +6,6 @@ import "./MainLayout.scss"
 import type { Metadata } from "next"
 import Toasts from "@/shared/ui/Toast/Toasts"
 
-// import { SessionProvider } from "next-auth/react";
 const FONTS = {
 	text: {
 		fontSize: 16,
@@ -18,67 +17,177 @@ const FONTS = {
 	},
 }
 
-const COLOR = {
-	textColor: "#e3e3e3",
-	disabled: "#6d6a6a79",
 
+
+// main: "#0b57d0",
+// secondary: "#323234",
+// text: "#e3e3e3",
+// background: "#2a2828",
+
+
+// main: "#0b57d0",
+// secondary: "#141313",
+// text: "#d2d2d2",
+// textActive: "#d0d0d0",
+// background: "#303032",
+
+
+
+
+
+
+const COLOR = {
 	backgroundTextColor: "#cfcfcf",
-	background: "#313131",
-	foreground: "#222222",
+	foreground: "#989299",
 	buttonBaseBackground: "#8d8d8d",
 	hover: "#4d4d4d",
 	hoverActive: "#507fdc",
 	activeBackground: "#2a5cd0",
 	// activeHover: "",
-	stroke: "#58595d76",
 	activeBorder: "#ECECEC",
 	foregroundSecond: "#292929cb",
 	strokeNavPanel: "#111111e8",
 
+
+
+	// MAIN PALETTE
+	main: "#0b57d0",
+	secondary: "#2c2b2b",
+	text: "#d2d2d2",
+	textActive: "#d0d0d0",
+	background: "#323233",
+
+
+	// helper colors
+	disabled: "#6d6a6a79",
+	hoverMix: "#fefefe", // для ховеров пока не актиных
+	hoverMixActive: "#2a2828b3", // для ховеров активных элементов
+	selectedMix: "#555353", // для выделения выбранного элемента
+	selectedMixHover: "#d8d8d873",
+	activeMix: "#453e3eb8", // для кнопок и активных элементов
+	strokeMix: "#4d4d4d4b",
+
+
+	switchBgActive: "#2a2828", // пока не надо
+
+	// CHEKBOX 
+	checkboxBg: "color-mix(in srgb, var(--secondary-color), var(--hover-mix) 22%)",
+
+	// MODAL
+	modalBg: "color-mix(in srgb, var(--secondary-color), #000000 80%)",
+
+
+	// USER CARD
+	usercardBg: "var(--menu-bg)",
+	usercardBgSelected: "color-mix(in srgb, var(--user-card-bg), var(--selected-mix) 40%)",
+	usercardBgSelectedHover: "color-mix(in srgb, var(--user-card-bg), var(--selected-mix-hover) 60%)",
+
+	// POPOVER
+	popoverBg: "var(--menu-bg)",
+	// TABLE
+	tableBg: "color-mix(in srgb, var(--background-color), #7575758b 50%)",
+	tableHeaderBg: "color-mix(in srgb, var(--background-color), #7474749f 50%)",
+	tableRowHoverBg: "color-mix(in srgb, var(--background-color), var(--hover-mix) 20%)",
+	tableRowSelectedBg: "color-mix(in srgb, var(--background-color), var(--selected-mix) 40%)",
+	tableRowSelectedHoverBg: "color-mix(in srgb, var(--background-color), var(--selected-mix-hover) 60%)",
+	tableBorder: "color-mix(in srgb, var(--secondary-color), var(--stroke-mix) 70%)",
+
+	// DEPARTMENT TREE
+	departmenttreepanelBg: "color-mix(in srgb, var(--secondary-color), #6666669f 30%)",
+
+	// ICON BUTTON
+	iconSvg: "color-mix(in srgb, var(--text-color), var(--active-mix) 40%)",
+
+	iconbuttonBg: "color-mix(in hsl, var(--background-color), var(--active-mix) 32%)",
+	iconbuttonBgHover: "color-mix(in srgb, var(--background-color), var(--hover-mix) 70%)",
+	iconbuttonBgDisabled: "color-mix(in srgb, var(--background-color), var(--disabled) 40%)",
+
+	// INPUT
+	inputBg: "color-mix(in srgb, var(--background-color), var(--active-mix) 42%)",
+
+	inputBorder: "var(--main-color)",
+	inputBorderHover: "color-mix(in srgb, var(--main-color), var(--hover-mix) 7%)",
+
+	// MENU
+	menuBg: "color-mix(in srgb, var(--secondary-color), var(--selected-mix) 12%)",
+
+	menuItemHoverBg: "color-mix(in srgb, var(--main-color), var(--hover-mix) 22%)",
+
+	menuItemActiveBg: "color-mix(in srgb, var(--main-color) , var(--hover-mix-active) 20%)",
+
+	menuItemSelectedBg: "color-mix(in srgb, var(--main-color), var(--selected-mix) 20%)",
+
+	menuItemColor: "#ffffff",
+	menuItemSelectedColor: "var(--text-active-color)",
+	// menuItemDisabledColor:
+	// "color-mix(in srgb, var(--text-active-color), var(--disabled) 60%)",
+	menuHover: "color-mix(in srgb, var(--main-color), var(--hover-mix) 42%)",
+
+	// DESCTOP COLORS
+	textDescription: "color-mix(in srgb, var(--text-color), var(--disabled) 30%)",
+	textHover: "var(--text-color)", // пока не надо
+	textDisabled: "color-mix(in srgb, var(--text-color), var(--disabled) 70%)",
+	textPlaceholder: "color-mix(in srgb, var(--text-color), var(--disabled) 20%)",
+
 	// BUTTON COLORS //
-	formbuttonBg: "var(--active-background)",
-	formbuttonBgActive: "var(--active-background)",
-	formbuttonBgHover: "var(--active-hover)",
-	formbuttonBgDisabled: "var(--disabled)",
+	formbuttonBg: "var(--main-color)",
+	formbuttonBgActive: "color-mix(in srgb, var(--main-color) 85%, #2c2c2c 15%)",
+	formbuttonBgHover: "color-mix(in srgb, var(--main-color) 100%, var(--hover-mix) 32%)",
+	formbuttonBgDisabled: "color-mix(in srgb, var(--main-color), var(--disabled) 40%)",
 
 	formbuttonText: "var(--text-color)",
 	formbuttonTextActive: "var(--text-color)",
 	formbuttonTextHover: "var(--text-color)",
-	formbuttonTextDisabled: "var(--text-muted)",
 }
 
 export const metadata: Metadata = {
 	title: "RedFlags",
 }
 
-// TODO: вот так для всех сделать
-const layout = {
-	siderBg: COLOR.foreground,
-}
 
 const theme: ThemeConfig = {
+	// zeroRuntime: true,
 	token: {
-		colorTextDescription: COLOR.textColor,
-		colorPrimary: COLOR.activeBackground,
-		colorText: COLOR.textColor,
-		colorBgBase: COLOR.foreground,
+		colorPrimary: COLOR.main,
+
+		colorTextDescription: COLOR.textDescription,
+		colorText: COLOR.textActive,
+		colorTextLightSolid: COLOR.text,
+		colorTextDisabled: COLOR.textDisabled,
+		colorTextPlaceholder: COLOR.textPlaceholder,
+
+		colorPrimaryBgHover: "#ffffff",
+
+		colorBgBase: COLOR.menuBg,
 		colorBgLayout: COLOR.background,
 		// colorBorder: COLOR.stroke,
-		colorTextPlaceholder: "#d2d2d2",
-		colorPrimaryActive: COLOR.activeBackground,
-		colorPrimaryBg: COLOR.foregroundSecond,
+		colorPrimaryActive: COLOR.formbuttonBgActive,
+		colorPrimaryBg: COLOR.secondary,
 
-		colorTextDisabled: COLOR.formbuttonTextDisabled,
+		colorBgContainerDisabled: COLOR.formbuttonBgDisabled,
 
+
+		lineWidth: 2,
+
+		// colorBgContainerDisabled: COLOR.formbuttonBgDisabled,
 	},
 	components: {
 		Layout: {
-			...layout,
+			siderBg: COLOR.menuBg,
 		},
+
+		Input: {
+			hoverBorderColor: COLOR.inputBorderHover,
+			colorBgContainer: COLOR.inputBg,
+			colorBorder: COLOR.inputBorder,
+
+			activeBorderColor: COLOR.inputBorderHover,
+			activeShadow: "0 0 0 2px rgba(11, 87, 208, 0.2)"
+		},
+
 
 		Button: {
 			// BG
-			colorBgBase: COLOR.formbuttonBg,
 			defaultBg: COLOR.formbuttonBg,
 			defaultHoverBg: COLOR.formbuttonBgHover,
 			defaultActiveBg: COLOR.formbuttonBgActive,
@@ -89,51 +198,77 @@ const theme: ThemeConfig = {
 			defaultActiveColor: COLOR.formbuttonTextActive,
 			defaultColor: COLOR.formbuttonText,
 
+			lineWidth: 0,
 
-			// defaultShadow: `0 2px 5px var(--shadow)`,
-			// primaryShadow: `0 2px 5px var(--shadow)`
-
-			// colorBorder: COLOR.activeBorder,
 		},
 
 		Table: {
 			fontSize: FONTS.text.fontSize,
 			cellPaddingBlockSM: 2,
-			rowSelectedBg: COLOR.foreground,
-			rowSelectedHoverBg: COLOR.hover,
-			rowHoverBg: COLOR.hover,
-			colorBgContainer: COLOR.background,
-			borderColor: COLOR.stroke,
+			rowSelectedBg: COLOR.tableRowSelectedBg,
+			rowSelectedHoverBg: COLOR.tableRowSelectedHoverBg,
+			rowHoverBg: COLOR.tableRowHoverBg,
+			colorBgContainer: COLOR.tableBg,
+			borderColor: COLOR.tableBorder,
+			headerBg: COLOR.tableHeaderBg,
 			// cellPaddingBlock: 8,
 		},
 
 
 		Tree: {
-			colorBorder: COLOR.activeBackground, // цвет чекбокса и лиций
+			colorBorder: COLOR.main, // цвет чекбокса и лиций
 			colorBgContainer: "",
 			directoryNodeSelectedColor: COLOR.activeBorder,
 			directoryNodeSelectedBg: COLOR.activeBorder,
 
 		},
 
+		Popover: {
+			colorBgContainer: COLOR.popoverBg,
+
+			colorBgBase: COLOR.popoverBg,
+		},
+
 		Menu: {
 			collapsedIconSize: 32, // почему-то нужно чтобы было в 2 раза больше иначе будет дёргаться размер
 			collapsedWidth: 32,
 			itemHeight: 48,
-			itemSelectedBg: COLOR.activeBackground,
-			itemSelectedColor: COLOR.textColor,
-			itemBg: COLOR.foreground,
-			itemHoverBg: COLOR.hover,
+
+			horizontalItemSelectedBg: COLOR.menuItemSelectedBg,
+			horizontalItemHoverBg: COLOR.menuHover,
+			horizontalItemSelectedColor: COLOR.menuItemSelectedColor,
+
+			itemSelectedBg: COLOR.menuItemSelectedBg,
+			itemSelectedColor: COLOR.menuItemSelectedColor,
+			itemBg: COLOR.menuBg,
+			itemActiveBg: COLOR.menuItemActiveBg,
+			itemHoverBg: COLOR.menuItemHoverBg,
+			itemColor: COLOR.menuItemColor,
+			// activeBarWidth: 10,
+			activeBarWidth: 0,
 
 		},
 
 		Breadcrumb: {
-			lastItemColor: COLOR.activeBackground,
+			lastItemColor: COLOR.main,
 			fontSize: FONTS.text.fontSize,
 			lineHeight: 1,
 			fontFamily: FONTS.text.fontFamily,
 
-			separatorColor: COLOR.stroke,
+			separatorColor: COLOR.strokeMix,
+		},
+
+		Modal: {
+			contentBg: COLOR.modalBg,
+			borderRadius: 8,
+			// colorText: COLOR.text,
+			// colorTextHeading: COLOR.text,
+			// colorTextDescription: COLOR.textDescription,
+		},
+
+		Checkbox: {
+			colorPrimary: COLOR.main,       // checked
+			colorBgContainer: COLOR.checkboxBg,   // фон
 		},
 	},
 }
@@ -150,40 +285,84 @@ export default function RootLayout({
 
 					{
 						overflow: "hidden",
+						"--main-color": COLOR.main,
+						"--secondary-color": COLOR.secondary,
+						"--text-color": COLOR.text,
+						"--text-active-color": COLOR.textActive,
+						"--disabled": COLOR.disabled,
 
-						"--text-color": COLOR.textColor,
-						"--active-hover": COLOR.hoverActive,
-						"--active-background": COLOR.activeBackground,
-						"--foreground": COLOR.foreground,
-						"--foreground-second": COLOR.foregroundSecond,
+						// GENERAL
+						"--foreground": COLOR.secondary,
+						"--foreground-second": COLOR.secondary,
 						"--background": COLOR.background,
 						"--hover": COLOR.hover,
 						"--hover-active-background": COLOR.hoverActive,
 						"--border-for-nav-panel": COLOR.strokeNavPanel,
 
+						// MIXES
+						"--hover-mix": COLOR.hoverMix,
+						"--hover-mix-active": COLOR.hoverMixActive,
+						"--selected-mix": COLOR.selectedMix,
+						"--active-mix": COLOR.activeMix,
+						"--stroke-mix": COLOR.strokeMix,
+						"--selected-mix-hover": COLOR.selectedMixHover,
+
+						"--active-hover": COLOR.hoverActive,
+						"--active-background": COLOR.activeBackground,
+
+						// CHEKBOX
+						"--checkbox-bg": COLOR.checkboxBg,
+
+						// MODAL
+						"--modal-bg": COLOR.modalBg,
+
+						// USER CARD
+						"--user-card-bg": COLOR.usercardBg,
+
+						// POPOVER
+						"--popover-bg": COLOR.popoverBg,
+
+						// TABLE
+						"--table-bg": COLOR.tableBg,
+						"--table-header-bg": COLOR.tableHeaderBg,
+						"--table-row-hover-bg": COLOR.tableRowHoverBg,
+						"--table-row-selected-bg": COLOR.tableRowSelectedBg,
+						"--table-row-selected-hover-bg": COLOR.tableRowSelectedHoverBg,
+						"--table-border": COLOR.tableBorder,
+
+						// MENU
+						"--menu-bg": COLOR.menuBg,
+						"--menu-item-hover-bg": COLOR.menuItemHoverBg,
+						"--menu-item-active-bg": COLOR.menuItemActiveBg,
+						"--menu-item-selected-bg": COLOR.menuItemSelectedBg,
+						"--menu-item-color": COLOR.menuItemColor,
+						"--menu-item-selected-color": COLOR.menuItemSelectedColor,
+						"--menu-hover": COLOR.menuHover,
+
+						// ICON BUTTON
+						"--iconbutton-bg": COLOR.iconbuttonBg,
+						"--iconbutton-bg-hover": COLOR.iconbuttonBgHover,
+						"--iconbutton-bg-disabled": COLOR.iconbuttonBgDisabled,
+
+						// department tree
+						"--department-tree-panel-bg": COLOR.departmenttreepanelBg,
+
+
+
 						"--button-base-background": COLOR.buttonBaseBackground,
-						"--disabled": COLOR.disabled,
 						"--background-text-color": COLOR.backgroundTextColor,
 
+						// BUTTONS
+						"--formbutton-bg": COLOR.formbuttonBg,
+						"--formbutton-bg-active": COLOR.formbuttonBgActive,
+						"--formbutton-bg-hover": COLOR.formbuttonBgHover,
+						"--formbutton-bg-disabled": COLOR.formbuttonBgDisabled,
 
-						// ...style
-						// "--ant-color-text-quaternary": COLOR.textColor,
-						// "--ant-color-text-secondary": COLOR.textColor,
-						// "--ant-color-text-primary": COLOR.textColor,
-						// "--ant-color-text": COLOR.textColor,
-						// "--ant-color-text-placeholder": "#d2d2d2",
-						// "--ant-color-bg-base": COLOR.background,
-						// "--ant-color-bg-layout": COLOR.background,
-						// "--ant-color-border": COLOR.stroke,
-						// "--ant-color-primary": COLOR.activeBackground,
-						// "--ant-color-primary-active": COLOR.activeBackground,
-						// "--ant-color-primary-bg": COLOR.foregroundSecond,
-						// "--ant-color-primary-hover": COLOR.activeHover,
-						// "--ant-color-primary-hover-bg": COLOR.hoverActive,
-						// "--ant-color-text-placeholder": "#d2d2d2",
-						// "--ant-color-text-quaternary": COLOR.textColor,
-						// "--ant-color-text-secondary": COLOR.textColor,
-						// "--ant-color-text-primary": COLOR.textColor,		
+						"--formbutton-text": COLOR.formbuttonText,
+						"--formbutton-text-active": COLOR.formbuttonTextActive,
+						"--formbutton-text-hover": COLOR.formbuttonTextHover,
+						"--input-bg": COLOR.inputBg,
+						"--input-border": COLOR.inputBorder,
 					} as React.CSSProperties
 				}
 			>

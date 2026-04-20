@@ -7,15 +7,17 @@ import { memo } from "react"
 import useDepartmentTree from "../../model/DepartmentTree/useDepartmentTree"
 import TitleRender, { IDepartmentNode } from "./TitleRender"
 import { IDepartment } from "../../lib"
+import { isDeepStrictEqual } from "util"
 
 interface Props {
+	isEditable?: boolean
 	onCheckLeaf?: (department: IDepartment, checkedKeys: number[]) => void
 	onUncheckLeaf?: (department: IDepartment, checkedKeys: number[]) => void
 	onLoaded?: (departments: IDepartment[]) => void
 }
 
 
-const DepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
+const DepartmentTree = ({ isEditable, onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 	const {
 		departments,
 		treeData,
@@ -59,6 +61,7 @@ const DepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 					selectable={true}
 					titleRender={(node) => (
 						<TitleRender
+							isEditableProp={isEditable}
 							node={node as unknown as IDepartmentNode}
 							organizationId={organizationId}
 							key={node.key}
@@ -75,7 +78,7 @@ const DepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 					onDrop={(info) => {
 						handleDrop(
 							info.dragNode as unknown as IDepartmentNode, // Перетаскиваемый отдел
-							(info.node as unknown as IDepartmentNode).id, // ID узла, куда падает
+							(info.node as unknown as IDepartmentNode), // ID узла, куда падает
 							info.dropToGap, // бросили между узулами = true иначе внутрь false
 						)
 					}}

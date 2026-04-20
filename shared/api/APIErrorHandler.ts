@@ -11,6 +11,7 @@ import {
 } from "./APIErrors"
 import { showToast } from "../ui"
 import { useRouter } from "next/navigation"
+import loginApi from "./loginApi"
 
 // interface CustomAPIErrorHandler {
 // 	error: APIError
@@ -56,7 +57,8 @@ export const useAPIErrorHandler = <T extends APIError | FFAPIError>(
 					customHandler.handler(error)
 					return
 				}
-			} else if (isAPIError(error)) {
+			}
+			if (isAPIError(error)) {
 				const customHandler = customHandlers.find((handler) => {
 					return handler.error.status === error.status
 				})
@@ -85,9 +87,11 @@ export const useAPIErrorHandler = <T extends APIError | FFAPIError>(
 				case 403:
 					showToast({
 						title: "Доступ запрещён",
-						text: "У вас нет прав для выполнения этого действия",
+						text: "У вас нет прав для выполнения этого действия, прощайте",
 						type: "error",
 					})
+					loginApi.logOut()
+					router.push("/login")
 					break
 				case 404:
 					showToast({

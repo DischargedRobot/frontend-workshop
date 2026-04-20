@@ -127,7 +127,7 @@ export const userApiCommon = {
 			method: "PATCH",
 			headers: cookies ? { Cookie: cookies } : {},
 			body: JSON.stringify({
-				departmentUUID: department.uuid,
+				uuidDepartment: department.uuid,
 			}),
 		})
 	},

@@ -40,11 +40,11 @@
 		flex: 2;
 		&:disabled {
 			color: color-mix(in srgb, var(--text-color), var(--disabled-mix));
-			background-color: color-mix(
-				in srgb,
-				var(--active-background),
-				var(--disabled-mix)
-			);
+			// background-color: color-mix(
+			// 	in srgb,
+			// 	var(--active-background),
+			// 	var(--disabled-mix)
+			// );
 		}
 
 		// &:hover {
@@ -57,14 +57,14 @@
 
 	&__reset-button {
 		flex: 1;
-		&:disabled {
-			color: color-mix(in srgb, var(--white), var(--disabled-mix));
-			background-color: color-mix(
-				in srgb,
-				var(--error),
-				var(--disabled-mix)
-			);
-		}
+		// &:disabled {
+		// 	color: color-mix(in srgb, var(--white), var(--disabled-mix));
+		// 	background-color: color-mix(
+		// 		in srgb,
+		// 		var(--error),
+		// 		var(--disabled-mix)
+		// 	);
+		// }
 	}
 
 	&__token {

@@ -5,14 +5,11 @@ import { FFApi, useFFFiltersStore, useFFStore } from "@/entities/FF"
 import { useBreadcrumbStore } from "@/entities/DepartmentBreadcamb"
 import { useOrganizationStore } from "@/entities/Organization"
 import { APIError, mapAPIErrors } from "@/shared/api/APIErrors"
-import { showToast } from "@/shared/ui"
 
 import { departmentApi } from "../../api"
 import { IDepartment } from "../../lib"
 import { useDepartmentsStore } from "../useDepartmentsStore"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
-import { ApiError } from "next/dist/server/api-utils"
-import { error } from "console"
 
 export const useDepartmentTableColumns = () => {
 	const organizationId = useOrganizationStore(
@@ -35,7 +32,7 @@ export const useDepartmentTableColumns = () => {
 
 	const handleError = useAPIErrorHandler([{
 		error: mapAPIErrors(404), handler: () => {
-			console.log("В этом отделе фич флагов нет")
+			// console.log("В этом отделе фич флагов нет")
 		}
 	}])
 

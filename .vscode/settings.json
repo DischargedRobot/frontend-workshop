@@ -1,9 +1,8 @@
 {
-	"kiroAgent.configureMCP": "Disabled",
-	"typescript.autoClosingTags": true,
-	"ecsstractor_port.attributes": "className",
-	"ecsstractor_tsx_port.bem_nesting": true,
-	"ecsstractor_tsx_port.attributes": "className",
-	"ecsstractor_tsx_port.brackets": true,
-	"editor.colorDecorators": true
+	"js/ts.autoClosingTags.enabled": true,
+	// "editor": false,
+	"editor.defaultColorDecorators": "always",
+	"editor.colorDecorators": true,
+	"editor.colorDecoratorsActivatedOn": "clickAndHover"
+	// "editor.colorDecoratorsLimit": 500,
 }

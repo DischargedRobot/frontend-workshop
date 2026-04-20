@@ -12,8 +12,7 @@ const LoadingPage: React.FC = () => {
 				minHeight: "100vh",
 			}}
 		>
-			<Spin size="large" description="Loading..." />
-			LAYOUT
+			<Spin size="large" description="Загрузка, пожалуйста, ожидайте" />
 		</div>
 	)
 }

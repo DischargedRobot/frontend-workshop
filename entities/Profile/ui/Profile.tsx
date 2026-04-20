@@ -1,24 +1,23 @@
 "use client"
 
-import { Form, Input, Spin, Button } from "antd"
+import { Form, Button } from "antd"
 import { IProfile } from "../lib/profileTypes"
 import Avatar from "@/shared/ui/Avatar"
 import RoleList from "@/shared/ui/RoleList"
-import RoleStatus from "@/shared/model/RolesStatus/RolesStatus"
 import "./Profile.scss"
 import { useEffect, useMemo } from "react"
 import { IRole } from "@/shared/model/Role"
+import { TextInput } from "@/shared/ui"
+import { useProfileStore } from "../model/useProfileStore"
 
 interface ProfileProps {
 	profile: IProfile
-	departmentName?: string
 	onSubmit?: (values: IProfile) => void
 	logOutButton: React.ReactNode
 }
 
 export const Profile = ({
 	profile,
-	departmentName = "Не указан",
 	onSubmit,
 	logOutButton,
 }: ProfileProps) => {
@@ -62,20 +61,23 @@ export const Profile = ({
 				<Avatar rightButton={logOutButton} size={100} />
 			</div>
 			<Form.Item
+				initialValue={profile.login}
 				label="Логин"
 				name="login"
 				className="profile-grid__login"
 			>
-				<Input placeholder="Логин" />
+				<TextInput disabled placeholder="Логин" />
 			</Form.Item>
 
 
 
 			<Form.Item
+				initialValue={profile.departmentName}
 				label="Текущий отдел"
+				name="departmentName"
 				className="profile-grid__department"
 			>
-				<Input value={departmentName} />
+				<TextInput disabled />
 			</Form.Item>
 
 			<div className="profile-grid__roles-wrapper">

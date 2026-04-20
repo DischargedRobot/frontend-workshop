@@ -10,6 +10,7 @@ interface IProfileStore {
 
 export const useProfileStore = create<IProfileStore>((set) => ({
 	profile: {
+		departmentName: "",
 		id: 0,
 		login: "",
 		password: "",

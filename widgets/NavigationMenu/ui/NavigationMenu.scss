@@ -13,7 +13,7 @@
 
 		color: var(--text);
 
-		background-color: var(--foreground);
+		// background-color: var(--menu-bg);
 		box-shadow: 3px 0 10px var(--shadow);
 		border-right: 1px solid var(--border-for-nav-panel);
 
@@ -44,7 +44,7 @@
 	}
 
 	&__item_selected {
-		background-color: var(--ant-color-primary-active);
+		// background-color: var(--ant-color-primary-active);
 	}
 
 	&_collapsed {
@@ -63,7 +63,7 @@
 		color: var(--text-color);
 		border-radius: 50%;
 
-		background-color: var(--foreground-second);
+		// background-color: var(--foreground-second);
 		box-shadow: 2px 0 2px #00000081;
 
 		&:hover {
@@ -98,7 +98,7 @@
 
 			box-shadow: 0 -3px 10px var(--shadow);
 			border-top: 1px solid var(--border-for-nav-panel);
-			background-color: var(--foreground);
+			// background-color: var(--foreground);
 		}
 
 		svg {
@@ -140,7 +140,7 @@
 		}
 
 		.ant-menu-item-selected {
-			background-color: var(--active) !important;
+			// background-color: var(--active) !important;
 		}
 
 		.ant-menu-overflow-item-rest {
