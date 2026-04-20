@@ -1,0 +1,29 @@
+@use "@/common/styles/placeholder.scss";
+@use "@/common/styles/variables.scss" as vars;
+
+.change-profile-menu {
+	position: sticky;
+	left: 0;
+
+	@extend %flex-column;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	height: 100vh;
+
+	@media (max-width: vars.$medium-breakpoint) {
+		top: 0;
+
+		z-index: 10;
+		flex-direction: row;
+
+		width: 100% !important;
+		height: auto;
+	}
+
+	& li {
+		height: 100%;
+		width: auto;
+	}
+}

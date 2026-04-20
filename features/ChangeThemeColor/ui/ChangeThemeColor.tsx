@@ -24,6 +24,7 @@ export const ColorBlocksPicker = () => {
     });
 
     const containerRef = useRef<HTMLDivElement | null>(null);
+    const colorPaletteRef = useRef<HTMLDivElement | null>(null);
 
     const selectedColor = useMemo(
         () => (selectedBlock ? colors[selectedBlock] : ""),
@@ -40,7 +41,11 @@ export const ColorBlocksPicker = () => {
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+            if (containerRef.current
+                && colorPaletteRef.current
+                && !colorPaletteRef.current.contains(e.target as Node)
+                && !containerRef.current.getElementsByClassName("color-picker__color-input")[0].contains(e.target as Node)
+                && !containerRef.current.getElementsByClassName("color-picker__hex-input")[0].contains(e.target as Node)) {
                 setSelectedBlock(null);
             }
         };
@@ -50,9 +55,9 @@ export const ColorBlocksPicker = () => {
     }, []);
 
     return (
-        <div className="color-picker">
+        <div className="color-picker" >
             <h2 className="color-picker__title title title_litle">Палитра темы</h2>
-            <div className="color-picker__blocks-row" ref={containerRef}>
+            <div className="color-picker__blocks-row" ref={colorPaletteRef}>
                 {BLOCKS.map(({ key, label }) => {
                     const isSelected = selectedBlock === key;
                     const color = colors[key];
@@ -76,7 +81,7 @@ export const ColorBlocksPicker = () => {
                     Выбран блок: <b>{selectedBlock ?? "-"}</b>
                 </div>
 
-                <div className="color-picker__controls">
+                <div className="color-picker__controls" ref={containerRef}>
                     <input
                         type="color"
                         value={selectedColor}
