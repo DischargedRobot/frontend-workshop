@@ -7,15 +7,14 @@ import { Button } from "antd"
 
 const RegistrationPage = () => {
 	return (
-		<Content className="content registration">
+		<div className="content registration">
 			<div className="registration__content">
-				<h2 className="title">Регистрация</h2>
 				<OrganizationRegistrationForm />
 			</div>
 			<Link href="/login" style={{ width: "100%" }}>
 				<Button className="form-button" type="primary">Войти</Button>
 			</Link>
-		</Content>
+		</div>
 	)
 }
 

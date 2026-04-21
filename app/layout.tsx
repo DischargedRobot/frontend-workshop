@@ -44,7 +44,7 @@ const COLOR = {
 	strokeNavPanel: "#111111e8",
 
 	// MAIN PALETTE
-	main: "#0b57d0",
+	main: "#3871cc",
 	secondary: "#2c2b2b",
 	text: "#d2d2d2",
 	textActive: "#d0d0d0",
@@ -299,6 +299,13 @@ export default function RootLayout({
 
 						"--active-hover": COLOR.hoverActive,
 						"--active-background": COLOR.activeBackground,
+
+
+						// TEXT
+						"--text-description": COLOR.textDescription,
+						"--text-hover": COLOR.textHover,
+						"--text-disabled": COLOR.textDisabled,
+						"--text-placeholder": COLOR.textPlaceholder,
 
 						// CHEKBOX
 						"--checkbox-bg": COLOR.checkboxBg,

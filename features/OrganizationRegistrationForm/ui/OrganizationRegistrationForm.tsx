@@ -59,63 +59,68 @@ export const OrganizationRegistrationForm = () => {
 					<h3 className="title title_very-litle">
 						Профиль администрации
 					</h3>
-					<Form.Item
-						// label="Логин"
-						name="login"
-						rules={[
-							{
-								required: true,
-								message: "Введите логин",
-							},
-						]}
-						help={error?.login}
+					<div className="admin">
+						<div className="admin__content">
+							<Form.Item
+								// label="Логин"
+								name="login"
+								rules={[
+									{
+										required: true,
+										message: "Введите логин",
+									},
+								]}
+								help={error?.login}
 
-					>
-						<TextInput placeholder="Логин" />
-					</Form.Item>
-					<Form.Item
-						validateTrigger="onChange"
-						// label="Пароль"
-						name="password"
-						rules={[
-							{
-								validator: (_, value) => {
-									const ok = validatePassword(value || "")
-									return ok ? Promise.resolve() : Promise.reject(new Error("Пароль не соответствует требованиям"))
-								}
-							}
-						]}
-						help={passwordWatcher ? <PasswordChecksComponent /> : undefined}
-					>
-						<TextInputPassword placeholder="Пароль" />
-					</Form.Item>
-					<Form.Item
-						// label="Подтверждение пароля"
-						name="confirm"
-						dependencies={["password"]}
-						rules={[
-							({ getFieldValue }) => ({
-								validator(_, value) {
-									if (!value || getFieldValue("password") === value) {
-										return Promise.resolve()
+							>
+								<TextInput placeholder="Логин" />
+							</Form.Item>
+							<Form.Item
+								validateTrigger="onChange"
+								// label="Пароль"
+								name="password"
+								rules={[
+									{
+										validator: (_, value) => {
+											const ok = validatePassword(value || "")
+											return ok ? Promise.resolve() : Promise.reject()
+										}
 									}
-									return Promise.reject(new Error("Пароли не совпадают"))
-								}
-							})
-						]}
-					>
-						<TextInputPassword placeholder="Подтверждение пароля" />
-					</Form.Item>
+								]}
+								extra={<PasswordChecksComponent />}
+							>
+								<TextInputPassword placeholder="Пароль" />
+							</Form.Item>
+						</div>
 
+						<Form.Item
+							// label="Подтверждение пароля"
+							name="confirm"
+							dependencies={["password"]}
+							rules={[
+								({ getFieldValue }) => ({
+									validator(_, value) {
+										if (!value || getFieldValue("password") === value) {
+											return Promise.resolve()
+										}
+										return Promise.reject(new Error("Пароли не совпадают"))
+									}
+								})
+							]}
+						>
+							<TextInputPassword placeholder="Подтверждение пароля" />
+						</Form.Item>
+					</div>
 				</div>
 			</div>
 
 			<Button
 				className="form-button"
-				type="primary"
+				type="default"
 				htmlType="submit"
 				loading={loading}
-			> {loading ? "Регистрация..." : "Зарегистрироваться"}
+			>
+				{loading ? "Регистрация..." : "Зарегистрировать"}
 			</Button>
 
 		</Form>

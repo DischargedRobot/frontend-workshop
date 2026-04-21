@@ -1,0 +1,239 @@
+@use "@/common/styles/placeholder.scss";
+@use "@/common/styles/variables.scss" as vars;
+.switch-auth-panel {
+	@extend %flex-column;
+	align-items: center;
+	justify-content: center;
+
+	padding: 24px 20px;
+	gap: 20px;
+
+	width: 100%;
+	height: 100%;
+
+	color: var(--text-color);
+	background-color: var(--main-color);
+
+	@media (max-width: vars.$medium-breakpoint) {
+		padding: 34px 20px;
+		gap: 10px;
+	}
+	// .switch-auth-panel__title
+	flex: 0;
+
+	&__title {
+	}
+
+	// .switch-auth-panel__text
+
+	&__text {
+	}
+
+	& button {
+		border: 2px solid var(--text-color);
+	}
+}
+$gap-content: 20px;
+$login-registration-table-size: vars.$medium-breakpoint / 2 - $gap-content / 2;
+
+%login-registration-table {
+	@extend %flex-column;
+	align-items: center;
+	justify-content: center;
+
+	padding: 10px 20px;
+	gap: 20px;
+
+	width: 100%;
+	height: 100%;
+}
+
+.login {
+	@extend %login-registration-table;
+	&__switch {
+		border-radius: 120px 0 0 120px;
+
+		@media (max-width: vars.$medium-breakpoint) {
+			padding: 30px 20px 10px;
+
+			border-radius: 120px 120px 0 0;
+		}
+	}
+}
+
+.registration {
+	@extend %login-registration-table;
+
+	&__switch {
+		border-radius: 0 120px 120px 0;
+		@media (max-width: vars.$medium-breakpoint) {
+			border-radius: 0 0 120px 120px;
+		}
+	}
+}
+.auth-page {
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	display: flex;
+	align-items: center;
+	margin: 0 auto;
+
+	max-width: $login-registration-table-size * 2 + $gap-content;
+
+	color: var(--text-color) !important;
+
+	@media (max-height: 550px) {
+		align-items: flex-start;
+	}
+
+	@media (max-width: vars.$medium-breakpoint) {
+		flex-direction: column;
+		max-width: 100%;
+	}
+
+	&__content {
+		display: grid;
+		align-items: center;
+		justify-content: center;
+		grid-template-columns: repeat(2, $login-registration-table-size);
+
+		gap: $gap-content;
+
+		height: 550px;
+
+		border-radius: 30px;
+		background-color: var(--bacground-color);
+
+		@media (max-width: vars.$medium-breakpoint) {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			width: 100%;
+			height: fit-content;
+			border-radius: 0;
+		}
+	}
+}
+
+.login {
+	&__content {
+		padding: 20px 30px;
+	}
+}
+.registration {
+	&__content {
+		padding: 20px 30px;
+	}
+}
+
+$animation-duration: 1s;
+
+.to {
+	&Login {
+		animation: toLogin $animation-duration forwards;
+	}
+	&Registration {
+		animation: toRegistration $animation-duration forwards;
+	}
+}
+
+.from {
+	&Login {
+		animation: fromLogin $animation-duration forwards;
+	}
+	&Registration {
+		animation: fromRegistration $animation-duration forwards;
+	}
+}
+
+@keyframes toRegistration {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-100%);
+	}
+}
+
+@keyframes toLogin {
+	from {
+		transform: translateX(-200%);
+	}
+	to {
+		transform: translateX(-100%);
+	}
+}
+
+@keyframes fromLogin {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-100%);
+	}
+}
+
+@keyframes fromRegistration {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(100%);
+	}
+}
+
+@media (max-width: vars.$medium-breakpoint) {
+	.to {
+		&Login {
+			animation: toLoginMobile $animation-duration forwards;
+		}
+		&Registration {
+			animation: toRegistrationMobile $animation-duration forwards;
+		}
+	}
+	.from {
+		&Login {
+			animation: fromLoginMobile $animation-duration forwards;
+		}
+		&Registration {
+			animation: fromRegistrationMobile $animation-duration forwards;
+		}
+	}
+
+	@keyframes toRegistrationMobile {
+		from {
+			transform: translateY(0);
+		}
+		to {
+			transform: translateY(-100%);
+		}
+	}
+
+	@keyframes toLoginMobile {
+		from {
+			transform: translateY(-200%);
+		}
+		to {
+			transform: translateY(-100%);
+		}
+	}
+
+	@keyframes fromLoginMobile {
+		from {
+			transform: translateY(0);
+		}
+		to {
+			transform: translateY(-100%);
+		}
+	}
+
+	@keyframes fromRegistrationMobile {
+		from {
+			transform: translateY(0);
+		}
+		to {
+			transform: translateY(100%);
+		}
+	}
+}

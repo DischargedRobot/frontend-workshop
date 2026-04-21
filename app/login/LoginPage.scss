@@ -23,3 +23,38 @@
 	color: var(--text-muted);
 	font-size: 14px;
 }
+
+.switch-auth-panel {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: 24px 100px;
+	gap: 100px;
+
+	width: fit-content;
+	height: fit-content;
+
+	color: var(--text-color);
+	background-color: #2f4c7e;
+	border-radius: 30px;
+	// .switch-auth-panel__content
+
+	&__content {
+		@extend %flex-column;
+		align-items: center;
+		justify-content: center;
+
+		gap: 12px;
+	}
+
+	// .switch-auth-panel__title
+
+	&__title {
+	}
+
+	// .switch-auth-panel__text
+
+	&__text {
+	}
+}

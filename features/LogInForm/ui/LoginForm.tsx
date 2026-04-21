@@ -28,24 +28,27 @@ export const LoginForm = () => {
 				<span className="error-message">{errorAuth.message}</span>
 			)}
 			<Form.Item
-				label="Логин"
+
 				name="login"
 				rules={[{ required: true, message: "Введите логин" }]}
 			>
 				<TextInput placeholder="Логин" />
 			</Form.Item>
 			<Form.Item
-				label="Пароль"
+
 				name="password"
 				rules={[{ required: true, message: "Введите пароль" }]}
 			>
 				<TextInputPassword placeholder="Пароль" />
 			</Form.Item>
-			<div className="authorisation-table__buttons">
-				<Button htmlType="submit" className="form-button" loading={loading}>
-					Войти
-				</Button>
-			</div>
+			<Button
+				type="default"
+				htmlType="submit"
+				className="form-button"
+				loading={loading}
+			>
+				Войти
+			</Button>
 		</Form>
 	)
 }

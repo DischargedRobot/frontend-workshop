@@ -1,11 +1,13 @@
 .text-filed {
-	display: flex;
-	flex-direction: column;
-	background-color: var(--textinput-bg);
-	border-radius: 10px;
+	position: relative;
 
 	overflow: hidden;
-	position: relative;
+
+	display: flex;
+	flex-direction: column;
+	border-radius: 10px;
+
+	gap: 5px;
 
 	&__input {
 		color: var(--text-color);
@@ -30,6 +32,8 @@
 
 	&__input_password {
 		padding-right: 30px;
+		justify-self: end;
+		align-items: end;
 		outline: none;
 	}
 	&__toggle {
@@ -40,12 +44,13 @@
 
 		border: none;
 		padding: 4px;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
 
 		background: transparent;
 		color: var(--text-color);
 		cursor: pointer;
+	}
+
+	&__input-wrapper {
+		position: relative;
 	}
 }
