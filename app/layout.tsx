@@ -57,7 +57,7 @@ const COLOR = {
 	selectedMix: "#555353", // для выделения выбранного элемента
 	selectedMixHover: "#d8d8d873",
 	activeMix: "#453e3eb8", // для кнопок и активных элементов
-	strokeMix: "#4d4d4d4b",
+	strokeMix: "#b6b6b64b",
 
 	switchBgActive: "#2a2828", // пока не надо
 
@@ -74,6 +74,7 @@ const COLOR = {
 
 	// POPOVER
 	popoverBg: "var(--menu-bg)",
+
 	// TABLE
 	tableBg: "color-mix(in srgb, var(--background-color), #7575758b 50%)",
 	tableHeaderBg: "color-mix(in srgb, var(--background-color), #7474749f 50%)",
@@ -93,10 +94,12 @@ const COLOR = {
 	iconbuttonBgDisabled: "color-mix(in srgb, var(--background-color), var(--disabled) 40%)",
 
 	// INPUT
-	inputBg: "color-mix(in srgb, var(--background-color), var(--active-mix) 42%)",
+	inputBg: "color-mix(in srgb, var(--background-color), var(--hover-mix) 42%)",
+	inputBgActive: "color-mix(in srgb, var(--background-color), var(--active-mix) 60%)",
 
-	inputBorder: "var(--main-color)",
+	inputBorder: "color-mix(in srgb, var(--text-color), var(--stroke-mix) 90%)",
 	inputBorderHover: "color-mix(in srgb, var(--main-color), var(--hover-mix) 7%)",
+	inputBorderActive: "color-mix(in srgb, var(--main-color), var(--active-mix) 40%)",
 
 	// MENU
 	menuBg: "color-mix(in srgb, var(--secondary-color), var(--selected-mix) 12%)",
@@ -309,6 +312,13 @@ export default function RootLayout({
 						// CHEKBOX
 						"--checkbox-bg": COLOR.checkboxBg,
 
+						// INPUT
+						"--textinput-bg": COLOR.inputBg,
+						"--textinput-bg-active": COLOR.inputBgActive,
+
+						"--textinput-border": COLOR.inputBorder,
+						"--textinput-border-active": COLOR.inputBorderActive,
+
 						// MODAL
 						"--modal-bg": COLOR.modalBg,
 
@@ -359,6 +369,9 @@ export default function RootLayout({
 						"--formbutton-text-hover": COLOR.formbuttonTextHover,
 						"--input-bg": COLOR.inputBg,
 						"--input-border": COLOR.inputBorder,
+
+						"--error-message-color": "#ff4d4f",
+						"--success-message-color": "#2abd53",
 					} as React.CSSProperties
 				}
 			>

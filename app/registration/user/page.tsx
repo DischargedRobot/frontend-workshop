@@ -11,7 +11,7 @@ const UserRegistrationPage = async ({
 	const { token } = await searchParams
 
 	if (!token) {
-		redirect("/login")
+		redirect("/auth")
 	}
 	return (
 		<Content className="user-registration">

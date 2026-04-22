@@ -3,7 +3,8 @@
 .full-department-table {
 	@extend %flex-column;
 
-	gap: 10px;
+	gap: clamp(10px, 3.33px + 0.87vw, 20px);
+	padding: clamp(10px, -3.33px + 1.74vw, 30px);
 
-	padding: 10px;
+	height: 100%;
 }

@@ -30,6 +30,7 @@
 }
 
 .department-tree-panel {
+	overflow-x: visible;
 	position: relative;
 
 	z-index: 10;
@@ -37,18 +38,15 @@
 	flex-direction: column;
 	justify-content: space-between;
 
-	background-color: var(--department-tree-panel-bg);
-
 	padding: 10px 0 0;
 
 	flex: 0 0 auto;
 	min-width: 200px;
 	max-width: min(360px, 40vw);
 
+	background-color: var(--department-tree-panel-bg);
 	border-right: var(--border-for-nav-panel);
 	box-shadow: 2px 0 5px var(--shadow);
-
-	overflow-x: visible;
 
 	&.collapsed {
 		min-width: 0;

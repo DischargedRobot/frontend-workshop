@@ -43,7 +43,7 @@ export const functionInitApplication = cache(
 		} catch (err) {
 			const error = err as APIError
 			if (error.status === 401 || error.status === 404) {
-				redirect("/login")
+				redirect("/auth")
 			} else {
 				throw err
 			}

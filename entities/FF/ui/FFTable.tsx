@@ -33,6 +33,7 @@ const FFTable = ({ featureFlags }: Props) => {
 
 				emptyText: (!isLoading &&
 					<Empty
+						style={{ width: "100%" }}
 						image={<NotFoundIcon />}
 						description={
 							<span style={{ color: "var(--text-color)" }}>

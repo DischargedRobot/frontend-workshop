@@ -123,7 +123,8 @@ export const useDepartmentTableColumns = () => {
 			title: "К отделу",
 			dataIndex: "link",
 			key: "link",
-			width: "64px",
+			minWidth: 64,
+			width: "100px",
 			render: (_, department) => (
 				<button
 					onClick={() => {

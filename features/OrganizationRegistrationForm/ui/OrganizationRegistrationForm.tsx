@@ -49,7 +49,7 @@ export const OrganizationRegistrationForm = () => {
 							message: "Введите название организации",
 						},
 					]}
-					help={error?.organization}
+					help={<span className="error-message">{error?.organization}</span>}
 				>
 					<TextInput placeholder="Название организация" />
 				</Form.Item>
@@ -69,7 +69,7 @@ export const OrganizationRegistrationForm = () => {
 										message: "Введите логин",
 									},
 								]}
-								help={error?.login}
+								help={<span className="error-message">{error?.login}</span>}
 
 							>
 								<TextInput placeholder="Логин" />

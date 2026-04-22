@@ -18,17 +18,17 @@ export const LoginForm = () => {
 
 	return (
 		<Form
+			validateTrigger="onChange"
 			className="authorisation-table"
 			form={form}
 			layout="vertical"
 			onFinish={onSubmit}
 			requiredMark={false}
 		>
-			{errorAuth && (
-				<span className="error-message">{errorAuth.message}</span>
+			{(
+				<span className="error-message">{errorAuth && errorAuth.message}</span>
 			)}
 			<Form.Item
-
 				name="login"
 				rules={[{ required: true, message: "Введите логин" }]}
 			>
@@ -47,7 +47,7 @@ export const LoginForm = () => {
 				className="form-button"
 				loading={loading}
 			>
-				Войти
+				{loading ? "Вход..." : "Войти"}
 			</Button>
 		</Form>
 	)

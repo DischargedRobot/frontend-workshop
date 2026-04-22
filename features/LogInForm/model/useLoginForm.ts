@@ -28,7 +28,7 @@ export const useLoginForm = () => {
 
 			router.push("/personal/ffmenu")
 		} catch (error) {
-			setErrorAuth({ message: "Ошибка при входе" })
+			setErrorAuth({ message: "Неверный логин или пароль" })
 		} finally {
 			setLoading(false)
 		}

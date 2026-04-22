@@ -17,6 +17,10 @@
 	}
 }
 
+.error-message {
+	color: var(--error-message-color);
+}
+
 .admin {
 	&__content {
 		display: flex;

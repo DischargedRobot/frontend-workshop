@@ -73,7 +73,7 @@ export default async function proxy(request: NextRequest) {
 	const pathname = request.nextUrl.pathname
 	const origin = request.nextUrl.origin
 
-	const autURL = new URL("/login", origin)
+	const autURL = new URL("/auth", origin)
 
 	const isProtectedPath = protectRoutes.some((route) =>
 		pathname.startsWith(route),

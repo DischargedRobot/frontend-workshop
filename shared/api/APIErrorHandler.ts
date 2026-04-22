@@ -82,7 +82,7 @@ export const useAPIErrorHandler = <T extends APIError | FFAPIError>(
 			// Если кастомного обработчика нет, используем что есть
 			switch (apiError.status) {
 				case 401:
-					router.push("/login")
+					router.push("/auth")
 					break
 				case 403:
 					showToast({
@@ -91,7 +91,7 @@ export const useAPIErrorHandler = <T extends APIError | FFAPIError>(
 						type: "error",
 					})
 					loginApi.logOut()
-					router.push("/login")
+					router.push("/auth")
 					break
 				case 404:
 					showToast({

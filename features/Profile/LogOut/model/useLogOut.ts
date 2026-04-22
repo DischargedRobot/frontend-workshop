@@ -8,7 +8,7 @@ export const useLogOut = () => {
 
 	const logOut = async () => {
 		await loginApi.logOut()
-		router.push("/login")
+		router.push("/auth")
 	}
 
 	return { logOut }
