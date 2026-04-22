@@ -2,7 +2,7 @@
 	width: 100%;
 
 	// чтобы любой контент не выходил за пределы, даже если навели при dragAndDrop
-	overflow: hidden;
+	// overflow: hidden;
 	.ant-tree-node-content-wrapper {
 		// чтобы не ставить фиксированный width
 		width: 100%;
@@ -24,7 +24,7 @@
 		& > input {
 			line-height: 1;
 			display: block;
-			overflow: hidden !important;
+			overflow-x: hidden !important;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			width: 100% !important;

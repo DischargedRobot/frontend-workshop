@@ -85,6 +85,8 @@ $login-registration-table-size: calc(
 	align-items: center;
 	margin: 0 auto;
 
+	height: 100vh !important;
+
 	max-width: calc($login-registration-table-size * 2 + $gap-content);
 
 	color: var(--text-color) !important;
@@ -95,7 +97,6 @@ $login-registration-table-size: calc(
 	}
 
 	&__content {
-		overflow: auto;
 		display: grid;
 		align-items: center;
 		justify-content: center;

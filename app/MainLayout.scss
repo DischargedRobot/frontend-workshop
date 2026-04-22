@@ -2,7 +2,7 @@
 
 .main-layout {
 	display: flex !important;
-	align-items: center;
+	align-items: stretch;
 	height: 100%;
 
 	@media (max-width: vars.$medium-breakpoint) {
