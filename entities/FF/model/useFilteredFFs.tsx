@@ -70,7 +70,6 @@ const useFilteredFFs = () => {
 	)
 
 	const featureFlags = useFFStore((state) => state.featureFlags)
-
 	return useMemo(
 		() => filterFF(["departmentIds", "name"], featureFlags, filters),
 		[featureFlags, filters],

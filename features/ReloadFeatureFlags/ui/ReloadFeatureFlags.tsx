@@ -20,6 +20,10 @@ const ReloadFeatureFlags = ({ onClick }: Props) => {
         useShallow((state) => state.getLastDepartment() ?? organization.child),
     )
 
+    const path = useBreadcrumbStore(
+        useShallow((state) => state.path),
+    )
+
     const setFeatureFlag = useFFStore((state) => state.setFeatureFlags)
 
 
@@ -27,13 +31,13 @@ const ReloadFeatureFlags = ({ onClick }: Props) => {
     const reloadFeatureFlags = useCallback(async () => {
         console.log("reload feature flags", lastDep)
         const response = await FFApi.getFFsByDepartments(
-            lastDep.children,
+            [...lastDep.children, ...path],
             organization.id,
             100,
             0,
         )
         setFeatureFlag(response.FFs)
-    }, [lastDep, organization, setFeatureFlag])
+    }, [lastDep, path, organization, setFeatureFlag])
 
     return <ReloadButton onClick={reloadFeatureFlags} />
 }

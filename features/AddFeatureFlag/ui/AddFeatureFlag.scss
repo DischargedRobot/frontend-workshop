@@ -48,7 +48,6 @@
 .feature-flag-form {
 	@extend %flex-column;
 
-	gap: 15px;
 	padding: 20px;
 
 	max-width: clamp(300px, 257.14px + 7.44vw, 400px);

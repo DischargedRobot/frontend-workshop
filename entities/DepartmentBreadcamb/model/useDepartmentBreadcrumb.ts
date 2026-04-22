@@ -24,6 +24,7 @@ export const useDepartmentBreadcrumb = () => {
 	// при клике берём всех до текущего включительно
 	// и детей текущего отдела и закидывает в фильтр для фф
 	const onBreadcrumbClick = (item: IDepartment, index: number) => {
+		console.log(item, index, "item, index in onBreadcrumbClick")
 		setDepartmentFilters([...path.slice(0, index + 1), ...item.children])
 		setPath(path.slice(0, index + 1))
 	}

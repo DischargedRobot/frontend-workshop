@@ -208,6 +208,12 @@ const theme: ThemeConfig = {
 			// cellPaddingBlock: 8,
 		},
 
+		Pagination: {
+			colorPrimary: COLOR.main,
+			colorBgContainer: COLOR.tableBg,
+			colorText: COLOR.text,
+		},
+
 
 		Tree: {
 			colorBorder: COLOR.main, // цвет чекбокса и лиций

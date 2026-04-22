@@ -21,11 +21,11 @@ const AddDepartment = ({ DepartmentSelector, onServiceCreated }: Props) => {
 	const { form, isCollapsed, setIsCollapsed, onSubmit } = useAddDepartment({ onServiceCreated })
 
 
-	const AddDepForm = (
+	const addDepForm = (
 		<div className="add-department">
 			<Form
 				form={form}
-				className={`add-department__panel ${isCollapsed ? "add-department__panel_collapsed" : ""}`}
+				className={`add-department__panel `}
 				onFinish={onSubmit}
 				layout="vertical"
 			>
@@ -75,16 +75,13 @@ const AddDepartment = ({ DepartmentSelector, onServiceCreated }: Props) => {
 
 		<Popover
 			classNames={{ container: "add-department-popover" }}
-			content={AddDepForm}
+			content={addDepForm}
 			autoAdjustOverflow
 			placement="bottom"
 			trigger="click"
-			open={isOpen}
-			onOpenChange={(open) => setIsOpen(open)}
-			destroyOnHidden
 		>
 			<span>
-				<AddButton onClick={() => setIsCollapsed((prev) => !prev)} />
+				<AddButton />
 			</span>
 		</Popover>
 	)

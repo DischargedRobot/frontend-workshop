@@ -1,4 +1,4 @@
-import { TableProps } from "antd"
+import { TableProps, Tooltip } from "antd"
 import { mutate } from "swr"
 
 import { FFApi, useFFFiltersStore, useFFStore } from "@/entities/FF"
@@ -11,6 +11,8 @@ import { IDepartment } from "../../lib"
 import { useDepartmentsStore } from "../useDepartmentsStore"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 import { useState } from "react"
+import { DeleteIcon } from "@/shared/assets/Icon"
+import { ArrowRightOutlined } from "@ant-design/icons"
 
 export const useDepartmentTableColumns = () => {
 	const organizationId = useOrganizationStore(
@@ -65,7 +67,6 @@ export const useDepartmentTableColumns = () => {
 	const loadData = async (department: IDepartment): Promise<void> => {
 		setIsLoading(true)
 		const childrenLastDepartment = department.children
-
 		if (!department.isService) {
 			try {
 				const children = await mutate(
@@ -79,18 +80,19 @@ export const useDepartmentTableColumns = () => {
 							department.id,
 						),
 				)
-
-				if (children != undefined) {
-					changeDepartmentChildren(department, children)
-					setFFFilterDepartments([
-						department,
-						...path,
-						...children,
-					])
-				}
+				changeDepartmentChildren(department, children ?? [])
+				setFFFilterDepartments([
+					department,
+					...path,
+					...(children ?? []),
+				])
 			} catch (error) {
 				if (error instanceof APIError && error.status === 404) {
 					changeDepartmentChildren(department, [])
+					setFFFilterDepartments([
+						department,
+						...path,
+					])
 				}
 			}
 		} else {
@@ -114,17 +116,20 @@ export const useDepartmentTableColumns = () => {
 
 	const columns: TableProps<IDepartment>["columns"] = [
 		{
-			title: "Имя отдела",
+			title: <Tooltip title="Имя отдела">Название</Tooltip>,
 			dataIndex: "name",
 			key: "NameDepartment",
 			minWidth: 100,
+			ellipsis: true,
 		},
 		{
-			title: "К отделу",
+			title: <Tooltip title="Дочерние отделы">Дочерние</Tooltip>,
 			dataIndex: "link",
 			key: "link",
 			minWidth: 64,
-			width: "100px",
+			align: "center",
+			ellipsis: true,
+
 			render: (_, department) => (
 				<button
 					onClick={() => {
@@ -133,7 +138,7 @@ export const useDepartmentTableColumns = () => {
 						getFFAndAddToStore(department.id)
 					}}
 				>
-					<span>→</span>
+					<ArrowRightOutlined />
 				</button>
 			),
 		},
@@ -141,13 +146,16 @@ export const useDepartmentTableColumns = () => {
 			title: "Удалить",
 			key: "delete",
 			width: "64px",
+			minWidth: 64,
 			align: "center",
+			ellipsis: true,
+
 			render: (_, department) => (
 				<button
 					style={{ alignItems: "center" }}
 					onClick={() => removeDepartment(department)}
 				>
-					<span>✕</span>
+					<DeleteIcon />
 				</button>
 			),
 		},
