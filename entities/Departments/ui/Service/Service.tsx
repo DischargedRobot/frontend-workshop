@@ -1,5 +1,8 @@
+import "./Service.scss"
+
 import { memo } from "react"
 import type { IService } from "@/entities/Departments/lib/service"
+
 
 interface Props {
     service: IService

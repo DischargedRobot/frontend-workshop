@@ -1,0 +1,45 @@
+.service {
+	display: grid;
+	gap: 10px;
+	padding: 12px;
+	container-type: inline-size;
+
+	background-color: var(--foreground);
+
+	&__row {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 8px;
+	}
+
+	&__field {
+		display: grid;
+		gap: 4px;
+		padding: 8px 10px;
+
+		background-color: var(--background);
+		border: 1px solid var(--stroke-opacity);
+		border-radius: 8px;
+	}
+
+	&__label {
+		font-family: var(--inter);
+		font-size: 12px;
+		font-weight: 600;
+		color: var(--background-text-color);
+	}
+
+	&__value {
+		font-family: var(--roboto-mono);
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--text-color);
+		word-break: break-word;
+	}
+
+	@container (max-width: 280px) {
+		&__row {
+			grid-template-columns: 1fr;
+		}
+	}
+}

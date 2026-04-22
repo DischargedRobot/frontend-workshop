@@ -11,9 +11,7 @@
 		width: 100%;
 
 		&:hover {
-			background-color: var(
-				--background
-			);
+			background-color: var(--background);
 		}
 	}
 	.visibility-button {
@@ -23,28 +21,19 @@
 		gap: 4px;
 		padding: 2px 10px;
 
-		background-color: var(
-			--foreground
-		);
+		background-color: var(--foreground);
 
-		border-bottom: 2px solid
-			var(--stroke);
+		border-bottom: 2px solid var(--stroke);
 
 		& .icon {
-			transition: transform
-				var(
-					--animation-duration
-				)
-				ease;
+			transition: transform var(--animation-duration) ease;
 
 			&_visible {
 				transform: rotate(0deg);
 			}
 
 			&_hidden {
-				transform: rotate(
-					90deg
-				);
+				transform: rotate(90deg);
 			}
 		}
 	}
@@ -52,16 +41,8 @@
 	&__content {
 		overflow: hidden;
 		transition:
-			max-height
-				var(
-					--animation-duration
-				)
-				ease-out,
-			opacity
-				var(
-					--animation-duration
-				)
-				ease;
+			max-height var(--animation-duration) ease-out,
+			opacity var(--animation-duration) ease;
 		opacity: 1;
 		visibility: visible;
 
@@ -71,60 +52,6 @@
 
 		&_hidden {
 			max-height: 0;
-		}
-	}
-}
-
-.service {
-	display: grid;
-	gap: 10px;
-	padding: 12px;
-	container-type: inline-size;
-
-	background-color: var(--foreground);
-
-	&__row {
-		display: grid;
-		grid-template-columns: repeat(
-			2,
-			minmax(0, 1fr)
-		);
-		gap: 8px;
-	}
-
-	&__field {
-		display: grid;
-		gap: 4px;
-		padding: 8px 10px;
-
-		background-color: var(
-			--background
-		);
-		border: 1px solid
-			var(--stroke-opacity);
-		border-radius: 8px;
-	}
-
-	&__label {
-		font-family: var(--inter);
-		font-size: 12px;
-		font-weight: 600;
-		color: var(
-			--background-text-color
-		);
-	}
-
-	&__value {
-		font-family: var(--roboto-mono);
-		font-size: 14px;
-		font-weight: 500;
-		color: var(--text-color);
-		word-break: break-word;
-	}
-
-	@container (max-width: 280px) {
-		&__row {
-			grid-template-columns: 1fr;
 		}
 	}
 }
