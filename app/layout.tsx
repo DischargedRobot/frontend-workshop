@@ -272,9 +272,8 @@ export default function RootLayout({
 		<html lang="en">
 			<body
 				style={
-
 					{
-						overflow: "hidden",
+						overflow: "auto",
 						"--main-color": COLOR.main,
 						"--secondary-color": COLOR.secondary,
 						"--text-color": COLOR.text,

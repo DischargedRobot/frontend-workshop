@@ -24,7 +24,6 @@ export const OrganizationRegistrationForm = () => {
 
 	return (
 		<Form
-			validateTrigger="onBlur"
 			className="registration-table"
 			form={form}
 			autoComplete="off"

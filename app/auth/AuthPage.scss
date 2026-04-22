@@ -17,10 +17,11 @@
 	@media (max-width: vars.$medium-breakpoint) {
 		padding: 34px 20px;
 		gap: 10px;
+
+		height: 300px;
 	}
 	// .switch-auth-panel__title
 	flex: 0;
-
 	&__title {
 	}
 
@@ -34,7 +35,9 @@
 	}
 }
 $gap-content: 20px;
-$login-registration-table-size: vars.$medium-breakpoint / 2 - $gap-content / 2;
+$login-registration-table-size: calc(
+	vars.$medium-breakpoint / 2 - $gap-content / 2
+);
 
 %login-registration-table {
 	@extend %flex-column;
@@ -44,8 +47,12 @@ $login-registration-table-size: vars.$medium-breakpoint / 2 - $gap-content / 2;
 	padding: 10px 20px;
 	gap: 20px;
 
-	width: 100%;
+	width: $login-registration-table-size;
 	height: 100%;
+
+	@media (max-width: vars.$medium-breakpoint) {
+		width: 100%;
+	}
 }
 
 .login {
@@ -74,18 +81,13 @@ $login-registration-table-size: vars.$medium-breakpoint / 2 - $gap-content / 2;
 .auth-page {
 	overflow-x: hidden;
 	overflow-y: auto;
-
 	display: flex;
 	align-items: center;
 	margin: 0 auto;
 
-	max-width: $login-registration-table-size * 2 + $gap-content;
+	max-width: calc($login-registration-table-size * 2 + $gap-content);
 
 	color: var(--text-color) !important;
-
-	@media (max-height: 550px) {
-		align-items: flex-start;
-	}
 
 	@media (max-width: vars.$medium-breakpoint) {
 		flex-direction: column;
@@ -93,24 +95,26 @@ $login-registration-table-size: vars.$medium-breakpoint / 2 - $gap-content / 2;
 	}
 
 	&__content {
+		overflow: auto;
 		display: grid;
 		align-items: center;
 		justify-content: center;
 		grid-template-columns: repeat(2, $login-registration-table-size);
 
 		gap: $gap-content;
+		flex: none;
 
-		height: 550px;
+		height: 500px;
 
-		border-radius: 30px;
-		background-color: var(--bacground-color);
+		background-color: var(--background-color);
 
 		@media (max-width: vars.$medium-breakpoint) {
 			display: flex;
 			flex-direction: column;
-			justify-content: flex-start;
+			justify-content: space-between;
 			width: 100%;
-			height: fit-content;
+			min-height: 100%;
+
 			border-radius: 0;
 		}
 	}

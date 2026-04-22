@@ -1,8 +1,6 @@
 import { OrganizationRegistrationForm } from "@/features/OrganizationRegistrationForm"
 import "./RegistrationPage.scss"
 import Link from "next/link"
-
-import { Content } from "antd/es/layout/layout"
 import { Button } from "antd"
 
 const RegistrationPage = () => {

@@ -31,6 +31,7 @@ const nextConfig: NextConfig = {
 			"next-auth",
 		],
 	},
+	allowedDevOrigins: ["192.168.0.189"],
 }
 
 export default nextConfig
