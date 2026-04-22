@@ -6,22 +6,14 @@
 
 	gap: 10px;
 	border-radius: 20px;
-	background-color: var(--popover-bg) !important;
 
 	// TODO:объединить клаcсы в reload и заплейхолдрить
-	&:hover {
-		color: var(--text-color);
+	// & svg {
+	// 	min-width: 16px;
+	// 	min-height: 16px;
 
-		svg {
-			color: var(--icon-button-bg-hover);
-		}
-	}
-	& svg {
-		min-width: 16px;
-		min-height: 16px;
-
-		color: var(--icon-button-bg);
-	}
+	// 	color: var(--icon-button-bg);
+	// }
 
 	&__feature-flag-form {
 		position: absolute;
@@ -35,12 +27,13 @@
 	&__button {
 		width: 100%;
 	}
+
 	&__buttons {
 		display: flex;
 
 		gap: 10px;
 
-		width: 100%;
+		width: fit-content;
 	}
 
 	* {
@@ -48,14 +41,18 @@
 	}
 }
 
+.ant-form-item:has(.add-feature-flag__buttons) {
+	margin: 0 !important;
+}
+
 .feature-flag-form {
 	@extend %flex-column;
 
 	gap: 15px;
-	padding: 10px 10px;
+	padding: 20px;
 
-	max-width: clamp(200px, 160px + 12.5vw, 400px);
-	width: max-content;
+	max-width: clamp(300px, 257.14px + 7.44vw, 400px);
+	width: fit-content;
 	height: auto;
 
 	border-radius: 20px;

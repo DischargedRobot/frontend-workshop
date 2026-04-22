@@ -64,8 +64,7 @@ const COLOR = {
 	// CHEKBOX 
 	checkboxBg: "color-mix(in srgb, var(--secondary-color), var(--hover-mix) 22%)",
 
-	// MODAL
-	modalBg: "color-mix(in srgb, var(--secondary-color), #000000 80%)",
+	modalBg: "color-mix(in srgb, var(--secondary-color), #000000 7%)",
 
 	// USER CARD
 	usercardBg: "var(--menu-bg)",
@@ -73,7 +72,7 @@ const COLOR = {
 	usercardBgSelectedHover: "color-mix(in srgb, var(--user-card-bg), var(--selected-mix-hover) 60%)",
 
 	// POPOVER
-	popoverBg: "var(--menu-bg)",
+	popoverBg: "color-mix(in srgb, var(--secondary-color), #000000 7%)",
 
 	// TABLE
 	tableBg: "color-mix(in srgb, var(--background-color), #7575758b 50%)",
@@ -204,6 +203,8 @@ const theme: ThemeConfig = {
 			colorBgContainer: COLOR.tableBg,
 			borderColor: COLOR.tableBorder,
 			headerBg: COLOR.tableHeaderBg,
+
+			lineWidth: 0,
 			// cellPaddingBlock: 8,
 		},
 

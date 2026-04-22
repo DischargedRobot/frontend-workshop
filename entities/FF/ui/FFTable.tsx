@@ -19,6 +19,7 @@ const FFTable = ({ featureFlags }: Props) => {
 
 	return (
 		<Table
+			bordered={false}
 			className="ff-table"
 			rowClassName={"text-table text-table_litle text-table_tiny"}
 			size="small"

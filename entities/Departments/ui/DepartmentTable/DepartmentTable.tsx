@@ -13,6 +13,8 @@ const TableDepartment = () => {
 
 	return (
 		<Table
+			bordered={false}
+
 			rowClassName={"text-table text-table_litle text-table_tiny"}
 			rowSelection={{
 				type: "checkbox",
