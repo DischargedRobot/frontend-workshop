@@ -1,5 +1,5 @@
-.sprite-loader {
-	animation: spin 1s steps(6) infinite;
+.eye {
+	animation: spin 1s linear alternate infinite;
 }
 
 @keyframes spin {
@@ -7,6 +7,19 @@
 		transform: translateX(0%);
 	}
 	100% {
-		transform: translateX(100%);
+		transform: translateX(20%);
 	}
+}
+
+.loader-icon {
+	min-width: 85px;
+	min-height: 82px;
+	display: inline-block;
+	flex-shrink: 0;
+}
+
+.loader-icon__svg {
+	display: block;
+	width: 100%;
+	height: 100%;
 }

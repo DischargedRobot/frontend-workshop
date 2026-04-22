@@ -9,6 +9,7 @@ import { Content } from "antd/es/layout/layout"
 import { LoginForm } from "@/features/LogInForm"
 import { Button } from "antd"
 import { OrganizationRegistrationForm } from "@/features/OrganizationRegistrationForm"
+import { LoadIconLogo } from "@/_page/LoaderIcon"
 
 
 type TVisiblePanel = "login" | "registration" | null
@@ -30,19 +31,19 @@ export default function AuthPage() {
 
     return (
         <Content className={`auth-page`}>
-                {prevVisiblePanel && (
-                    <div
-                        onAnimationEnd={() => {
-                            setIsAnimating(false)
-                            setPrevVisiblePanel(null)
-                        }}
-                        className={`auth-page__content ${isAnimating ? (prevVisiblePanel === "login" ? "fromLogin" : "fromRegistration") : ""}`} >
-                        {renderAuth(prevVisiblePanel)}
-                    </div>
-                )}
-                <div className={`auth-page__content ${isAnimating ? (visiblePanel === "login" ? "toLogin" : "toRegistration") : ""}`} >
-                    {renderAuth(visiblePanel, handleSwitchPanel)}
+            {prevVisiblePanel && (
+                <div
+                    onAnimationEnd={() => {
+                        setIsAnimating(false)
+                        setPrevVisiblePanel(null)
+                    }}
+                    className={`auth-page__content ${isAnimating ? (prevVisiblePanel === "login" ? "fromLogin" : "fromRegistration") : ""}`} >
+                    {renderAuth(prevVisiblePanel)}
                 </div>
+            )}
+            <div className={`auth-page__content ${isAnimating ? (visiblePanel === "login" ? "toLogin" : "toRegistration") : ""}`} >
+                {renderAuth(visiblePanel, handleSwitchPanel)}
+            </div>
         </Content >
     )
 }
