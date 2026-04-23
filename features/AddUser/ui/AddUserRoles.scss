@@ -2,14 +2,15 @@
 	display: flex;
 	gap: 24px;
 	width: 100%;
+	justify-content: center;
 
 	&__block {
 		display: flex;
 		flex-direction: column;
 		gap: 12px;
 
-		max-width: 200px;
 		width: 100%;
+		align-items: center;
 	}
 
 	hr {
@@ -31,5 +32,18 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 4px 0;
+	}
+	& .add-user-roles__segmented {
+		.ant-segmented-group {
+			display: flex;
+			gap: 8px;
+		}
+
+		.ant-segmented-item {
+			flex: 1 1 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 	}
 }

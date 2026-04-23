@@ -6,24 +6,27 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import {
 	CheckOutlined,
 	ExclamationOutlined,
+	InfoOutlined,
 	WarningOutlined,
 } from "@ant-design/icons"
 import { create } from "zustand"
 import { Spin } from "antd"
 
-type TToast = "warning" | "success" | "error" | "load"
+type TToast = "warning" | "success" | "error" | "load" | "inform"
 const defaultTitle = new Map<TToast, string>([
 	["warning", "Предупреждение"],
 	["success", "Успех"],
 	["error", "Ошибка"],
-	["load", "Загрузка"]
+	["load", "Загрузка"],
+	['inform', 'Оповещение']
 ])
 
 const icons = new Map<TToast, React.ReactNode>([
 	["warning", <WarningOutlined className="toast__icon" key={"warning"} />],
 	["success", <CheckOutlined className="toast__icon" key={"success"} />],
 	["error", <ExclamationOutlined className="toast__icon" key={"error"} />],
-	["load", <Spin className="toas__icon" key={"load"} />]
+	["load", <Spin className="toast__icon" key={"load"} />],
+	["inform", <InfoOutlined className="toast__icon" key={"inform"} />]
 ])
 
 interface IToast {

@@ -1,17 +1,6 @@
 @use "@/common/styles/placeholder.scss";
 
-// :root {
-// 	--base-l: 0.72;
-// 	--base-c: 0.14;
-// 	--base-h: 250;
-
-// 	--base-color: oklch(var(--base-l) var(--base-c) var(--base-h));
-
-// 	--inverse-like: oklch(
-// 		calc(1 - var(--base-l)) var(--base-c) calc(var(--base-h) + 180)
-// 	);
-// }
-
+// TODO: удалить и барть в layout
 :root {
 	// --main-color: "#0b57d0" !important;
 	// --secondary-color: "#141313" !important;
@@ -55,43 +44,43 @@
 	--text-color: #e3e3e3;
 	--background-color: #2a2828;
 
-	// DEPARTMENT TREE
-	--department-tree-panel-bg: color-mix(
-		in srgb,
-		var(--secondary-color),
-		#3f3f3f69 32%
-	);
-	--popover-bg: red;
+	// // DEPARTMENT TREE
+	// --department-tree-panel-bg: color-mix(
+	// 	in srgb,
+	// 	var(--secondary-color),
+	// 	#3f3f3f69 32%
+	// );
+	// --popover-bg: red;
 
-	// TEXTINPUT COLORS
-	--textinput-bg: var(--foreground);
-	--textinput-bg-active: var(--secondary-color);
+	// // TEXTINPUT COLORS
+	// --textinput-bg: var(--foreground);
+	// --textinput-bg-active: var(--secondary-color);
 
-	--textinput-border: var(--stroke-opacity);
-	--textinput-border-active: var(--stroke-opacity);
+	// --textinput-border: var(--stroke-opacity);
+	// --textinput-border-active: var(--stroke-opacity);
 
-	// BUTTON COLORS //
-	--formbutton-bg-active: var(--active-background);
-	--formbutton-bg-hover: var(--active-hover);
-	--formbutton-bg-disabled: var(--disabled);
+	// // BUTTON COLORS //
+	// --formbutton-bg-active: var(--active-background);
+	// --formbutton-bg-hover: var(--active-hover);
+	// --formbutton-bg-disabled: var(--disabled);
 
-	--formbutton-text-active: var(--text-color);
-	--formbutton-text-hover: var(--text-color);
-	--formbutton-text-disabled: var(--text-muted);
-	// Toasts colors
-	--toast-bg-error: #ffabab;
-	--toast-bg-success: #c5f7dc;
-	--toast-bg-warning: #ffde91;
+	// --formbutton-text-active: var(--text-color);
+	// --formbutton-text-hover: var(--text-color);
+	// --formbutton-text-disabled: var(--text-muted);
+	// // Toasts colors
+	// --toast-bg-error: #ffabab;
+	// --toast-bg-success: #c5f7dc;
+	// --toast-bg-warning: #ffde91;
 
-	--toast-border-warning: #ca8e0c;
-	--toast-border-success: #20b428;
-	--toast-border-error: #b61919;
+	// --toast-border-warning: #ca8e0c;
+	// --toast-border-success: #20b428;
+	// --toast-border-error: #b61919;
 
-	--toast-text: #383838;
+	// --toast-text: #383838;
 
-	--toast-text-error: var(--text-color);
-	--toast-text-success: var(--text-color);
-	--toast-text-warning: var(--text-color);
+	// --toast-text-error: var(--toast-text);
+	// --toast-text-success: var(--toast-text);
+	// --toast-text-warning: var(--toast-text);
 
 	--text-muted: color-mix(in srgb, var(--text-color), #666 50%);
 
@@ -166,6 +155,10 @@ html {
 
 .ant-popover-arrow {
 	display: none !important;
+}
+
+.ant-drawer-body {
+	padding: 6px !important;
 }
 
 .body-layout {

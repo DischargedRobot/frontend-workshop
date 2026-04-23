@@ -1,9 +1,12 @@
 @use "@/common/styles/placeholder.scss";
+@use "@/common/styles/variables.scss" as vars;
 
 .add-user {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+	position: relative;
 	max-width: 50vw;
 	min-width: 500px;
 	width: 100%;
@@ -12,6 +15,7 @@
 	&__qr-code-container {
 		@extend %flex;
 		align-items: center;
+		justify-content: center;
 		gap: 20px;
 		width: 100%;
 	}
@@ -21,6 +25,7 @@
 		flex: 2;
 
 		width: 100%;
+		justify-content: center;
 		gap: 20px;
 	}
 
@@ -38,6 +43,8 @@
 
 	&__add-button {
 		flex: 2;
+		padding: 5px;
+
 		&:disabled {
 			color: color-mix(in srgb, var(--text-color), var(--disabled-mix));
 			// background-color: color-mix(
@@ -57,6 +64,7 @@
 
 	&__reset-button {
 		flex: 1;
+		padding: 5px;
 		// &:disabled {
 		// 	color: color-mix(in srgb, var(--white), var(--disabled-mix));
 		// 	background-color: color-mix(
@@ -84,12 +92,31 @@
 	}
 }
 
+.add-user__close {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	z-index: 40;
+
+	& .add-user__close-btn {
+		width: 36px;
+		height: 36px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		color: var(--text-color);
+	}
+}
+
 .qr-code {
 	display: block;
 
 	flex: 1;
-
 	border: none;
+
+	align-self: center;
+	margin: 0 auto;
 	// cursor: pointer;
 
 	canvas {
@@ -110,4 +137,40 @@
 
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+
+@media (max-width: vars.$medium-breakpoint) {
+	.add-user {
+		max-width: 100%;
+		min-width: auto;
+		padding: 12px;
+
+		&__qr-code-container {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 12px;
+		}
+
+		&__token-container {
+			width: 100%;
+			padding: 0;
+		}
+
+		&__buttons {
+			flex-wrap: wrap;
+			gap: 8px;
+		}
+
+		.qr-code {
+			width: 100%;
+			flex: none;
+			align-self: center;
+			margin: 0 auto;
+		}
+
+		.url {
+			max-width: 100%;
+			white-space: normal;
+		}
+	}
 }

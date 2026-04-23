@@ -64,7 +64,7 @@ const COLOR = {
 	// CHEKBOX 
 	checkboxBg: "color-mix(in srgb, var(--secondary-color), var(--hover-mix) 22%)",
 
-	modalBg: "color-mix(in srgb, var(--secondary-color), #000000 7%)",
+	modalBg: "color-mix(in srgb, var(--secondary-color), #474747 20%)",
 
 	// USER CARD
 	usercardBg: "var(--menu-bg)",
@@ -131,6 +131,30 @@ const COLOR = {
 	formbuttonText: "var(--text-color)",
 	formbuttonTextActive: "var(--text-color)",
 	formbuttonTextHover: "var(--text-color)",
+
+	// SEGMENTED
+	segmentednBg: "color-mix(in srgb, var(--main-color), var(--hover-mix) 52%)",
+
+	segmentedItemSelectedBg: "color-mix(in srgb, var(--main-color), var(--active-mix) 40%)",
+	segmentedItemHoverBg: "color-mix(in srgb, var(--main-color), var(--hover-mix) 22%)",
+	segmentedItemActiveBg: "color-mix(in srgb, var(--main-color), var(--active-mix) 60%)",
+
+	segmentedColorText: "color-mix(in srgb, var(--text-color), var(--disabled) 40%)",
+	segmentedColorTextActive: "var(--text-color)",
+	// TOAST 
+	toastBgError: "#ffabab",
+	toastBgSuccess: "#c5f7dc",
+	toastBgWarning: "#ffde91",
+
+	toastBorderWarning: "#ca8e0c",
+	toastBorderSuccess: "#20b428",
+	toastBorderError: "#b61919",
+
+	toastText: "#383838",
+
+	toastTextError: "var(--toast-text)",
+	toastTextSuccess: "var(--toast-text)",
+	toastTextWarning: "var(--toast-text)",
 }
 
 export const metadata: Metadata = {
@@ -193,6 +217,14 @@ const theme: ThemeConfig = {
 
 			lineWidth: 0,
 
+		},
+		Segmented: {
+			colorBgBase: COLOR.segmentednBg,
+			itemSelectedBg: COLOR.formbuttonBgActive,
+			itemHoverBg: COLOR.formbuttonBgHover,
+			itemActiveBg: COLOR.formbuttonBgActive,
+			colorText: COLOR.segmentedColorTextActive,
+			colorTextLabel: COLOR.segmentedColorText,
 		},
 
 		Table: {
@@ -266,6 +298,11 @@ const theme: ThemeConfig = {
 			// colorText: COLOR.text,
 			// colorTextHeading: COLOR.text,
 			// colorTextDescription: COLOR.textDescription,
+		},
+
+		Drawer: {
+			colorBgElevated: COLOR.modalBg,
+			colorBgContainer: COLOR.modalBg,
 		},
 
 		Checkbox: {
@@ -379,6 +416,20 @@ export default function RootLayout({
 
 						"--error-message-color": "#ff4d4f",
 						"--success-message-color": "#2abd53",
+
+						//TOAST
+						"--toast-bg-error": COLOR.toastBgError,
+						"--toast-bg-success": COLOR.toastBgSuccess,
+						"--toast-bg-warning": COLOR.toastBgWarning,
+
+						"--toast-border-error": COLOR.toastBorderError,
+						"--toast-border-success": COLOR.toastBorderSuccess,
+						"--toast-border-warning": COLOR.toastBorderWarning,
+
+						"--toast-text": COLOR.toastText,
+						"--toast-text-error": COLOR.toastTextError,
+						"--toast-text-success": COLOR.toastTextSuccess,
+						"--toast-text-warning": COLOR.toastTextWarning,
 					} as React.CSSProperties
 				}
 			>

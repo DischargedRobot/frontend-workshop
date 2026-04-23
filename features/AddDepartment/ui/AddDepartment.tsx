@@ -75,7 +75,6 @@ const AddDepartment = ({ DepartmentSelector, onServiceCreated }: Props) => {
 	)
 
 	return (
-
 		<Popover
 			content={addDepForm}
 			placement="bottom"
