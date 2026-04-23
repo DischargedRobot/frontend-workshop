@@ -9,16 +9,17 @@ import { showToast } from "@/shared/ui"
 import { useBreadcrumbStore } from "@/entities/DepartmentBreadcamb"
 import { useShallow } from "zustand/shallow"
 import { IOrganization } from "@/entities/Organization/model/useOrganizationStore"
-import { useRouter } from "next/router"
 
 type FormValues = Pick<IFeatureFlag, "name" | "value" | "departmentId">
 
 export const useAddFeatureFlag = (organization: IOrganization) => {
+	const { handleAPIError, APIErrorMessage, setAPIErrorMessage } =
+		useAddFFErrorHandler()
+
 	const currentDep = useBreadcrumbStore(
 		useShallow((state) => state.getLastDepartment()),
 	)
 
-	const [isVisible, setIsVisible] = useState(false)
 	const [form] = Form.useForm<FormValues>()
 
 	const defaultDepartmentId = useMemo(
@@ -34,13 +35,13 @@ export const useAddFeatureFlag = (organization: IOrganization) => {
 		[currentDep],
 	)
 
-	const { handleAPIError, APIErrorMessage, setAPIErrorMessage } =
-		useAddFFErrorHandler()
-
 	const addFFToStore = useFFStore((state) => state.addFeatureFlags)
 
+	const [isLoading, setIsLoading] = useState(false)
 	const handleFormSubmit = useCallback(
 		async (values: FormValues) => {
+			setIsLoading(true)
+
 			try {
 				const ff = await FFApi.addFF(
 					organization.id,
@@ -48,7 +49,6 @@ export const useAddFeatureFlag = (organization: IOrganization) => {
 					values,
 				)
 
-				setIsVisible(false)
 				addFFToStore([
 					{
 						...ff,
@@ -62,6 +62,8 @@ export const useAddFeatureFlag = (organization: IOrganization) => {
 				form.resetFields(["name"])
 			} catch (error) {
 				handleAPIError(error as APIError)
+			} finally {
+				setIsLoading(false)
 			}
 		},
 		[organization.id, addFFToStore, departments, form, handleAPIError],
@@ -69,12 +71,11 @@ export const useAddFeatureFlag = (organization: IOrganization) => {
 
 	return {
 		form,
-		isVisible,
-		setIsVisible,
 		departments,
 		defaultDepartmentId,
 		handleFormSubmit,
 		APIErrorMessage,
+		isLoading,
 		setAPIErrorMessage,
 	}
 }

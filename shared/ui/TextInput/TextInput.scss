@@ -17,7 +17,7 @@
 		padding: 8px 12px;
 
 		background-color: var(--textinput-bg);
-		border: 1px solid var(--textinput-border);
+		border: 2px solid var(--textinput-border);
 		border-radius: 10px;
 
 		width: 100%;
@@ -29,6 +29,10 @@
 			-webkit-box-shadow: 0 0 0px 1000px var(--textinput-bg) inset !important;
 			-webkit-text-fill-color: var(--text-color) !important;
 			transition: background-color 5000s ease-in-out 0s;
+		}
+
+		&:hover {
+			border-color: var(--textinput-border-hover);
 		}
 	}
 

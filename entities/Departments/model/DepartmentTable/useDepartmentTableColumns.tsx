@@ -145,7 +145,7 @@ export const useDepartmentTableColumns = () => {
 		{
 			title: "Удалить",
 			key: "delete",
-			width: "64px",
+			width: "100px",
 			minWidth: 64,
 			align: "center",
 			ellipsis: true,

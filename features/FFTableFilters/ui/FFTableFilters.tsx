@@ -1,7 +1,7 @@
 import "./FFTableFilters.scss"
 // import useFFFiltersStore from "@/entities/FFTable/model/useFFFiltersStore"
 import useFFTableFiltersStore from "../model/useFFTableFiltersStore"
-import { Switch } from "antd"
+import { Popover, Switch } from "antd"
 import { FilterOutlined } from "@ant-design/icons"
 import { useState } from "react"
 
@@ -9,29 +9,13 @@ const FFTableFilters = ({ className }: { className?: string }) => {
 	const columns = useFFTableFiltersStore((state) => state.visibleColumns)
 	const toggle = useFFTableFiltersStore((state) => state.toggleVisibleColumn)
 
-	const [isCollapsed, setIsCollapsed] = useState(true)
-	return (
+
+	const content = (
 		<div
 			className={`ff-table-filters${className ? ` ${className}` : ""}`}
-			onBlur={(e) => {
-				if (
-					!(
-						e.relatedTarget &&
-						e.currentTarget.contains(e.relatedTarget)
-					)
-				) {
-					setIsCollapsed(true)
-				}
-			}}
 		>
-			<button
-				className="ff-table-filters__button"
-				onClick={() => setIsCollapsed((prev) => !prev)}
-			>
-				<FilterOutlined />
-			</button>
 			<ul
-				className={`ff-table-filters__panel ${isCollapsed ? "ff-table-filters__panel_collapsed" : ""}`}
+				className={`ff-table-filters__panel  `}
 			>
 				{Object.entries(columns).map(([key, column]) => (
 					<li key={key}>
@@ -44,6 +28,22 @@ const FFTableFilters = ({ className }: { className?: string }) => {
 				))}
 			</ul>
 		</div>
+	)
+	return (
+		<Popover
+			autoAdjustOverflow
+			placement="top"
+
+			content={content}
+			trigger="click"
+		>
+			<button
+				className="ff-table-filters__button"
+			>
+				<FilterOutlined />
+			</button>
+		</Popover>
+
 	)
 }
 

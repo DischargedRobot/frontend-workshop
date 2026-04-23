@@ -4,18 +4,18 @@
 
 	width: 100%;
 
-	border: 1px solid var(--input-border);
+	border: 2px solid var(--textinput-border);
 	border-radius: 9px;
 
 	transition: border-color 0.2s ease-out;
 
 	&:hover {
-		border-color: var(--hover);
+		border-color: var(--textinput-border-hover);
 	}
 
 	// т.к. фокус на инпуте
 	&:focus-within {
-		border-color: var(--active);
+		border-color: var(--textinput-border-hover);
 	}
 
 	@extend %scrollbar;
@@ -31,7 +31,7 @@
 		border: none;
 		border-radius: 9px;
 
-		background-color: var(--secondary);
+		background-color: var(--textinput-bg);
 	}
 
 	&__arrow {
@@ -102,11 +102,11 @@
 		transition: background-color 0.15s;
 
 		&:hover {
-			background-color: var(--hover);
+			background-color: var(--textinput-bg-hover);
 		}
 
 		&_selected {
-			background-color: var(--active-hover);
+			background-color: var(--textinput-bg-active);
 		}
 	}
 }

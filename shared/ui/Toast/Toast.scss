@@ -1,7 +1,7 @@
 .toast {
 	display: grid;
 	grid-template-rows: 20px auto;
-	grid-template-columns: 64px 128px;
+	grid-template-columns: 64px auto;
 	grid-template-areas:
 		"icon title"
 		"icon text";
@@ -13,6 +13,7 @@
 
 	border-radius: 20px;
 	border-left: 10px solid;
+	word-break: break-all;
 
 	&_fade-in {
 		opacity: 1;
@@ -66,7 +67,7 @@
 
 	&__icon {
 		grid-area: icon;
-		font-size: 32;
+		font-size: 32px;
 	}
 
 	&__title {

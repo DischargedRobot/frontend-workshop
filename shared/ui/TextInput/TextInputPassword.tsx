@@ -27,7 +27,7 @@ const TextInputPassword = (props: Props) => {
     }
 
     return (
-        <label className="text-filed text">
+        <label className="text-filed text text_litle">
             {label && <span>{label}</span>}
             <div className="text-filed__input-wrapper">
                 <input

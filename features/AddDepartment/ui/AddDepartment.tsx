@@ -74,6 +74,7 @@ const AddDepartment = ({ DepartmentSelector, onServiceCreated }: Props) => {
 	return (
 
 		<Popover
+
 			classNames={{ container: "add-department-popover" }}
 			content={addDepForm}
 			autoAdjustOverflow

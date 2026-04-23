@@ -66,29 +66,29 @@ const Toast = ({
 	const toast = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		const handleMouseEnter = (e: MouseEvent) => {
-			e.stopPropagation()
-			if (timer.current) {
-				clearTimeout(timer.current)
-			}
-			// Сохраняем позицию только если тост ещё не активный
-			if (!isActive && toast.current) {
-				const rect = toast.current.getBoundingClientRect()
-				useToastStore.getState().setActiveToast({
-					id,
-					position: {
-						top: rect.top + window.scrollY,
-						left: rect.left + window.scrollX,
-					},
-				})
-			}
-		}
+		// const handleMouseEnter = (e: MouseEvent) => {
+		// 	e.stopPropagation()
+		// 	if (timer.current) {
+		// 		clearTimeout(timer.current)
+		// 	}
+		// 	// Сохраняем позицию только если тост ещё не активный
+		// 	if (!isActive && toast.current) {
+		// 		const rect = toast.current.getBoundingClientRect()
+		// 		useToastStore.getState().setActiveToast({
+		// 			id,
+		// 			position: {
+		// 				top: rect.top + window.scrollY,
+		// 				left: rect.left + window.scrollX,
+		// 			},
+		// 		})
+		// 	}
+		// }
 
-		const handleMouseLeave = (e: MouseEvent) => {
-			e.stopPropagation()
-			useToastStore.getState().setActiveToast(null)
-			startTimer()
-		}
+		// const handleMouseLeave = (e: MouseEvent) => {
+		// 	e.stopPropagation()
+		// 	useToastStore.getState().setActiveToast(null)
+		// 	startTimer()
+		// }
 
 		const handleTransitionEnd = () => {
 			// Не удаляем если тост активный
@@ -98,13 +98,13 @@ const Toast = ({
 		}
 
 		const toastElement = toast.current
-		toastElement?.addEventListener("mouseenter", handleMouseEnter)
-		toastElement?.addEventListener("mouseleave", handleMouseLeave)
+		// toastElement?.addEventListener("mouseenter", handleMouseEnter)
+		// toastElement?.addEventListener("mouseleave", handleMouseLeave)
 		toastElement?.addEventListener("transitionend", handleTransitionEnd)
 
 		return () => {
-			toastElement?.removeEventListener("mouseenter", handleMouseEnter)
-			toastElement?.removeEventListener("mouseleave", handleMouseLeave)
+			// toastElement?.removeEventListener("mouseenter", handleMouseEnter)
+			// toastElement?.removeEventListener("mouseleave", handleMouseLeave)
 			toastElement?.removeEventListener(
 				"transitionend",
 				handleTransitionEnd,

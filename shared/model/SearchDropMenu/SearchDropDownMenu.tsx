@@ -140,7 +140,7 @@ export const SearchDropDownMenu = <T,>({
 	}
 
 	return (
-		<div ref={containerRef} className={`search-dropdown ${className}`}>
+		<div ref={containerRef} className={`search-dropdown ${className} text text_litle`}>
 			<input
 				ref={inputRef}
 				type="text"

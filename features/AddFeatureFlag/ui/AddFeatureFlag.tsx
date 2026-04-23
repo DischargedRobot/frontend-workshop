@@ -16,11 +16,10 @@ type Props = {
 export const AddFeatureFlag = ({ organization }: Props) => {
 	const {
 		form,
-		isVisible,
-		setIsVisible,
 		departments,
 		defaultDepartmentId,
 		handleFormSubmit,
+		isLoading,
 		APIErrorMessage, setAPIErrorMessage,
 	} = useAddFeatureFlag(organization)
 
@@ -82,6 +81,7 @@ export const AddFeatureFlag = ({ organization }: Props) => {
 				validateStatus={APIErrorMessage?.department ? "error" : undefined}
 			>
 				<SelectDepartmentSearchDropMenu
+					placeholder="Отдел"
 					onSelect={(dep) => {
 						form.setFieldValue(
 							"departmentId",
@@ -97,8 +97,9 @@ export const AddFeatureFlag = ({ organization }: Props) => {
 					<Button
 						className="add-feature-flag__button"
 						htmlType="submit"
+						loading={isLoading}
 					>
-						Добавить
+						{isLoading ? "Добавление..." : "Добавить"}
 					</Button>
 					<Button
 						className="add-feature-flag__button"
@@ -112,10 +113,7 @@ export const AddFeatureFlag = ({ organization }: Props) => {
 		</Form>
 	)
 
-	const [isOpen, setIsOpen] = useState(false)
-
 	return (
-
 		<div className="add-feature-flag">
 			<Popover
 				style={{ padding: 0 }}

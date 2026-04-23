@@ -72,11 +72,11 @@ const COLOR = {
 	usercardBgSelectedHover: "color-mix(in srgb, var(--user-card-bg), var(--selected-mix-hover) 60%)",
 
 	// POPOVER
-	popoverBg: "color-mix(in srgb, var(--secondary-color), #000000 7%)",
+	popoverBg: "color-mix(in srgb, var(--background-color), #000000 2%)",
 
 	// TABLE
-	tableBg: "color-mix(in srgb, var(--background-color), #7575758b 50%)",
-	tableHeaderBg: "color-mix(in srgb, var(--background-color), #7474749f 50%)",
+	tableBg: "color-mix(in srgb, var(--background-color), #7575758b 20%)",
+	tableHeaderBg: "color-mix(in srgb, var(--background-color), #7474749f 40%)",
 	tableRowHoverBg: "color-mix(in srgb, var(--background-color), var(--hover-mix) 20%)",
 	tableRowSelectedBg: "color-mix(in srgb, var(--background-color), var(--selected-mix) 40%)",
 	tableRowSelectedHoverBg: "color-mix(in srgb, var(--background-color), var(--selected-mix-hover) 60%)",
@@ -89,15 +89,16 @@ const COLOR = {
 	iconSvg: "color-mix(in srgb, var(--text-color), var(--active-mix) 40%)",
 
 	iconbuttonBg: "color-mix(in hsl, var(--background-color), var(--active-mix) 32%)",
-	iconbuttonBgHover: "color-mix(in srgb, var(--background-color), var(--hover-mix) 70%)",
+	iconbuttonBgHover: "color-mix(in srgb, var(--background-color), var(--hover-mix) 10%)",
 	iconbuttonBgDisabled: "color-mix(in srgb, var(--background-color), var(--disabled) 40%)",
 
 	// INPUT
-	inputBg: "color-mix(in srgb, var(--background-color), var(--hover-mix) 42%)",
+	inputBg: "color-mix(in srgb, var(--background-color), var(--active-mix) 50%)",
 	inputBgActive: "color-mix(in srgb, var(--background-color), var(--active-mix) 60%)",
+	inputBgHover: "color-mix(in srgb, var(--background-color), var(--hover-mix) 10%)",
 
 	inputBorder: "color-mix(in srgb, var(--text-color), var(--stroke-mix) 90%)",
-	inputBorderHover: "color-mix(in srgb, var(--main-color), var(--hover-mix) 7%)",
+	inputBorderHover: "color-mix(in srgb, var(--main-color), var(--hover-mix-active) 10%)",
 	inputBorderActive: "color-mix(in srgb, var(--main-color), var(--active-mix) 40%)",
 
 	// MENU
@@ -225,8 +226,9 @@ const theme: ThemeConfig = {
 
 		Popover: {
 			colorBgContainer: COLOR.popoverBg,
-
+			colorBgElevated: COLOR.popoverBg,
 			colorBgBase: COLOR.popoverBg,
+			// borderRadius: 16,
 		},
 
 		Menu: {
@@ -293,7 +295,7 @@ export default function RootLayout({
 						// GENERAL
 						"--foreground": COLOR.secondary,
 						"--foreground-second": COLOR.secondary,
-						"--background": COLOR.background,
+						"--background-color": COLOR.background,
 						"--hover": COLOR.hover,
 						"--hover-active-background": COLOR.hoverActive,
 						"--border-for-nav-panel": COLOR.strokeNavPanel,
@@ -322,9 +324,11 @@ export default function RootLayout({
 						// INPUT
 						"--textinput-bg": COLOR.inputBg,
 						"--textinput-bg-active": COLOR.inputBgActive,
+						"--textinput-bg-hover": COLOR.inputBgHover,
 
 						"--textinput-border": COLOR.inputBorder,
 						"--textinput-border-active": COLOR.inputBorderActive,
+						"--textinput-border-hover": COLOR.inputBorderHover,
 
 						// MODAL
 						"--modal-bg": COLOR.modalBg,
@@ -360,8 +364,6 @@ export default function RootLayout({
 						// department tree
 						"--department-tree-panel-bg": COLOR.departmenttreepanelBg,
 
-
-
 						"--button-base-background": COLOR.buttonBaseBackground,
 						"--background-text-color": COLOR.backgroundTextColor,
 
@@ -374,8 +376,6 @@ export default function RootLayout({
 						"--formbutton-text": COLOR.formbuttonText,
 						"--formbutton-text-active": COLOR.formbuttonTextActive,
 						"--formbutton-text-hover": COLOR.formbuttonTextHover,
-						"--input-bg": COLOR.inputBg,
-						"--input-border": COLOR.inputBorder,
 
 						"--error-message-color": "#ff4d4f",
 						"--success-message-color": "#2abd53",
