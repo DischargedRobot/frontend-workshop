@@ -4,6 +4,7 @@ import { DataNode } from "antd/es/tree"
 import { departmentApi } from "../../api"
 import { useDepartmentsStore } from "../../model"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
+import { Avatar } from "antd"
 
 export interface IDepartmentNode
 	extends IDepartment, Omit<DataNode, "children" | "isService"> { }
@@ -31,7 +32,7 @@ const TitleRender = (props: Props): React.ReactNode => {
 
 	const handleAPIError = useAPIErrorHandler()
 	return (
-		<>
+		<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
 			<input
 				readOnly={!isEditableProp && !isEditable}
 				style={{ paddingLeft: "8px" }}
@@ -54,7 +55,10 @@ const TitleRender = (props: Props): React.ReactNode => {
 					setIsEditable(true)
 				}}
 			/>
-		</>
+			<Avatar size={16} style={{ padding: "6px", backgroundColor: `${node.isService ? 'var(--main-color)' : 'var(--secondary-color)'}` }}>
+				{node.isService ? "S" : "D"}
+			</Avatar>
+		</div>
 	)
 }
 

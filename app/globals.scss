@@ -129,6 +129,7 @@ input:-webkit-autofill:active {
 
 html,
 body {
+	padding-right: 0 !important;
 	background: var(--background);
 }
 html {
@@ -153,7 +154,11 @@ html {
 	margin-bottom: 25px;
 	width: 100%;
 }
-
+.ant-table-placeholder > .ant-table-cell {
+	width: 100% !important;
+	min-width: 100% !important;
+	padding: 0 !important;
+}
 .ant-popover-container {
 	padding: 0 !important;
 	border-radius: 20px !important;

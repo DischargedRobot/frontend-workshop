@@ -2,10 +2,10 @@
 
 import "./AddDepartment.scss"
 
-import { AddButton } from "@/shared/ui"
-import { Button, Form, Input, Popover, Switch } from "antd"
+import { AddButton, TextInput } from "@/shared/ui"
+import { Button, Form, Popover, Switch } from "antd"
 import { useAddDepartment } from "../model/useAddDepartment"
-import { memo, useState } from "react"
+import { memo } from "react"
 import { IService } from "@/entities/Departments"
 
 type DepartmentSelectorComponent = React.ComponentType<{
@@ -18,7 +18,7 @@ type Props = {
 }
 
 const AddDepartment = ({ DepartmentSelector, onServiceCreated }: Props) => {
-	const { form, isCollapsed, setIsCollapsed, onSubmit } = useAddDepartment({ onServiceCreated })
+	const { form, onSubmit, isLoading } = useAddDepartment({ onServiceCreated })
 
 
 	const addDepForm = (
@@ -36,7 +36,7 @@ const AddDepartment = ({ DepartmentSelector, onServiceCreated }: Props) => {
 						{ required: true, message: "Введите название отдела" },
 					]}
 				>
-					<Input autoComplete="off" placeholder="Название отдела" />
+					<TextInput placeholder="Название отдела" />
 				</Form.Item>
 				<Form.Item
 					name="parentId"
@@ -64,25 +64,27 @@ const AddDepartment = ({ DepartmentSelector, onServiceCreated }: Props) => {
 					</Form.Item>
 				</div>
 
-				<Button htmlType="submit">Создать</Button>
+				<Button
+					type="default"
+					htmlType="submit"
+					loading={isLoading}
+				>
+					{isLoading ? "Создание..." : "Создать"}</Button>
 			</Form>
 		</div>
 	)
 
-	const [isOpen, setIsOpen] = useState(false)
-
 	return (
 
 		<Popover
-
-			classNames={{ container: "add-department-popover" }}
 			content={addDepForm}
-			autoAdjustOverflow
 			placement="bottom"
+			autoAdjustOverflow
+			getPopupContainer={(node) => node.parentElement ?? document.body}
 			trigger="click"
 		>
 			<span>
-				<AddButton />
+				<AddButton title="Добавить отдел" />
 			</span>
 		</Popover>
 	)

@@ -2,10 +2,11 @@
 
 import "./FFTable.scss"
 
-import { Empty, Table, TableProps } from "antd"
+import { Empty, Spin, Table, TableProps } from "antd"
 import { useGetFFsFromServer, useFFTable } from "../model"
 import { IFeatureFlag } from "../lib/types"
 import { NotFoundIcon } from "@/shared/assets/Icon/NotFoundIcon/NotFoundIcon"
+import { Loader } from "@/_page/Loader"
 
 export type TFFTableColumns = TableProps<IFeatureFlag>["columns"]
 
@@ -26,13 +27,16 @@ const FFTable = ({ featureFlags }: Props) => {
 			rowKey="id"
 			rowSelection={{ type: "checkbox" }}
 			pagination={{ placement: ["bottomCenter"], pageSize: 8 }}
-			dataSource={featureFlags}
+			dataSource={isLoading ? [] : featureFlags}
 			columns={columns}
 			tableLayout="fixed"
-			loading={{ description: "Загрузка...", spinning: isLoading }}
 			locale={{
-
-				emptyText: (!isLoading &&
+				emptyText: (isLoading
+					?
+					<div style={{ height: "100px", width: "100%" }}>
+						<Spin />
+					</div>
+					:
 					<Empty
 						style={{ width: "100%" }}
 						image={<NotFoundIcon />}

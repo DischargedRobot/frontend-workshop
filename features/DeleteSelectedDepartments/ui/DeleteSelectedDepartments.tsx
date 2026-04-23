@@ -8,7 +8,7 @@ import { DeleteButton } from "@/shared/ui"
 const DeleteSelectedDepartments = () => {
 	const { deleteDepartments } = useDeleteSelectedDepartments()
 
-	return <DeleteButton onClick={deleteDepartments} />
+	return <DeleteButton title="Удалить выбранные отделы" onClick={deleteDepartments} />
 }
 
 export default DeleteSelectedDepartments

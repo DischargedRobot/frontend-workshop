@@ -1,6 +1,4 @@
 .add-department {
-	position: relative;
-
 	z-index: 1000;
 	width: max-content;
 	height: auto;
@@ -17,11 +15,6 @@
 	}
 
 	&__panel {
-		position: absolute;
-		top: 150%;
-		left: 0;
-		transform: translate(-45%, 0);
-
 		display: flex;
 		flex-direction: column;
 
@@ -54,12 +47,5 @@
 	.ant-form-item {
 		margin: 0;
 		width: auto;
-	}
-
-	&-popover {
-		width: 100px;
-		height: 100px;
-		background: transparent !important;
-		padding: 0;
 	}
 }

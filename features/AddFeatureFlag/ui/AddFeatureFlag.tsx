@@ -116,7 +116,6 @@ export const AddFeatureFlag = ({ organization }: Props) => {
 	return (
 		<div className="add-feature-flag">
 			<Popover
-				style={{ padding: 0 }}
 				content={addButtonContent}
 				autoAdjustOverflow
 				placement="bottom"

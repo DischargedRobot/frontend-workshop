@@ -6,7 +6,7 @@ export const useFullDepartmentTree = () => {
 	const organization = useOrganizationStore((state) => state.organization)
 	const departments = useDepartmentsStore(
 		useShallow((state) => state.getDepartmentsIncludingAllChildren()),
-	)
+	).filter((d) => d.isService === false)
 
 	return {
 		organization,

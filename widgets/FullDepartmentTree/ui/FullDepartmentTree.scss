@@ -68,7 +68,7 @@
 	}
 
 	&__title {
-		@extend %flex;
+		@extend %flex-column;
 		justify-content: space-between;
 
 		gap: 10px;

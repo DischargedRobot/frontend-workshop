@@ -54,7 +54,7 @@ const COLOR = {
 	disabled: "#6d6a6a79",
 	hoverMix: "#fefefe", // для ховеров пока не актиных
 	hoverMixActive: "#2a2828b3", // для ховеров активных элементов
-	selectedMix: "#555353", // для выделения выбранного элемента
+	selectedMix: "#1d1d1d", // для выделения выбранного элемента
 	selectedMixHover: "#d8d8d873",
 	activeMix: "#453e3eb8", // для кнопок и активных элементов
 	strokeMix: "#b6b6b64b",
@@ -102,7 +102,7 @@ const COLOR = {
 	inputBorderActive: "color-mix(in srgb, var(--main-color), var(--active-mix) 40%)",
 
 	// MENU
-	menuBg: "color-mix(in srgb, var(--secondary-color), var(--selected-mix) 12%)",
+	menuBg: "color-mix(in srgb, var(--secondary-color), var(--selected-mix) 22%)",
 
 	menuItemHoverBg: "color-mix(in srgb, var(--main-color), var(--hover-mix) 22%)",
 
@@ -114,7 +114,7 @@ const COLOR = {
 	menuItemSelectedColor: "var(--text-active-color)",
 	// menuItemDisabledColor:
 	// "color-mix(in srgb, var(--text-active-color), var(--disabled) 60%)",
-	menuHover: "color-mix(in srgb, var(--main-color), var(--hover-mix) 42%)",
+	menuHover: "color-mix(in srgb, var(--main-color), var(--hover-mix) 22%)",
 
 	// DESCTOP COLORS
 	textDescription: "color-mix(in srgb, var(--text-color), var(--disabled) 30%)",

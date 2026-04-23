@@ -42,7 +42,7 @@ const DepartmentTree = ({ isEditable, onLoaded, onCheckLeaf, onUncheckLeaf }: Pr
 					image={<NotFoundIcon />}
 					description={
 						<span style={{ color: "var(--text-color) !important" }}>
-							{error?.message ?? "Отделов нет :("}
+							{error?.message ?? "Отделов нет"}
 						</span>
 					}
 				/>

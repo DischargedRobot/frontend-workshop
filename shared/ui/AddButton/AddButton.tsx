@@ -10,11 +10,12 @@ type Props = {
 	type?: "button" | "submit" | "reset"
 	onClick?: (e: MouseEvent<HTMLButtonElement>) => void
 	disabled?: boolean
-}
+} & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-const AddButton = ({ type = "button", onClick, disabled, children }: Props) => {
+const AddButton = ({ type = "button", onClick, disabled, children, ...props }: Props) => {
 	return (
 		<IconButton
+			{...props}
 			icon={<PlusCircleOutlined />}
 			className="add-button"
 			type={type}
