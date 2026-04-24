@@ -48,21 +48,28 @@
 	}
 
 	&_warning {
-		color: var(--toast-text);
+		color: var(--toast-text-warning);
 		border-color: var(--toast-border-warning);
 		background-color: var(--toast-bg-warning);
 	}
 
 	&_error {
 		border-color: var(--toast-border-error);
-		color: var(--toast-text);
+		color: var(--toast-text-error);
 		background-color: var(--toast-bg-error);
 	}
 
 	&_success {
 		border-color: var(--toast-border-success);
-		color: var(--toast-text);
+		color: var(--toast-text-success);
 		background-color: var(--toast-bg-success);
+	}
+
+	&_load,
+	&_inform {
+		border-color: var(--toast-border-inform);
+		color: var(--toast-text-inform);
+		background-color: var(--toast-bg-inform);
 	}
 
 	&__icon {

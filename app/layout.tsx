@@ -145,16 +145,21 @@ const COLOR = {
 	toastBgError: "#ffabab",
 	toastBgSuccess: "#c5f7dc",
 	toastBgWarning: "#ffde91",
+	toastBgInform: "#8dace9",
+
 
 	toastBorderWarning: "#ca8e0c",
 	toastBorderSuccess: "#20b428",
 	toastBorderError: "#b61919",
+	toastBorderInform: "#3173d5",
+
 
 	toastText: "#383838",
 
 	toastTextError: "var(--toast-text)",
 	toastTextSuccess: "var(--toast-text)",
 	toastTextWarning: "var(--toast-text)",
+	toastTextInform: "var(--toast-text)",
 }
 
 export const metadata: Metadata = {
@@ -193,6 +198,12 @@ const theme: ThemeConfig = {
 			siderBg: COLOR.menuBg,
 		},
 
+		Select: {
+			colorBgSolidHover: COLOR.inputBgHover,
+			colorBgContainer: COLOR.inputBg,
+			colorBorder: COLOR.inputBorder,
+			colorPrimary: COLOR.main,
+		},
 		Input: {
 			hoverBorderColor: COLOR.inputBorderHover,
 			colorBgContainer: COLOR.inputBg,
@@ -421,15 +432,18 @@ export default function RootLayout({
 						"--toast-bg-error": COLOR.toastBgError,
 						"--toast-bg-success": COLOR.toastBgSuccess,
 						"--toast-bg-warning": COLOR.toastBgWarning,
+						"--toast-bg-inform": COLOR.toastBgInform,
 
 						"--toast-border-error": COLOR.toastBorderError,
 						"--toast-border-success": COLOR.toastBorderSuccess,
 						"--toast-border-warning": COLOR.toastBorderWarning,
+						"--toast-border-inform": COLOR.toastBorderInform,
 
 						"--toast-text": COLOR.toastText,
 						"--toast-text-error": COLOR.toastTextError,
 						"--toast-text-success": COLOR.toastTextSuccess,
 						"--toast-text-warning": COLOR.toastTextWarning,
+						"--toast-text-inform": COLOR.toastTextInform,
 					} as React.CSSProperties
 				}
 			>

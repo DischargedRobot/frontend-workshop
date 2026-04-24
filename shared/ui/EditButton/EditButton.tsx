@@ -6,14 +6,14 @@ import { EditOutlined } from "@ant-design/icons"
 
 type Props = {
     value?: string
-    onClick?: (value?: string) => void
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
     className?: string
     title?: string
 }
 
 export const EditButton = ({ value, onClick, className, title }: Props) => {
-    const handleClick = () => {
-        onClick?.(value)
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        onClick?.(e)
     }
 
     return (

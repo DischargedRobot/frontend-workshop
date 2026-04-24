@@ -5,6 +5,7 @@ export const Loader = () => {
     return (
         <div
             style={{
+                margin: "0 auto",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",

@@ -16,7 +16,8 @@ import { mutate, useSWRConfig } from "swr"
 import { useAPIErrorHandler } from "@/shared/api/APIErrorHandler"
 import { SelectDepartmentSearchDropMenu } from "@/features/SelectDepartmentSearchDropMenu"
 import { mapAPIErrors } from "@/shared/api"
-import { EditButton } from "@/shared/ui/EditButton"
+import { ToggleEditable } from "@/features/ToggleEditable"
+import { showToast } from "@/shared/ui/Toast"
 import { ShowService } from "@/features/ShowService"
 import { Grid } from "antd"
 
@@ -123,7 +124,7 @@ const FullDepartmentTree = () => {
 							<DeleteSelectedDepartments />
 						</Can>
 						<Can I="update" a="Department">
-							<EditButton onClick={() => setIsEditable(prev => !prev)} />
+							<ToggleEditable isEditable={isEditable} onClick={(e) => setIsEditable(prev => !prev)} />
 						</Can>
 					</div>
 				</div>

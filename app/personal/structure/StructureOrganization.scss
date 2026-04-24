@@ -4,10 +4,13 @@
 .structure-organization {
 	@extend %flex;
 
+	align-items: stretch;
+
 	overflow: visible;
 
 	gap: 30px;
 
+	min-height: 300px !important;
 	// height: 100vh;
 
 	.ant-tabs-content {
@@ -49,13 +52,12 @@
 
 	/* When department panel is rendered inside tabs on small screens,
 	 disable its fixed positioning and allow internal scrolling. */
-	@media (max-width: vars.$small-breakpoint) {
-		height: 100%;
+	@media (max-width: vars.$medium-breakpoint) {
+		height: auto;
 		min-height: 0;
-
+		flex: 1 1 auto;
 		.department-tree-panel {
 			position: static !important;
-			height: 100% !important;
 			min-height: 0 !important;
 			overflow-x: hidden !important;
 		}
