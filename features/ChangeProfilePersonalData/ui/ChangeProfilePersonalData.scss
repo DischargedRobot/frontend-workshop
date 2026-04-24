@@ -1,4 +1,5 @@
 @use "@/common/styles/placeholder.scss";
+@use "@/common/styles/variables.scss" as vars;
 
 .change-profile-personal-form {
 	@extend %flex-column;
@@ -16,5 +17,9 @@
 		gap: 10px;
 
 		width: 100%;
+	}
+
+	@media (max-width: vars.$medium-breakpoint) {
+		justify-content: flex-start;
 	}
 }

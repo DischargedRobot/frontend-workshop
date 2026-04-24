@@ -1,6 +1,6 @@
 .toast {
 	display: grid;
-	grid-template-rows: 20px auto;
+	grid-template-rows: 24px auto;
 	grid-template-columns: 64px auto;
 	grid-template-areas:
 		"icon title"
@@ -9,11 +9,10 @@
 	justify-items: center;
 	padding: 5px;
 
-	width: calc(200px + 10vw);
+	width: calc(250px + 10vw);
 
 	border-radius: 20px;
 	border-left: 10px solid;
-	word-break: break-all;
 
 	&_fade-in {
 		opacity: 1;
@@ -48,26 +47,26 @@
 	}
 
 	&_warning {
-		color: var(--toast-text-warning);
+		color: var(--toast-text-warning) !important;
 		border-color: var(--toast-border-warning);
 		background-color: var(--toast-bg-warning);
 	}
 
 	&_error {
-		border-color: var(--toast-border-error);
+		border-color: var(--toast-border-error) !important;
 		color: var(--toast-text-error);
 		background-color: var(--toast-bg-error);
 	}
 
 	&_success {
-		border-color: var(--toast-border-success);
+		border-color: var(--toast-border-success) !important;
 		color: var(--toast-text-success);
 		background-color: var(--toast-bg-success);
 	}
 
 	&_load,
 	&_inform {
-		border-color: var(--toast-border-inform);
+		border-color: var(--toast-border-inform) !important;
 		color: var(--toast-text-inform);
 		background-color: var(--toast-bg-inform);
 	}
@@ -78,10 +77,14 @@
 	}
 
 	&__title {
+		overflow: hidden;
+		font-weight: 600;
 		grid-area: title;
 	}
 
 	&__text {
+		word-break: break-all;
+
 		grid-area: text;
 	}
 }

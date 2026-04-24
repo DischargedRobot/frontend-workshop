@@ -61,10 +61,17 @@ const COLOR = {
 
 	switchBgActive: "#2a2828", // пока не надо
 
+	deleteIconColor: "#F57474",
+
 	// CHEKBOX 
 	checkboxBg: "color-mix(in srgb, var(--secondary-color), var(--hover-mix) 22%)",
 
 	modalBg: "color-mix(in srgb, var(--secondary-color), #474747 20%)",
+
+	// ROLE
+	roleBg: "color-mix(in srgb, var(--secondary-color), var(--hover-mix) 22%)",
+	roleBgHover: "color-mix(in srgb, var(--secondary-color), var(--hover-mix) 32%)",
+	roleBgDeleteHover: "color-mix(in srgb, var(--secondary-color), #e62529 52%)",
 
 	// USER CARD
 	usercardBg: "var(--menu-bg)",
@@ -294,6 +301,10 @@ const theme: ThemeConfig = {
 
 		},
 
+		Tabs: {
+			inkBarColor: COLOR.text
+		},
+
 		Breadcrumb: {
 			lastItemColor: COLOR.main,
 			fontSize: FONTS.text.fontSize,
@@ -366,6 +377,9 @@ export default function RootLayout({
 						"--text-disabled": COLOR.textDisabled,
 						"--text-placeholder": COLOR.textPlaceholder,
 
+						// DELETED ICON
+						"--delete-icon-color": COLOR.deleteIconColor,
+
 						// CHEKBOX
 						"--checkbox-bg": COLOR.checkboxBg,
 
@@ -380,6 +394,11 @@ export default function RootLayout({
 
 						// MODAL
 						"--modal-bg": COLOR.modalBg,
+
+						// ROLE
+						"--role-bg": COLOR.roleBg,
+						"--role-bg-hover": COLOR.roleBgHover,
+						"--role-bg-delete-hover": COLOR.roleBgDeleteHover,
 
 						// USER CARD
 						"--user-card-bg": COLOR.usercardBg,

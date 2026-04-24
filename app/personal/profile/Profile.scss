@@ -8,6 +8,8 @@
 
 	@media (max-width: vars.$medium-breakpoint) {
 		flex-direction: column;
+		justify-content: flex-start;
+
 		gap: 20px;
 	}
 }
@@ -17,8 +19,8 @@
 
 	position: relative;
 
-	min-height: 360px;
 	width: 100%;
+	min-height: min(100vh, 600px);
 	height: 100%;
 }
 

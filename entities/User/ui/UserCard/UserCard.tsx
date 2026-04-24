@@ -12,6 +12,7 @@ import { Can } from "@/shared/model/Ability"
 import { areRolesEqual } from "../../model/UserCard/useUserCard"
 import { SelectDepartmentSearchDropMenu } from "@/features/SelectDepartmentSearchDropMenu"
 import { DeleteButton } from "@/shared/ui"
+import { Button } from "antd"
 
 interface Props {
 	user: IUser
@@ -50,7 +51,7 @@ const UserCard = ({ user, setUser }: Props) => {
 				</Can>
 			</span>
 			<div className="user-card__personal-data">
-				<h2 className="user-card__name">{user.login}</h2>
+				<h2 className="user-card__name text ">{user.login}</h2>
 				<div>
 
 					<SelectDepartmentSearchDropMenu
@@ -61,20 +62,23 @@ const UserCard = ({ user, setUser }: Props) => {
 
 				</div>
 				<div style={{ display: "flex", justifyContent: "space-between" }}>
-					<button
+					<Button
+						style={{ padding: "0 7px", margin: 0, height: "24px" }}
 						className={`text text_litle ${!isDirty ? "disabled" : ""}`}
 						onClick={saveData}
 						disabled={!isDirty}
 					>
 						Сохранить
-					</button>
-					<button
+					</Button>
+					<Button
+						style={{ padding: "0 7px", margin: 0, height: "24px" }}
+
 						className={`text text_litle ${!isDirty ? "disabled" : ""}`}
 						disabled={!isDirty}
 						onClick={resetData}
 					>
 						Отменить
-					</button>
+					</Button>
 				</div>
 			</div>
 			<div className="user-card__role-list text text_tiny">

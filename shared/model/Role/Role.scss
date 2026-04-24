@@ -5,26 +5,25 @@
 	padding: 5px;
 
 	border-radius: 10;
-	background-color: #464649;
+	background-color: var(--role-bg);
 
 	&:hover {
-		background-color: #818181;
+		background-color: var(--role-bg-hover);
 	}
 
 	&:active {
-		background-color: #a22e2ed1;
+		background-color: var(--role-bg-delete-hover);
 	}
 
 	&_disabled {
-		opacity: 0.6;
-		cursor: default;
+		cursor: auto;
 
 		&:hover {
-			background-color: #464649;
+			background-color: var(--role-bg);
 		}
 
 		&:active {
-			background-color: #464649;
+			background-color: var(--role-bg);
 		}
 	}
 }

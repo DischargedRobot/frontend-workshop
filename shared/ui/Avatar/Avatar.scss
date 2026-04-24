@@ -4,13 +4,12 @@
 
 	&__image {
 		border-radius: 50%;
+		border: 2px solid var(--secondary-color);
 	}
 
 	&__button {
 		position: absolute;
 		padding: 5px;
-		border-radius: 50%;
-		background-color: var(--foreground-second);
 
 		&_left {
 			bottom: 0;

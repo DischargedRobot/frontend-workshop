@@ -16,7 +16,7 @@ const UserRegistrationPage = async ({
 	return (
 		<Content className="user-registration">
 			<div className="user-registration__content">
-				<h1>Регистрация</h1>
+				<h1 className="title">Регистрация пользователя</h1>
 				<UserRegistrationForm token={token} />
 			</div>
 		</Content>

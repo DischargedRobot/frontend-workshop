@@ -101,7 +101,7 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
             </div>
             <div className="change-profile-personal-form__content">
                 <Form.Item
-                    label="Логин"
+
                     name="login"
                     rules={[
                         {
@@ -113,11 +113,11 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
                     validateStatus={profileApiError.login ? 'error' : undefined}
                 >
                     {/* onBlur={() => markBlurred("login")} */}
-                    <TextInput placeholder={profileLogin} />
+                    <TextInput label="Логин" placeholder={profileLogin} />
                 </Form.Item>
 
                 <Form.Item
-                    label="Текущий пароль"
+
                     name="currentPassword"
                     rules={[
                         {
@@ -128,11 +128,11 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
                     help={profileApiError.password ?? undefined}
                     validateStatus={profileApiError.password ? 'error' : undefined}
                 >
-                    <TextInputPassword autoComplete="off" type="password" placeholder="Текущий пароль" />
+                    <TextInputPassword label="Текущий пароль" autoComplete="off" type="password" placeholder="Текущий пароль" />
                 </Form.Item>
 
                 <Form.Item
-                    label="Новый пароль"
+
                     name="password"
                     rules={[
                         {
@@ -145,13 +145,14 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
                     ]}
                     help={passwordWatcher ? <PasswordChecksComponent /> : undefined}
                 >
-                    <TextInputPassword placeholder="Оставьте пустым, чтобы не менять" />
+                    <TextInputPassword label="Новый пароль" placeholder="Оставьте пустым, чтобы не менять" />
                 </Form.Item>
 
                 <Form.Item
+                    className="text text_litle"
                     validateTrigger="onChange"
                     name="confirm"
-                    label="Подтвердите пароль"
+
                     dependencies={["password"]}
                     rules={[{
                         required: !!form.getFieldValue("password"),
@@ -173,7 +174,7 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
                     }),
                     ]}
                 >
-                    <TextInputPassword placeholder="Повторите пароль" />
+                    <TextInputPassword label="Подтвердите пароль" placeholder="Повторите пароль" />
                 </Form.Item>
             </div>
             <Form.Item>

@@ -33,7 +33,7 @@ const FFTable = ({ featureFlags }: Props) => {
 			locale={{
 				emptyText: (isLoading
 					?
-					<div style={{ height: "100px", width: "100%" }}>
+					<div className="ff-table__loader">
 						<Spin />
 					</div>
 					:

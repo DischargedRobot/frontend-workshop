@@ -181,11 +181,31 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 
 			// if (!dropToGap) {
 			try {
-				const responseDep = await departmentApi.changeDepartmentParent(
-					dragNode as IDepartment,
-					dropNode as IDepartment,
-					organization.id,
-				)
+				if (!dropToGap) {
+					await departmentApi.changeDepartmentParent(
+						dragNode as IDepartment,
+						dropNode as IDepartment,
+						organization.id,
+					)
+					changeParentDep(dragNode, dropNode.id)
+
+				} else {
+					const deps = useDepartmentsStore.getState().getDepartmentsIncludingAllChildren()
+					const pathDeps = dropNode.path.split(".").map(Number)
+					const parentId = pathDeps?.at(-2) ?? pathDeps[0]
+					const parentDep = deps.find((dep) => dep.id === parentId)
+					console.log("parentId", parentId, "parentDep", parentDep)
+					if (!parentDep) {
+						throw new Error("Parent department not found")
+					}
+					await departmentApi.changeDepartmentParent(
+						dragNode as IDepartment,
+						parentDep,
+						organization.id,
+					)
+					changeParentDep(dragNode, parentId)
+
+				}
 
 				// // После успешного изменения получим свежие дети корневого отдела
 				// const key = [
@@ -207,7 +227,6 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 				// 	changeDepartmentChildren(organization.child, fresh)
 				// 	onLoaded?.([...fresh])
 				// }
-				changeParentDep(dragNode, dropNode.id)
 			} catch (err) {
 				handleMoveDepAPIError(err)
 				// console.log("Failed to move department", err)
@@ -219,6 +238,7 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 				// 	],
 				// )
 			}
+			// }
 			// } else {
 		},
 		[changeParentDep, changeChild, onLoaded, organization.child, changeDepartmentChildren, mutate, handleMoveDepAPIError, organization.id, organization.child, organization.child?.id],

@@ -5,4 +5,12 @@
 		@extend .text;
 		@extend .text_bold;
 	}
+	&__loader {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		width: 100%;
+		height: 100px;
+	}
 }

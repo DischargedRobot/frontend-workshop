@@ -67,15 +67,15 @@ export const useFFTableColumns = ({
 				hidden: !filters.lastUpdate.isVisible,
 				ellipsis: true,
 			},
-			{
-				align: "center",
-				title: "Описание",
-				key: "description",
-				dataIndex: "description",
-				render: (value: string) => <InfoIcon info={value} />,
-				hidden: !filters.description.isVisible,
-				ellipsis: true,
-			},
+			// {
+			// 	align: "center",
+			// 	title: "Описание",
+			// 	key: "description",
+			// 	dataIndex: "description",
+			// 	render: (value: string) => <InfoIcon info={value} />,
+			// 	hidden: !filters.description.isVisible,
+			// 	ellipsis: true,
+			// },
 		)
 	}
 
@@ -84,15 +84,16 @@ export const useFFTableColumns = ({
 	const ability = useAbility(AbilityContext)
 	if (ability.can("delete", "FF")) {
 		columns.push({
-			align: "center",
-			title: "",
+			title: "Удалить",
 			key: "delete",
+			width: "100px",
+			minWidth: 64,
+			align: "center",
 			render: (_, FF) => (
 				<button onClick={() => removeFF(FF)}>
 					<DeleteIcon />
 				</button>
 			),
-			width: "64px",
 		})
 	}
 

@@ -43,13 +43,13 @@
 	}
 }
 .log-out-button {
-	color: var(--dangerous, red);
+	color: var(--delete-icon-color, red);
 	padding: 4px;
 	flex-shrink: 0;
 	background-color: transparent;
 
 	&:hover {
-		color: var(--dangerous-hover, darkred);
+		color: var(--delete-icon-color, darkred);
 		background-color: var(--dark-transparent);
 	}
 }

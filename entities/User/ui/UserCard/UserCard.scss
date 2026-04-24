@@ -2,7 +2,7 @@
 
 .user-card {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: 1fr auto;
 	grid-template-rows: 32px 75px 75px auto;
 	grid-template-areas:
 		"avatar circle-selection"
@@ -61,10 +61,9 @@
 		align-self: center;
 		justify-self: center;
 
-		margin: 0 auto;
+		margin: 0 15px;
 
 		border-radius: 50%;
-		border: 2px solid var(--stroke);
 	}
 
 	&__delete-button {
@@ -73,7 +72,7 @@
 		right: 0;
 		transform: translate(25%, 25%);
 
-		border-radius: 50;
+		border-radius: 50%;
 		background-color: var(--foreground);
 
 		&:hover {

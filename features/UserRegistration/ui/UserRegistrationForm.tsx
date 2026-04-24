@@ -34,7 +34,6 @@ const UserRegistrationForm = ({ token }: Props) => {
 		>
 
 			<Form.Item
-				label="Логин"
 				name="login"
 				rules={[
 					{
@@ -56,7 +55,6 @@ const UserRegistrationForm = ({ token }: Props) => {
 			</Form.Item>
 			<Form.Item
 				validateTrigger="onChange"
-				label="Пароль"
 				name="password"
 				rules={[
 					() => ({
@@ -74,7 +72,6 @@ const UserRegistrationForm = ({ token }: Props) => {
 			</Form.Item>
 
 			<Form.Item
-				label="Подтверждение пароля"
 				name="confirm"
 				rules={[
 					({ getFieldValue }) => ({

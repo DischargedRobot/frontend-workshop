@@ -136,8 +136,8 @@ const Toast = ({
 			className={`toast ${"toast_" + type} ${isFade ? "toast_fade-out" : "toast_fade-in"} ${isActive ? "toast_active" : ""}`}
 		>
 			{icons.get(type)}
-			<h5 className="toast__title">{title}</h5>
-			<span className="toas__text">{text}</span>
+			<h5 className="toast__title ">{title}</h5>
+			<span className="toast__text">{text}</span>
 		</div>
 	)
 }
