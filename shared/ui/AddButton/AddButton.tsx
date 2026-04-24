@@ -10,6 +10,7 @@ type Props = {
 	type?: "button" | "submit" | "reset"
 	onClick?: (e: MouseEvent<HTMLButtonElement>) => void
 	disabled?: boolean
+	tooltip?: React.ReactNode
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 const AddButton = ({ type = "button", onClick, disabled, children, ...props }: Props) => {
@@ -20,6 +21,7 @@ const AddButton = ({ type = "button", onClick, disabled, children, ...props }: P
 			className="add-button"
 			type={type}
 			onClick={onClick}
+			tooltip={disabled ? "Сначала создайте отдел" : props.tooltip ?? "Добавить пользователя"}
 			disabled={disabled}
 		>
 			{children}

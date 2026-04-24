@@ -83,7 +83,7 @@ const COLOR = {
 	tableBorder: "color-mix(in srgb, var(--secondary-color), var(--stroke-mix) 70%)",
 
 	// DEPARTMENT TREE
-	departmenttreepanelBg: "color-mix(in srgb, var(--secondary-color), #6666669f 30%)",
+	departmenttreepanelBg: "color-mix(in srgb, var(--secondary-color), var(--background-color) 15%)",
 
 	// ICON BUTTON
 	iconSvg: "color-mix(in srgb, var(--text-color), var(--active-mix) 40%)",

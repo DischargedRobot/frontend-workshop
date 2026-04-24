@@ -8,9 +8,7 @@ interface Props {
 
 const ReloadButton = ({ onClick }: Props) => {
 	return (
-		<IconButton icon={<ReloadOutlined />} onClick={onClick}>
-			Обновить
-		</IconButton>
+		<IconButton icon={<ReloadOutlined />} onClick={onClick} tooltip={"Обновить"} />
 	)
 }
 

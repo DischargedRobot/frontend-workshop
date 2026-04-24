@@ -21,7 +21,7 @@ export const EditButton = ({ value, onClick, className, title }: Props) => {
             icon={<EditOutlined />}
             onClick={handleClick}
             className={className}
-            title={title ?? "Редактировать"}
+            tooltip={title ?? "Редактировать"}
         >
             {value ? <span className="edit-button__label">{value}</span> : null}
         </IconButton>

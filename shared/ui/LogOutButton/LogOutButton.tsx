@@ -9,7 +9,7 @@ interface LogOutButtonProps {
 
 export const LogOutButton = ({ onClick, label }: LogOutButtonProps) => {
 	return (
-		<IconButton icon={<LogoutOutlined />} onClick={onClick} className="log-out-button">
+		<IconButton icon={<LogoutOutlined />} onClick={onClick} className="log-out-button" tooltip={label ?? "Выйти"}>
 			{label}
 		</IconButton>
 	)

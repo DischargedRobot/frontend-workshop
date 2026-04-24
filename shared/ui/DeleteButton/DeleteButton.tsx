@@ -10,6 +10,7 @@ import { IconButton } from "../IconButton"
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	onClick?: MouseEventHandler<HTMLButtonElement>
 	className?: string
+	tooltip?: React.ReactNode
 }
 
 export const DeleteButton = ({ onClick, className = "", ...props }: Props) => {
@@ -19,6 +20,7 @@ export const DeleteButton = ({ onClick, className = "", ...props }: Props) => {
 			icon={<DeleteIcon />}
 			className={`delete-button ${className}`}
 			onClick={onClick}
+			tooltip={props.tooltip ?? "Удалить"}
 		/>
 	)
 }
