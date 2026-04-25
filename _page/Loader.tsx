@@ -5,14 +5,14 @@ export const Loader = () => {
     return (
         <div
             style={{
-                margin: "0 auto",
+                width: "100%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 minHeight: "100vh",
             }}
         >
-            <Spin size="large" description="Загрузка, пожалуйста, ожидайте" />
+            <Spin size="large" description="Секундочку..." />
         </div>
     )
 }   

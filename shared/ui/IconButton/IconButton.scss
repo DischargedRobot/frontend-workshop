@@ -12,10 +12,9 @@
 
 	&:hover {
 		background-color: var(--iconbutton-bg-hover);
-		color: var(--text-color);
 
 		svg {
-			color: var(--active-hover);
+			color: var(--icon-svg);
 		}
 	}
 
@@ -29,17 +28,17 @@
 		}
 
 		svg {
-			color: color-mix(in srgb, var(--active), var(--disabled-mix));
+			color: color-mix(in srgb, var(--icon-svg), var(--disabled-mix));
 		}
 
-		color: color-mix(in srgb, var(--text-color), var(--disabled-mix));
+		color: color-mix(in srgb, var(--icon-svg), var(--disabled-mix));
 		background-color: var(--iconbutton-bg-disabled);
 	}
 
 	& svg {
 		min-width: var(--size-button-icon);
 		min-height: var(--size-button-icon);
-		color: var(--active);
+		color: var(--icon-svg);
 	}
 }
 .log-out-button {

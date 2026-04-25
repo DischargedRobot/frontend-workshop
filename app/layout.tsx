@@ -18,6 +18,12 @@ const FONTS = {
 }
 
 
+// PINK
+// main: "#cc38c7",
+// secondary: "#e58df6",
+// text: "#f9f9f9",
+// textActive: "#fcfcfc",
+// background: "#e3b9e5",
 
 // main: "#0b57d0",
 // secondary: "#323234",
@@ -63,6 +69,11 @@ const COLOR = {
 
 	deleteIconColor: "#F57474",
 
+
+	// LOGO
+	logoDark: "color-mix(in srgb, var(--background-color), #000000 20%)",
+	logoLight: "var(--text-color)",
+
 	// CHEKBOX 
 	checkboxBg: "color-mix(in srgb, var(--secondary-color), var(--hover-mix) 22%)",
 
@@ -93,14 +104,14 @@ const COLOR = {
 	departmenttreepanelBg: "color-mix(in srgb, var(--secondary-color), var(--background-color) 15%)",
 
 	// ICON BUTTON
-	iconSvg: "color-mix(in srgb, var(--text-color), var(--active-mix) 40%)",
+	iconSvg: "color-mix(in srgb, var(--main-color), var(--active-mix) 40%)",
 
 	iconbuttonBg: "color-mix(in hsl, var(--background-color), var(--active-mix) 32%)",
 	iconbuttonBgHover: "color-mix(in srgb, var(--background-color), var(--hover-mix) 10%)",
 	iconbuttonBgDisabled: "color-mix(in srgb, var(--background-color), var(--disabled) 40%)",
 
 	// INPUT
-	inputBg: "color-mix(in srgb, var(--background-color), var(--active-mix) 50%)",
+	inputBg: "color-mix(in srgb, var(--background-color), var(--active-mix) 30%)",
 	inputBgActive: "color-mix(in srgb, var(--background-color), var(--active-mix) 60%)",
 	inputBgHover: "color-mix(in srgb, var(--background-color), var(--hover-mix) 10%)",
 
@@ -113,7 +124,7 @@ const COLOR = {
 
 	menuItemHoverBg: "color-mix(in srgb, var(--main-color), var(--hover-mix) 22%)",
 
-	menuItemActiveBg: "color-mix(in srgb, var(--main-color) , var(--hover-mix-active) 20%)",
+	menuItemActiveBg: "color-mix(in srgb, var(--main-color) , var(--hover-mix-active) 12%)",
 
 	menuItemSelectedBg: "color-mix(in srgb, var(--main-color), var(--selected-mix) 20%)",
 
@@ -377,6 +388,10 @@ export default function RootLayout({
 						"--text-disabled": COLOR.textDisabled,
 						"--text-placeholder": COLOR.textPlaceholder,
 
+						// LOGO
+						"--logo-dark": COLOR.logoDark,
+						"--logo-light": COLOR.logoLight,
+
 						// DELETED ICON
 						"--delete-icon-color": COLOR.deleteIconColor,
 
@@ -424,6 +439,8 @@ export default function RootLayout({
 						"--menu-hover": COLOR.menuHover,
 
 						// ICON BUTTON
+						"--icon-svg": COLOR.iconSvg,
+
 						"--iconbutton-bg": COLOR.iconbuttonBg,
 						"--iconbutton-bg-hover": COLOR.iconbuttonBgHover,
 						"--iconbutton-bg-disabled": COLOR.iconbuttonBgDisabled,
