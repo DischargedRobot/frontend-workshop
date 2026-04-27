@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Modal, Drawer, Grid, Tooltip } from "antd"
+import { Modal, Drawer, Grid } from "antd"
 import { memo } from "react"
 import { useAddUserModal } from "../model"
 import { AddButton } from "@/shared/ui"

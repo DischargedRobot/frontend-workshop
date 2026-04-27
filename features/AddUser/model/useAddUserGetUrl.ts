@@ -5,7 +5,7 @@ import { showToast } from "@/shared/ui"
 import { IRole } from "@/shared/model/Role/types"
 
 export const useAddUserGetUrl = () => {
-	const [url, setUrl] = useState("Тут нет ссылки, вы ещё её не получили :_(")
+	const [url, setUrl] = useState("Тут будет Ваша ссылка")
 	const [isLoading, setIsLoading] = useState(false)
 	const handleAPIError = useAPIErrorHandler()
 

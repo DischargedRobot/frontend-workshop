@@ -104,7 +104,7 @@ const COLOR = {
 	departmenttreepanelBg: "color-mix(in srgb, var(--secondary-color), var(--background-color) 15%)",
 
 	// ICON BUTTON
-	iconSvg: "color-mix(in srgb, var(--main-color), var(--active-mix) 40%)",
+	iconSvg: "var(--main-color)",
 
 	iconbuttonBg: "color-mix(in hsl, var(--background-color), var(--active-mix) 32%)",
 	iconbuttonBgHover: "color-mix(in srgb, var(--background-color), var(--hover-mix) 10%)",

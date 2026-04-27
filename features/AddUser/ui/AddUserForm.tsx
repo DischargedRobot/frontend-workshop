@@ -1,7 +1,7 @@
 "use client"
 
 import { Button, Form, QRCode, Select, Tooltip, Typography, FormInstance, FormProps, SelectProps } from "antd"
-import { SyncOutlined, CloseOutlined } from "@ant-design/icons"
+import { SyncOutlined, CloseOutlined, LoadingOutlined } from "@ant-design/icons"
 import { memo } from "react"
 import AddUserRoles from "./AddUserRoles"
 import "./AddUser.scss"
@@ -99,15 +99,16 @@ const AddUserForm = ({
                         <Button
                             className="add-user__add-button text text_litle"
                             disabled={!isNotFull}
-                            type="primary"
+                            type="default"
                             htmlType="submit"
-                            loading={isLoading && { icon: <SyncOutlined spin /> }}
+                            loading={isLoading && { icon: <LoadingOutlined /> }}
                         >
                             {isNotFull ? "Получить ссылку" : "Выберите отдел и роли"}
                         </Button>
                         <Button
                             className="add-user__reset-button  text text_litle"
                             disabled={isClean}
+                            type="default"
                             htmlType="reset"
                             onClick={handleReset}
                         >

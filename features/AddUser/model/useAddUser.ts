@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { TROLE, IRole } from "@/shared/model/Role/types"
+import { IRole, DEFAULT_ROLES } from "@/shared/model/Role/types"
 import { useDepartmentsStore } from "@/entities/Departments"
 import { useShallow } from "zustand/shallow"
 import { useForm } from "antd/es/form/Form"
@@ -22,11 +22,7 @@ export const useAddUser = () => {
 	const [isNotFull, setIsNotFull] = useState(false)
 
 	const [roles, setRoles] = useState<IRole[]>(
-		Object.entries(TROLE).map(([key, value]) => ({
-			name: key as keyof typeof TROLE,
-			type: value,
-			isEnabled: false,
-		})),
+		DEFAULT_ROLES.map((r) => ({ ...r })),
 	)
 
 	const { url, handleGetToken, isLoading, resetUrl } = useAddUserGetUrl()
@@ -41,11 +37,7 @@ export const useAddUser = () => {
 	}
 
 	const handleReset = () => {
-		const resetRoles = roles.map((role) => ({
-			...role,
-			isEnabled: false,
-		}))
-		setRoles(resetRoles)
+		setRoles(DEFAULT_ROLES.map((r) => ({ ...r })))
 		resetUrl()
 		setIsClean(true)
 		setIsNotFull(false)

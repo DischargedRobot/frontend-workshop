@@ -7,6 +7,7 @@ import { Button, Form, Popover, Switch } from "antd"
 import { useAddDepartment } from "../model/useAddDepartment"
 import { memo } from "react"
 import { IService } from "@/entities/Departments"
+import { LoadingOutlined } from "@ant-design/icons"
 
 type DepartmentSelectorComponent = React.ComponentType<{
 	onChange: (id: number) => void
@@ -67,9 +68,10 @@ const AddDepartment = ({ DepartmentSelector, onServiceCreated }: Props) => {
 				<Button
 					type="default"
 					htmlType="submit"
-					loading={isLoading}
+					loading={isLoading && { icon: <LoadingOutlined /> }}
 				>
-					{isLoading ? "Создание..." : "Создать"}</Button>
+					{isLoading ? "Создание..." : "Создать"}
+				</Button>
 			</Form>
 		</div>
 	)
@@ -79,8 +81,8 @@ const AddDepartment = ({ DepartmentSelector, onServiceCreated }: Props) => {
 			content={addDepForm}
 			placement="bottom"
 			autoAdjustOverflow
-			getPopupContainer={(node) => node.parentElement ?? document.body}
 			trigger="click"
+			styles={{ root: { zIndex: 100 } }}
 		>
 			<span>
 				<AddButton title="Добавить отдел" />

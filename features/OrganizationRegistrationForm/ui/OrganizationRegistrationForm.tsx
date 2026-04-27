@@ -1,6 +1,7 @@
 "use client"
 
 import { Button, Form } from "antd"
+import { LoadingOutlined } from "@ant-design/icons"
 import "./OrganizationRegistrationForm.scss"
 import { useOrganizationRegistrationForm } from "../model"
 import { TextInput } from "@/shared/ui"
@@ -19,7 +20,6 @@ export const OrganizationRegistrationForm = () => {
 	const { onSubmit, loading, error, clearFieldError } = useOrganizationRegistrationForm()
 
 	const { validator: validatePassword, PasswordChecksComponent } = useCheckPassword()
-	const passwordWatcher = Form.useWatch("password", form)
 
 
 	return (
@@ -117,7 +117,7 @@ export const OrganizationRegistrationForm = () => {
 				className="form-button"
 				type="default"
 				htmlType="submit"
-				loading={loading}
+				loading={loading && { icon: <LoadingOutlined /> }}
 			>
 				{loading ? "Регистрация..." : "Зарегистрировать"}
 			</Button>

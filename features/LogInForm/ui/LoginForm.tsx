@@ -4,6 +4,7 @@ import "./LoginForm.scss"
 
 import { useLoginForm } from "../model"
 import { Button, Form } from "antd"
+import { LoadingOutlined } from "@ant-design/icons"
 import { TextInput } from "@/shared/ui"
 import { TextInputPassword } from "@/shared/ui/TextInput"
 
@@ -45,7 +46,7 @@ export const LoginForm = () => {
 				type="default"
 				htmlType="submit"
 				className="form-button"
-				loading={loading}
+				loading={loading && { icon: <LoadingOutlined /> }}
 			>
 				{loading ? "Вход..." : "Войти"}
 			</Button>

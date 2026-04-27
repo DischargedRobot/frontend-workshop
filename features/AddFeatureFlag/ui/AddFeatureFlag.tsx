@@ -3,11 +3,11 @@
 import "./AddFeatureFlag.scss"
 
 import { Button, Form, Popover, Switch } from "antd"
+import { LoadingOutlined } from "@ant-design/icons"
 import { IOrganization } from "@/entities/Organization/model/useOrganizationStore"
 import { useAddFeatureFlag } from "../model/useAddFeatureFlag"
 import { AddButton, TextInput } from "@/shared/ui"
 import { SelectDepartmentSearchDropMenu } from "@/features/SelectDepartmentSearchDropMenu"
-import { useState } from "react"
 
 type Props = {
 	organization: IOrganization
@@ -97,7 +97,7 @@ export const AddFeatureFlag = ({ organization }: Props) => {
 					<Button
 						className="add-feature-flag__button"
 						htmlType="submit"
-						loading={isLoading}
+						loading={isLoading && { icon: <LoadingOutlined /> }}
 					>
 						{isLoading ? "Добавление..." : "Добавить"}
 					</Button>

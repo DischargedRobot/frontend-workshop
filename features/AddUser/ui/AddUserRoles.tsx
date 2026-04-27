@@ -2,7 +2,7 @@
 
 import { Grid, Segmented } from "antd"
 import { memo, useState } from "react"
-import { IRole, DEFAULT_ROLES } from "@/shared/model/Role/types"
+import { IRole, DEFAULT_ROLES, NAMES_OF_ROLE_ACTIONS } from "@/shared/model/Role/types"
 import UserRolesList from "./UserRolesList"
 import "./AddUserRoles.scss"
 
@@ -16,7 +16,8 @@ interface Props {
 
 const AddUserRoles = ({ roles, value, onChange }: Props) => {
 
-	const displayRoles = roles ?? value ?? DEFAULT_ROLES
+	const allRoles = roles ?? value ?? DEFAULT_ROLES
+	const displayRoles = allRoles.filter((r) => NAMES_OF_ROLE_ACTIONS[r.type] !== "Просмотр")
 
 	const titles = ["Сотрудники", "Фич флаги", "Отделы"]
 	const countCollumn = titles.length
@@ -44,7 +45,7 @@ const AddUserRoles = ({ roles, value, onChange }: Props) => {
 				const blockRoles = displayRoles.slice(from, to)
 
 				const handleBlockChange = (updatedBlockRoles: IRole[], changedRole: IRole) => {
-					const mergedRoles = displayRoles.map((r) => { // сливаем измененёния с отобраемыми
+					const mergedRoles = allRoles.map((r) => {
 						const found = updatedBlockRoles.find((b) => b.type === r.type)
 						return found ?? r
 					})

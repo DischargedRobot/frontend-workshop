@@ -2,6 +2,7 @@
 import "./UserRegistrationForm.scss"
 
 import { Button, Form } from "antd"
+import { LoadingOutlined } from "@ant-design/icons"
 import { useRegistrationForm } from "../model"
 import { TextInput } from "@/shared/ui"
 import { memo } from "react"
@@ -90,7 +91,7 @@ const UserRegistrationForm = ({ token }: Props) => {
 			<Button
 				type="primary"
 				htmlType="submit"
-				loading={loading}
+				loading={loading && { icon: <LoadingOutlined /> }}
 				block
 				size="large"
 			>

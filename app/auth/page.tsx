@@ -2,14 +2,11 @@
 
 import "./AuthPage.scss"
 
-import { useEffect, useRef, useState } from "react"
-import Login from "../login/page"
-import RegistrationPage from "../registration/organization/page"
+import { useState } from "react"
 import { Content } from "antd/es/layout/layout"
 import { LoginForm } from "@/features/LogInForm"
 import { Button } from "antd"
 import { OrganizationRegistrationForm } from "@/features/OrganizationRegistrationForm"
-import { LoadIconLogo } from "@/_page/LoaderIcon"
 
 
 type TVisiblePanel = "login" | "registration" | null

@@ -115,6 +115,6 @@ export const DEFAULT_ROLES: IRole[] = Object.entries(TROLE).map(
 	([key, value]) => ({
 		name: key as TROLEKey,
 		type: value,
-		isEnabled: false,
+		isEnabled: NAMES_OF_ROLE_ACTIONS[value] === "Просмотр",
 	}),
 )
