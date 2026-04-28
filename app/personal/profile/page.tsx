@@ -52,7 +52,7 @@ const ProfilePage = () => {
 		<Content className="profile-page">
 			<ChangeProfileMenu selectedKey={currentPanel} onSelect={handleSelect} />
 
-			<div className="profile-panel-area" >
+			<div className={`profile-panel-area ${currentPanel === "profile" ? "profile-panel-area__profile" : ""}`} >
 				{prevPanel && (
 					<div
 						onAnimationEnd={() => {

@@ -1,5 +1,4 @@
 import { Spin } from "antd"
-import { LoadIconLogo } from "./LoaderIcon"
 
 export const Loader = () => {
     return (

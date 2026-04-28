@@ -55,6 +55,7 @@
 	@media (max-width: vars.$medium-breakpoint) {
 		height: auto;
 		min-height: 0;
+		max-height: calc(100vh - 73px);
 		flex: 1 1 auto;
 		.department-tree-panel {
 			position: static !important;

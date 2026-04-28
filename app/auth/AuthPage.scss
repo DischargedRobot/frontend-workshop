@@ -95,6 +95,9 @@ $login-registration-table-size: calc(
 		flex-direction: column;
 		max-width: 100%;
 	}
+	@media (max-height: 470px) {
+		align-items: flex-start;
+	}
 
 	&__content {
 		display: grid;

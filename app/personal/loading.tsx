@@ -5,7 +5,6 @@ import { Loader } from "@/_page/Loader"
 const LoadingPage: React.FC = () => {
 	return (
 		<Loader />
-
 	)
 }
 

@@ -8,7 +8,6 @@ import type { MenuProps } from 'antd';
 import {
     UserOutlined,
     LockOutlined,
-    PictureOutlined,
 } from '@ant-design/icons';
 import { Grid } from 'antd';
 
@@ -26,7 +25,7 @@ const ChangeProfileMenu: React.FC<{
     const items: MenuProps['items'] = [
         { key: 'profile', icon: <UserOutlined style={{ fontSize: isMobile ? 16 : "" }} />, label: isMobile ? '' : 'Профиль' },
         { key: 'changePassword', icon: <LockOutlined style={{ fontSize: isMobile ? 16 : "" }} />, label: isMobile ? '' : 'Сменить пароль' },
-        { key: 'theme', icon: <PictureOutlined style={{ fontSize: isMobile ? 16 : "" }} />, label: isMobile ? '' : 'Тема' },
+        // { key: 'theme', icon: <PictureOutlined style={{ fontSize: isMobile ? 16 : "" }} />, label: isMobile ? '' : 'Тема' },
     ];
     return (
         <Menu

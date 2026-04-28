@@ -313,7 +313,8 @@ const theme: ThemeConfig = {
 		},
 
 		Tabs: {
-			inkBarColor: COLOR.text
+			colorBorderSecondary: COLOR.secondary,
+			inkBarColor: COLOR.main,
 		},
 
 		Breadcrumb: {

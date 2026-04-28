@@ -94,10 +94,9 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
                 style={{
                     display: "flex",
                     justifyContent: "center",
-                    marginBottom: 16,
                 }}
             >
-                <Avatar size={80} />
+                <Avatar size={90} />
             </div>
             <div className="change-profile-personal-form__content">
                 <Form.Item
@@ -177,8 +176,14 @@ const ChangeProfilePersonalData = ({ onSave }: Props) => {
                     <TextInputPassword label="Подтвердите пароль" placeholder="Повторите пароль" />
                 </Form.Item>
             </div>
-            <Form.Item>
-                <Button type="primary" htmlType="submit" {...(isDirty ? {} : { disabled: true })}>
+            <Form.Item
+                className="change-profile-personal-form__button"
+            >
+                <Button
+                    type="primary"
+                    htmlType="submit"
+                    {...(isDirty ? {} : { disabled: true })}
+                >
                     Сохранить
                 </Button>
             </Form.Item>

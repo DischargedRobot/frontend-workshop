@@ -6,7 +6,7 @@
 	justify-content: center;
 	align-items: center;
 
-	gap: 30px;
+	gap: 15px;
 
 	max-width: 350px;
 	width: 100%;
@@ -21,5 +21,13 @@
 
 	@media (max-width: vars.$medium-breakpoint) {
 		justify-content: flex-start;
+	}
+
+	&__button {
+		margin-bottom: 0;
+	}
+
+	&__avatar {
+		margin-bottom: 0;
 	}
 }
