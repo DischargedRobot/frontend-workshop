@@ -114,8 +114,8 @@ SDK отвечает за интеграцию фича-флагов в клие
   <strong style="display:block;margin-top:16px">Мобильная</strong>
 
   <div style="display:flex;gap:12px;align-items:center;margin-top:8px">
-    <img src="readme/interface/mobile/ffmenuFF.jpg" alt="Features mobile" style="height:360px;object-fit:scale-down;width:240px;display:block">
-    <img src="readme/interface/mobile/ffmenuDeps.jpg" alt="Features table mobile" style="height:360px;object-fit:scale-down;width:240px;display:block">
+    <img src="readme/interface/mobile/ffmenuFF.jpg" alt="Features mobile" width="240">
+    <img src="readme/interface/mobile/ffmenuDeps.jpg" alt="Features table mobile" width="240">
   </div>
   <p style="margin-top:8px">Меню фич флагов: список фич флагов, быстрое переключение, добавление и фильтрация по названию и отделам.</p>
 </div>
