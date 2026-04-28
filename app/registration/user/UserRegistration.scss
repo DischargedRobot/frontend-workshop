@@ -2,6 +2,9 @@
 
 .user-registration {
 	@extend %center_content;
+	@extend %flex-column;
+	align-items: center;
+	justify-content: center;
 }
 
 .user-registration__content {

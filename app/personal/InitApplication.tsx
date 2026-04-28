@@ -4,6 +4,7 @@ import { IProfile, useProfileStore } from "@/entities/Profile"
 import { IOrganization, useOrganizationStore } from "@/entities/Organization/model/useOrganizationStore"
 import { useApplicationStore } from "@/shared/model/Application"
 import { useDepartmentsStore } from "@/entities/Departments/model/useDepartmentsStore"
+import { useSelectedDepartmentsStore } from "@/entities/Departments"
 
 export const InitApplication: React.FC<{
 	profile: IProfile
@@ -15,7 +16,6 @@ export const InitApplication: React.FC<{
 	const setIsLoading = useApplicationStore((s) => s.setIsLoading)
 	const isLoading = useApplicationStore((s) => s.isLoading)
 	const setDepartments = useDepartmentsStore((s) => s.setDepartments)
-
 
 	useEffect(() => {
 		setProfile(profile)

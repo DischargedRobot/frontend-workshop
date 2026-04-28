@@ -79,6 +79,13 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 				changeChild({ ...organization.child, children: departments })
 				changeDepartmentChildren(organization.child, departments)
 				onLoaded?.([...departments])
+
+				// Если ещё нет выбранных отделов, по умолчанию ставим детей первого уровня
+				const selectedDeps = useSelectedDepartmentsStore.getState().departments
+				if (!selectedDeps || selectedDeps.length === 0) {
+					const firstLevel = useDepartmentsStore.getState().departments[0]?.children || []
+					useSelectedDepartmentsStore.getState().setDepartments(firstLevel)
+				}
 			},
 		},
 	)
@@ -207,39 +214,12 @@ const useDepartmentTree = ({ onLoaded, onCheckLeaf, onUncheckLeaf }: Props) => {
 
 				}
 
-				// // После успешного изменения получим свежие дети корневого отдела
-				// const key = [
-				// 	["department", "organizationId", "departmentId"],
-				// 	["all", organization.id, organization.child.id],
-				// ]
 
-				// const fresh = await mutate(
-				// 	key,
-				// 	() =>
-				// 		departmentApi.getDescedantOfDepartments(
-				// 			organization.id,
-				// 			organization.child.id,
-				// 		),
-				// )
-
-				// if (fresh && Array.isArray(fresh)) {
-				// 	changeChild({ ...organization.child, children: fresh })
-				// 	changeDepartmentChildren(organization.child, fresh)
-				// 	onLoaded?.([...fresh])
-				// }
 			} catch (err) {
 				handleMoveDepAPIError(err)
-				// console.log("Failed to move department", err)
-				// // Откатим изменения, перезагрузив данные из API
-				// await mutate(
-				// 	[
-				// 		["department", "organizationId", "departmentId"],
-				// 		["all", organization.id, organization.child.id],
-				// 	],
-				// )
+
 			}
-			// }
-			// } else {
+
 		},
 		[changeParentDep, changeChild, onLoaded, organization.child, changeDepartmentChildren, mutate, handleMoveDepAPIError, organization.id, organization.child, organization.child?.id],
 	)

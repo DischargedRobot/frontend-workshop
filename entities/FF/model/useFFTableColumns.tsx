@@ -33,6 +33,8 @@ export const useFFTableColumns = ({
 			align: "center",
 			title: "Включён",
 			key: "value",
+			ellipsis: true,
+
 			dataIndex: "value",
 			render: (value: boolean, FF: IFeatureFlag) => (
 				<Switch
@@ -88,6 +90,7 @@ export const useFFTableColumns = ({
 			key: "delete",
 			width: "100px",
 			minWidth: 64,
+			ellipsis: true,
 			align: "center",
 			render: (_, FF) => (
 				<button onClick={() => removeFF(FF)}>

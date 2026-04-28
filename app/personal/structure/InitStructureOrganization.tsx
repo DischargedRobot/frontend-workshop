@@ -3,7 +3,7 @@
 import { useEffect } from "react"
 import { useUsersStore } from "@/entities/User"
 import { IUser } from "@/entities/User"
-import { useDepartmentsStore } from "@/entities/Departments"
+import { useDepartmentsStore, useSelectedDepartmentsStore } from "@/entities/Departments"
 import { IOrganization } from "@/entities/Organization"
 
 interface Props {
@@ -17,11 +17,11 @@ export const InitStructureOrganization = ({ users, children, organization }: Pro
     const setUsers = useUsersStore((state) => state.setUsers)
     const setDepartments = useDepartmentsStore((s) => s.setDepartments)
     console.log("InitStructureOrganization get organization", organization)
-
     useEffect(() => {
         setUsers(users)
         setDepartments([organization.child])
-    }, [organization, setDepartments])
+
+    }, [organization, setDepartments, setUsers, users])
 
     return <>{children}</>
 }
