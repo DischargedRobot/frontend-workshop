@@ -56,16 +56,16 @@ SDK отвечает за интеграцию фича-флагов в клие
 <div>
   <strong>Десктоп</strong>
   <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start;margin-top:8px">
-    <img src="readme/interface/desktop/registration.jpg" alt="Registration desktop" style="height:360px;object-fit:scale-down;width:100%;display:block;">
-    <img src="readme/interface/desktop/auth.jpg" alt="Auth desktop" style="height:360px;object-fit:scale-down;width:100%;display:block;">
-    <img src="readme/interface/desktop/registrationUser.jpg" alt="Auth desktop" style="height:360px;object-fit:scale-down;width:100%;display:block;">
+    <img src="readme/interface/desktop/registration.jpg" alt="Registration desktop" >
+    <img src="readme/interface/desktop/auth.jpg" alt="Auth desktop">
+    <img src="readme/interface/desktop/registrationUser.jpg" alt="Auth desktop">
   </div>
 <strong style="display:block;margin-top:16px">Мобильная</strong>
 
   <div style="display:flex;gap:12px;align-items:center;margin-top:8px">
-    <img src="readme/interface/mobile/registration.jpg" alt="Registration mobile" style="height:360px;object-fit:scale-down;width:240px;display:block;">
-    <img src="readme/interface/mobile/auth.jpg" alt="Auth mobile" style="height:360px;object-fit:scale-down;width:240px;display:block">
-    <img src="readme/interface/mobile/registrationUser.jpg" alt="Auth desktop" style="height:360px;object-fit:scale-down;width:240px;display:block">
+    <img src="readme/interface/mobile/registration.jpg" alt="Registration mobile" width="240">
+    <img src="readme/interface/mobile/auth.jpg" alt="Auth mobile" width="240">
+    <img src="readme/interface/mobile/registrationUser.jpg" alt="Auth desktop" width="240">
   </div>
 </div>
 
@@ -74,14 +74,14 @@ SDK отвечает за интеграцию фича-флагов в клие
 <div>
   <strong>Десктоп</strong>
   <div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start;margin-top:8px">
-    <img src="readme/interface/desktop/profile.jpg" alt="Profile desktop" style="height:360px;object-fit:scale-down;width:100%;display:block">
-    <img src="readme/interface/desktop/changeProfile.jpg" alt="Profile menu desktop" style="height:360px;object-fit:scale-down;width:100%;display:block">
+    <img src="readme/interface/desktop/profile.jpg" alt="Profile desktop">
+    <img src="readme/interface/desktop/changeProfile.jpg" alt="Profile menu desktop" >
   </div>
   <strong style="display:block;margin-top:16px">Мобильная</strong>
 
   <div style="display:flex;gap:12px;align-items:center;margin-top:8px">
-    <img src="readme/interface/mobile/profile.jpg" alt="Profile mobile" style="height:360px;object-fit:scale-down;width:240px;display:block">
-    <img src="readme/interface/mobile/changeProfile.jpg" alt="Profile menu mobile" style="height:360px;object-fit:scale-down;width:240px;display:block">
+    <img src="readme/interface/mobile/profile.jpg" alt="Profile mobile" width="240">
+    <img src="readme/interface/mobile/changeProfile.jpg" alt="Profile menu mobile" width="240">
   </div>
   <p style="margin-top:8px">Интерфейс профиля: быстрый доступ к настройкам, переключение аккаунтов и управление уведомлениями.</p>
 </div>
@@ -91,16 +91,15 @@ SDK отвечает за интеграцию фича-флагов в клие
 <div>
   <strong>Десктоп</strong>
   <div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start;margin-top:8px">
-    <img src="readme/interface/desktop/structure.jpg" alt="Organization desktop" style="height:360px;object-fit:scale-down;width:100%;display:block">
-    <img src="readme/interface/desktop/structureAddUser.jpg" alt="Organization structure desktop" style="height:360px;object-fit:scale-down;width:100%;display:block">
+    <img src="readme/interface/desktop/structure.jpg" alt="Organization desktop">
+    <img src="readme/interface/desktop/structureAddUser.jpg" alt="Organization structure desktop">
   </div>
   <strong style="display:block;margin-top:16px">Мобильная</strong>
 
   <div style="display:flex;gap:12px;align-items:center;margin-top:8px">
-    <img src="readme/interface/mobile/structureDeps.jpg" alt="Organization mobile" style="height:360px;object-fit:scale-down;width:240px;display:block">
-    <img src="readme/interface/mobile/structureUsers.jpg" alt="Organization structure mobile" style="height:360px;object-fit:scale-down;width:240px;display:block">
-    <img src="readme/interface/mobile/structureAddUser.jpg" alt="Organization structure mobile" style="height:360px;object-fit:scale-down;width:240px;display:block">
-    <img src="readme/interface/mobile/structureAddService.jpg" alt="Organization structure mobile" style="height:360px;object-fit:scale-down;width:240px;display:block">
+    <img src="readme/interface/mobile/structureDeps.jpg" alt="Organization mobile" width="240">
+    <img src="readme/interface/mobile/structureUsers.jpg" alt="Organization structure mobile" width="240">
+    <img src="readme/interface/mobile/structureAddUser.jpg" alt="Organization structure mobile" width="240">
   </div>
   <p style="margin-top:8px">Управление организацией: создание отделов\сервисов, создание пользователей, назначение ролей и просмотр структуры.</p>
 </div>
@@ -110,7 +109,7 @@ SDK отвечает за интеграцию фича-флагов в клие
 <div>
   <strong>Десктоп</strong>
   <div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start;margin-top:8px">
-    <img src="readme/interface/desktop/ffmenu.jpg" alt="Features desktop" style="height:360px;object-fit:scale-down;width:100%;">
+    <img src="readme/interface/desktop/ffmenu.jpg" alt="Features desktop" >
   </div>
   <strong style="display:block;margin-top:16px">Мобильная</strong>
 
