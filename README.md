@@ -1,4 +1,4 @@
-(За основу взят readme написанный Ириной Хрусталевой [ссылка на readme](https://github.com/RedFlagss/feature_flag_main))
+(Это форк основго приложения и за основу взят readme написанный Ириной Хрусталевой [ссылка на readme](https://github.com/RedFlagss/feature_flag_main))
 
 # RED FLAGS
 
@@ -20,10 +20,50 @@ Frontend хранится по [ссылке](https://github.com/RedFlagss/front
 - Сервис авторизации: Java 21, Micronaut, PostgreSQL, Redis, Kafka
 - Основной сервис: Java 21, Micronaut, Kafka, PostgreSQL
 
-Для микросервисов админ панели настроено хранение логов и сбор метрик: Grafana Alloy, Loki, Prometheus, Grafana
+- Для микросервисов админ панели настроено хранение логов и сбор метрик: Grafana Alloy, Loki, Prometheus, Grafana
 
-SDK для клиентских приложений: Java 17, Kafka
-Frontend: TS, React, next.js, scss, casl, antd
+- SDK для клиентских приложений: Java 17, Kafka
+- Frontend: TS, React, next.js, scss, casl, antd
+
+# Мой вклад
+
+- Создание макета приложения
+- Написание графических компонентов
+- Вёртска приложения с использованием antd
+- Интеграция фронтенда с бекендом (основного сервиса и атуентификация)
+- Настройка ролей и прав доступа
+- Синхронизация данных при отличии в версиях
+- Докер файл и имедж для сборки проекта с использование докер композера
+
+
+## Используемые технологии
+
+<div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin: 24px 0;">
+  <div style="display: flex; flex-direction: column; align-items: center; width: 90px;">
+    <img src="readme/stack/ts.png" alt="TypeScript" width="48" height="48" />
+    <span style="margin-top: 8px; font-size: 14px;">TypeScript</span>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center; width: 90px;">
+    <img src="readme/stack/react.png" alt="React" width="48" height="48" />
+    <span style="margin-top: 8px; font-size: 14px;">React</span>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center; width: 90px;">
+    <img src="readme/stack/nextjs.png" alt="Next.js" width="90" height="48" />
+    <span style="margin-top: 8px; font-size: 14px;">Next.js</span>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center; width: 90px;">
+    <img src="readme/stack/scss.png" alt="SCSS" width="48" height="48" />
+    <span style="margin-top: 8px; font-size: 14px;">SCSS</span>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center; width: 90px;">
+    <img src="readme/stack/antd.png" alt="Ant Design" width="48" height="48" />
+    <span style="margin-top: 8px; font-size: 14px;">Ant Design</span>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center; width: 90px;">
+    <img src="readme/stack/casl.png" alt="CASL" width="48" height="48" />
+    <span style="margin-top: 8px; font-size: 14px;">CASL</span>
+  </div>
+</div>
 
 # Документация
 
